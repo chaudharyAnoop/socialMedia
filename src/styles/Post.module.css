@@ -6,7 +6,7 @@
         align-items: center;
         justify-content: space-between;
         height: 800px;
-        background-color: rgb(19, 19, 19);
+        background-color: rgb(248, 248, 248);
         border-radius: 10px;
         padding: 5px;
 
@@ -72,18 +72,22 @@
         /* color: rgb(44, 44, 44); */
     }
 
-    @media (prefers-color-scheme: dark) {}
+    @media (prefers-color-scheme: dark) {
+        .main {
+            background-color: rgb(19, 19, 19);
+        }
+    }
 }
 
 @media screen and (max-width: 900px) and (min-width: 520px) {
     .main {
-        width: 46vw;
+        width: 75vw;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: space-between;
         height: 800px;
-        background-color: rgb(36, 36, 36);
+        background-color: rgb(248, 248, 248);
         border-radius: 10px;
         padding: 5px;
 
@@ -149,7 +153,11 @@
         /* color: rgb(44, 44, 44); */
     }
 
-    @media (prefers-color-scheme: dark) {}
+    @media (prefers-color-scheme: dark) {
+        .main {
+            background-color: rgb(19, 19, 19);
+        }
+    }
 }
 
 @media screen and (max-width: 520px) {
@@ -160,7 +168,7 @@
         align-items: center;
         justify-content: space-between;
         /* height: 800px; */
-        background-color: rgb(36, 36, 36);
+        background-color: rgb(248, 248, 248);
         border-radius: 10px;
         padding: 5px;
 
@@ -226,5 +234,9 @@
         /* color: rgb(44, 44, 44); */
     }
 
-    @media (prefers-color-scheme: dark) {}
+    @media (prefers-color-scheme: dark) {
+        .main {
+            background-color: rgb(19, 19, 19);
+        }
+    }
 }

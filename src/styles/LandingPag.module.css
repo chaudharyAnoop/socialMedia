@@ -26,13 +26,13 @@
         font-size: 18px;
         font-weight: 700;
         padding: 7px 20px;
-        background-color: rgb(15, 15, 15);
+        /* background-color: rgb(233, 233, 233); */
         border-radius: 30px;
         margin: 4px 20px;
     }
 
     .t2 {
-        background-color: rgb(17, 17, 17);
+        background-color: rgb(235, 235, 235);
     }
 
     .posts {
@@ -70,7 +70,7 @@
     .main {
         display: flex;
         flex-direction: column;
-        width: 50vw;
+        width: 80vw;
         align-items: center;
         padding: 0 30px;
         overflow: scroll;
@@ -91,16 +91,16 @@
     .t1,
     .t2,
     .t3 {
-        font-size: 18px;
+        font-size: 16px;
         font-weight: 700;
         padding: 7px 20px;
-        background-color: rgb(15, 15, 15);
+        /* background-color: rgb(15, 15, 15); */
         border-radius: 30px;
-        margin: 4px 20px;
+        margin: 4px 10px;
     }
 
     .t2 {
-        background-color: rgb(17, 17, 17);
+        background-color: rgb(238, 238, 238);
     }
 
     .posts {
