@@ -1,0 +1,242 @@
+@media screen and (min-width: 900px) {
+    .main {
+        width: 48vw;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        height: 800px;
+        background-color: rgb(248, 248, 248);
+        border-radius: 10px;
+        padding: 5px;
+
+    }
+
+    .data {
+        width: 99%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+    }
+
+    .title {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .dp {
+        height: 30px;
+        width: 30px;
+        border-radius: 20px;
+        object-fit: cover;
+        margin-right: 10px;
+    }
+
+    .t1 {
+        font-weight: 600;
+    }
+
+    .t2 {
+        /* color: grey; */
+        font-size: 15px;
+        font-weight: 500;
+    }
+
+    .img {
+        height: 500px;
+        width: 100%;
+        object-fit: cover;
+    }
+
+    .likes {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .icon {
+        font-size: 25px;
+        margin: 10px 10px;
+    }
+
+    .icon:first-child {
+        color: red;
+    }
+
+    .desc {
+        padding: 0 10px;
+        font-weight: 500;
+        /* color: rgb(44, 44, 44); */
+    }
+
+    @media (prefers-color-scheme: dark) {
+        .main {
+            background-color: rgb(19, 19, 19);
+        }
+    }
+}
+
+@media screen and (max-width: 900px) and (min-width: 520px) {
+    .main {
+        width: 75vw;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        height: 800px;
+        background-color: rgb(248, 248, 248);
+        border-radius: 10px;
+        padding: 5px;
+
+    }
+
+    .data {
+        width: 90%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+    }
+
+    .title {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .dp {
+        height: 30px;
+        width: 30px;
+        border-radius: 20px;
+        object-fit: cover;
+        margin-right: 10px;
+    }
+
+    .t1 {
+        font-weight: 600;
+    }
+
+    .t2 {
+        /* color: grey; */
+        font-size: 15px;
+        font-weight: 500;
+    }
+
+    .img {
+        height: 500px;
+        width: 100%;
+        object-fit: cover;
+    }
+
+    .likes {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .icon {
+        font-size: 25px;
+        margin: 10px 10px;
+    }
+
+    .icon:first-child {
+        color: red;
+    }
+
+    .desc {
+        padding: 0 10px;
+        font-weight: 500;
+        /* color: rgb(44, 44, 44); */
+    }
+
+    @media (prefers-color-scheme: dark) {
+        .main {
+            background-color: rgb(19, 19, 19);
+        }
+    }
+}
+
+@media screen and (max-width: 520px) {
+    .main {
+        width: 96%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        /* height: 800px; */
+        background-color: rgb(248, 248, 248);
+        border-radius: 10px;
+        padding: 5px;
+
+    }
+
+    .data {
+        width: 96%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+    }
+
+    .title {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .dp {
+        height: 30px;
+        width: 30px;
+        border-radius: 20px;
+        object-fit: cover;
+        margin-right: 10px;
+    }
+
+    .t1 {
+        font-weight: 600;
+    }
+
+    .t2 {
+        /* color: grey; */
+        font-size: 15px;
+        font-weight: 500;
+    }
+
+    .img {
+        height: 500px;
+        width: 100%;
+        object-fit: cover;
+    }
+
+    .likes {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .icon {
+        font-size: 25px;
+        margin: 10px 10px;
+    }
+
+    .icon:first-child {
+        color: red;
+    }
+
+    .desc {
+        padding: 0 10px;
+        font-weight: 500;
+        /* color: rgb(44, 44, 44); */
+    }
+
+    @media (prefers-color-scheme: dark) {
+        .main {
+            background-color: rgb(19, 19, 19);
+        }
+    }
+}

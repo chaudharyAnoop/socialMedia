@@ -1,0 +1,11 @@
+@media screen and (min-width: 900px) {
+    @media (prefers-color-scheme: dark) {}
+}
+
+@media screen and (max-width: 900px) and (min-width: 520px) {
+    @media (prefers-color-scheme: dark) {}
+}
+
+@media screen and (max-width: 520px) {
+    @media (prefers-color-scheme: dark) {}
+}
