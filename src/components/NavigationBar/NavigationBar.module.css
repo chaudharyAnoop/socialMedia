@@ -4,7 +4,7 @@
     .hideMain {
         flex-shrink: 0;
         height: 100vh;
-        width: 300px !important;
+        width: 300px !important; 
         display: flex;
         flex-direction: column;
         align-items: flex-start;
