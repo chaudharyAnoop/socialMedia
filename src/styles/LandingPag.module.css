@@ -1,11 +1,12 @@
 @media screen and (min-width: 900px) {
     .main {
+        height: 100vh;
         display: flex;
         flex-direction: column;
         width: 50vw;
         align-items: center;
         padding: 0 30px;
-        overflow: scroll;
+        overflow-y: scroll;
 
     }
 
@@ -47,6 +48,21 @@
         overflow: scroll;
         scroll-behavior: smooth;
         scrollbar-width: none;
+    }
+
+
+
+    .loading {
+        text-align: center;
+        font-size: 1.2rem;
+        margin: 20px 0;
+    }
+
+    .error {
+        text-align: center;
+        color: red;
+        font-size: 1.2rem;
+        margin: 20px 0;
     }
 
     @media (prefers-color-scheme: dark) {

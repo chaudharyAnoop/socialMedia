@@ -59,7 +59,7 @@ function NavigationBar() {
             </NavLink>
           </li>
           <li className={styles.list_li}>
-            <NavLink to="/" className={styles.link}>
+            <NavLink to="/admin" className={styles.link}>
               <div className={styles.tile}>
                 <div className={styles.name}>
                   <FaSearch className={styles.icon} />

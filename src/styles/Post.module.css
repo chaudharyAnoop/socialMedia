@@ -5,7 +5,6 @@
         flex-direction: column;
         align-items: center;
         justify-content: space-between;
-        height: 800px;
         background-color: rgb(248, 248, 248);
         border-radius: 10px;
         padding: 5px;
@@ -50,6 +49,10 @@
         object-fit: cover;
     }
 
+    .interactions {
+        display: flex;
+    }
+
     .likes {
         width: 100%;
         display: flex;
@@ -57,9 +60,51 @@
         justify-content: space-between;
     }
 
+    .likecountdiv {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+
+    }
+
+    .likecount {
+
+        text-align: left;
+        font-weight: bold;
+        padding: 0 10px;
+        margin: 4px 0;
+        cursor: pointer;
+    }
+
+    .commentcount {
+        text-align: left;
+        font-weight: bold;
+        padding: 0 10px;
+        margin: 4px 0;
+        cursor: pointer;
+    }
+
+    .counts {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .countdiv {
+        display: flex;
+    }
+
     .icon {
         font-size: 25px;
         margin: 10px 10px;
+    }
+
+    .count {
+        font-size: 18px;
+        margin: 10px 15px;
     }
 
     .icon:first-child {
@@ -70,6 +115,50 @@
         padding: 0 10px;
         font-weight: 500;
         /* color: rgb(44, 44, 44); */
+        margin: 4px 0;
+    }
+
+    .inputs {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 5px;
+    }
+
+    .input {
+        margin: 0 10px;
+        width: 35vw;
+        height: 35px;
+        padding: 0 10px;
+        border: none;
+        outline: none;
+        background-color: transparent;
+        font-size: 15px;
+        color: rgb(255, 255, 255);
+        transition: 300ms ease-in-out;
+        border-radius: 20px;
+    }
+
+    .input:focus {
+        background-color: rgb(38, 38, 38);
+        transition: 300ms ease-in-out;
+    }
+
+    .input::placeholder {
+        color: rgb(187, 158, 163);
+
+
+    }
+
+    .post,
+    .post:active,
+    .post:focus {
+        color: rgb(171, 171, 255);
+        border: none;
+        outline: none;
+        background-color: transparent;
+        font-weight: bolder;
     }
 
     @media (prefers-color-scheme: dark) {
@@ -86,7 +175,6 @@
         flex-direction: column;
         align-items: center;
         justify-content: space-between;
-        height: 800px;
         background-color: rgb(248, 248, 248);
         border-radius: 10px;
         padding: 5px;
@@ -94,7 +182,7 @@
     }
 
     .data {
-        width: 90%;
+        width: 96%;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -151,6 +239,109 @@
         padding: 0 10px;
         font-weight: 500;
         /* color: rgb(44, 44, 44); */
+        margin: 4px 0;
+    }
+
+    .interactions {
+        display: flex;
+    }
+
+    .likes {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .likecountdiv {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+
+    }
+
+    .likecount {
+
+        text-align: left;
+        font-weight: bold;
+        padding: 0 10px;
+        margin: 4px 0;
+        cursor: pointer;
+    }
+
+    .commentcount {
+        text-align: left;
+        font-weight: bold;
+        padding: 0 10px;
+        margin: 4px 0;
+        cursor: pointer;
+    }
+
+    .counts {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .countdiv {
+        display: flex;
+    }
+
+    .icon {
+        font-size: 25px;
+        margin: 10px 10px;
+    }
+
+    .count {
+        font-size: 18px;
+        margin: 10px 15px;
+    }
+
+
+    .inputs {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 5px;
+    }
+
+    .input {
+        margin: 0 10px;
+        width: 55vw;
+        height: 35px;
+        padding: 0 10px;
+        border: none;
+        outline: none;
+        background-color: transparent;
+        font-size: 15px;
+        color: rgb(255, 255, 255);
+        transition: 300ms ease-in-out;
+        border-radius: 20px;
+    }
+
+    .input:focus {
+        background-color: rgb(38, 38, 38);
+        transition: 300ms ease-in-out;
+    }
+
+    .input::placeholder {
+        color: rgb(187, 158, 163);
+
+
+    }
+
+    .post,
+    .post:active,
+    .post:focus {
+        color: rgb(171, 171, 255);
+        border: none;
+        outline: none;
+        background-color: transparent;
+        font-weight: bolder;
     }
 
     @media (prefers-color-scheme: dark) {
@@ -175,7 +366,7 @@
     }
 
     .data {
-        width: 96%;
+        width: 98%;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -228,11 +419,131 @@
         color: red;
     }
 
+    .likes {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .icon {
+        font-size: 25px;
+        margin: 10px 10px;
+    }
+
+    .icon:first-child {
+        color: red;
+    }
+
     .desc {
         padding: 0 10px;
         font-weight: 500;
         /* color: rgb(44, 44, 44); */
+        margin: 4px 0;
     }
+
+    .interactions {
+        display: flex;
+    }
+
+    .likes {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .likecountdiv {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+
+    }
+
+    .likecount {
+
+        text-align: left;
+        font-weight: bold;
+        padding: 0 10px;
+        margin: 4px 0;
+        cursor: pointer;
+    }
+
+    .commentcount {
+        text-align: left;
+        font-weight: bold;
+        padding: 0 10px;
+        margin: 4px 0;
+        cursor: pointer;
+    }
+
+    .counts {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .countdiv {
+        display: flex;
+    }
+
+    .icon {
+        font-size: 25px;
+        margin: 10px 10px;
+    }
+
+    .count {
+        font-size: 18px;
+        margin: 10px 15px;
+    }
+
+
+    .inputs {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 5px;
+    }
+
+    .input {
+        margin: 0 10px;
+        width: 70vw;
+        height: 35px;
+        padding: 0 10px;
+        border: none;
+        outline: none;
+        background-color: transparent;
+        font-size: 15px;
+        color: rgb(255, 255, 255);
+        transition: 300ms ease-in-out;
+        border-radius: 20px;
+    }
+
+    .input:focus {
+        background-color: rgb(38, 38, 38);
+        transition: 300ms ease-in-out;
+    }
+
+    .input::placeholder {
+        color: rgb(187, 158, 163);
+
+
+    }
+
+    .post,
+    .post:active,
+    .post:focus {
+        color: rgb(171, 171, 255);
+        border: none;
+        outline: none;
+        background-color: transparent;
+        font-weight: bolder;
+    }
+
 
     @media (prefers-color-scheme: dark) {
         .main {
