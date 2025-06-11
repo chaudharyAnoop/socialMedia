@@ -1,10 +1,17 @@
-import React from 'react';
-import { useAppSelector, useAppDispatch } from '../../store/hooks';
-import { selectPost, likePost, Post } from '../../store/slices/exploreSlice'; // Ensure Post type is imported
-import { X, Heart, MessageCircle, Send, Bookmark, MoreHorizontal } from 'lucide-react';
+import React from "react"; // Ensure Post type is imported
+import {
+  X,
+  Heart,
+  MessageCircle,
+  Send,
+  Bookmark,
+  MoreHorizontal,
+} from "lucide-react";
 
 // Import the CSS module
-import styles from './PostModal.module.css'; // Adjust path if your CSS file is elsewhere
+import styles from "./PostModal.module.css"; // Adjust path if your CSS file is elsewhere
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { likePost, selectPost } from "../../redux/slices/exploreSlice";
 
 const PostModal: React.FC = () => {
   const { selectedPost } = useAppSelector((state) => state.explore);
@@ -28,10 +35,7 @@ const PostModal: React.FC = () => {
   };
 
   return (
-    <div
-      className={styles.modalBackdrop}
-      onClick={handleBackdropClick}
-    >
+    <div className={styles.modalBackdrop} onClick={handleBackdropClick}>
       <div className={styles.modalContent}>
         {/* Image Section */}
         <div className={styles.imageSection}>
@@ -58,10 +62,7 @@ const PostModal: React.FC = () => {
               <button className={styles.headerButton}>
                 <MoreHorizontal />
               </button>
-              <button
-                onClick={handleClose}
-                className={styles.headerButton}
-              >
+              <button onClick={handleClose} className={styles.headerButton}>
                 <X />
               </button>
             </div>
@@ -75,7 +76,8 @@ const PostModal: React.FC = () => {
                 <div className={styles.commentAvatar}></div>
                 <div>
                   <p className={styles.commentText}>
-                    <span className={styles.commentUsername}>user123</span> Amazing shot! 🔥
+                    <span className={styles.commentUsername}>user123</span>{" "}
+                    Amazing shot! 🔥
                   </p>
                   <p className={styles.commentTime}>2h</p>
                 </div>
@@ -84,7 +86,10 @@ const PostModal: React.FC = () => {
                 <div className={styles.commentAvatar}></div>
                 <div>
                   <p className={styles.commentText}>
-                    <span className={styles.commentUsername}>photography_lover</span> Where was this taken?
+                    <span className={styles.commentUsername}>
+                      photography_lover
+                    </span>{" "}
+                    Where was this taken?
                   </p>
                   <p className={styles.commentTime}>1h</p>
                 </div>
@@ -97,7 +102,10 @@ const PostModal: React.FC = () => {
             <div className={styles.actionIcons}>
               <div className={styles.leftIcons}>
                 <button onClick={handleLike} className={styles.actionButton}>
-                  <Heart className={selectedPost.isLiked ? styles.likedHeart : ''} /> {/* Example for conditional like styling */}
+                  <Heart
+                    className={selectedPost.isLiked ? styles.likedHeart : ""}
+                  />{" "}
+                  {/* Example for conditional like styling */}
                 </button>
                 <button className={styles.actionButton}>
                   <MessageCircle />

@@ -1,13 +1,20 @@
-import React from 'react';
-import { useAppSelector, useAppDispatch } from '../../store/hooks';
-import { setSearchQuery, addRecentSearch, removeRecentSearch, clearRecentSearches } from '../../store/slices/exploreSlice';
-import { Clock, X, Search } from 'lucide-react';
+import React from "react";
+import { Clock, X, Search } from "lucide-react";
 
 // Import the CSS module
-import styles from './RecentSearches.module.css'; // Adjust path if your CSS file is elsewhere
+import styles from "./RecentSearches.module.css"; // Adjust path if your CSS file is elsewhere
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import {
+  addRecentSearch,
+  clearRecentSearches,
+  removeRecentSearch,
+  setSearchQuery,
+} from "../../redux/slices/exploreSlice";
 
 const RecentSearches: React.FC = () => {
-  const { recentSearches, searchQuery } = useAppSelector((state) => state.explore);
+  const { recentSearches, searchQuery } = useAppSelector(
+    (state) => state.explore
+  );
   const dispatch = useAppDispatch();
 
   const handleRecentSearchClick = (search: string) => {
@@ -33,10 +40,7 @@ const RecentSearches: React.FC = () => {
         <>
           <div className={styles.header}>
             <h3 className={styles.headerTitle}>Recent</h3>
-            <button
-              onClick={handleClearAll}
-              className={styles.clearAllButton}
-            >
+            <button onClick={handleClearAll} className={styles.clearAllButton}>
               Clear all
             </button>
           </div>
@@ -65,7 +69,9 @@ const RecentSearches: React.FC = () => {
         <div className={styles.emptyState}>
           <Search className={styles.emptySearchIcon} />
           <p className={styles.emptyMessage}>No recent searches</p>
-          <p className={styles.emptySubMessage}>Your search history will appear here</p>
+          <p className={styles.emptySubMessage}>
+            Your search history will appear here
+          </p>
         </div>
       )}
     </div>

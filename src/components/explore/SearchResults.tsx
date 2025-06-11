@@ -1,13 +1,20 @@
-import React from 'react';
-import { useAppSelector, useAppDispatch } from '../../store/hooks';
-import { selectPost, likePost, Post, Account } from '../../store/slices/exploreSlice';
-import { Heart, MessageCircle, Play, CheckCircle } from 'lucide-react';
+import React from "react";
+import { Heart, MessageCircle, Play, CheckCircle } from "lucide-react";
 
 // Import the CSS module
-import styles from './SearchResults.module.css'; // Adjust path if your CSS file is elsewhere
+import styles from "./SearchResults.module.css"; // Adjust path if your CSS file is elsewhere
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import {
+  likePost,
+  selectPost,
+  type Account,
+  type Post,
+} from "../../redux/slices/exploreSlice";
 
 const SearchResults: React.FC = () => {
-  const { searchResults, isSearching } = useAppSelector((state) => state.explore);
+  const { searchResults, isSearching } = useAppSelector(
+    (state) => state.explore
+  );
   const dispatch = useAppDispatch();
 
   if (!isSearching) return null;
@@ -38,10 +45,7 @@ const SearchResults: React.FC = () => {
           <h2 className={styles.sectionHeader}>Accounts</h2>
           <div className={styles.accountsList}>
             {searchResults.accounts.map((account: Account) => (
-              <div
-                key={account.id}
-                className={styles.accountItem}
-              >
+              <div key={account.id} className={styles.accountItem}>
                 <div className={styles.profileImageContainer}>
                   <img
                     src={account.profileImage}
@@ -66,9 +70,7 @@ const SearchResults: React.FC = () => {
                     {formatFollowers(account.followers)} followers
                   </p>
                 </div>
-                <button className={styles.followButton}>
-                  Follow
-                </button>
+                <button className={styles.followButton}>Follow</button>
               </div>
             ))}
           </div>
@@ -108,11 +110,17 @@ const SearchResults: React.FC = () => {
                       className={styles.overlayButton}
                     >
                       <Heart />
-                      <span className={styles.overlayButtonSpan}>{post.likes.toLocaleString()}</span>
+                      <span className={styles.overlayButtonSpan}>
+                        {post.likes.toLocaleString()}
+                      </span>
                     </button>
-                    <div className={styles.overlayButton}> {/* Reusing overlayButton style for comments */}
+                    <div className={styles.overlayButton}>
+                      {" "}
+                      {/* Reusing overlayButton style for comments */}
                       <MessageCircle />
-                      <span className={styles.overlayButtonSpan}>{post.comments}</span>
+                      <span className={styles.overlayButtonSpan}>
+                        {post.comments}
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -123,12 +131,15 @@ const SearchResults: React.FC = () => {
       )}
 
       {/* No Results */}
-      {searchResults.accounts.length === 0 && searchResults.posts.length === 0 && (
-        <div className={styles.noResultsContainer}>
-          <p className={styles.noResultsMessage}>No results found</p>
-          <p className={styles.noResultsSubMessage}>Try searching for something else</p>
-        </div>
-      )}
+      {searchResults.accounts.length === 0 &&
+        searchResults.posts.length === 0 && (
+          <div className={styles.noResultsContainer}>
+            <p className={styles.noResultsMessage}>No results found</p>
+            <p className={styles.noResultsSubMessage}>
+              Try searching for something else
+            </p>
+          </div>
+        )}
     </div>
   );
 };

@@ -1,12 +1,12 @@
-import React from 'react';
-import { useAppSelector } from '../../store/hooks';
-import ExploreHeader from './ExploreHeader';
-import ExploreGrid from './ExploreGrid';
-import SearchResults from './SearchResults';
-import PostModal from './PostModal';
+import React from "react";
+import ExploreHeader from "./ExploreHeader";
+import ExploreGrid from "./ExploreGrid";
+import SearchResults from "./SearchResults";
+import PostModal from "./PostModal";
 
 // Import the CSS module
-import styles from './Explore.module.css'; // Verify this path is correct
+import styles from "./Explore.module.css"; // Verify this path is correct
+import { useAppSelector } from "../../redux/hooks";
 
 const Explore: React.FC = () => {
   const { isSearching } = useAppSelector((state) => state.explore);

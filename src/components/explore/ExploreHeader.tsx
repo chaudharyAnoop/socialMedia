@@ -1,11 +1,14 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { useAppSelector, useAppDispatch } from '../../store/hooks';
-import { setSearchQuery, addRecentSearch } from '../../store/slices/exploreSlice';
-import { Search, Grid3X3, Bookmark, UserCheck, Tag } from 'lucide-react';
-import RecentSearches from './RecentSearches';
+import React, { useState, useRef, useEffect } from "react";
+import { Search, Grid3X3, Bookmark, UserCheck, Tag } from "lucide-react";
+import RecentSearches from "./RecentSearches";
 
 // Import the CSS module
-import styles from './ExploreHeader.module.css'; // Adjust path if your CSS file is elsewhere
+import styles from "./ExploreHeader.module.css"; // Adjust path if your CSS file is elsewhere
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import {
+  addRecentSearch,
+  setSearchQuery,
+} from "../../redux/slices/exploreSlice";
 
 const ExploreHeader: React.FC = () => {
   const { searchQuery } = useAppSelector((state) => state.explore);
@@ -14,10 +17,10 @@ const ExploreHeader: React.FC = () => {
   const searchRef = useRef<HTMLDivElement>(null);
 
   const categories = [
-    { icon: Grid3X3, label: 'All', active: true },
-    { icon: UserCheck, label: 'People', active: false },
-    { icon: Tag, label: 'Tags', active: false },
-    { icon: Bookmark, label: 'Saved', active: false },
+    { icon: Grid3X3, label: "All", active: true },
+    { icon: UserCheck, label: "People", active: false },
+    { icon: Tag, label: "Tags", active: false },
+    { icon: Bookmark, label: "Saved", active: false },
   ];
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -39,14 +42,17 @@ const ExploreHeader: React.FC = () => {
   // Handle click outside to close recent searches
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
+      if (
+        searchRef.current &&
+        !searchRef.current.contains(event.target as Node)
+      ) {
         setIsSearchFocused(false);
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
@@ -56,7 +62,9 @@ const ExploreHeader: React.FC = () => {
       <div className={styles.searchBarWrapper}>
         <div className={styles.searchRelativeContainer} ref={searchRef}>
           <form onSubmit={handleSearchSubmit}>
-            <div className={styles.searchRelativeContainer}> {/* This div was originally for relative positioning */}
+            <div className={styles.searchRelativeContainer}>
+              {" "}
+              {/* This div was originally for relative positioning */}
               <Search className={styles.searchIcon} />
               <input
                 type="text"
@@ -84,11 +92,14 @@ const ExploreHeader: React.FC = () => {
                 key={category.label}
                 // Conditionally apply 'active' class from module
                 className={`${styles.categoryButton} ${
-                  category.active ? styles.active : ''
+                  category.active ? styles.active : ""
                 }`}
               >
-                <IconComponent className={styles.categoryButtonSvg} /> {/* Apply a specific class for the icon */}
-                <span className={styles.categoryButtonText}>{category.label}</span>
+                <IconComponent className={styles.categoryButtonSvg} />{" "}
+                {/* Apply a specific class for the icon */}
+                <span className={styles.categoryButtonText}>
+                  {category.label}
+                </span>
               </button>
             );
           })}

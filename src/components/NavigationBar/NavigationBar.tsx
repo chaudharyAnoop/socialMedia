@@ -59,17 +59,17 @@ function NavigationBar() {
             </NavLink>
           </li>
           <li className={styles.list_li}>
-            <NavLink to="/admin" className={styles.link}>
+            <NavLink to="/explore" className={styles.link}>
               <div className={styles.tile}>
                 <div className={styles.name}>
                   <FaSearch className={styles.icon} />
                   <p className={styles.head}> Search</p>
                 </div>
-                {/* <p className={styles.val}>10</p> */}
+                <p className={styles.val}>{"Explore"}</p>
               </div>
             </NavLink>
           </li>{" "}
-          <li className={styles.list_li}>
+          {/* <li className={styles.list_li}>
             <NavLink to="/" className={styles.link}>
               <div className={styles.tile}>
                 <div className={styles.name}>
@@ -79,7 +79,7 @@ function NavigationBar() {
                 <p className={styles.val}>suggestion</p>
               </div>
             </NavLink>
-          </li>{" "}
+          </li>{" "} */}
           <li className={styles.list_li}>
             <NavLink to="/" className={styles.link}>
               <div className={styles.tile}>

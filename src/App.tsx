@@ -7,6 +7,7 @@ import QuickAccess from "./components/QuickAccess/QuickAccess";
 // import AdminPage from "./pages/AdminPage/AdminPage";
 import { Suspense, lazy } from "react";
 import RouteChangeHandler from "./components/RouteChangeHandler";
+import ExplorePage from "./pages/explore/ExplorePage";
 
 const LandingPage = lazy(() => import("./pages/LandingPage/LandingPage"));
 const AdminPage = lazy(() => import("./pages/AdminPage/AdminPage"));
@@ -25,7 +26,7 @@ function App() {
           >
             <Routes>
               <Route path="/" element={<LandingPage />} />
-              <Route path="/admin" element={<AdminPage />} />
+              <Route path="/explore" element={<ExplorePage />} />
             </Routes>
           </Suspense>
           {/* </RouteChangeHandler> */}

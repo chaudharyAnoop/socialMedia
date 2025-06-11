@@ -1,10 +1,14 @@
-import React from 'react';
-import { useAppSelector, useAppDispatch } from '../../store/hooks';
-import { selectPost, likePost, Post } from '../../store/slices/exploreSlice';
-import { Heart, MessageCircle, Play } from 'lucide-react';
+import React from "react";
+import { Heart, MessageCircle, Play } from "lucide-react";
 
 // Import the CSS module
-import styles from './ExploreGrid.module.css'; // Adjust path if your CSS file is elsewhere
+import styles from "./ExploreGrid.module.css"; // Adjust path if your CSS file is elsewhere
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import {
+  likePost,
+  selectPost,
+  type Post,
+} from "../../redux/slices/exploreSlice";
 
 const ExploreGrid: React.FC = () => {
   const { posts } = useAppSelector((state) => state.explore);
@@ -21,12 +25,12 @@ const ExploreGrid: React.FC = () => {
 
   const getGridClasses = (size: string) => {
     // Dynamically apply base class and size-specific class from the CSS module
-    let sizeClass = '';
+    let sizeClass = "";
     switch (size) {
-      case 'large':
+      case "large":
         sizeClass = styles.largeItem;
         break;
-      case 'medium':
+      case "medium":
         sizeClass = styles.mediumItem;
         break;
       default: // 'small' or any other default
@@ -56,7 +60,8 @@ const ExploreGrid: React.FC = () => {
           {/* Video indicator */}
           {post.isVideo && (
             <div className={styles.videoIndicator}>
-              <Play className={styles.videoIndicatorSvg} /> {/* Apply a specific class for the icon if needed */}
+              <Play className={styles.videoIndicatorSvg} />{" "}
+              {/* Apply a specific class for the icon if needed */}
             </div>
           )}
 
@@ -68,11 +73,17 @@ const ExploreGrid: React.FC = () => {
                 className={styles.overlayButton}
               >
                 <Heart className={styles.overlayButtonSvg} />
-                <span className={styles.overlayButtonText}>{post.likes.toLocaleString()}</span>
+                <span className={styles.overlayButtonText}>
+                  {post.likes.toLocaleString()}
+                </span>
               </button>
-              <div className={styles.overlayButton}> {/* Reusing overlayButton style for comments */}
+              <div className={styles.overlayButton}>
+                {" "}
+                {/* Reusing overlayButton style for comments */}
                 <MessageCircle className={styles.overlayButtonSvg} />
-                <span className={styles.overlayButtonText}>{post.comments}</span>
+                <span className={styles.overlayButtonText}>
+                  {post.comments}
+                </span>
               </div>
             </div>
           </div>
