@@ -1,0 +1,16 @@
+/* Styles for the main container */
+.container {
+  min-height: 100vh; /* Use 100vh for full viewport height */
+  background-color: #f9fafb; /* Equivalent to bg-gray-50 from TailwindCSS */
+  /* You can add more specific styles here if needed */
+  padding: 20px; /* Example padding */
+}
+
+/* Styles for any elements directly within this page if needed */
+/* For example: */
+.pageTitle {
+  font-size: 2.5rem;
+  color: #1a202c; /* A dark gray color */
+  text-align: center;
+  margin-bottom: 30px;
+}
