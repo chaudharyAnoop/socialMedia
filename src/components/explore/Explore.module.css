@@ -1,18 +1,150 @@
-/* Corresponds to: min-h-screen bg-white */
-.exploreContainer { /* <--- Make sure this class name is exactly "exploreContainer" */
-  min-height: 100vh; /* min-h-screen in Tailwind */
-  background-color: #ffffff; /* bg-white in Tailwind */
-  display: flex; /* Added for better layout control, often implied by responsive design */
-  flex-direction: column; /* To stack header and content vertically */
+.gridContainer {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
 }
 
-/* Corresponds to: max-w-6xl mx-auto p-4 */
-.contentWrapper { /* <--- Make sure this class name is exactly "contentWrapper" */
-  max-width: 72rem; /* Tailwind's max-w-6xl is 72rem (1152px if 1rem=16px) */
-  margin-left: auto; /* mx-auto */
-  margin-right: auto; /* mx-auto */
-  padding: 1rem; /* p-4 (16px) */
-  box-sizing: border-box; /* Good practice for padding */
-  width: 100%; /* Ensures it doesn't get squished, especially with max-width */
-  flex-grow: 1; /* Allows content area to fill remaining vertical space */
+.gridItem {
+  position: relative;
+  aspect-ratio: 1;
+  cursor: pointer;
+  overflow: hidden;
+  background: #f5f5f5;
+}
+
+@media (prefers-color-scheme: dark) {
+  .gridItem {
+    background: #1a1a1a;
+  }
+}
+
+.postImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.2s ease;
+}
+
+.gridItem:hover .postImage {
+  transform: scale(1.05);
+}
+
+.videoIndicator {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  color: white;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 4px;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.videoIndicatorSvg {
+  width: 16px;
+  height: 16px;
+}
+
+.hoverOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.gridItem:hover .hoverOverlay {
+  opacity: 1;
+}
+
+.overlayContent {
+  display: flex;
+  gap: 24px;
+  color: white;
+}
+
+.overlayButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.overlayButton:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.overlayButtonSvg {
+  width: 20px;
+  height: 20px;
+}
+
+.overlayButtonText {
+  font-size: 14px;
+}
+
+/* Mobile styles */
+@media screen and (max-width: 900px) {
+  .gridContainer {
+    gap: 2px;
+  }
+  
+  .overlayContent {
+    gap: 16px;
+  }
+  
+  .overlayButtonSvg {
+    width: 18px;
+    height: 18px;
+  }
+  
+  .overlayButtonText {
+    font-size: 12px;
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .gridContainer {
+    gap: 1px;
+  }
+  
+  .videoIndicator {
+    top: 4px;
+    right: 4px;
+    padding: 2px;
+  }
+  
+  .videoIndicatorSvg {
+    width: 12px;
+    height: 12px;
+  }
+  
+  .overlayContent {
+    gap: 12px;
+  }
+  
+  .overlayButton {
+    padding: 4px;
+  }
+  
+  .overlayButtonSvg {
+    width: 16px;
+    height: 16px;
+  }
+  
+  .overlayButtonText {
+    font-size: 11px;
+  }
 }

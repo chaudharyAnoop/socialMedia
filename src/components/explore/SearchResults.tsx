@@ -1,8 +1,7 @@
 import React from "react";
 import { Heart, MessageCircle, Play, CheckCircle } from "lucide-react";
-
-// Import the CSS module
-import styles from "./SearchResults.module.css"; // Adjust path if your CSS file is elsewhere
+import { useNavigate } from "react-router-dom";
+import styles from "./SearchResults.module.css";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import {
   likePost,
@@ -16,6 +15,7 @@ const SearchResults: React.FC = () => {
     (state) => state.explore
   );
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   if (!isSearching) return null;
 
@@ -26,6 +26,10 @@ const SearchResults: React.FC = () => {
   const handleLike = (e: React.MouseEvent, postId: string) => {
     e.stopPropagation();
     dispatch(likePost(postId));
+  };
+
+  const handleAccountClick = (account: Account) => {
+    navigate(`/profile/${account.username}`);
   };
 
   const formatFollowers = (count: number) => {
@@ -39,13 +43,16 @@ const SearchResults: React.FC = () => {
 
   return (
     <div className={styles.searchResultsContainer}>
-      {/* Accounts Section */}
       {searchResults.accounts.length > 0 && (
         <div>
           <h2 className={styles.sectionHeader}>Accounts</h2>
           <div className={styles.accountsList}>
             {searchResults.accounts.map((account: Account) => (
-              <div key={account.id} className={styles.accountItem}>
+              <div
+                key={account.id}
+                className={styles.accountItem}
+                onClick={() => handleAccountClick(account)}
+              >
                 <div className={styles.profileImageContainer}>
                   <img
                     src={account.profileImage}
@@ -77,7 +84,6 @@ const SearchResults: React.FC = () => {
         </div>
       )}
 
-      {/* Posts Section */}
       {searchResults.posts.length > 0 && (
         <div>
           <h2 className={styles.sectionHeader}>Posts</h2>
@@ -85,24 +91,22 @@ const SearchResults: React.FC = () => {
             {searchResults.posts.map((post) => (
               <div
                 key={post.id}
-                className={styles.postGridItem} // Base and group hover handled in CSS
+                className={styles.postGridItem}
                 onClick={() => handlePostClick(post)}
               >
                 <img
                   src={post.imageUrl}
                   alt={`Post by ${post.username}`}
-                  // No direct className needed here as it's targeted by .postGridItem img in CSS
+                  className={styles.postImage}
                   loading="lazy"
                 />
 
-                {/* Video indicator */}
                 {post.isVideo && (
                   <div className={styles.videoIndicator}>
                     <Play />
                   </div>
                 )}
 
-                {/* Hover overlay */}
                 <div className={styles.hoverOverlay}>
                   <div className={styles.overlayContent}>
                     <button
@@ -115,8 +119,6 @@ const SearchResults: React.FC = () => {
                       </span>
                     </button>
                     <div className={styles.overlayButton}>
-                      {" "}
-                      {/* Reusing overlayButton style for comments */}
                       <MessageCircle />
                       <span className={styles.overlayButtonSpan}>
                         {post.comments}
@@ -130,7 +132,6 @@ const SearchResults: React.FC = () => {
         </div>
       )}
 
-      {/* No Results */}
       {searchResults.accounts.length === 0 &&
         searchResults.posts.length === 0 && (
           <div className={styles.noResultsContainer}>

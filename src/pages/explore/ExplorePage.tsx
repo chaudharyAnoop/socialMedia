@@ -1,5 +1,4 @@
 import React from "react";
-import { Provider } from "react-redux";
 import Explore from "../../components/explore/Explore";
 
 // Import the CSS module

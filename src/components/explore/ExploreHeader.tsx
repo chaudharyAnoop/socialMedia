@@ -1,9 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Search, Grid3X3, Bookmark, UserCheck, Tag } from "lucide-react";
-import RecentSearches from "./RecentSearches";
-
-// Import the CSS module
-import styles from "./ExploreHeader.module.css"; // Adjust path if your CSS file is elsewhere
+import RecentSearches from "../explore/RecentSearches";
+import styles from "./ExploreHeader.module.css";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import {
   addRecentSearch,
@@ -31,7 +29,7 @@ const ExploreHeader: React.FC = () => {
     e.preventDefault();
     if (searchQuery.trim()) {
       dispatch(addRecentSearch(searchQuery.trim()));
-      setIsSearchFocused(false); // Close dropdown after submission
+      setIsSearchFocused(false);
     }
   };
 
@@ -39,7 +37,6 @@ const ExploreHeader: React.FC = () => {
     setIsSearchFocused(true);
   };
 
-  // Handle click outside to close recent searches
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -58,13 +55,10 @@ const ExploreHeader: React.FC = () => {
 
   return (
     <div className={styles.headerContainer}>
-      {/* Search Bar */}
       <div className={styles.searchBarWrapper}>
         <div className={styles.searchRelativeContainer} ref={searchRef}>
           <form onSubmit={handleSearchSubmit}>
-            <div className={styles.searchRelativeContainer}>
-              {" "}
-              {/* This div was originally for relative positioning */}
+            <div className={styles.searchInputContainer}>
               <Search className={styles.searchIcon} />
               <input
                 type="text"
@@ -76,13 +70,10 @@ const ExploreHeader: React.FC = () => {
               />
             </div>
           </form>
-
-          {/* Recent Searches Dropdown */}
           {isSearchFocused && <RecentSearches />}
         </div>
       </div>
 
-      {/* Category Tabs - Hide when searching */}
       {!searchQuery && (
         <div className={styles.categoryTabsContainer}>
           {categories.map((category) => {
@@ -90,13 +81,11 @@ const ExploreHeader: React.FC = () => {
             return (
               <button
                 key={category.label}
-                // Conditionally apply 'active' class from module
                 className={`${styles.categoryButton} ${
                   category.active ? styles.active : ""
                 }`}
               >
-                <IconComponent className={styles.categoryButtonSvg} />{" "}
-                {/* Apply a specific class for the icon */}
+                <IconComponent className={styles.categoryButtonSvg} />
                 <span className={styles.categoryButtonText}>
                   {category.label}
                 </span>

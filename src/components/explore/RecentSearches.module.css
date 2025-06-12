@@ -1,135 +1,217 @@
-/* Main dropdown container */
 .recentSearchesDropdown {
-  position: absolute; /* absolute */
-  top: 100%; /* top-full */
-  left: 0; /* left-0 */
-  right: 0; /* right-0 */
-  background-color: #ffffff; /* bg-white */
-  border: 1px solid #e5e7eb; /* border border-gray-200 */
-  border-radius: 0.5rem; /* rounded-lg (8px) */
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-lg */
-  margin-top: 0.25rem; /* mt-1 (4px) */
-  z-index: 50; /* z-50 */
-  max-height: 20rem; /* max-h-80 (320px) */
-  overflow-y: auto; /* overflow-y-auto */
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid #dbdbdb;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 50;
+  max-height: 362px;
+  overflow-y: auto;
 }
 
-/* Header for recent searches (Recent / Clear all) */
+@media (prefers-color-scheme: dark) {
+  .recentSearchesDropdown {
+    background: #262626;
+    border-color: #363636;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+}
+
 .header {
-  display: flex; /* flex */
-  align-items: center; /* items-center */
-  justify-content: space-between; /* justify-between */
-  padding: 1rem; /* p-4 */
-  border-bottom: 1px solid #f3f4f6; /* border-b border-gray-100 */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  border-bottom: 1px solid #efefef;
+}
+
+@media (prefers-color-scheme: dark) {
+  .header {
+    border-bottom-color: #363636;
+  }
 }
 
 .headerTitle {
-  font-weight: 600; /* font-semibold */
-  color: #111827; /* text-gray-900 */
+  font-size: 16px;
+  font-weight: 600;
+  color: #262626;
+  margin: 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  .headerTitle {
+    color: white;
+  }
 }
 
 .clearAllButton {
-  color: #3b82f6; /* text-blue-500 */
-  font-size: 0.875rem; /* text-sm (14px) */
-  font-weight: 500; /* font-medium */
   background: none;
   border: none;
+  color: #0095f6;
+  font-size: 14px;
+  font-weight: 600;
   cursor: pointer;
-  padding: 0; /* Remove default button padding */
-  transition: color 150ms ease-in-out; /* Add transition for hover */
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
 }
 
 .clearAllButton:hover {
-  color: #2563eb; /* hover:text-blue-600 */
+  background-color: rgba(0, 149, 246, 0.1);
 }
 
-/* List of recent search items */
 .recentSearchList {
-  padding-top: 0.5rem; /* py-2 (8px) */
-  padding-bottom: 0.5rem; /* py-2 (8px) */
+  padding: 8px 0;
 }
 
 .recentSearchItem {
-  display: flex; /* flex */
-  align-items: center; /* items-center */
-  justify-content: space-between; /* justify-between */
-  padding: 0.75rem 1rem; /* px-4 py-3 (12px vertical, 16px horizontal) */
-  transition: background-color 150ms ease-in-out; /* Add transition for hover */
-  cursor: pointer; /* cursor-pointer */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
 }
 
 .recentSearchItem:hover {
-  background-color: #f9fafb; /* hover:bg-gray-50 */
+  background-color: #f5f5f5;
 }
 
-/* For group-hover behavior on the X button */
-.recentSearchItem {
-  position: relative; /* Needed for absolute positioning of child elements if any, or for group-hover */
-}
-
-.recentSearchItem:hover .removeButton { /* Simulating group-hover:opacity-100 */
-  opacity: 1;
+@media (prefers-color-scheme: dark) {
+  .recentSearchItem:hover {
+    background-color: #1a1a1a;
+  }
 }
 
 .searchItemContent {
-  display: flex; /* flex */
-  align-items: center; /* items-center */
-  gap: 0.75rem; /* space-x-3 (12px) */
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
 }
 
 .clockIcon {
-  width: 1rem; /* w-4 (16px) */
-  height: 1rem; /* h-4 (16px) */
-  color: #9ca3af; /* text-gray-400 */
+  width: 16px;
+  height: 16px;
+  color: #8e8e8e;
 }
 
 .searchText {
-  color: #111827; /* text-gray-900 */
+  color: #262626;
+  font-size: 14px;
 }
 
-/* Remove button (X icon) */
+@media (prefers-color-scheme: dark) {
+  .searchText {
+    color: white;
+  }
+}
+
 .removeButton {
-  opacity: 0; /* opacity-0 */
-  padding: 0.25rem; /* p-1 (4px) */
-  background: none; /* Remove default button styles */
+  background: none;
   border: none;
+  color: #8e8e8e;
   cursor: pointer;
-  border-radius: 9999px; /* rounded-full */
-  transition-property: all; /* transition-all */
-  transition-duration: 150ms; /* default transition duration */
+  padding: 4px;
+  border-radius: 4px;
+  opacity: 0;
+  transition: all 0.2s ease;
+}
+
+.recentSearchItem:hover .removeButton {
+  opacity: 1;
 }
 
 .removeButton:hover {
-  background-color: #e5e7eb; /* hover:bg-gray-200 */
+  background-color: #f5f5f5;
+  color: #262626;
 }
 
-.removeButton svg {
-  width: 0.75rem; /* w-3 (12px) */
-  height: 0.75rem; /* h-3 (12px) */
-  color: #6b7280; /* text-gray-500 */
+@media (prefers-color-scheme: dark) {
+  .removeButton:hover {
+    background-color: #363636;
+    color: white;
+  }
 }
 
-/* Empty state / No recent searches message */
 .emptyState {
-  padding: 2rem; /* p-8 (32px) */
-  text-align: center; /* text-center */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 32px 16px;
+  text-align: center;
 }
 
 .emptySearchIcon {
-  width: 3rem; /* w-12 (48px) */
-  height: 3rem; /* h-12 (48px) */
-  color: #d1d5db; /* text-gray-300 */
-  margin-left: auto; /* mx-auto */
-  margin-right: auto; /* mx-auto */
-  margin-bottom: 0.75rem; /* mb-3 (12px) */
+  width: 48px;
+  height: 48px;
+  color: #8e8e8e;
+  margin-bottom: 16px;
 }
 
 .emptyMessage {
-  color: #6b7280; /* text-gray-500 */
+  font-size: 16px;
+  font-weight: 600;
+  color: #262626;
+  margin: 0 0 4px 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  .emptyMessage {
+    color: white;
+  }
 }
 
 .emptySubMessage {
-  color: #9ca3af; /* text-gray-400 */
-  font-size: 0.875rem; /* text-sm (14px) */
-  margin-top: 0.25rem; /* mt-1 (4px) */
+  font-size: 14px;
+  color: #8e8e8e;
+  margin: 0;
+}
+
+/* Mobile styles */
+@media screen and (max-width: 520px) {
+  .recentSearchesDropdown {
+    max-height: 300px;
+  }
+  
+  .header {
+    padding: 12px;
+  }
+  
+  .headerTitle {
+    font-size: 14px;
+  }
+  
+  .clearAllButton {
+    font-size: 12px;
+  }
+  
+  .recentSearchItem {
+    padding: 6px 12px;
+  }
+  
+  .searchText {
+    font-size: 13px;
+  }
+  
+  .emptyState {
+    padding: 24px 12px;
+  }
+  
+  .emptySearchIcon {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 12px;
+  }
+  
+  .emptyMessage {
+    font-size: 14px;
+  }
+  
+  .emptySubMessage {
+    font-size: 12px;
+  }
 }

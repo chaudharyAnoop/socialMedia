@@ -1,249 +1,318 @@
-/* Main container for search results */
 .searchResultsContainer {
-  max-width: 72rem; /* max-w-6xl (72rem = 1152px) */
-  margin-left: auto; /* mx-auto */
-  margin-right: auto; /* mx-auto */
-  padding: 1rem; /* p-4 (16px) */
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem; /* space-y-6 (24px) */
+  padding: 24px 0;
 }
 
-/* Section Header (Accounts/Posts) */
 .sectionHeader {
-  font-size: 1.125rem; /* text-lg (18px) */
-  font-weight: 600; /* font-semibold */
-  margin-bottom: 1rem; /* mb-4 (16px) */
-  color: #111827; /* text-gray-900 */
+  font-size: 16px;
+  font-weight: 600;
+  color: #262626;
+  margin: 0 0 16px 0;
 }
 
-/* --- Accounts Section --- */
+@media (prefers-color-scheme: dark) {
+  .sectionHeader {
+    color: white;
+  }
+}
+
 .accountsList {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem; /* space-y-3 (12px) */
+  gap: 8px;
+  margin-bottom: 32px;
 }
 
 .accountItem {
-  display: flex; /* flex */
-  align-items: center; /* items-center */
-  gap: 0.75rem; /* space-x-3 (12px) */
-  padding: 0.75rem; /* p-3 (12px) */
-  transition: background-color 150ms ease-in-out; /* transition-colors */
-  border-radius: 0.5rem; /* rounded-lg (8px) */
-  cursor: pointer; /* cursor-pointer */
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
 }
 
 .accountItem:hover {
-  background-color: #f9fafb; /* hover:bg-gray-50 */
+  background-color: #f5f5f5;
+}
+
+@media (prefers-color-scheme: dark) {
+  .accountItem:hover {
+    background-color: #1a1a1a;
+  }
 }
 
 .profileImageContainer {
-  position: relative; /* relative */
+  position: relative;
+  flex-shrink: 0;
 }
 
 .profileImage {
-  width: 3rem; /* w-12 (48px) */
-  height: 3rem; /* h-12 (48px) */
-  border-radius: 9999px; /* rounded-full */
-  object-fit: cover; /* object-cover */
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
 .verifiedBadgeOuter {
-  position: absolute; /* absolute */
-  bottom: -0.25rem; /* -bottom-1 (approx) */
-  right: -0.25rem; /* -right-1 (approx) */
-  background-color: #3b82f6; /* bg-blue-500 */
-  border-radius: 9999px; /* rounded-full */
-  padding: 0.125rem; /* p-0.5 (approx) */
-  display: flex; /* For centering the icon */
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  background: white;
+  border-radius: 50%;
+  padding: 2px;
+  color: #0095f6;
+}
+
+@media (prefers-color-scheme: dark) {
+  .verifiedBadgeOuter {
+    background: black;
+  }
+}
+
+.accountInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.usernameContainer {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.username {
+  font-size: 14px;
+  font-weight: 600;
+  color: #262626;
+}
+
+@media (prefers-color-scheme: dark) {
+  .username {
+    color: white;
+  }
+}
+
+.verifiedIcon {
+  width: 12px;
+  height: 12px;
+  color: #0095f6;
+}
+
+.fullName {
+  font-size: 14px;
+  color: #8e8e8e;
+  margin: 0;
+}
+
+.followersCount {
+  font-size: 12px;
+  color: #8e8e8e;
+  margin: 0;
+}
+
+.followButton {
+  padding: 5px 16px;
+  background: #0095f6;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.followButton:hover {
+  background: #1877f2;
+}
+
+.postsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+  margin-bottom: 32px;
+}
+
+.postGridItem {
+  position: relative;
+  aspect-ratio: 1;
+  cursor: pointer;
+  overflow: hidden;
+  background: #f5f5f5;
+}
+
+@media (prefers-color-scheme: dark) {
+  .postGridItem {
+    background: #1a1a1a;
+  }
+}
+
+.postImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.2s ease;
+}
+
+.postGridItem:hover .postImage {
+  transform: scale(1.05);
+}
+
+.videoIndicator {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  color: white;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 4px;
+  padding: 4px;
+  display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.verifiedBadgeOuter svg {
-  width: 0.75rem; /* w-3 (12px) */
-  height: 0.75rem; /* h-3 (12px) */
-  color: #ffffff; /* text-white */
-  fill: currentColor; /* fill-current */
-}
-
-.accountInfo {
-  flex: 1; /* flex-1 */
-}
-
-.usernameContainer {
-  display: flex; /* flex */
-  align-items: center; /* items-center */
-  gap: 0.25rem; /* space-x-1 (4px) */
-}
-
-.username {
-  font-weight: 600; /* font-semibold */
-  color: #111827; /* text-gray-900 */
-}
-
-.verifiedIcon {
-  width: 1rem; /* w-4 (16px) */
-  height: 1rem; /* h-4 (16px) */
-  color: #3b82f6; /* text-blue-500 */
-  fill: currentColor; /* fill-current */
-}
-
-.fullName {
-  font-size: 0.875rem; /* text-sm (14px) */
-  color: #4b5563; /* text-gray-600 */
-}
-
-.followersCount {
-  font-size: 0.75rem; /* text-xs (12px) */
-  color: #6b7280; /* text-gray-500 */
-}
-
-.followButton {
-  padding: 0.375rem 1rem; /* px-4 py-1.5 (6px vertical, 16px horizontal) */
-  background-color: #3b82f6; /* bg-blue-500 */
-  color: #ffffff; /* text-white */
-  font-size: 0.875rem; /* text-sm (14px) */
-  font-weight: 500; /* font-medium */
-  border-radius: 0.375rem; /* rounded-md (6px) */
-  border: none;
-  cursor: pointer;
-  transition: background-color 150ms ease-in-out; /* transition-colors */
-}
-
-.followButton:hover {
-  background-color: #2563eb; /* hover:bg-blue-600 */
-}
-
-/* --- Posts Section (reused from ExploreGrid with modifications) --- */
-.postsGrid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr); /* grid-cols-3 */
-  gap: 0.25rem; /* gap-1 (4px) */
-  row-gap: 0.25rem; /* gap-1 */
-}
-
-/* Tablet / Medium Screens */
-@media (min-width: 768px) { /* Corresponds to md: breakpoint */
-  .postsGrid {
-    grid-template-columns: repeat(4, 1fr); /* md:grid-cols-4 */
-    gap: 0.5rem; /* md:gap-2 (8px) */
-    row-gap: 0.5rem; /* md:gap-2 */
-  }
-}
-
-/* Large Screens */
-@media (min-width: 1024px) { /* Corresponds to lg: breakpoint */
-  .postsGrid {
-    grid-template-columns: repeat(6, 1fr); /* lg:grid-cols-6 */
-  }
-}
-
-/* Base style for each post grid item */
-.postGridItem {
-  position: relative; /* relative */
-  cursor: pointer; /* cursor-pointer */
-  overflow: hidden; /* overflow-hidden */
-  border-radius: 0.5rem; /* rounded-lg (8px) */
-  background-color: #e5e7eb; /* bg-gray-200 */
-  aspect-ratio: 1 / 1; /* aspect-square */
-}
-
-/* Image styling */
-.postGridItem img {
-  width: 100%; /* w-full */
-  height: 100%; /* h-full */
-  object-fit: cover; /* object-cover */
-  transition-property: transform; /* transition-transform */
-  transition-duration: 300ms; /* duration-300 */
-}
-
-.postGridItem:hover img {
-  transform: scale(1.05); /* group-hover:scale-105 */
-}
-
-/* Video indicator */
-.videoIndicator {
-  position: absolute; /* absolute */
-  top: 0.5rem; /* top-2 (8px) */
-  right: 0.5rem; /* right-2 (8px) */
-  color: #fff; /* text-white */
-  fill: #fff; /* fill-white */
-}
-
-.videoIndicator svg { /* Targeting the lucide-react icon */
-  width: 1rem; /* w-4 (16px) */
-  height: 1rem; /* h-4 (16px) */
-}
-
-/* Hover overlay */
 .hoverOverlay {
-  position: absolute; /* absolute */
-  inset: 0; /* inset-0 */
-  background-color: rgba(0, 0, 0, 0); /* bg-black bg-opacity-0 */
-  transition-property: background-color, opacity; /* transition-all */
-  transition-duration: 300ms; /* duration-300 */
-  display: flex; /* flex */
-  align-items: center; /* items-center */
-  justify-content: center; /* justify-center */
-  opacity: 0; /* opacity-0 */
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s ease;
 }
 
 .postGridItem:hover .hoverOverlay {
-  background-color: rgba(0, 0, 0, 0.3); /* group-hover:bg-opacity-30 */
-  opacity: 1; /* group-hover:opacity-100 */
+  opacity: 1;
 }
 
 .overlayContent {
-  display: flex; /* flex */
-  align-items: center; /* items-center */
-  gap: 1.5rem; /* space-x-6 (24px) */
-  color: #fff; /* text-white */
+  display: flex;
+  gap: 24px;
+  color: white;
 }
 
-/* Like/Comment button base */
 .overlayButton {
-  display: flex; /* flex */
-  align-items: center; /* items-center */
-  gap: 0.25rem; /* space-x-1 (4px) */
-  transition-property: transform; /* transition-transform */
-  transition-duration: 150ms; /* A reasonable default for hover, adjust if needed */
-  background: none; /* Remove default button background */
-  border: none; /* Remove default button border */
-  color: inherit; /* Inherit text color from parent */
-  cursor: pointer; /* Add pointer cursor */
-  padding: 0; /* Remove default button padding */
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
 }
 
 .overlayButton:hover {
-  transform: scale(1.1); /* hover:scale-110 */
+  background: rgba(255, 255, 255, 0.1);
 }
 
-.overlayButton svg {
-  width: 1.25rem; /* w-5 (20px) */
-  height: 1.25rem; /* h-5 (20px) */
-  fill: #fff; /* fill-white */
+.overlayButtonSpan {
+  font-size: 14px;
 }
 
-.overlayButton span {
-  font-weight: 600; /* font-semibold */
-}
-
-/* --- No Results Message --- */
 .noResultsContainer {
-  text-align: center; /* text-center */
-  padding-top: 3rem; /* py-12 (48px) */
-  padding-bottom: 3rem; /* py-12 (48px) */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 64px 16px;
+  text-align: center;
 }
 
 .noResultsMessage {
-  color: #6b7280; /* text-gray-500 */
-  font-size: 1.125rem; /* text-lg (18px) */
+  font-size: 22px;
+  font-weight: 300;
+  color: #262626;
+  margin: 0 0 8px 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  .noResultsMessage {
+    color: white;
+  }
 }
 
 .noResultsSubMessage {
-  color: #9ca3af; /* text-gray-400 */
-  font-size: 0.875rem; /* text-sm (14px) */
-  margin-top: 0.5rem; /* mt-2 (8px) */
+  font-size: 14px;
+  color: #8e8e8e;
+  margin: 0;
+}
+
+/* Mobile styles */
+@media screen and (max-width: 900px) {
+  .searchResultsContainer {
+    padding: 16px 0;
+  }
+  
+  .accountItem {
+    padding: 6px 12px;
+  }
+  
+  .postsGrid {
+    gap: 2px;
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .searchResultsContainer {
+    padding: 12px 0;
+  }
+  
+  .sectionHeader {
+    font-size: 14px;
+    margin-bottom: 12px;
+  }
+  
+  .accountItem {
+    padding: 4px 8px;
+    gap: 8px;
+  }
+  
+  .profileImage {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .username {
+    font-size: 13px;
+  }
+  
+  .fullName,
+  .followersCount {
+    font-size: 12px;
+  }
+  
+  .followButton {
+    padding: 4px 12px;
+    font-size: 12px;
+  }
+  
+  .postsGrid {
+    gap: 1px;
+    margin-bottom: 24px;
+  }
+  
+  .overlayContent {
+    gap: 16px;
+  }
+  
+  .overlayButtonSpan {
+    font-size: 12px;
+  }
+  
+  .noResultsContainer {
+    padding: 48px 12px;
+  }
+  
+  .noResultsMessage {
+    font-size: 18px;
+  }
+  
+  .noResultsSubMessage {
+    font-size: 12px;
+  }
 }

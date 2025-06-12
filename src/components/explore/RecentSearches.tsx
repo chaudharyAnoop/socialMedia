@@ -1,8 +1,6 @@
 import React from "react";
 import { Clock, X, Search } from "lucide-react";
-
-// Import the CSS module
-import styles from "./RecentSearches.module.css"; // Adjust path if your CSS file is elsewhere
+import styles from "./RecentSearches.module.css";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import {
   addRecentSearch,
@@ -19,11 +17,11 @@ const RecentSearches: React.FC = () => {
 
   const handleRecentSearchClick = (search: string) => {
     dispatch(setSearchQuery(search));
-    dispatch(addRecentSearch(search)); // Re-add to move it to the top of recents
+    dispatch(addRecentSearch(search));
   };
 
   const handleRemoveSearch = (e: React.MouseEvent, search: string) => {
-    e.stopPropagation(); // Prevent the parent div's onClick from firing
+    e.stopPropagation();
     dispatch(removeRecentSearch(search));
   };
 
@@ -31,7 +29,6 @@ const RecentSearches: React.FC = () => {
     dispatch(clearRecentSearches());
   };
 
-  // Only show when search input is focused but empty
   if (searchQuery.length > 0) return null;
 
   return (
@@ -48,7 +45,7 @@ const RecentSearches: React.FC = () => {
             {recentSearches.map((search, index) => (
               <div
                 key={index}
-                className={styles.recentSearchItem} // Base and group hover handled in CSS
+                className={styles.recentSearchItem}
                 onClick={() => handleRecentSearchClick(search)}
               >
                 <div className={styles.searchItemContent}>
@@ -57,7 +54,7 @@ const RecentSearches: React.FC = () => {
                 </div>
                 <button
                   onClick={(e) => handleRemoveSearch(e, search)}
-                  className={styles.removeButton} // Opacity and hover handled in CSS
+                  className={styles.removeButton}
                 >
                   <X />
                 </button>

@@ -23,49 +23,28 @@ const ExploreGrid: React.FC = () => {
     dispatch(likePost(postId));
   };
 
-  const getGridClasses = (size: string) => {
-    // Dynamically apply base class and size-specific class from the CSS module
-    let sizeClass = "";
-    switch (size) {
-      case "large":
-        sizeClass = styles.largeItem;
-        break;
-      case "medium":
-        sizeClass = styles.mediumItem;
-        break;
-      default: // 'small' or any other default
-        sizeClass = styles.smallItem;
-        break;
-    }
-    // Combine the base grid item class with the size-specific class
-    return `${styles.gridItem} ${sizeClass}`;
-  };
 
   return (
     <div className={styles.gridContainer}>
-      {posts.map((post, index) => (
+      {posts.map((post) => (
         <div
           key={post.id}
-          className={getGridClasses(post.size)} // Apply classes from the module
+          className={styles.gridItem}
           onClick={() => handlePostClick(post)}
         >
-          {/* Image */}
           <img
             src={post.imageUrl}
             alt={`Post by ${post.username}`}
-            // No direct className needed here as it's targeted by .gridItem img in CSS
+            className={styles.postImage}
             loading="lazy"
           />
 
-          {/* Video indicator */}
           {post.isVideo && (
             <div className={styles.videoIndicator}>
-              <Play className={styles.videoIndicatorSvg} />{" "}
-              {/* Apply a specific class for the icon if needed */}
+              <Play className={styles.videoIndicatorSvg} />
             </div>
           )}
 
-          {/* Hover overlay */}
           <div className={styles.hoverOverlay}>
             <div className={styles.overlayContent}>
               <button
@@ -78,8 +57,6 @@ const ExploreGrid: React.FC = () => {
                 </span>
               </button>
               <div className={styles.overlayButton}>
-                {" "}
-                {/* Reusing overlayButton style for comments */}
                 <MessageCircle className={styles.overlayButtonSvg} />
                 <span className={styles.overlayButtonText}>
                   {post.comments}

@@ -1,16 +1,34 @@
-/* Styles for the main container */
-.container {
-  min-height: 100vh; /* Use 100vh for full viewport height */
-  background-color: #f9fafb; /* Equivalent to bg-gray-50 from TailwindCSS */
-  /* You can add more specific styles here if needed */
-  padding: 20px; /* Example padding */
+.explorePage {
+  min-height: 100vh;
+  background: white;
+  padding-top: 60px;
 }
 
-/* Styles for any elements directly within this page if needed */
-/* For example: */
-.pageTitle {
-  font-size: 2.5rem;
-  color: #1a202c; /* A dark gray color */
-  text-align: center;
-  margin-bottom: 30px;
+@media (prefers-color-scheme: dark) {
+  .explorePage {
+    background: black;
+  }
+}
+
+.container {
+  max-width: 975px;
+  margin: 0 auto;
+  padding: 24px 20px;
+}
+
+@media screen and (max-width: 900px) {
+  .container {
+    padding: 16px;
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .explorePage {
+    padding-top: 0;
+    padding-bottom: 60px;
+  }
+  
+  .container {
+    padding: 12px;
+  }
 }
