@@ -29,6 +29,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "../../redux/store";
 import { toggleNavigationBar } from "../../redux/navigationBarSlice";
+import { Home, MessageCircle } from "lucide-react";
 
 function NavigationBar() {
   const dispatch = useDispatch<AppDispatch>();
@@ -51,7 +52,7 @@ function NavigationBar() {
             <NavLink to="/" className={styles.link}>
               <div className={styles.tile}>
                 <div className={styles.name}>
-                  <FaHome className={styles.icon} />
+                  <Home className={styles.icon} />
                   <p className={styles.head}> Home</p>
                 </div>
                 <p className={styles.val}>new post</p>
@@ -95,7 +96,7 @@ function NavigationBar() {
             <NavLink to="/" className={styles.link}>
               <div className={styles.tile}>
                 <div className={styles.name}>
-                  <FaMessage className={styles.icon} />
+                  <MessageCircle className={styles.icon} />
                   <p className={styles.head}> Message</p>
                 </div>
                 <p className={styles.val}>25</p>

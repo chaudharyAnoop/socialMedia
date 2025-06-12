@@ -3,6 +3,7 @@ import styles from "../styles/Post.module.css";
 import { FaHeart, FaRegBookmark, FaTimes } from "react-icons/fa";
 import { BsSend } from "react-icons/bs";
 import { FaRegMessage } from "react-icons/fa6";
+import { MessageCircle } from "lucide-react";
 
 interface CircularImageProps {
   imgUrl: string;
@@ -35,7 +36,7 @@ export default function Post({
       <div className={styles.likes}>
         <div className={styles.interactions}>
           <FaHeart className={styles.icon} />
-          <FaRegMessage className={styles.icon} />
+          <MessageCircle className={styles.icon} />
           <BsSend className={styles.icon} />
         </div>
         <FaRegBookmark className={styles.icon} />
@@ -157,7 +158,7 @@ export default function Post({
               <div className={styles.likes}>
                 <div className={styles.interactions}>
                   <FaHeart className={styles.icon} />
-                  <FaRegMessage className={styles.icon} />
+                  <MessageCircle className={styles.icon} />
                   <BsSend className={styles.icon} />
                 </div>
                 <FaRegBookmark className={styles.icon} />
