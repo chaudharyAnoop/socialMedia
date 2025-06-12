@@ -60,7 +60,7 @@ function LandingPage() {
                   title={post.title}
                   likecount={post.reactions.likes.toString()}
                   body={post.body}
-                  imgUrl={`https://picsum.photos/5000/5000?random=${post.id}`}
+                  imgUrl={`https://picsum.photos/2000/2000?random=${post.id}`}
                   alt={post.title}
                 />
               </div>
@@ -72,7 +72,7 @@ function LandingPage() {
               title={post.title}
               likecount={post.reactions.likes.toString()}
               body={post.body}
-              imgUrl={`https://picsum.photos/600/400?random=${post.id}`}
+              imgUrl={`https://picsum.photos/2000/2000?random=${post.id}`}
               alt={post.title}
             />
           );

@@ -1,15 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "../styles/Post.module.css";
-import {
-  FaBookmark,
-  FaHeart,
-  FaRegBookmark,
-  FaShare,
-  FaShareAlt,
-} from "react-icons/fa";
-import { IoIosSend } from "react-icons/io";
-import { BsFillSendFill, BsSend } from "react-icons/bs";
-import { FaMessage, FaRegMessage } from "react-icons/fa6";
+import { FaHeart, FaRegBookmark, FaTimes } from "react-icons/fa";
+import { BsSend } from "react-icons/bs";
+import { FaRegMessage } from "react-icons/fa6";
 
 interface CircularImageProps {
   imgUrl: string;
@@ -26,6 +19,8 @@ export default function Post({
   title,
   likecount,
 }: CircularImageProps) {
+  const txt = `Wow, this looks amazing! 😍 Keep shining! ✨ #Inspo dashbdgb dajdas dbjasbdas dhasvdbas dbhasvd asdbva sd dbausd asjdas dbsad asdasdb asdabsd asbd asbd anbs dasd had sad `;
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <div className={styles.main}>
       <div className={styles.data}>
@@ -51,12 +46,133 @@ export default function Post({
 
       <p className={styles.desc}>{body}</p>
       <div className={styles.likecountdiv}>
-        <p className={styles.commentcount}>View all 68 comments</p>
+        <p
+          className={styles.commentcount}
+          onClick={() => {
+            setIsOpen(!isOpen);
+          }}
+        >
+          View all 68 comments
+        </p>
       </div>
       <div className={styles.inputs}>
         <input className={styles.input} placeholder="Add a comment"></input>
         <button className={styles.post}>Post</button>
       </div>
+      {isOpen && (
+        <div className={styles.main_comments}>
+          <div className={styles.close}>
+            <FaTimes
+              className={styles.closeicon}
+              onClick={() => {
+                setIsOpen(!isOpen);
+              }}
+            />
+          </div>
+          <div className={styles.comment_div}>
+            <div className={styles.comment_img}>
+              <img src={imgUrl} alt={alt} className={styles.commentimg}></img>
+            </div>
+            <div className={styles.comments}>
+              {" "}
+              <div className={styles.data}>
+                <div className={styles.title}>
+                  <img src="/dp1.jpg" className={styles.dp}></img>
+                  <p className={styles.t1}>{title}</p>
+                </div>
+                <p className={styles.t2}>2 hours ago</p>
+              </div>
+              <div className={styles.allcomments}>
+                <div className={styles.commentcard}>
+                  <p className={styles.avatar}>A</p>
+                  <div className={styles.commentdata}>
+                    <p className={styles.commentuser}>Anoop Kumar Chaudhary</p>
+                    <p className={styles.commentvalue}>{txt}</p>
+                  </div>
+                </div>
+                <div className={styles.commentcard}>
+                  <p className={styles.avatar}>A</p>
+                  <div className={styles.commentdata}>
+                    <p className={styles.commentuser}>Anoop Kumar Chaudhary</p>
+                    <p className={styles.commentvalue}>{txt}</p>
+                  </div>
+                </div>{" "}
+                <div className={styles.commentcard}>
+                  <p className={styles.avatar}>A</p>
+                  <div className={styles.commentdata}>
+                    <p className={styles.commentuser}>Anoop Kumar Chaudhary</p>
+                    <p className={styles.commentvalue}>{txt}</p>
+                  </div>
+                </div>{" "}
+                <div className={styles.commentcard}>
+                  <p className={styles.avatar}>A</p>
+                  <div className={styles.commentdata}>
+                    <p className={styles.commentuser}>Anoop Kumar Chaudhary</p>
+                    <p className={styles.commentvalue}>{txt}</p>
+                  </div>
+                </div>{" "}
+                <div className={styles.commentcard}>
+                  <p className={styles.avatar}>A</p>
+                  <div className={styles.commentdata}>
+                    <p className={styles.commentuser}>Anoop Kumar Chaudhary</p>
+                    <p className={styles.commentvalue}>{txt}</p>
+                  </div>
+                </div>{" "}
+                <div className={styles.commentcard}>
+                  <p className={styles.avatar}>A</p>
+                  <div className={styles.commentdata}>
+                    <p className={styles.commentuser}>Anoop Kumar Chaudhary</p>
+                    <p className={styles.commentvalue}>{txt}</p>
+                  </div>
+                </div>{" "}
+                <div className={styles.commentcard}>
+                  <p className={styles.avatar}>A</p>
+                  <div className={styles.commentdata}>
+                    <p className={styles.commentuser}>Anoop Kumar Chaudhary</p>
+                    <p className={styles.commentvalue}>{txt}</p>
+                  </div>
+                </div>{" "}
+                <div className={styles.commentcard}>
+                  <p className={styles.avatar}>A</p>
+                  <div className={styles.commentdata}>
+                    <p className={styles.commentuser}>Anoop Kumar Chaudhary</p>
+                    <p className={styles.commentvalue}>{txt}</p>
+                  </div>
+                </div>{" "}
+                <div className={styles.commentcard}>
+                  <p className={styles.avatar}>A</p>
+                  <div className={styles.commentdata}>
+                    <p className={styles.commentuser}>Anoop Kumar Chaudhary</p>
+                    <p className={styles.commentvalue}>{txt}</p>
+                  </div>
+                </div>{" "}
+                <div className={styles.commentcard}>
+                  <p className={styles.avatar}>A</p>
+                  <div className={styles.commentdata}>
+                    <p className={styles.commentuser}>Anoop Kumar Chaudhary</p>
+                    <p className={styles.commentvalue}>{txt}</p>
+                  </div>
+                </div>
+              </div>{" "}
+              <div className={styles.likes}>
+                <div className={styles.interactions}>
+                  <FaHeart className={styles.icon} />
+                  <FaRegMessage className={styles.icon} />
+                  <BsSend className={styles.icon} />
+                </div>
+                <FaRegBookmark className={styles.icon} />
+              </div>
+              <div className={styles.inputs}>
+                <input
+                  className={styles.input2}
+                  placeholder="Post a comment"
+                ></input>
+                <button className={styles.post_button}>Post</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
