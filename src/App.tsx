@@ -9,14 +9,10 @@ import QuickAccess from "./components/QuickAccess/QuickAccess";
 import { Suspense, lazy } from "react";
 import RouteChangeHandler from "./components/RouteChangeHandler";
 import ExplorePage from "./pages/explore/ExplorePage";
-<<<<<<< HEAD
-<<<<<<< HEAD
 import Signin from "./pages/Signin/Signin";
-=======
->>>>>>> c978f6d377aea881f91c124fc80bcda80449ec8d
-=======
 import { onFirebaseMessage, requestNotificationPermission } from "./firebase/firebase";
->>>>>>> feature/notification
+
+
 
 const LandingPage = lazy(() => import("./pages/LandingPage/LandingPage"));
 const AdminPage = lazy(() => import("./pages/AdminPage/AdminPage"));
