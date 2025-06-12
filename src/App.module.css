@@ -60,6 +60,7 @@
 
 @media screen and (min-width: 900px) {
   .main {
+    position: relative;
     height: 100vh;
     overflow: hidden;
   }
