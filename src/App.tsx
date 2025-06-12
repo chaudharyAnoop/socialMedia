@@ -10,12 +10,9 @@ import { Suspense, lazy } from "react";
 import RouteChangeHandler from "./components/RouteChangeHandler";
 import ExplorePage from "./pages/explore/ExplorePage";
 import Signin from "./pages/Signin/Signin";
-<<<<<<< HEAD
-=======
 import { onFirebaseMessage, requestNotificationPermission } from "./firebase/firebase";
 
 
->>>>>>> 4b3199f21784fb8b2a5ddd78ccd72bbc07344031
 
 const LandingPage = lazy(() => import("./pages/LandingPage/LandingPage"));
 const AdminPage = lazy(() => import("./pages/AdminPage/AdminPage"));
