@@ -15,7 +15,7 @@ import { onFirebaseMessage, requestNotificationPermission } from "./firebase/fir
 const LandingPage = lazy(() => import("./pages/LandingPage/LandingPage"));
 const AdminPage = lazy(() => import("./pages/AdminPage/AdminPage"));
 
-function App() {
+
   // const [count, setCount] = useState(0);
 
   const App: React.FC = () => {
@@ -46,6 +46,6 @@ function App() {
     </div>
   );
 }
-}
 
-export default App;
+
+export default App
