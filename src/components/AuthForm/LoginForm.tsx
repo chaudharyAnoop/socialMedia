@@ -1,13 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import { Formik, Form } from 'formik';
 import { useAuth } from '../../contexts/AuthContext';
-import { FormikInput } from '../FormInput/FormikInput';
-import { SocialLogin } from '../SocialLogin/SocialLogin';
-import { loginSchema } from '../../utils/validationSchemas';
+import { loginValidationSchema } from '../../utils/validationSchemas';
+import FormikInput from '../FormInput/FormikInput';
+import SocialLogin from '../SocialLogin/SocialLogin';
 import styles from './AuthForm.module.css';
 
 interface LoginFormProps {
   onSwitchToSignup: () => void;
+  onShowOTP: (email: string) => void;
 }
 
 interface LoginFormValues {
@@ -15,101 +16,97 @@ interface LoginFormValues {
   password: string;
 }
 
-export const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToSignup }) => {
-  const { login, isLoading, error, clearError } = useAuth();
-
-  useEffect(() => {
-    clearError();
-  }, [clearError]);
+const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToSignup, onShowOTP }) => {
+  const { login } = useAuth();
+  const [serverError, setServerError] = useState('');
 
   const initialValues: LoginFormValues = {
     email: '',
-    password: ''
+    password: '',
   };
 
-  const handleSubmit = async (values: LoginFormValues) => {
+  const handleSubmit = async (
+    values: LoginFormValues,
+    { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
+  ) => {
+    setServerError('');
+    
     try {
-      await login(values.email, values.password);
-    } catch (err) {
-      // Error is handled by the context
+      const result = await login(values.email, values.password);
+      
+      if (result.success) {
+        if (result.requiresOTP) {
+          onShowOTP(values.email);
+        }
+        // If login is successful without OTP, the AuthContext will handle the state change
+      } else {
+        setServerError(result.message || 'Login failed. Please try again.');
+      }
+    } catch (error) {
+      setServerError('An unexpected error occurred. Please try again.');
+    } finally {
+      setSubmitting(false);
     }
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.formWrapper}>
-        <div className={styles.logoContainer}>
-          <h1 className={styles.logo}>Instagram</h1>
-        </div>
+    <div className={styles.authContainer}>
+      <div className={styles.authWrapper}>
+        <div className={styles.authBox}>
+          <div className={styles.logo}>
+            <h1 className={styles.logoText}>Instagram</h1>
+          </div>
 
-        <div className={styles.card}>
           <Formik
             initialValues={initialValues}
-            validationSchema={loginSchema}
+            validationSchema={loginValidationSchema}
             onSubmit={handleSubmit}
           >
-            {({ isValid, dirty }) => (
+            {({ isSubmitting, isValid, dirty }) => (
               <Form className={styles.form}>
-                {error && (
-                  <div className={styles.errorAlert}>
-                    {error}
-                  </div>
+                {serverError && (
+                  <div className={styles.errorMessage}>{serverError}</div>
                 )}
 
                 <FormikInput
+                  type="text"
                   name="email"
-                  type="email"
-                  placeholder="Email"
+                  placeholder="Phone number, username or email address"
+                  autoComplete="username"
                 />
 
                 <FormikInput
-                  name="password"
                   type="password"
+                  name="password"
                   placeholder="Password"
+                  autoComplete="current-password"
+                  showPasswordToggle={true}
                 />
 
                 <button
                   type="submit"
-                  className={styles.button}
-                  disabled={isLoading || !isValid || !dirty}
+                  className={`${styles.submitButton} ${isSubmitting ? styles.loading : ''}`}
+                  disabled={!isValid || !dirty || isSubmitting}
                 >
-                  {isLoading ? (
-                    <>
-                      <div className={styles.spinner} />
-                      Logging in...
-                    </>
-                  ) : (
-                    'Log in'
-                  )}
+                  {isSubmitting && <div className={styles.spinner}></div>}
+                  Log in
                 </button>
-
-                <div className={styles.divider}>OR</div>
-
-                <SocialLogin mode="login" />
-
-                <div className={styles.forgotPassword}>
-                  <a href="#" className={styles.forgotLink}>
-                    Forgot password?
-                  </a>
-                </div>
               </Form>
             )}
           </Formik>
+
+          <SocialLogin showForgotPassword />
         </div>
 
-        <div className={styles.switchCard}>
-          <span className={styles.switchText}>
-            Don't have an account?
-            <button
-              type="button"
-              className={styles.switchLink}
-              onClick={onSwitchToSignup}
-            >
-              Sign up
-            </button>
-          </span>
+        <div className={styles.switchBox}>
+          Don't have an account?{' '}
+          <a href="#" onClick={(e) => { e.preventDefault(); onSwitchToSignup(); }}>
+            Sign up
+          </a>
         </div>
       </div>
     </div>
   );
 };
+
+export default LoginForm;
