@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "../../redux/store";
 import { fetchPosts, resetPosts } from "../../redux/postSlice";
 import Post from "../../components/Post.component";
+import { v4 as uuidv4 } from "uuid";
 
 function LandingPage() {
   const dispatch = useDispatch<AppDispatch>();
@@ -56,7 +57,7 @@ function LandingPage() {
             return (
               <div ref={lastPostElementRef} key={post.id}>
                 <Post
-                  key={post.id}
+                  key={uuidv4()}
                   title={post.title}
                   likecount={post.reactions.likes.toString()}
                   body={post.body}
@@ -68,7 +69,7 @@ function LandingPage() {
           }
           return (
             <Post
-              key={post.id}
+              key={uuidv4()}
               title={post.title}
               likecount={post.reactions.likes.toString()}
               body={post.body}

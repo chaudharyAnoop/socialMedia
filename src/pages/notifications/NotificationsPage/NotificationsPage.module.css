@@ -1,0 +1,82 @@
+/* src/components/Notifications/NotificationsPage.module.css */
+.page {
+    min-height: 100vh;
+    background-color: #ffffff;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    padding-bottom: 20px;
+  }
+  
+  .container {
+    max-width: 100%;
+    margin: 0 auto;
+    background-color: transparent;
+    min-height: 100vh;
+  }
+  
+  .notificationsContainer {
+    padding-top: 16px;
+    padding-bottom: 20px;
+  }
+  
+  .swipeInstruction {
+    text-align: center;
+    padding: 12px 20px;
+    color: #8a8d91;
+    font-size: 13px;
+    font-weight: 500;
+  }
+  
+  .emptyState {
+    text-align: center;
+    padding: 80px 20px;
+    color: #8a8d91;
+  }
+  
+  .emptyIcon {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background-color: #e3f2fd;
+    border: 3px solid #1877f2;
+    margin: 0 auto 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .emptyTitle {
+    font-size: 24px;
+    margin-bottom: 12px;
+    font-weight: 600;
+    color: #1c1e21;
+  }
+  
+  .emptyText {
+    font-size: 16px;
+    color: #65676b;
+    max-width: 300px;
+    margin: 0 auto;
+    line-height: 1.4;
+  }
+  
+  @media (min-width: 769px) {
+    .page {
+      padding-bottom: 40px;
+    }
+    
+    .container {
+      max-width: 800px;
+    }
+  }
+
+  @media screen and (min-width: 900px) {
+    @media (prefers-color-scheme: dark) {}
+  }
+  
+  @media screen and (max-width: 900px) and (min-width: 520px) {
+    @media (prefers-color-scheme: dark) {}
+  }
+  
+  @media screen and (max-width: 520px) {
+    @media (prefers-color-scheme: dark) {}
+  }
