@@ -9,6 +9,7 @@ import QuickAccess from "./components/QuickAccess/QuickAccess";
 import { Suspense, lazy } from "react";
 import RouteChangeHandler from "./components/RouteChangeHandler";
 import ExplorePage from "./pages/explore/ExplorePage";
+import Signin from "./pages/Signin/Signin";
 import { onFirebaseMessage, requestNotificationPermission } from "./firebase/firebase";
 
 const LandingPage = lazy(() => import("./pages/LandingPage/LandingPage"));
@@ -16,6 +17,7 @@ const AdminPage = lazy(() => import("./pages/AdminPage/AdminPage"));
 
 function App() {
   // const [count, setCount] = useState(0);
+
   const App: React.FC = () => {
     useEffect(() => {
       requestNotificationPermission();
@@ -34,6 +36,7 @@ function App() {
             <Routes>
               <Route path="/" element={<LandingPage />} />
               <Route path="/explore" element={<ExplorePage />} />
+              <Route path="/signin" element={<Signin />} />
             </Routes>
           </Suspense>
           {/* </RouteChangeHandler> */}
