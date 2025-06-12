@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useEffect, useRef, useCallback } from "react";
 import styles from "./LandingPage.module.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -81,6 +82,16 @@ function LandingPage() {
       )}
     </div>
   );
+=======
+import LandingPageOne from "../../components/LandingPage.component";
+
+function LandingPage() {
+    return (
+        <div>
+            <LandingPageOne />
+        </div>
+    );
+>>>>>>> feature/signin-signup
 }
 
 export default LandingPage;

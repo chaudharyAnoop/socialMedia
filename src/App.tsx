@@ -1,4 +1,4 @@
-import { useState } from "react";
+// import { useState } from "react";
 import styles from "./App.module.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import NavigationBar from "./components/NavigationBar/NavigationBar";
@@ -12,7 +12,7 @@ const LandingPage = lazy(() => import("./pages/LandingPage/LandingPage"));
 const AdminPage = lazy(() => import("./pages/AdminPage/AdminPage"));
 
 function App() {
-  const [count, setCount] = useState(0);
+  // const [count, setCount] = useState(0);
 
   return (
     <div className={styles.main}>
