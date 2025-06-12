@@ -1,5 +1,6 @@
 // import { useState } from "react";
 import styles from "./App.module.css";
+import React , {useEffect} from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import NavigationBar from "./components/NavigationBar/NavigationBar";
 // import LandingPage from "./pages/LandingPage/LandingPage";
@@ -9,15 +10,24 @@ import { Suspense, lazy } from "react";
 import RouteChangeHandler from "./components/RouteChangeHandler";
 import ExplorePage from "./pages/explore/ExplorePage";
 <<<<<<< HEAD
+<<<<<<< HEAD
 import Signin from "./pages/Signin/Signin";
 =======
 >>>>>>> c978f6d377aea881f91c124fc80bcda80449ec8d
+=======
+import { onFirebaseMessage, requestNotificationPermission } from "./firebase/firebase";
+>>>>>>> feature/notification
 
 const LandingPage = lazy(() => import("./pages/LandingPage/LandingPage"));
 const AdminPage = lazy(() => import("./pages/AdminPage/AdminPage"));
 
 function App() {
   // const [count, setCount] = useState(0);
+  const App: React.FC = () => {
+    useEffect(() => {
+      requestNotificationPermission();
+      onFirebaseMessage();
+    }, []);
 
   return (
     <div className={styles.main}>
@@ -40,6 +50,7 @@ function App() {
       </BrowserRouter>
     </div>
   );
+}
 }
 
 export default App;
