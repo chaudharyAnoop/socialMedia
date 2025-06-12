@@ -3,6 +3,7 @@ import styles from "../styles/Post.module.css";
 import { FaHeart, FaRegBookmark, FaTimes } from "react-icons/fa";
 import { BsSend } from "react-icons/bs";
 import { FaRegMessage } from "react-icons/fa6";
+import { MessageCircle, Send } from "lucide-react";
 
 interface CircularImageProps {
   imgUrl: string;
@@ -21,6 +22,16 @@ export default function Post({
 }: CircularImageProps) {
   const txt = `Wow, this looks amazing! 😍 Keep shining! ✨ #Inspo dashbdgb dajdas dbjasbdas dhasvdbas dbhasvd asdbva sd dbausd asjdas dbsad asdasdb asdabsd asbd asbd anbs dasd had sad `;
   const [isOpen, setIsOpen] = useState(false);
+  const [isImageLoading, setIsImageLoading] = useState(true);
+  const handleImageLoad = () => {
+    setIsImageLoading(false);
+  };
+
+  // Handle image load error
+  const handleImageError = () => {
+    setIsImageLoading(false); // Optionally handle error state
+    console.error("Failed to load image");
+  };
   return (
     <div className={styles.main}>
       <div className={styles.data}>
@@ -31,12 +42,23 @@ export default function Post({
         <p className={styles.t2}>2 hours ago</p>
       </div>
 
-      <img src={imgUrl} alt={alt} className={styles.img}></img>
+      {isImageLoading && (
+        <div className={styles.loadingSpinner}>
+          <div className={styles.spinner}></div>
+        </div>
+      )}
+      <img
+        src={imgUrl}
+        alt={alt}
+        className={`${styles.img} ${isImageLoading ? styles.hidden : ""}`}
+        onLoad={handleImageLoad}
+        onError={handleImageError}
+      />
       <div className={styles.likes}>
         <div className={styles.interactions}>
           <FaHeart className={styles.icon} />
-          <FaRegMessage className={styles.icon} />
-          <BsSend className={styles.icon} />
+          <MessageCircle className={styles.icon} />
+          <Send className={styles.icon} />
         </div>
         <FaRegBookmark className={styles.icon} />
       </div>
@@ -71,7 +93,13 @@ export default function Post({
           </div>
           <div className={styles.comment_div}>
             <div className={styles.comment_img}>
-              <img src={imgUrl} alt={alt} className={styles.commentimg}></img>
+              <img
+                src={imgUrl}
+                alt={alt}
+                className={styles.commentimg}
+                onLoad={handleImageLoad}
+                onError={handleImageError}
+              />
             </div>
             <div className={styles.comments}>
               {" "}
@@ -157,8 +185,8 @@ export default function Post({
               <div className={styles.likes}>
                 <div className={styles.interactions}>
                   <FaHeart className={styles.icon} />
-                  <FaRegMessage className={styles.icon} />
-                  <BsSend className={styles.icon} />
+                  <MessageCircle className={styles.icon} />
+                  <Send className={styles.icon} />
                 </div>
                 <FaRegBookmark className={styles.icon} />
               </div>

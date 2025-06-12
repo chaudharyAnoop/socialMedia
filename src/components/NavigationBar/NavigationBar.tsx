@@ -13,8 +13,10 @@ import {
   FaHome,
   FaInternetExplorer,
   FaPlus,
+  FaRegBookmark,
   FaRegHeart,
   FaRegTimesCircle,
+  FaRegUser,
   FaSearch,
   FaTimes,
   FaTimesCircle,
@@ -29,6 +31,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "../../redux/store";
 import { toggleNavigationBar } from "../../redux/navigationBarSlice";
+import { Home, MessageCircle } from "lucide-react";
 
 function NavigationBar() {
   const dispatch = useDispatch<AppDispatch>();
@@ -51,7 +54,7 @@ function NavigationBar() {
             <NavLink to="/" className={styles.link}>
               <div className={styles.tile}>
                 <div className={styles.name}>
-                  <FaHome className={styles.icon} />
+                  <Home className={styles.icon} />
                   <p className={styles.head}> Home</p>
                 </div>
                 <p className={styles.val}>new post</p>
@@ -95,7 +98,7 @@ function NavigationBar() {
             <NavLink to="/" className={styles.link}>
               <div className={styles.tile}>
                 <div className={styles.name}>
-                  <FaMessage className={styles.icon} />
+                  <MessageCircle className={styles.icon} />
                   <p className={styles.head}> Message</p>
                 </div>
                 <p className={styles.val}>25</p>
@@ -106,7 +109,7 @@ function NavigationBar() {
             <NavLink to="/" className={styles.link}>
               <div className={styles.tile}>
                 <div className={styles.name}>
-                  <FaHeart className={styles.icon} />
+                  <FaRegHeart className={styles.icon} />
                   <p className={styles.head}> Notification</p>
                 </div>
                 <p className={styles.val}>5 not..</p>
@@ -117,7 +120,7 @@ function NavigationBar() {
             <NavLink to="/" className={styles.link}>
               <div className={styles.tile}>
                 <div className={styles.name}>
-                  <FaBookmark className={styles.icon} />
+                  <FaRegBookmark className={styles.icon} />
                   <p className={styles.head}> Bookmark</p>
                 </div>
                 <p className={styles.val}>99+</p>
@@ -128,7 +131,7 @@ function NavigationBar() {
             <NavLink to="/" className={styles.link}>
               <div className={styles.tile}>
                 <div className={styles.name}>
-                  <FaUser className={styles.icon} />
+                  <FaRegUser className={styles.icon} />
                   <p className={styles.head}> Profile</p>
                 </div>
                 {/* <p className={styles.val}>10</p> */}
