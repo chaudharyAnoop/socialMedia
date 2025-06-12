@@ -56,6 +56,9 @@ function LandingPage() {
             return (
               <div ref={lastPostElementRef} key={post.id}>
                 <Post
+                  key={post.id}
+                  title={post.title}
+                  likecount={post.reactions.likes.toString()}
                   body={post.body}
                   imgUrl={`https://picsum.photos/5000/5000?random=${post.id}`}
                   alt={post.title}
@@ -66,6 +69,8 @@ function LandingPage() {
           return (
             <Post
               key={post.id}
+              title={post.title}
+              likecount={post.reactions.likes.toString()}
               body={post.body}
               imgUrl={`https://picsum.photos/600/400?random=${post.id}`}
               alt={post.title}

@@ -15,15 +15,23 @@ interface CircularImageProps {
   imgUrl: string;
   alt?: string;
   body: string;
+  title: string;
+  likecount: string;
 }
 
-export default function Post({ imgUrl, alt, body }: CircularImageProps) {
+export default function Post({
+  imgUrl,
+  alt,
+  body,
+  title,
+  likecount,
+}: CircularImageProps) {
   return (
     <div className={styles.main}>
       <div className={styles.data}>
         <div className={styles.title}>
           <img src="/dp1.jpg" className={styles.dp}></img>
-          <p className={styles.t1}>anoop kumar chaudhary</p>
+          <p className={styles.t1}>{title}</p>
         </div>
         <p className={styles.t2}>2 hours ago</p>
       </div>
@@ -38,7 +46,7 @@ export default function Post({ imgUrl, alt, body }: CircularImageProps) {
         <FaRegBookmark className={styles.icon} />
       </div>
       <div className={styles.likecountdiv}>
-        <p className={styles.likecount}>280043 Likes</p>
+        <p className={styles.likecount}>{likecount} Likes</p>
       </div>
 
       <p className={styles.desc}>{body}</p>
