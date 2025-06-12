@@ -1,0 +1,74 @@
+.uploadArea {
+  height: 400px;
+  border: 2px dashed #d1d5db;
+  border-radius: 8px;
+  margin: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.uploadAreaHover {
+  composes: uploadArea;
+  border-color: #3b82f6;
+  background-color: #eff6ff;
+  transform: scale(1.02);
+}
+
+.uploadIconContainer {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(to bottom right, #a855f7, #ec4899);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.uploadTitle {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #1f2937;
+  margin-bottom: 12px;
+}
+
+.uploadSubtitle {
+  color: #6b7280;
+  margin-bottom: 32px;
+  font-size: 1.125rem;
+}
+
+.selectButton {
+  background: linear-gradient(to right, #3b82f6, #9333ea);
+  color: white;
+  padding: 12px 32px;
+  border-radius: 9999px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  transform: scale(1);
+}
+
+.selectButton:hover {
+  background: linear-gradient(to right, #2563eb, #7c3aed) !important;
+  transform: scale(1.05) !important;
+}
+@media screen and (min-width: 900px) {
+  @media (prefers-color-scheme: dark) {}
+}
+
+@media screen and (max-width: 900px) and (min-width: 520px) {
+  @media (prefers-color-scheme: dark) {}
+}
+
+@media screen and (max-width: 520px) {
+  @media (prefers-color-scheme: dark) {}
+}
