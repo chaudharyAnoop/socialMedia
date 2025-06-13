@@ -13,8 +13,10 @@ import {
   FaHome,
   FaInternetExplorer,
   FaPlus,
+  FaRegBookmark,
   FaRegHeart,
   FaRegTimesCircle,
+  FaRegUser,
   FaSearch,
   FaTimes,
   FaTimesCircle,
@@ -82,7 +84,7 @@ function NavigationBar() {
             </NavLink>
           </li>{" "} */}
           <li className={styles.list_li}>
-            <NavLink to="/signin" className={styles.link}>
+            <NavLink to="/create" className={styles.link}>
               <div className={styles.tile}>
                 <div className={styles.name}>
                   <FaPlus className={styles.icon} />
@@ -93,7 +95,7 @@ function NavigationBar() {
             </NavLink>
           </li>{" "}
           <li className={styles.list_li}>
-            <NavLink to="/" className={styles.link}>
+            <NavLink to="/auth" className={styles.link}>
               <div className={styles.tile}>
                 <div className={styles.name}>
                   <MessageCircle className={styles.icon} />
@@ -107,7 +109,7 @@ function NavigationBar() {
             <NavLink to="/" className={styles.link}>
               <div className={styles.tile}>
                 <div className={styles.name}>
-                  <FaHeart className={styles.icon} />
+                  <FaRegHeart className={styles.icon} />
                   <p className={styles.head}> Notification</p>
                 </div>
                 <p className={styles.val}>5 not..</p>
@@ -118,7 +120,7 @@ function NavigationBar() {
             <NavLink to="/" className={styles.link}>
               <div className={styles.tile}>
                 <div className={styles.name}>
-                  <FaBookmark className={styles.icon} />
+                  <FaRegBookmark className={styles.icon} />
                   <p className={styles.head}> Bookmark</p>
                 </div>
                 <p className={styles.val}>99+</p>
@@ -129,7 +131,7 @@ function NavigationBar() {
             <NavLink to="/" className={styles.link}>
               <div className={styles.tile}>
                 <div className={styles.name}>
-                  <FaUser className={styles.icon} />
+                  <FaRegUser className={styles.icon} />
                   <p className={styles.head}> Profile</p>
                 </div>
                 {/* <p className={styles.val}>10</p> */}

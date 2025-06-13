@@ -1,6 +1,6 @@
 // import { useState } from "react";
 import styles from "./App.module.css";
-import React , {useEffect} from 'react';
+import React, { useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import NavigationBar from "./components/NavigationBar/NavigationBar";
 // import LandingPage from "./pages/LandingPage/LandingPage";
@@ -10,21 +10,23 @@ import { Suspense, lazy } from "react";
 import RouteChangeHandler from "./components/RouteChangeHandler";
 import ExplorePage from "./pages/explore/ExplorePage";
 import Signin from "./pages/Signin/Signin";
-import { onFirebaseMessage, requestNotificationPermission } from "./firebase/firebase";
-
-
+import {
+  onFirebaseMessage,
+  requestNotificationPermission,
+} from "./firebase/firebase";
+import InstagramCreatePost from "./pages/InstagramCreatePost/InstagramCreatePost";
+import { LoginForm } from "./components/AuthForm/LoginForm";
 
 const LandingPage = lazy(() => import("./pages/LandingPage/LandingPage"));
 const AdminPage = lazy(() => import("./pages/AdminPage/AdminPage"));
 
+// const [count, setCount] = useState(0);
 
-  // const [count, setCount] = useState(0);
-
-  const App: React.FC = () => {
-    useEffect(() => {
-      requestNotificationPermission();
-      onFirebaseMessage();
-    }, []);
+const App: React.FC = () => {
+  useEffect(() => {
+    requestNotificationPermission();
+    onFirebaseMessage();
+  }, []);
 
   return (
     <div className={styles.main}>
@@ -38,7 +40,8 @@ const AdminPage = lazy(() => import("./pages/AdminPage/AdminPage"));
             <Routes>
               <Route path="/" element={<LandingPage />} />
               <Route path="/explore" element={<ExplorePage />} />
-              <Route path="/signin" element={<Signin />} />
+              <Route path="/create" element={<InstagramCreatePost />} />
+              <Route path="/auth" element={<LoginForm />} />
             </Routes>
           </Suspense>
           {/* </RouteChangeHandler> */}
@@ -47,7 +50,6 @@ const AdminPage = lazy(() => import("./pages/AdminPage/AdminPage"));
       </BrowserRouter>
     </div>
   );
-}
+};
 
-
-export default App
+export default App;

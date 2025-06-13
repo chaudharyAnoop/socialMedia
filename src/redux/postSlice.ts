@@ -34,12 +34,22 @@ export const fetchPosts = createAsyncThunk<
   { rejectValue: string }
 >("posts/fetchPosts", async ({ page, limit }, { rejectWithValue }) => {
   try {
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODRiZDc2NDdmZDcyMzVjNjViYmM2NmEiLCJlbWFpbCI6ImpvaG4xMkB5b3BtYWlsLmNvbSIsInJvbGUiOiJ1c2VyIiwiZGV2aWNlSWQiOiJ0ZXN0LWRldmljZSIsImlwQWRkcmVzcyI6IjEyNy4wLjAuMSIsInVzZXJBZ2VudCI6IlBvc3RtYW5SdW50aW1lLzcuMjkuMCIsImlhdCI6MTc0OTgwMDg4OSwiZXhwIjoxNzQ5ODAzODg5LCJzdWIiOiI2ODRiZDc2NDdmZDcyMzVjNjViYmM2NmEifQ.RsdUo5jv12A8ViBE1wOx51On4CrnQiFoyfWKuHhZuHg`,
+      "X-Custom-Header": "CustomValue",
+    };
     const response = await axios.get<{
       posts: Post[];
       total: number;
       skip: number;
       limit: number;
-    }>(`https://dummyjson.com/posts?limit=${limit}&skip=${(page - 1) * limit}`);
+    }>(
+      `http://localhost:3000/posts/feed?limit=${limit}&skip=${
+        (page - 1) * limit
+      }`,
+      { headers }
+    );
     return { posts: response.data.posts, total: response.data.total };
   } catch (error) {
     if (axios.isAxiosError(error)) {
