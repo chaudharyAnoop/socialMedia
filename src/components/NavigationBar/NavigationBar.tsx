@@ -84,7 +84,7 @@ function NavigationBar() {
             </NavLink>
           </li>{" "} */}
           <li className={styles.list_li}>
-            <NavLink to="/signin" className={styles.link}>
+            <NavLink to="/create" className={styles.link}>
               <div className={styles.tile}>
                 <div className={styles.name}>
                   <FaPlus className={styles.icon} />
@@ -95,7 +95,7 @@ function NavigationBar() {
             </NavLink>
           </li>{" "}
           <li className={styles.list_li}>
-            <NavLink to="/" className={styles.link}>
+            <NavLink to="/auth" className={styles.link}>
               <div className={styles.tile}>
                 <div className={styles.name}>
                   <MessageCircle className={styles.icon} />
