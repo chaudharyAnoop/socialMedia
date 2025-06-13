@@ -1,0 +1,249 @@
+/* Main container for search results */
+.searchResultsContainer {
+  max-width: 72rem; /* max-w-6xl (72rem = 1152px) */
+  margin-left: auto; /* mx-auto */
+  margin-right: auto; /* mx-auto */
+  padding: 1rem; /* p-4 (16px) */
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem; /* space-y-6 (24px) */
+}
+
+/* Section Header (Accounts/Posts) */
+.sectionHeader {
+  font-size: 1.125rem; /* text-lg (18px) */
+  font-weight: 600; /* font-semibold */
+  margin-bottom: 1rem; /* mb-4 (16px) */
+  color: #111827; /* text-gray-900 */
+}
+
+/* --- Accounts Section --- */
+.accountsList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem; /* space-y-3 (12px) */
+}
+
+.accountItem {
+  display: flex; /* flex */
+  align-items: center; /* items-center */
+  gap: 0.75rem; /* space-x-3 (12px) */
+  padding: 0.75rem; /* p-3 (12px) */
+  transition: background-color 150ms ease-in-out; /* transition-colors */
+  border-radius: 0.5rem; /* rounded-lg (8px) */
+  cursor: pointer; /* cursor-pointer */
+}
+
+.accountItem:hover {
+  background-color: #f9fafb; /* hover:bg-gray-50 */
+}
+
+.profileImageContainer {
+  position: relative; /* relative */
+}
+
+.profileImage {
+  width: 3rem; /* w-12 (48px) */
+  height: 3rem; /* h-12 (48px) */
+  border-radius: 9999px; /* rounded-full */
+  object-fit: cover; /* object-cover */
+}
+
+.verifiedBadgeOuter {
+  position: absolute; /* absolute */
+  bottom: -0.25rem; /* -bottom-1 (approx) */
+  right: -0.25rem; /* -right-1 (approx) */
+  background-color: #3b82f6; /* bg-blue-500 */
+  border-radius: 9999px; /* rounded-full */
+  padding: 0.125rem; /* p-0.5 (approx) */
+  display: flex; /* For centering the icon */
+  align-items: center;
+  justify-content: center;
+}
+
+.verifiedBadgeOuter svg {
+  width: 0.75rem; /* w-3 (12px) */
+  height: 0.75rem; /* h-3 (12px) */
+  color: #ffffff; /* text-white */
+  fill: currentColor; /* fill-current */
+}
+
+.accountInfo {
+  flex: 1; /* flex-1 */
+}
+
+.usernameContainer {
+  display: flex; /* flex */
+  align-items: center; /* items-center */
+  gap: 0.25rem; /* space-x-1 (4px) */
+}
+
+.username {
+  font-weight: 600; /* font-semibold */
+  color: #111827; /* text-gray-900 */
+}
+
+.verifiedIcon {
+  width: 1rem; /* w-4 (16px) */
+  height: 1rem; /* h-4 (16px) */
+  color: #3b82f6; /* text-blue-500 */
+  fill: currentColor; /* fill-current */
+}
+
+.fullName {
+  font-size: 0.875rem; /* text-sm (14px) */
+  color: #4b5563; /* text-gray-600 */
+}
+
+.followersCount {
+  font-size: 0.75rem; /* text-xs (12px) */
+  color: #6b7280; /* text-gray-500 */
+}
+
+.followButton {
+  padding: 0.375rem 1rem; /* px-4 py-1.5 (6px vertical, 16px horizontal) */
+  background-color: #3b82f6; /* bg-blue-500 */
+  color: #ffffff; /* text-white */
+  font-size: 0.875rem; /* text-sm (14px) */
+  font-weight: 500; /* font-medium */
+  border-radius: 0.375rem; /* rounded-md (6px) */
+  border: none;
+  cursor: pointer;
+  transition: background-color 150ms ease-in-out; /* transition-colors */
+}
+
+.followButton:hover {
+  background-color: #2563eb; /* hover:bg-blue-600 */
+}
+
+/* --- Posts Section (reused from ExploreGrid with modifications) --- */
+.postsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* grid-cols-3 */
+  gap: 0.25rem; /* gap-1 (4px) */
+  row-gap: 0.25rem; /* gap-1 */
+}
+
+/* Tablet / Medium Screens */
+@media (min-width: 768px) { /* Corresponds to md: breakpoint */
+  .postsGrid {
+    grid-template-columns: repeat(4, 1fr); /* md:grid-cols-4 */
+    gap: 0.5rem; /* md:gap-2 (8px) */
+    row-gap: 0.5rem; /* md:gap-2 */
+  }
+}
+
+/* Large Screens */
+@media (min-width: 1024px) { /* Corresponds to lg: breakpoint */
+  .postsGrid {
+    grid-template-columns: repeat(6, 1fr); /* lg:grid-cols-6 */
+  }
+}
+
+/* Base style for each post grid item */
+.postGridItem {
+  position: relative; /* relative */
+  cursor: pointer; /* cursor-pointer */
+  overflow: hidden; /* overflow-hidden */
+  border-radius: 0.5rem; /* rounded-lg (8px) */
+  background-color: #e5e7eb; /* bg-gray-200 */
+  aspect-ratio: 1 / 1; /* aspect-square */
+}
+
+/* Image styling */
+.postGridItem img {
+  width: 100%; /* w-full */
+  height: 100%; /* h-full */
+  object-fit: cover; /* object-cover */
+  transition-property: transform; /* transition-transform */
+  transition-duration: 300ms; /* duration-300 */
+}
+
+.postGridItem:hover img {
+  transform: scale(1.05); /* group-hover:scale-105 */
+}
+
+/* Video indicator */
+.videoIndicator {
+  position: absolute; /* absolute */
+  top: 0.5rem; /* top-2 (8px) */
+  right: 0.5rem; /* right-2 (8px) */
+  color: #fff; /* text-white */
+  fill: #fff; /* fill-white */
+}
+
+.videoIndicator svg { /* Targeting the lucide-react icon */
+  width: 1rem; /* w-4 (16px) */
+  height: 1rem; /* h-4 (16px) */
+}
+
+/* Hover overlay */
+.hoverOverlay {
+  position: absolute; /* absolute */
+  inset: 0; /* inset-0 */
+  background-color: rgba(0, 0, 0, 0); /* bg-black bg-opacity-0 */
+  transition-property: background-color, opacity; /* transition-all */
+  transition-duration: 300ms; /* duration-300 */
+  display: flex; /* flex */
+  align-items: center; /* items-center */
+  justify-content: center; /* justify-center */
+  opacity: 0; /* opacity-0 */
+}
+
+.postGridItem:hover .hoverOverlay {
+  background-color: rgba(0, 0, 0, 0.3); /* group-hover:bg-opacity-30 */
+  opacity: 1; /* group-hover:opacity-100 */
+}
+
+.overlayContent {
+  display: flex; /* flex */
+  align-items: center; /* items-center */
+  gap: 1.5rem; /* space-x-6 (24px) */
+  color: #fff; /* text-white */
+}
+
+/* Like/Comment button base */
+.overlayButton {
+  display: flex; /* flex */
+  align-items: center; /* items-center */
+  gap: 0.25rem; /* space-x-1 (4px) */
+  transition-property: transform; /* transition-transform */
+  transition-duration: 150ms; /* A reasonable default for hover, adjust if needed */
+  background: none; /* Remove default button background */
+  border: none; /* Remove default button border */
+  color: inherit; /* Inherit text color from parent */
+  cursor: pointer; /* Add pointer cursor */
+  padding: 0; /* Remove default button padding */
+}
+
+.overlayButton:hover {
+  transform: scale(1.1); /* hover:scale-110 */
+}
+
+.overlayButton svg {
+  width: 1.25rem; /* w-5 (20px) */
+  height: 1.25rem; /* h-5 (20px) */
+  fill: #fff; /* fill-white */
+}
+
+.overlayButton span {
+  font-weight: 600; /* font-semibold */
+}
+
+/* --- No Results Message --- */
+.noResultsContainer {
+  text-align: center; /* text-center */
+  padding-top: 3rem; /* py-12 (48px) */
+  padding-bottom: 3rem; /* py-12 (48px) */
+}
+
+.noResultsMessage {
+  color: #6b7280; /* text-gray-500 */
+  font-size: 1.125rem; /* text-lg (18px) */
+}
+
+.noResultsSubMessage {
+  color: #9ca3af; /* text-gray-400 */
+  font-size: 0.875rem; /* text-sm (14px) */
+  margin-top: 0.5rem; /* mt-2 (8px) */
+}
