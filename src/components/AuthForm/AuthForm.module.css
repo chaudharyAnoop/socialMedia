@@ -1,237 +1,270 @@
-.container {
+.authContainer {
   min-height: 100vh;
+  width: 100vw;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 20px;
-  background-color: #000000;
+  /* background: var(--bg-secondary); */
+  background: var(--bg-primary);
 }
 
-.formWrapper {
+.authWrapper {
   width: 100%;
-  max-width: 350px;
-  animation: fadeIn 0.6s ease-out;
+  max-width: 450px;
 }
 
-.logoContainer {
+.authBox {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 1px;
+  padding: 40px 40px 20px;
+  margin-bottom: 10px;
+}
+
+.logo {
   text-align: center;
   margin-bottom: 32px;
 }
 
-.logo {
-  font-size: 32px;
-  font-weight: 400;
-  color: #FFFFFF;
-  font-family: 'Billabong', cursive, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  letter-spacing: 1px;
-}
-
-.card {
-  background-color: #000000;
-  border: 1px solid #363636;
-  padding: 24px;
-  border-radius: 1px;
-  margin-bottom: 10px;
-}
-
-.form {
-  display: flex;
-  flex-direction: column;
-}
-
-.title {
-  text-align: center;
-  color: #8E8E8E;
-  font-size: 17px;
-  font-weight: 600;
-  margin-bottom: 16px;
-  line-height: 20px;
+.logoText {
+  font-family: 'Billabong', cursive;
+  font-size: 48px;
+  color: var(--text-primary);
+  margin: 0;
+  font-weight: normal;
 }
 
 .subtitle {
   text-align: center;
-  color: #8E8E8E;
-  font-size: 14px;
-  margin-bottom: 20px;
-  line-height: 18px;
+  color: var(--text-secondary);
+  font-size: 17px;
+  font-weight: 600;
+  margin: 0 40px 20px;
+  line-height: 20px;
 }
 
-.button {
+.form {
   width: 100%;
-  height: 32px;
-  background-color: #0095F6;
-  color: #FFFFFF;
+}
+
+.submitButton {
+  width: 100%;
+  padding: 8px 16px;
+  background: var(--button-primary);
+  color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: 4px;
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
   margin-top: 8px;
-  transition: all 0.2s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
+  transition: background-color 0.2s ease;
+  position: relative;
+  min-height: 36px;
 }
 
-.button:hover:not(:disabled) {
-  background-color: #1877F2;
+.submitButton:hover:not(:disabled) {
+  background: var(--button-primary-hover);
 }
 
-.button:active:not(:disabled) {
-  transform: scale(0.98);
-}
-
-.button:disabled {
-  background-color: #0095F6;
+.submitButton:disabled {
   opacity: 0.3;
-  cursor: not-allowed;
+  cursor: not-authorized;
 }
 
-.buttonSecondary {
-  background-color: transparent;
-  color: #0095F6;
-  border: 1px solid #363636;
-}
-
-.buttonSecondary:hover:not(:disabled) {
-  background-color: #121212;
-  border-color: #0095F6;
+.submitButton.loading {
+  color: transparent;
 }
 
 .spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   width: 16px;
   height: 16px;
   border: 2px solid transparent;
-  border-top: 2px solid #FFFFFF;
+  border-top: 2px solid white;
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
 
-.divider {
-  display: flex;
-  align-items: center;
-  margin: 18px 0;
-  color: #8E8E8E;
-  font-size: 13px;
-  font-weight: 600;
-  text-transform: uppercase;
+@keyframes spin {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
 }
 
-.divider::before,
-.divider::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background-color: #363636;
-}
-
-.divider::before {
-  margin-right: 18px;
-}
-
-.divider::after {
-  margin-left: 18px;
-}
-
-.switchCard {
-  background-color: #000000;
-  border: 1px solid #363636;
-  padding: 24px;
-  text-align: center;
+.switchBox {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
   border-radius: 1px;
-  font-size: 14px;
-}
-
-.switchText {
-  color: #F5F5F5;
-}
-
-.switchLink {
-  color: #0095F6;
-  text-decoration: none;
-  font-weight: 600;
-  margin-left: 4px;
-  transition: color 0.2s ease;
-}
-
-.switchLink:hover {
-  color: #1877F2;
-}
-
-.errorAlert {
-  background-color: #1A0A0A;
-  border: 1px solid #ED4956;
-  border-radius: 3px;
-  color: #ED4956;
-  padding: 12px;
-  margin-bottom: 16px;
-  font-size: 13px;
+  padding: 20px;
   text-align: center;
-  animation: fadeIn 0.3s ease-out;
-}
-
-.socialSection {
-  margin-bottom: 20px;
-}
-
-.socialButton {
-  width: 100%;
-  height: 32px;
-  background-color: transparent;
-  color: #F5F5F5;
-  border: 1px solid #363636;
-  border-radius: 8px;
   font-size: 14px;
+  color: var(--text-primary);
+}
+
+.switchBox a {
+  color: var(--button-primary);
   font-weight: 600;
+  text-decoration: none;
+}
+
+.switchBox a:hover {
+  text-decoration: underline;
+}
+
+.errorMessage {
+  background: rgba(237, 73, 86, 0.1);
+  color: var(--error-color);
+  padding: 12px;
+  border-radius: 4px;
+  font-size: 14px;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.terms {
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 12px;
+  margin: 20px 0;
+  line-height: 16px;
+}
+
+.terms a {
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.fileInput {
+  display: none;
+}
+
+.fileInputLabel {
+  display: block;
+  width: 100%;
+  padding: 12px 16px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 3px;
+  font-size: 12px;
+  color: var(--text-secondary);
   cursor: pointer;
-  margin-bottom: 8px;
-  transition: all 0.2s ease;
+  transition: border-color 0.2s ease;
+  text-align: center;
+  margin-bottom: 6px;
+}
+
+.fileInputLabel:hover {
+  border-color: var(--text-secondary);
+}
+
+.fileInputLabel.hasFile {
+  color: var(--text-primary);
+  background: var(--bg-primary);
+}
+
+/* OTP Verification Styles */
+.otpContainer {
+  text-align: center;
+}
+
+.otpIcon {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 24px;
+  background: var(--bg-secondary);
+  border-radius: 12px;
+  position: relative;
 }
 
-.socialButton:hover {
-  background-color: #121212;
-  border-color: #525252;
+.otpIcon svg {
+  width: 32px;
+  height: 32px;
+  color: var(--text-primary);
 }
 
-.forgotPassword {
-  text-align: center;
-  margin-top: 12px;
+.otpIcon::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  right: -4px;
+  width: 20px;
+  height: 20px;
+  background: var(--error-color);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.forgotLink {
-  color: #0095F6;
-  text-decoration: none;
+.otpIcon::before {
+  content: '♥';
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
   font-size: 12px;
-  transition: color 0.2s ease;
+  color: white;
+  z-index: 1;
 }
 
-.forgotLink:hover {
-  color: #1877F2;
+.otpTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 16px;
 }
 
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+.otpDescription {
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 20px;
+  margin-bottom: 24px;
 }
 
-@media (max-width: 450px) {
-  .container {
-    padding: 0;
-  }
-  
-  .formWrapper {
-    max-width: 100%;
-  }
-  
-  .card,
-  .switchCard {
+.otpDescription a {
+  color: var(--button-primary);
+  font-weight: 600;
+}
+
+.backButton {
+  background: none;
+  border: none;
+  color: var(--button-primary);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 16px;
+  padding: 8px 0;
+}
+
+.backButton:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .authBox {
+    padding: 40px 20px 20px;
     border: none;
-    border-radius: 0;
-    background-color: #000000;
+    background: transparent;
+  }
+
+  .switchBox {
+    border: none;
+    background: transparent;
+  }
+
+  .authContainer {
+    padding: 0;
   }
 }

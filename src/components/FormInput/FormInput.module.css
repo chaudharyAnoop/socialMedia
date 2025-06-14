@@ -1,6 +1,6 @@
-.inputGroup {
+.inputContainer {
   position: relative;
-  margin-bottom: 12px;
+  margin-bottom: 6px;
 }
 
 .inputWrapper {
@@ -9,141 +9,144 @@
   align-items: center;
 }
 
-.input {
+.inputField {
   width: 100%;
-  height: 38px;
-  padding: 9px 8px 7px 8px;
-  background-color: #121212;
-  border: 1px solid #363636;
+  padding: 12px 16px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
   border-radius: 3px;
-  color: #F5F5F5;
   font-size: 12px;
-  line-height: 16px;
+  color: var(--text-primary);
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+  padding-right: 40px;
+}
+
+.inputField:focus {
   outline: none;
-  transition: border-color 0.2s ease;
+  border-color: var(--text-secondary);
 }
 
-.input::placeholder {
-  color: #8E8E8E;
+.inputField::placeholder {
+  color: var(--text-secondary);
 }
 
-.input:focus {
-  border-color: #0095F6;
+.inputField.hasError {
+  border-color: var(--error-color);
 }
 
-.input.error {
-  border-color: #ED4956;
-  animation: shake 0.3s ease-in-out;
+.inputField.filled {
+  background: var(--bg-primary);
 }
 
-.textarea {
-  min-height: 60px;
-  padding: 8px;
-  resize: vertical;
-  font-family: inherit;
+.inputField.focused {
+  background: var(--bg-primary);
 }
 
-.eyeButton {
+.passwordToggle {
   position: absolute;
-  right: 8px;
+  right: 12px;
   background: none;
   border: none;
-  color: #8E8E8E;
   cursor: pointer;
-  padding: 4px;
-  border-radius: 2px;
-  transition: color 0.2s ease;
-}
-
-.eyeButton:hover {
-  color: #F5F5F5;
-}
-
-.fileInput {
-  display: none;
-}
-
-.fileInputLabel {
+  color: var(--text-secondary);
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  height: 38px;
-  background-color: #121212;
-  border: 1px solid #363636;
-  border-radius: 3px;
-  color: #8E8E8E;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  font-size: 12px;
+  padding: 4px;
+  border-radius: 4px;
+  transition: color 0.2s ease;
 }
 
-.fileInputLabel:hover {
-  background-color: #1A1A1A;
-  border-color: #0095F6;
-  color: #F5F5F5;
+.passwordToggle:hover {
+  color: var(--text-primary);
 }
 
-.fileInputLabel.hasFile {
-  color: #0095F6;
-  border-color: #0095F6;
+.passwordToggle:focus {
+  outline: none;
 }
 
 .errorMessage {
-  color: #ED4956;
-  font-size: 11px;
+  color: var(--error-color);
+  font-size: 12px;
   margin-top: 4px;
-  display: block;
-  animation: fadeIn 0.2s ease-out;
+  line-height: 1.4;
 }
 
 .passwordStrength {
-  margin-top: 6px;
-  font-size: 11px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.strengthLabel {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+  display: block;
 }
 
 .strengthBar {
   width: 100%;
-  height: 2px;
-  background-color: #363636;
-  border-radius: 1px;
+  height: 4px;
+  background: var(--bg-secondary);
+  border-radius: 2px;
   overflow: hidden;
-  margin-bottom: 4px;
+  display: flex;
+  gap: 2px;
 }
 
-.strengthProgress {
+.strengthSegment {
+  flex: 1;
   height: 100%;
-  border-radius: 1px;
-  transition: all 0.3s ease;
+  background: var(--border-color);
+  transition: background-color 0.3s ease;
 }
 
-.strengthProgress.weak {
-  width: 33%;
-  background-color: #ED4956;
+.strengthSegment.weak {
+  background: var(--error-color);
 }
 
-.strengthProgress.medium {
-  width: 66%;
-  background-color: #FFA500;
+.strengthSegment.fair {
+  background: #ff9500;
 }
 
-.strengthProgress.strong {
-  width: 100%;
-  background-color: #00D084;
+.strengthSegment.good {
+  background: #34c759;
+}
+
+.strengthSegment.strong {
+  background: #007aff;
 }
 
 .strengthText {
-  color: #8E8E8E;
+  font-size: 11px;
+  margin-top: 4px;
+  font-weight: 500;
 }
 
 .strengthText.weak {
-  color: #ED4956;
+  color: var(--error-color);
 }
 
-.strengthText.medium {
-  color: #FFA500;
+.strengthText.fair {
+  color: #ff9500;
+}
+
+.strengthText.good {
+  color: #34c759;
 }
 
 .strengthText.strong {
-  color: #00D084;
+  color: #007aff;
+}
+
+@media (max-width: 768px) {
+  .inputField {
+    padding: 14px 16px;
+    font-size: 14px;
+    padding-right: 44px;
+  }
+  
+  .passwordToggle {
+    right: 14px;
+  }
 }

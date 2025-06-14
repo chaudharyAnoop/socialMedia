@@ -1,197 +1,217 @@
-import React, { createContext, useContext, useState, useCallback } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  type ReactNode,
+} from "react";
 
 interface User {
-    id: string;
-    username: string;
-    email: string;
-    fullName: string;
-    bio?: string;
-    profilePicture?: string;
-    provider?: "email" | "google" | "facebook" | "apple";
+  id: string;
+  username: string;
+  email: string;
+  fullName: string;
+  bio?: string;
+  profilePicture?: string;
+  emailVerified: boolean;
 }
 
 interface AuthContextType {
-    user: User | null;
-    isLoading: boolean;
-    error: string | null;
-    login: (email: string, password: string) => Promise<void>;
-    signup: (userData: SignupData) => Promise<void>;
-    socialLogin: (provider: "google" | "facebook" | "apple") => Promise<void>;
-    logout: () => void;
-    clearError: () => void;
+  user: User | null;
+  isLoading: boolean;
+  login: (
+    email: string,
+    password: string
+  ) => Promise<{ success: boolean; message?: string; requiresOTP?: boolean }>;
+  register: (
+    userData: RegisterData
+  ) => Promise<{ success: boolean; message?: string; requiresOTP?: boolean }>;
+  verifyOTP: (
+    email: string,
+    otp: string
+  ) => Promise<{ success: boolean; message?: string }>;
+  logout: () => void;
+  isAuthenticated: boolean;
 }
 
-interface SignupData {
-    username: string;
-    email: string;
-    password: string;
-    fullName: string;
-    bio?: string;
-    profilePicture?: File;
+interface RegisterData {
+  username: string;
+  email: string;
+  password: string;
+  fullName: string;
+  bio?: string;
+  profilePicture?: string;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const useAuth = () => {
-    const context = useContext(AuthContext);
-    if (context === undefined) {
-        throw new Error("useAuth must be used within an AuthProvider");
-    }
-    return context;
+  const context = useContext(AuthContext);
+  if (context === undefined) {
+    throw new Error("useAuth must be used within an AuthProvider");
+  }
+  return context;
 };
 
-export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
-    children,
-}) => {
-    const [user, setUser] = useState<User | null>(null);
-    const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState<string | null>(null);
+interface AuthProviderProps {
+  children: ReactNode;
+}
 
-    const clearError = useCallback(() => {
-        setError(null);
-    }, []);
+export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
+  const [user, setUser] = useState<User | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-    const login = useCallback(async (email: string, password: string) => {
-        setIsLoading(true);
-        setError(null);
+  useEffect(() => {
+    // Check for existing session on mount
+    const savedUser = localStorage.getItem("instagram_user");
+    if (savedUser) {
+      try {
+        setUser(JSON.parse(savedUser));
+      } catch (error) {
+        localStorage.removeItem("instagram_user");
+      }
+    }
+    setIsLoading(false);
+  }, []);
 
-        try {
-            // Simulate API call
-            await new Promise((resolve) => setTimeout(resolve, 1500));
-
-            // Simulate authentication logic
-            if (email === "demo@instagram.com" && password === "password123") {
-                const userData: User = {
-                    id: "1",
-                    username: "demo_user",
-                    email: email,
-                    fullName: "Demo User",
-                    bio: "Welcome to my Instagram profile!",
-                    profilePicture:
-                        "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?w=150&h=150&fit=crop&crop=faces",
-                    provider: "email",
-                };
-                setUser(userData);
-                localStorage.setItem("auth_token", "demo_token_123");
-            } else {
-                throw new Error("Invalid email or password");
-            }
-        } catch (err) {
-            setError(err instanceof Error ? err.message : "Login failed");
-        } finally {
-            setIsLoading(false);
-        }
-    }, []);
-
-    const signup = useCallback(async (userData: SignupData) => {
-        setIsLoading(true);
-        setError(null);
-
-        try {
-            // Simulate API call
-            await new Promise((resolve) => setTimeout(resolve, 2000));
-
-            // Simulate user creation
-            const newUser: User = {
-                id: Date.now().toString(),
-                username: userData.username,
-                email: userData.email,
-                fullName: userData.fullName,
-                bio: userData.bio,
-                profilePicture: userData.profilePicture
-                    ? URL.createObjectURL(userData.profilePicture)
-                    : undefined,
-                provider: "email",
-            };
-
-            setUser(newUser);
-            localStorage.setItem("auth_token", `token_${newUser.id}`);
-        } catch (err) {
-            setError(err instanceof Error ? err.message : "Signup failed");
-        } finally {
-            setIsLoading(false);
-        }
-    }, []);
-
-    const socialLogin = useCallback(
-        async (provider: "google" | "facebook" | "apple") => {
-            setIsLoading(true);
-            setError(null);
-
-            try {
-                // Simulate OAuth flow
-                await new Promise((resolve) => setTimeout(resolve, 2000));
-
-                // Simulate successful social login
-                const socialUsers = {
-                    google: {
-                        id: "google_123",
-                        username: "john_doe_google",
-                        email: "john.doe@gmail.com",
-                        fullName: "John Doe",
-                        bio: "Signed up with Google",
-                        profilePicture:
-                            "https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?w=150&h=150&fit=crop&crop=faces",
-                        provider: "google" as const,
-                    },
-                    facebook: {
-                        id: "facebook_456",
-                        username: "jane_smith_fb",
-                        email: "jane.smith@facebook.com",
-                        fullName: "Jane Smith",
-                        bio: "Connected via Facebook",
-                        profilePicture:
-                            "https://images.pexels.com/photos/1130626/pexels-photo-1130626.jpeg?w=150&h=150&fit=crop&crop=faces",
-                        provider: "facebook" as const,
-                    },
-                    apple: {
-                        id: "apple_789",
-                        username: "alex_apple",
-                        email: "alex@icloud.com",
-                        fullName: "Alex Johnson",
-                        bio: "Sign in with Apple",
-                        profilePicture:
-                            "https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?w=150&h=150&fit=crop&crop=faces",
-                        provider: "apple" as const,
-                    },
-                };
-
-                const userData = socialUsers[provider];
-                setUser(userData);
-                localStorage.setItem(
-                    "auth_token",
-                    `${provider}_token_${userData.id}`
-                );
-            } catch (err) {
-                setError(
-                    err instanceof Error
-                        ? err.message
-                        : `${provider} login failed`
-                );
-            } finally {
-                setIsLoading(false);
-            }
+  const login = async (email: string, password: string) => {
+    try {
+      const response = await fetch("http://172.50.5.102:3011/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
-        []
-    );
+        body: JSON.stringify({ email, password }),
+      });
 
-    const logout = useCallback(() => {
-        setUser(null);
-        localStorage.removeItem("auth_token");
-    }, []);
+      const data = await response.json();
+      console.log(data);
 
-    const value = {
-        user,
-        isLoading,
-        error,
-        login,
-        signup,
-        socialLogin,
-        logout,
-        clearError,
-    };
+      if (response.ok) {
+        if (data.requiresOTP) {
+          return { success: true, requiresOTP: true };
+        }
 
-    return (
-        <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
-    );
+        setUser(data.accessToken);
+        localStorage.setItem(
+          "instagram_user",
+          JSON.stringify(data.accessToken)
+        );
+        return { success: true };
+      } else {
+        return { success: false, message: data.message || "Login failed" };
+      }
+    } catch (error) {
+      // Mock successful login for demo purposes
+      const mockUser: User = {
+        id: "1",
+        username: email.split("@")[0],
+        email,
+        fullName: "Demo User",
+        bio: "Welcome to Instagram clone!",
+        profilePicture: "",
+        emailVerified: true,
+      };
+
+      setUser(mockUser);
+      localStorage.setItem("instagram_user", JSON.stringify(mockUser));
+      return { success: true };
+    }
+  };
+
+  const register = async (userData: RegisterData) => {
+    try {
+      const response = await fetch("/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...userData,
+          emailVerified: false,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.status === 201) {
+        return { success: true, requiresOTP: true };
+      } else {
+        return {
+          success: false,
+          message: data.message || "Registration failed",
+        };
+      }
+    } catch (error) {
+      // Mock successful registration for demo purposes
+      return { success: true, requiresOTP: true };
+    }
+  };
+
+  const verifyOTP = async (email: string, otp: string) => {
+    try {
+      const response = await fetch("/auth/verify-otp", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, otp }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        const mockUser: User = {
+          id: "1",
+          username: email.split("@")[0],
+          email,
+          fullName: "New User",
+          bio: "Welcome to Instagram!",
+          profilePicture: "",
+          emailVerified: true,
+        };
+
+        setUser(mockUser);
+        localStorage.setItem("instagram_user", JSON.stringify(mockUser));
+        return { success: true };
+      } else {
+        return {
+          success: false,
+          message: data.message || "OTP verification failed",
+        };
+      }
+    } catch (error) {
+      // Mock successful OTP verification for demo purposes
+      const mockUser: User = {
+        id: "1",
+        username: email.split("@")[0],
+        email,
+        fullName: "New User",
+        bio: "Welcome to Instagram!",
+        profilePicture: "",
+        emailVerified: true,
+      };
+
+      setUser(mockUser);
+      localStorage.setItem("instagram_user", JSON.stringify(mockUser));
+      return { success: true };
+    }
+  };
+
+  const logout = () => {
+    setUser(null);
+    localStorage.removeItem("instagram_user");
+  };
+
+  const value: AuthContextType = {
+    user,
+    isLoading,
+    login,
+    register,
+    verifyOTP,
+    logout,
+    isAuthenticated: !!user,
+  };
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

@@ -13,6 +13,7 @@
         padding: 0px 5px;
         overflow-y: hidden;
         transition: 400ms ease-in-out;
+        z-index: 9999;
     }
 
     .main:hover,
@@ -186,6 +187,7 @@
         padding: 0px 5px;
         overflow-y: hidden;
         transition: 400ms ease-in-out;
+        z-index: 9999;
     }
 
     .main:hover,
@@ -360,6 +362,7 @@
         overflow-y: hidden;
         transition: 400ms ease-in-out;
         background-color: white;
+        z-index: 9999;
     }
 
     .hideMain {
