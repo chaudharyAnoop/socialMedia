@@ -1,5 +1,6 @@
 .authContainer {
   min-height: 100vh;
+  width: 100vw;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -90,8 +91,13 @@
 }
 
 @keyframes spin {
-  0% { transform: translate(-50%, -50%) rotate(0deg); }
-  100% { transform: translate(-50%, -50%) rotate(360deg); }
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
 }
 
 .switchBox {
@@ -252,12 +258,12 @@
     border: none;
     background: transparent;
   }
-  
+
   .switchBox {
     border: none;
     background: transparent;
   }
-  
+
   .authContainer {
     padding: 0;
   }
