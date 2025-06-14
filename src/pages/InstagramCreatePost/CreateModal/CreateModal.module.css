@@ -1,0 +1,111 @@
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+  padding: 16px;
+}
+
+.modalContent {
+  background-color: white;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 32rem;
+  max-height: 90vh;
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.modalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid #e5e7eb;
+  position: relative;
+}
+
+.modalHeaderButton {
+  position: absolute;
+  padding: 4px;
+  background-color: transparent;
+  border: none;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  left: 16px;
+}
+
+.modalHeaderButton:hover {
+  background-color: #f3f4f6;
+}
+
+.modalHeaderButtonRight {
+  position: absolute;
+  right: 16px;
+  color: #3b82f6;
+  font-weight: 600;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.modalHeaderButtonRight:hover {
+  color: #2563eb;
+}
+
+.modalTitle {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.modalBody {
+  overflow-y: auto;
+  max-height: calc(90vh - 60px);
+}
+
+.hiddenInput {
+  display: none;
+}
+
+/* Dark Mode */
+@media (prefers-color-scheme: dark) {
+  .modalContent {
+    background-color: #1f2937; /* dark gray */
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+  }
+
+  .modalHeader {
+    border-bottom: 1px solid #374151;
+  }
+
+  .modalHeaderButton:hover {
+    background-color: #374151;
+  }
+
+  .modalTitle {
+    color: #f9fafb;
+  }
+
+  .modalHeaderButtonRight {
+    color: #60a5fa;
+  }
+
+  .modalHeaderButtonRight:hover {
+    color: #3b82f6;
+  }
+}
+
+/* Responsive styles */
+@media (min-width: 1024px) {
+  .modalContent {
+    max-width: 48rem;
+  }
+}
