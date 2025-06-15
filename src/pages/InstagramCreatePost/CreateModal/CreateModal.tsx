@@ -3,6 +3,7 @@ import { X } from 'lucide-react';
 import styles from './CreateModal.module.css';
 import DropZone from '../DropZone/DropZone';
 import MediaCarousel from '../MediaCarousel/MediaCarousel';
+import axios from 'axios';
 
 interface SelectedMedia {
   file: File;
@@ -35,132 +36,103 @@ const CreateModal: React.FC<CreateModalProps> = ({
     handleFiles(files);
   };
 
-  // const handleFiles = async (files: File[]): Promise<void> => {
-  //   setLoading(true); // 👈 start loader
 
-  //   try {
-  //     const response = await fetch('https://jsonplaceholder.typicode.com/posts', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify({
-  //         message: 'User selected media files',
-  //         fileCount: files.length,
-  //         timestamp: new Date().toISOString()
-  //       }),
-  //     });
+//-----------------------------------------------------------------------------
+//this is the  code which is used to pass the data
+//actual api calling 
+// const handleFiles = async (files: File[]): Promise<void> => {
+//   setLoading(true);
 
-  //     const data = await response.json();
-  //     console.log('Dummy API called successfully:', data);
-  //   } catch (error) {
-  //     console.error('Dummy API call failed:', error);
-  //   } finally {
-  //     setLoading(false); // 👈 stop loader
-  //   }
+//   const mediaFiles = files.filter(file =>
+//     file.type.startsWith('image/') || file.type.startsWith('video/')
+//   );
 
-  //   const mediaFiles = files.filter(file =>
-  //     file.type.startsWith('image/') || file.type.startsWith('video/')
-  //   );
+//   const newMedia: SelectedMedia[] = mediaFiles.map(file => ({
+//     file,
+//     preview: URL.createObjectURL(file),
+//     type: file.type.startsWith('image/') ? 'image' : 'video',
+//   }));
 
-  //   const newMedia: SelectedMedia[] = mediaFiles.map(file => ({
-  //     file,
-  //     preview: URL.createObjectURL(file),
-  //     type: file.type.startsWith('image/') ? 'image' : 'video'
-  //   }));
+//   try {
+//     const uploadedUrls: string[] = [];
 
-  //   setSelectedMedia(prev => [...prev, ...newMedia]);
+//     for (const file of mediaFiles) {
+//       // 1️⃣ Request presigned URL from your backend
+//       const { data } = await axios.post('https://jsonplaceholder.typicode.com/posts', {
+//         fileName: file.name,
+//         fileType: file.type,
+//       });
 
-  //   console.log('hi');
-  //   console.log(newMedia);
-  // };
+//       // 2️⃣ Upload the file directly to S3 using the pre-signed PUT URL
+//       //here we put data.urls.uploadUrL
+//       await axios.put('https://jsonplaceholder.typicode.com/posts/1', file, {
+//         headers: {
+//           'Content-Type': file.type,
+//         },
+        
+//       });
 
-// ------------------
+//       // 3️⃣ Collect the public S3 URL
+//       uploadedUrls.push(data.publicUrl);
+//     }
+
+//     setUploadedKeys(prev => [...prev, ...uploadedUrls]);
+//     setTimestamp(new Date().toISOString());
+//   } catch (error) {
+//     console.error('S3 Upload failed:', error);
+//   } finally {
+//     setLoading(false);
+//   }
+
+//   setSelectedMedia(prev => [...prev, ...newMedia]);
+// };
 
 
+//Duummy api calling
 const handleFiles = async (files: File[]): Promise<void> => {
   setLoading(true);
 
   const mediaFiles = files.filter(file =>
     file.type.startsWith('image/') || file.type.startsWith('video/')
   );
-  console.log(mediaFiles);
+
   const newMedia: SelectedMedia[] = mediaFiles.map(file => ({
     file,
     preview: URL.createObjectURL(file),
-    type: file.type.startsWith('image/') ? 'image' : 'video'
+    type: file.type.startsWith('image/') ? 'image' : 'video',
   }));
 
-  const payload = {
-    mediaFiles: mediaFiles.map(file => ({
-      name: file.name,
-      type: file.type,
-      size: file.size,
-      lastModified: file.lastModified,
-    }))
-  };
-//here we are getting the links of media images 
   try {
-    const response = await fetch('https://jsonplaceholder.typicode.com/posts/1', {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        message: 'Updated media files',
-        mediaCount: newMedia.length,
-        files: payload,
-        timestamp: new Date().toISOString()
-      }),
+    const uploadedUrls: string[] = [];
 
-    });
+    for (const file of mediaFiles) {
+      // 🧪 Dummy simulated presign URL response
+      const data = {
+        uploadUrl: 'https://dummyjson.com/posts/1', // dummy PUT endpoint
+        publicUrl: `https://dummy-cdn.com/media/${file.name}`, // dummy public file URL
+      };
 
-    const data = await response.json();
-    setUploadedKeys((prev)=>[...prev , "link1" , "link2"]);
-    setTimestamp(data.timestamp);
-    console.log('Dummy PUT API called successfully:', data);
+      // Simulate upload
+      await axios.put(data.uploadUrl, file, {
+        headers: {
+          'Content-Type': file.type,
+        },
+      });
+     console.log('success');
+      // Save dummy URL
+      uploadedUrls.push(data.publicUrl);
+    }
+
+    setUploadedKeys(prev => [...prev, ...uploadedUrls]);
+    setTimestamp(new Date().toISOString());
   } catch (error) {
-    console.error('Dummy PUT API call failed:', error);
+    console.error('S3 Upload failed:', error);
   } finally {
     setLoading(false);
   }
-  
+
   setSelectedMedia(prev => [...prev, ...newMedia]);
-
-  console.log('hi');
-  console.log(newMedia);
 };
-//-----------------------------------------------------------------------------
-//this is the  code which is used to pass the data
-// try {
-//   const uploadedKeys: string[] = [];
-
-//   for (const file of mediaFiles) {
-//     const uploadUrl = `https://your-s3-upload-url.com/${encodeURIComponent(file.name)}`;
-
-//     const res = await axios.put(uploadUrl, file, {
-//       headers: {
-//         'Content-Type': file.type,
-//       },
-//     });
-
-//     // Get key from response or fallback to file name
-//     const key = res.data?.key || file.name;
-//     uploadedKeys.push(key);
-//   }
-
-//   // ✅ Push all uploaded keys to parent state
-//   setUploadedKeys(prevKeys => [...prevKeys, ...uploadedKeys]);
-
-//   setTimestamp(new Date().toISOString());
-// } catch (error) {
-//   console.error('Upload failed:', error);
-// } finally {
-//   setLoading(false);
-// }
-
-
-
 
 
   const openFileSelector = (): void => {

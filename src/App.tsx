@@ -155,7 +155,7 @@ const AppContent: React.FC = () => {
             element={
               <ProtectedRoute>
                 <LandingPage />
-              </ProtectedRoute>
+                </ProtectedRoute>
             }
           />
           <Route
@@ -163,7 +163,7 @@ const AppContent: React.FC = () => {
             element={
               <ProtectedRoute>
                 <ExplorePage />
-              </ProtectedRoute>
+                </ProtectedRoute>
             }
           />
           <Route
@@ -171,7 +171,7 @@ const AppContent: React.FC = () => {
             element={
               <ProtectedRoute>
                 <InstagramCreatePost />
-              </ProtectedRoute>
+                </ProtectedRoute>
             }
           />
           <Route
@@ -179,7 +179,7 @@ const AppContent: React.FC = () => {
             element={
               <ProtectedRoute>
                 <AdminPage />
-              </ProtectedRoute>
+                </ProtectedRoute>
             }
           />
           <Route path="/signin" element={<Signin />} />
@@ -188,7 +188,7 @@ const AppContent: React.FC = () => {
             element={
               <ProtectedRoute>
                 <Dashboard />
-              </ProtectedRoute>
+                </ProtectedRoute>
             }
           />
         </Routes>
