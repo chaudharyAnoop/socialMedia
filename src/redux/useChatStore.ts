@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import toast from "react-hot-toast";
-import { axiosInstance } from "../lib/axios";
+// // import { axiosInstance } from "../lib/axios";
 import { type User, type Message, type MessageData } from "../types/types";
 
 interface ChatState {
@@ -50,7 +50,10 @@ export const useChatStore = create<ChatState>((set, get) => ({
     const { selectedUser, messages } = get();
     if (!selectedUser) return;
     try {
-      const res = await axiosInstance.post(`/messages/send/${selectedUser._id}`, messageData);
+      const res = await axiosInstance.post(
+        `/messages/send/${selectedUser._id}`,
+        messageData
+      );
       set({ messages: [...messages, res.data] });
     } catch (error: any) {
       toast.error(error.response.data.message);

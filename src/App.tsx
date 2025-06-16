@@ -1,11 +1,6 @@
 import styles from "./App.module.css";
 import React, { useEffect } from "react";
-import {
-  Route, Routes
-  BrowserRouter,
-  Navigate,
-  useLocation,
-} from "react-router-dom";
+import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import NavigationBar from "./components/NavigationBar/NavigationBar";
 import QuickAccess from "./components/QuickAccess/QuickAccess";
 import { Suspense, lazy } from "react";
@@ -17,10 +12,11 @@ import {
   requestNotificationPermission,
 } from "./firebase/firebase";
 import InstagramCreatePost from "./pages/InstagramCreatePost/InstagramCreatePost";
-import  LoginForm  from "./components/AuthForm/LoginForm";
+import LoginForm from "./components/AuthForm/LoginForm";
 import { AuthProvider } from "./contexts/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Dashboard from "./components/Dashboard/Dashboard";
+import HomePage from "./pages/chat/HomePage";
 
 const LandingPage = lazy(() => import("./pages/LandingPage/LandingPage"));
 const AdminPage = lazy(() => import("./pages/AdminPage/AdminPage"));
@@ -174,6 +170,14 @@ const AppContent: React.FC = () => {
               </ProtectedRoute>
             }
           />
+          {/* <Route
+            path="/chat"
+            element={
+              <ProtectedRoute>
+                <HomePage />
+              </ProtectedRoute>
+            }
+          /> */}
           <Route
             path="/admin"
             element={
