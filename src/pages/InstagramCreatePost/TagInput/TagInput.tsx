@@ -8,26 +8,26 @@ interface TaggedPerson {
 }
 
 interface TagInputProps {
-  taggedPeople: TaggedPerson[];
-  setTaggedPeople: React.Dispatch<React.SetStateAction<TaggedPerson[]>>;
+  taggedUsers: TaggedPerson[];
+  settaggedUsers: React.Dispatch<React.SetStateAction<TaggedPerson[]>>;
 }
 
-const TagInput: React.FC<TagInputProps> = ({ taggedPeople, setTaggedPeople }) => {
+const TagInput: React.FC<TagInputProps> = ({ taggedUsers, settaggedUsers }) => {
   const [tagInput, setTagInput] = useState('');
 
   const addTaggedPerson = (): void => {
-    if (tagInput.trim() && !taggedPeople.find(p => p.name === tagInput.trim())) {
+    if (tagInput.trim() && !taggedUsers.find(p => p.name === tagInput.trim())) {
       const newPerson: TaggedPerson = {
         id: Date.now().toString(),
         name: tagInput.trim()
       };
-      setTaggedPeople(prev => [...prev, newPerson]);
+      settaggedUsers(prev => [...prev, newPerson]);
       setTagInput('');
     }
   };
 
   const removeTaggedPerson = (id: string): void => {
-    setTaggedPeople(prev => prev.filter(p => p.id !== id));
+    settaggedUsers(prev => prev.filter(p => p.id !== id));
   };
 
   return (
@@ -54,9 +54,9 @@ const TagInput: React.FC<TagInputProps> = ({ taggedPeople, setTaggedPeople }) =>
         </button>
       </div>
       
-      {taggedPeople.length > 0 && (
+      {taggedUsers.length > 0 && (
         <div className={styles.tagList}>
-          {taggedPeople.map((person) => (
+          {taggedUsers.map((person) => (
             <span
               key={person.id}
               className={styles.tag}
