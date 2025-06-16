@@ -1,0 +1,99 @@
+.profileContainer {
+  padding: 1rem;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.profileHeader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+@media screen and (min-width: 520px) {
+  .profileHeader {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+}
+
+.profileImage {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.userInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+@media screen and (min-width: 520px) {
+  .userInfo {
+    text-align: left;
+  }
+}
+
+.username {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.fullName {
+  font-size: 1.2rem;
+  color: #555;
+}
+
+.bio {
+  margin-top: 0.5rem;
+  color: #777;
+}
+
+.postsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 0.5rem;
+}
+
+.postImage {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.loading {
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.2rem;
+}
+
+@media screen and (min-width: 900px) {
+  @media (prefers-color-scheme: dark) {
+    .profileContainer {
+      background-color: #0d0d0d;
+      color: #fff;
+    }
+  }
+}
+
+@media screen and (max-width: 900px) and (min-width: 520px) {
+  @media (prefers-color-scheme: dark) {
+    .profileContainer {
+      background-color: #121212;
+    }
+  }
+}
+
+@media screen and (max-width: 520px) {
+  @media (prefers-color-scheme: dark) {
+    .profileContainer {
+      background-color: #1a1a1a;
+    }
+  }
+}

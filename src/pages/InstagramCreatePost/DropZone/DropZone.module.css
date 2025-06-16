@@ -1,0 +1,122 @@
+.dropZone {
+  height: 320px;
+  border: 2px dashed #d1d5db;
+  border-radius: 8px;
+  margin: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.dropZone:hover:not(.dropZoneActive) {
+  border-color: #9ca3af;
+  background-color: #f9fafb;
+}
+
+.dropZoneActive {
+  border-color: #3b82f6;
+  background-color: #eff6ff;
+  transform: scale(1.05);
+}
+
+.uploadIcon {
+  width: 64px;
+  height: 64px;
+  background: linear-gradient(to bottom right, #a855f7, #ec4899);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.uploadTitle {
+  font-size: 1.125rem;
+  font-weight: bold;
+  color: #1f2937;
+  margin-bottom: 12px;
+}
+
+.uploadText {
+  color: #6b7280;
+  margin-bottom: 32px;
+  font-size: 1.125rem;
+}
+
+.uploadButton {
+  background: linear-gradient(to right, #3b82f6, #9333ea);
+  color: white;
+  padding: 12px 32px;
+  border-radius: 9999px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.uploadButton:hover {
+  background: linear-gradient(to right, #2563eb, #7c3aed);
+  transform: scale(1.05);
+}
+
+/* Dark Mode */
+@media (prefers-color-scheme: dark) {
+  .dropZone {
+    border-color: #374151;
+    background-color: #1f2937;
+  }
+
+  .dropZone:hover:not(.dropZoneActive) {
+    border-color: #4b5563;
+    background-color: #111827;
+  }
+
+  .dropZoneActive {
+    border-color: #60a5fa;
+    background-color: #1e3a8a;
+  }
+
+  .uploadTitle {
+    color: #f9fafb;
+  }
+
+  .uploadText {
+    color: #d1d5db;
+  }
+
+  .uploadButton {
+    box-shadow: 0 10px 15px -3px rgba(255, 255, 255, 0.05);
+  }
+}
+
+/* Responsive styles */
+@media (max-width: 640px) {
+  .dropZone {
+    height: 384px;
+  }
+
+  .uploadIcon {
+    width: 80px;
+    height: 80px;
+  }
+
+  .uploadTitle {
+    font-size: 1.25rem;
+  }
+
+  .uploadText {
+    font-size: 0.875rem;
+  }
+
+  .uploadButton {
+    padding: 8px 24px;
+    font-size: 0.875rem;
+  }
+}

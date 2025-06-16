@@ -1,0 +1,150 @@
+.gridContainer {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+}
+
+.gridItem {
+  position: relative;
+  aspect-ratio: 1;
+  cursor: pointer;
+  overflow: hidden;
+  background: #f5f5f5;
+}
+
+@media (prefers-color-scheme: dark) {
+  .gridItem {
+    background: #1a1a1a;
+  }
+}
+
+.postImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.2s ease;
+}
+
+.gridItem:hover .postImage {
+  transform: scale(1.05);
+}
+
+.videoIndicator {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  color: white;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 4px;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.videoIndicatorSvg {
+  width: 16px;
+  height: 16px;
+}
+
+.hoverOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.gridItem:hover .hoverOverlay {
+  opacity: 1;
+}
+
+.overlayContent {
+  display: flex;
+  gap: 24px;
+  color: white;
+}
+
+.overlayButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.overlayButton:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.overlayButtonSvg {
+  width: 20px;
+  height: 20px;
+}
+
+.overlayButtonText {
+  font-size: 14px;
+}
+
+/* Mobile styles */
+@media screen and (max-width: 900px) {
+  .gridContainer {
+    gap: 2px;
+  }
+  
+  .overlayContent {
+    gap: 16px;
+  }
+  
+  .overlayButtonSvg {
+    width: 18px;
+    height: 18px;
+  }
+  
+  .overlayButtonText {
+    font-size: 12px;
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .gridContainer {
+    gap: 1px;
+  }
+  
+  .videoIndicator {
+    top: 4px;
+    right: 4px;
+    padding: 2px;
+  }
+  
+  .videoIndicatorSvg {
+    width: 12px;
+    height: 12px;
+  }
+  
+  .overlayContent {
+    gap: 12px;
+  }
+  
+  .overlayButton {
+    padding: 4px;
+  }
+  
+  .overlayButtonSvg {
+    width: 16px;
+    height: 16px;
+  }
+  
+  .overlayButtonText {
+    font-size: 11px;
+  }
+}

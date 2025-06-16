@@ -1,0 +1,34 @@
+.explorePage {
+  min-height: 100vh;
+  background: white;
+  padding-top: 60px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .explorePage {
+    background: black;
+  }
+}
+
+.container {
+  max-width: 975px;
+  margin: 0 auto;
+  padding: 24px 20px;
+}
+
+@media screen and (max-width: 900px) {
+  .container {
+    padding: 16px;
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .explorePage {
+    padding-top: 0;
+    padding-bottom: 60px;
+  }
+  
+  .container {
+    padding: 12px;
+  }
+}

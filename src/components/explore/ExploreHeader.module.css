@@ -1,0 +1,147 @@
+.headerContainer {
+  margin-bottom: 24px;
+}
+
+.searchBarWrapper {
+  margin-bottom: 24px;
+}
+
+.searchRelativeContainer {
+  position: relative;
+  max-width: 268px;
+  margin: 0 auto;
+}
+
+.searchInputContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 16px;
+  width: 16px;
+  height: 16px;
+  color: #8e8e8e;
+  z-index: 1;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 8px 16px 8px 40px;
+  background: #efefef;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #262626;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+@media (prefers-color-scheme: dark) {
+  .searchInput {
+    background: #262626;
+    color: white;
+  }
+}
+
+.searchInput:focus {
+  border-color: #dbdbdb;
+  background: white;
+}
+
+@media (prefers-color-scheme: dark) {
+  .searchInput:focus {
+    border-color: #363636;
+    background: #1a1a1a;
+  }
+}
+
+.searchInput::placeholder {
+  color: #8e8e8e;
+}
+
+.categoryTabsContainer {
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+  border-bottom: 1px solid #dbdbdb;
+}
+
+@media (prefers-color-scheme: dark) {
+  .categoryTabsContainer {
+    border-bottom-color: #262626;
+  }
+}
+
+.categoryButton {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 16px 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #8e8e8e;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-bottom: 1px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.categoryButton.active {
+  color: #262626;
+  border-bottom-color: #262626;
+}
+
+@media (prefers-color-scheme: dark) {
+  .categoryButton.active {
+    color: white;
+    border-bottom-color: white;
+  }
+}
+
+.categoryButtonSvg {
+  width: 12px;
+  height: 12px;
+}
+
+.categoryButtonText {
+  display: block;
+}
+
+/* Mobile styles */
+@media screen and (max-width: 900px) {
+  .searchRelativeContainer {
+    max-width: 100%;
+  }
+  
+  .categoryTabsContainer {
+    gap: 40px;
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .headerContainer {
+    margin-bottom: 16px;
+  }
+  
+  .searchBarWrapper {
+    margin-bottom: 16px;
+  }
+  
+  .categoryTabsContainer {
+    gap: 20px;
+  }
+  
+  .categoryButtonText {
+    display: none;
+  }
+  
+  .categoryButton {
+    padding: 12px 8px;
+  }
+}

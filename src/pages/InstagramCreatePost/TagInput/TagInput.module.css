@@ -1,0 +1,123 @@
+.tagSection {
+  margin-bottom: 55px;
+}
+
+.tagHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.tagLabel {
+  font-size: 0.875rem;
+  color: #374151;
+}
+
+.tagInput {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.tagInputField {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-family: inherit;
+  background-color: #fff;
+  color: #111827;
+}
+
+.tagInputField:focus {
+  outline: none;
+  border-color: transparent;
+  box-shadow: 0 0 0 2px #3b82f6;
+}
+
+.tagAddButton {
+  padding: 8px 16px;
+  background-color: #3b82f6;
+  color: white;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.tagAddButton:hover {
+  background-color: #2563eb;
+}
+
+.tagList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background-color: #dbeafe;
+  color: #1e40af;
+  padding: 4px 8px;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+}
+
+.tagRemove {
+  color: #2563eb;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+
+.tagRemove:hover {
+  color: #1e40af;
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  .tagLabel {
+    color: #d1d5db;
+  }
+
+  .tagInputField {
+    background-color: #0f172a;
+    color: #f1f5f9;
+    border: 1px solid #334155;
+  }
+
+  .tagInputField:focus {
+    box-shadow: 0 0 0 2px #3b82f6;
+  }
+
+  .tagAddButton {
+    background-color: #3b82f6;
+    color: white;
+  }
+
+  .tagAddButton:hover {
+    background-color: #2563eb;
+  }
+
+  .tag {
+    background-color: #1e3a8a;
+    color: #dbeafe;
+  }
+
+  .tagRemove {
+    color: #93c5fd;
+  }
+
+  .tagRemove:hover {
+    color: #bfdbfe;
+  }
+}

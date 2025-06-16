@@ -1,0 +1,318 @@
+.searchResultsContainer {
+  padding: 24px 0;
+}
+
+.sectionHeader {
+  font-size: 16px;
+  font-weight: 600;
+  color: #262626;
+  margin: 0 0 16px 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  .sectionHeader {
+    color: white;
+  }
+}
+
+.accountsList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 32px;
+}
+
+.accountItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.accountItem:hover {
+  background-color: #f5f5f5;
+}
+
+@media (prefers-color-scheme: dark) {
+  .accountItem:hover {
+    background-color: #1a1a1a;
+  }
+}
+
+.profileImageContainer {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.profileImage {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.verifiedBadgeOuter {
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  background: white;
+  border-radius: 50%;
+  padding: 2px;
+  color: #0095f6;
+}
+
+@media (prefers-color-scheme: dark) {
+  .verifiedBadgeOuter {
+    background: black;
+  }
+}
+
+.accountInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.usernameContainer {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.username {
+  font-size: 14px;
+  font-weight: 600;
+  color: #262626;
+}
+
+@media (prefers-color-scheme: dark) {
+  .username {
+    color: white;
+  }
+}
+
+.verifiedIcon {
+  width: 12px;
+  height: 12px;
+  color: #0095f6;
+}
+
+.fullName {
+  font-size: 14px;
+  color: #8e8e8e;
+  margin: 0;
+}
+
+.followersCount {
+  font-size: 12px;
+  color: #8e8e8e;
+  margin: 0;
+}
+
+.followButton {
+  padding: 5px 16px;
+  background: #0095f6;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.followButton:hover {
+  background: #1877f2;
+}
+
+.postsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+  margin-bottom: 32px;
+}
+
+.postGridItem {
+  position: relative;
+  aspect-ratio: 1;
+  cursor: pointer;
+  overflow: hidden;
+  background: #f5f5f5;
+}
+
+@media (prefers-color-scheme: dark) {
+  .postGridItem {
+    background: #1a1a1a;
+  }
+}
+
+.postImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.2s ease;
+}
+
+.postGridItem:hover .postImage {
+  transform: scale(1.05);
+}
+
+.videoIndicator {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  color: white;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 4px;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hoverOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.postGridItem:hover .hoverOverlay {
+  opacity: 1;
+}
+
+.overlayContent {
+  display: flex;
+  gap: 24px;
+  color: white;
+}
+
+.overlayButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.overlayButton:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.overlayButtonSpan {
+  font-size: 14px;
+}
+
+.noResultsContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 64px 16px;
+  text-align: center;
+}
+
+.noResultsMessage {
+  font-size: 22px;
+  font-weight: 300;
+  color: #262626;
+  margin: 0 0 8px 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  .noResultsMessage {
+    color: white;
+  }
+}
+
+.noResultsSubMessage {
+  font-size: 14px;
+  color: #8e8e8e;
+  margin: 0;
+}
+
+/* Mobile styles */
+@media screen and (max-width: 900px) {
+  .searchResultsContainer {
+    padding: 16px 0;
+  }
+  
+  .accountItem {
+    padding: 6px 12px;
+  }
+  
+  .postsGrid {
+    gap: 2px;
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .searchResultsContainer {
+    padding: 12px 0;
+  }
+  
+  .sectionHeader {
+    font-size: 14px;
+    margin-bottom: 12px;
+  }
+  
+  .accountItem {
+    padding: 4px 8px;
+    gap: 8px;
+  }
+  
+  .profileImage {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .username {
+    font-size: 13px;
+  }
+  
+  .fullName,
+  .followersCount {
+    font-size: 12px;
+  }
+  
+  .followButton {
+    padding: 4px 12px;
+    font-size: 12px;
+  }
+  
+  .postsGrid {
+    gap: 1px;
+    margin-bottom: 24px;
+  }
+  
+  .overlayContent {
+    gap: 16px;
+  }
+  
+  .overlayButtonSpan {
+    font-size: 12px;
+  }
+  
+  .noResultsContainer {
+    padding: 48px 12px;
+  }
+  
+  .noResultsMessage {
+    font-size: 18px;
+  }
+  
+  .noResultsSubMessage {
+    font-size: 12px;
+  }
+}
