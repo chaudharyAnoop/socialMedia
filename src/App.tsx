@@ -15,7 +15,7 @@ import {
   requestNotificationPermission,
 } from "./firebase/firebase";
 import InstagramCreatePost from "./pages/InstagramCreatePost/InstagramCreatePost";
-import { LoginForm } from "./components/AuthForm/LoginForm";
+import  LoginForm  from "./components/AuthForm/LoginForm";
 
 const LandingPage = lazy(() => import("./pages/LandingPage/LandingPage"));
 const AdminPage = lazy(() => import("./pages/AdminPage/AdminPage"));
