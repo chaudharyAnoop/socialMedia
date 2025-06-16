@@ -1,10 +1,10 @@
 import styles from "./App.module.css";
 import React, { useEffect } from "react";
 import {
-  Route, Routes
-  
+  Route, Routes,
   Navigate,
   useLocation,
+  BrowserRouter,
 } from "react-router-dom";
 import NavigationBar from "./components/NavigationBar/NavigationBar";
 import QuickAccess from "./components/QuickAccess/QuickAccess";
