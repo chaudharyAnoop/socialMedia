@@ -29,7 +29,7 @@ body {
   margin: 0;
   display: flex;
   place-items: flex-start;
-  /* width: 100vw; */
+  width: 100vw;
   height: 100vh;
   border: none;
   outline: none;
