@@ -34,12 +34,26 @@ export const fetchPosts = createAsyncThunk<
   { rejectValue: string }
 >("posts/fetchPosts", async ({ page, limit }, { rejectWithValue }) => {
   try {
+    let token = localStorage.getItem("instagram_user");
+    let cleanedUser = token?.slice(1, -1);
+    console.log(cleanedUser);
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${cleanedUser}`,
+      "X-Custom-Header": "CustomValue",
+    };
     const response = await axios.get<{
       posts: Post[];
       total: number;
       skip: number;
       limit: number;
-    }>(`https://dummyjson.com/posts?limit=${limit}&skip=${(page - 1) * limit}`);
+    }>(
+      `http://172.50.5.102:3000/posts/feed?limit=${limit}&skip=${
+        (page - 1) * limit
+      }`,
+      { headers }
+    );
+    console.log(response.data.posts);
     return { posts: response.data.posts, total: response.data.total };
   } catch (error) {
     if (axios.isAxiosError(error)) {

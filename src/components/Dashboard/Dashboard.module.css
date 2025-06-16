@@ -1,194 +1,221 @@
-.container {
+.dashboard {
   min-height: 100vh;
-  background-color: #000000;
-  padding: 20px;
+  background: var(--bg-secondary);
 }
 
 .header {
+  background: var(--bg-primary);
+  border-bottom: 1px solid var(--border-color);
+  padding: 8px 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.headerContent {
+  max-width: 975px;
+  margin: 0 auto;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 0 20px 20px 20px;
-  border-bottom: 1px solid #363636;
-  margin-bottom: 20px;
+  justify-content: space-between;
+  padding: 0 20px;
 }
 
 .logo {
+  font-family: 'Billabong', cursive;
+  font-size: 28px;
+  color: var(--text-primary);
+  margin: 0;
+  font-weight: normal;
+}
+
+.searchContainer {
+  flex: 1;
+  max-width: 268px;
+  margin: 0 24px;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 8px 16px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--text-primary);
+  text-align: center;
+}
+
+.searchInput::placeholder {
+  color: var(--text-secondary);
+}
+
+.searchInput:focus {
+  outline: none;
+  text-align: left;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.navButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-primary);
+  padding: 8px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
+}
+
+.navButton:hover {
+  background: var(--bg-secondary);
+}
+
+.navButton svg {
+  width: 24px;
+  height: 24px;
+}
+
+.profileButton {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--button-primary);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.main {
+  max-width: 975px;
+  margin: 0 auto;
+  padding: 30px 20px;
+}
+
+.welcomeCard {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 40px;
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.welcomeTitle {
   font-size: 24px;
-  font-weight: 400;
-  color: #FFFFFF;
-  font-family: 'Billabong', cursive, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-weight: 300;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+}
+
+.welcomeSubtitle {
+  color: var(--text-secondary);
+  font-size: 16px;
+  margin-bottom: 20px;
 }
 
 .userInfo {
   display: flex;
   align-items: center;
-  gap: 12px;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 20px;
 }
 
-.avatar {
-  width: 32px;
-  height: 32px;
+.userAvatar {
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
-  object-fit: cover;
-  border: 1px solid #363636;
-}
-
-.avatarPlaceholder {
-  width: 32px;
-  height: 32px;
-  background-color: #363636;
-  border-radius: 50%;
+  background: var(--button-primary);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #8E8E8E;
+  color: white;
+  font-size: 20px;
+  font-weight: 600;
 }
 
-.username {
-  color: #F5F5F5;
+.userDetails h3 {
+  font-size: 16px;
   font-weight: 600;
+  color: var(--text-primary);
+  margin: 0 0 4px;
+}
+
+.userDetails p {
   font-size: 14px;
+  color: var(--text-secondary);
+  margin: 0;
 }
 
 .logoutButton {
-  background: none;
-  border: 1px solid #363636;
-  color: #F5F5F5;
-  padding: 6px 12px;
+  background: var(--button-primary);
+  color: white;
+  border: none;
   border-radius: 4px;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 600;
   cursor: pointer;
-  font-size: 12px;
-  transition: all 0.2s ease;
+  margin-top: 20px;
+  transition: background-color 0.2s ease;
 }
 
 .logoutButton:hover {
-  background-color: #121212;
-  border-color: #ED4956;
-  color: #ED4956;
+  background: var(--button-primary-hover);
 }
 
-.welcome {
-  text-align: center;
-  color: #F5F5F5;
-  max-width: 600px;
-  margin: 40px auto;
-}
-
-.welcomeTitle {
-  font-size: 24px;
-  font-weight: 600;
-  margin-bottom: 16px;
-}
-
-.welcomeText {
-  color: #8E8E8E;
-  line-height: 1.6;
-  margin-bottom: 12px;
-}
-
-.profileDetails {
-  background-color: #121212;
-  border: 1px solid #363636;
+.feedPlaceholder {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
   border-radius: 8px;
-  padding: 20px;
-  margin: 20px auto;
-  max-width: 400px;
-}
-
-.profileHeader {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  margin-bottom: 16px;
-}
-
-.profileAvatar {
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid #363636;
-}
-
-.profileAvatarPlaceholder {
-  width: 64px;
-  height: 64px;
-  background-color: #363636;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #8E8E8E;
-  border: 2px solid #363636;
-}
-
-.profileInfo h3 {
-  color: #F5F5F5;
-  font-size: 18px;
-  font-weight: 600;
-  margin-bottom: 4px;
-}
-
-.profileInfo p {
-  color: #8E8E8E;
-  font-size: 14px;
-  margin-bottom: 2px;
-}
-
-.providerBadge {
-  font-size: 12px !important;
-  color: #0095F6 !important;
-  font-weight: 500;
-}
-
-.bio {
-  color: #F5F5F5;
-  line-height: 1.4;
-  font-size: 14px;
-}
-
-.demoNote {
-  background-color: #0A1A0A;
-  border: 1px solid #00D084;
-  border-radius: 8px;
-  padding: 16px;
-  margin: 20px auto;
-  max-width: 500px;
+  padding: 60px 40px;
   text-align: center;
+  color: var(--text-secondary);
 }
 
-.demoNote h4 {
-  color: #00D084;
-  font-size: 14px;
-  font-weight: 600;
-  margin-bottom: 8px;
-}
-
-.demoNote p {
-  color: #8E8E8E;
-  font-size: 12px;
-  line-height: 1.4;
+.feedPlaceholder svg {
+  width: 48px;
+  height: 48px;
+  margin-bottom: 16px;
+  opacity: 0.5;
 }
 
 @media (max-width: 768px) {
-  .header {
-    padding: 0 10px 20px 10px;
+  .headerContent {
+    padding: 0 16px;
   }
   
-  .userInfo {
-    gap: 8px;
-  }
-  
-  .username {
+  .searchContainer {
     display: none;
   }
   
-  .container {
-    padding: 10px;
+  .nav {
+    gap: 16px;
   }
   
-  .profileDetails {
-    margin: 20px 10px;
+  .main {
+    padding: 20px 16px;
+  }
+  
+  .welcomeCard {
+    padding: 24px 20px;
+  }
+  
+  .userInfo {
+    flex-direction: column;
+    gap: 12px;
   }
 }

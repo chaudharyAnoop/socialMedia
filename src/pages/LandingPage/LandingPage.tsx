@@ -58,23 +58,24 @@ function LandingPage() {
               <div ref={lastPostElementRef} key={post.id}>
                 <Post
                   key={uuidv4()}
-                  title={post.title}
-                  likecount={post.reactions.likes.toString()}
-                  body={post.body}
+                  title={"post.title"}
+                  likecount={"post.reactions.likes.toString()"}
+                  body={"post.body"}
                   imgUrl={`https://picsum.photos/2000/2000?random=${post.id}`}
-                  alt={post.title}
+                  alt={"post.title"}
                 />
+                <p>vkjvhhv</p>
               </div>
             );
           }
           return (
             <Post
               key={uuidv4()}
-              title={post.title}
-              likecount={post.reactions.likes.toString()}
-              body={post.body}
+              title={"post.title"}
+              likecount={"post.reactions.likes.toString()"}
+              body={"post.body"}
               imgUrl={`https://picsum.photos/2000/2000?random=${post.id}`}
-              alt={post.title}
+              alt={"post.title"}
             />
           );
         })}
