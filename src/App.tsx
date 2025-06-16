@@ -1,16 +1,14 @@
 import styles from "./App.module.css";
 import React, { useEffect } from "react";
 import {
-  BrowserRouter,
-  Routes,
-  Route,
+  Route, Routes,
   Navigate,
   useLocation,
+  BrowserRouter,
 } from "react-router-dom";
 import NavigationBar from "./components/NavigationBar/NavigationBar";
 import QuickAccess from "./components/QuickAccess/QuickAccess";
 import { Suspense, lazy } from "react";
-import RouteChangeHandler from "./components/RouteChangeHandler";
 import ExplorePage from "./pages/explore/ExplorePage";
 import Signin from "./pages/Signin/Signin";
 import {
@@ -18,6 +16,7 @@ import {
   requestNotificationPermission,
 } from "./firebase/firebase";
 import InstagramCreatePost from "./pages/InstagramCreatePost/InstagramCreatePost";
+import  LoginForm  from "./components/AuthForm/LoginForm";
 import { AuthProvider } from "./contexts/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Dashboard from "./components/Dashboard/Dashboard";

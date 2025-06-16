@@ -37,6 +37,7 @@ function LandingPage() {
       dispatch(fetchPosts({ page: 1, limit: 20 }));
     }
   }, [status, dispatch]);
+  console.log(posts);
 
   return (
     <div className={styles.main}>
@@ -55,14 +56,15 @@ function LandingPage() {
         {posts.map((post, index) => {
           if (posts.length === index + 1) {
             return (
-              <div ref={lastPostElementRef} key={post.id}>
+              <div ref={lastPostElementRef} key={post._id}>
                 <Post
                   key={uuidv4()}
                   title={"post.title"}
-                  likecount={"post.reactions.likes.toString()"}
-                  body={"post.body"}
-                  imgUrl={`https://picsum.photos/2000/2000?random=${post.id}`}
+                  likecount={"sadasdfdsf"}
+                  body={"post.toString()"}
+                  imgUrl={`https://dummy-project-bucket.s3.ap-south-1.amazonaws.com/media/1750074781800-y8cnbn.png`}
                   alt={"post.title"}
+                  postId={post._id.toString()}
                 />
                 <p>vkjvhhv</p>
               </div>
@@ -74,8 +76,9 @@ function LandingPage() {
               title={"post.title"}
               likecount={"post.reactions.likes.toString()"}
               body={"post.body"}
-              imgUrl={`https://picsum.photos/2000/2000?random=${post.id}`}
+              imgUrl={`https://picsum.photos/2000/2000?random=${post._id}`}
               alt={"post.title"}
+              postId={post._id.toString()}
             />
           );
         })}
