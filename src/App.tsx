@@ -80,51 +80,51 @@ const AdminPage = lazy(() => import("./pages/AdminPage/AdminPage"));
 //                 <Route
 //                   path="/"
 //                   element={
-//                     
+//                     <ProtectedRoute>
 //                       <LandingPage />
-//                     
+//                     </ProtectedRoute>
 //                   }
 //                 />
 //                 <Route
 //                   path="/explore"
 //                   element={
-//                     
+//                     <ProtectedRoute>
 //                       <ExplorePage />
-//                     
+//                     </ProtectedRoute>
 //                   }
 //                 />
 //                 <Route
 //                   path="/create"
 //                   element={
-//                     
+//                     <ProtectedRoute>
 //                       <InstagramCreatePost />
-//                     
+//                     </ProtectedRoute>
 //                   }
 //                 />
 //                 <Route
 //                   path="/admin"
 //                   element={
-//                     
+//                     <ProtectedRoute>
 //                       <AdminPage />
-//                     
+//                     </ProtectedRoute>
 //                   }
 //                 />
 //                 <Route path="/signin" element={<Signin />} />
 //                 <Route
 //                   path="/dashboard"
 //                   element={
-//                     
+//                     <ProtectedRoute>
 //                       <Dashboard />
-//                     
+//                     </ProtectedRoute>
 //                   }
 //                 />
 //                 {/* Redirect any unmatched routes to signin or landing based on auth state */}
 //                 <Route
 //                   path="*"
 //                   element={
-//                     
+//                     <ProtectedRoute>
 //                       <Navigate to="/" replace />
-//                     
+//                     </ProtectedRoute>
 //                   }
 //                 />
 //               </Routes>
@@ -153,42 +153,42 @@ const AppContent: React.FC = () => {
           <Route
             path="/"
             element={
-              
+              <ProtectedRoute>
                 <LandingPage />
-                
+                </ProtectedRoute>
             }
           />
           <Route
             path="/explore"
             element={
-              
+              <ProtectedRoute>
                 <ExplorePage />
-                
+                </ProtectedRoute>
             }
           />
           <Route
             path="/create"
             element={
-              
+              <ProtectedRoute>
                 <InstagramCreatePost />
-                
+                </ProtectedRoute>
             }
           />
           <Route
             path="/admin"
             element={
-              
+              <ProtectedRoute>
                 <AdminPage />
-                
+                </ProtectedRoute>
             }
           />
           <Route path="/signin" element={<Signin />} />
           <Route
             path="/dashboard"
             element={
-              
+              <ProtectedRoute>
                 <Dashboard />
-                
+                </ProtectedRoute>
             }
           />
         </Routes>
