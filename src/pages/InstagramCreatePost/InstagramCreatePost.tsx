@@ -11,6 +11,11 @@ interface SelectedMedia {
   file: File;
   preview: string;
   type: 'image' | 'video';
+  presignedData?: {
+    uploadUrl: string;
+    publicUrl: string;
+    fileKey: string;
+  };
 }
 
 interface TaggedPerson {
@@ -52,17 +57,71 @@ const InstagramCreatePost: React.FC = () => {
   };
   const token  = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODQ4MDNjNTA1NzRjNGVlNDFlZDIxYTgiLCJlbWFpbCI6ImFrc2hhdEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImRldmljZUlkIjoidGVzdC1kZXZpY2UiLCJpcEFkZHJlc3MiOiIxMjcuMC4wLjEiLCJ1c2VyQWdlbnQiOiJQb3N0bWFuUnVudGltZS83LjI5LjAiLCJpYXQiOjE3NTAwNzQ3MTcsImV4cCI6MTc1MDE2MTExNywic3ViIjoiNjg0ODAzYzUwNTc0YzRlZTQxZWQyMWE4In0.chBN1DBNLUADQ2LLYQKwinmCUioW2EowVK6JKu6kh00";
 //here we send the request to gaurav with link,content,tags people  
-  const handleShare = (): void => {
+  // const handleShare = (): void => {
+  //   console.log('Sharing post:', {
+  //     content,
+  //     taggedUsers: taggedUsers.map(p => p.name),
+  //     mediaKeys,
+  //     visibility
+  //   });
+
+    
+  //   const payload = {
+  //     mediaKeys,
+  //     content,
+  //     // taggedUsers: taggedUsers.map(p => p.name),
+  //     visibility
+  //   };
+  //   axios.post(
+  //     uploadmedia,
+  //     payload,
+  //     {
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //         'Authorization': `Bearer ${token}`, // if needed token is above in this file dont find here and there
+  //       },
+       
+  //     }
+  //   )
+  //   .then((response : AxiosResponse) => {
+  //     console.log('Posted successfully', response.data);
+  //   })
+  //   .catch((error:AxiosError) => {
+  //     console.error('Error posting data', error);
+  //   });
+  
+  //   // console.log("Final POST Payload:", payload);
+
+  //   closeShareModal();
+  // };
+  const handleShare = async (): Promise<void> => {
     console.log('Sharing post:', {
       content,
       taggedUsers: taggedUsers.map(p => p.name),
       mediaKeys,
       visibility
     });
+     // Upload all files to S3 first
+     const uploadedUrls: string[] = [];
+     for (const media of selectedMedia) {
+      if (!media.presignedData) continue;
+      
+      await axios.put(media.presignedData.uploadUrl, media.file, {
+        headers: {
+          'Content-Type': media.file.type,
+        },
+      });
+      
+      uploadedUrls.push(media.presignedData.fileKey);
+    }
+    setmediaKeys(uploadedUrls);
+    const taggedUsersData = taggedUsers.length > 0 
+      ? taggedUsers.map(p => p.name)
+      : "";
     const payload = {
       mediaKeys,
       content,
-      // taggedUsers: taggedUsers.map(p => p.name),
+      taggedUsers: taggedUsersData,
       visibility
     };
     axios.post(
@@ -87,6 +146,7 @@ const InstagramCreatePost: React.FC = () => {
 
     closeShareModal();
   };
+  
 
   return (
     <div className={styles.container}>
@@ -121,6 +181,7 @@ const InstagramCreatePost: React.FC = () => {
       {/* Modals */}
       {isCreateModalOpen && (
         <CreateModal
+          closeCreateModal={closeCreateModal}
           setTimestamp={setTimestamp}
           selectedMedia={selectedMedia}
           setmediaKeys={setmediaKeys}
