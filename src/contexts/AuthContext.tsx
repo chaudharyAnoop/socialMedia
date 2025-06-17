@@ -92,10 +92,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           return { success: true, requiresOTP: true };
         }
 
-        setUser(data.accessToken);
+        setUser(data.access_token);
         localStorage.setItem(
           "instagram_user",
-          JSON.stringify(data.accessToken)
+          JSON.stringify(data.access_token)
         );
         return { success: true };
       } else {
