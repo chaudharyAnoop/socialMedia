@@ -1,6 +1,15 @@
 import styles from "./App.module.css";
 import React, { useEffect } from "react";
+
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
+
+import {
+  Route,
+  Routes,
+  Navigate,
+  useLocation,
+  BrowserRouter,
+} from "react-router-dom";
 import NavigationBar from "./components/NavigationBar/NavigationBar";
 import QuickAccess from "./components/QuickAccess/QuickAccess";
 import { Suspense, lazy } from "react";

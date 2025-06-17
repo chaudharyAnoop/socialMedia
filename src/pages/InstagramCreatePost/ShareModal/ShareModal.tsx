@@ -17,23 +17,48 @@ interface TaggedPerson {
 
 interface ShareModalProps {
   selectedMedia: SelectedMedia[];
-  caption: string;
-  setCaption: React.Dispatch<React.SetStateAction<string>>;
-  taggedPeople: TaggedPerson[];
-  setTaggedPeople: React.Dispatch<React.SetStateAction<TaggedPerson[]>>;
+  content: string;
+  visibility:String;
+  setVisibility:any;
+  setcontent: React.Dispatch<React.SetStateAction<string>>;
+  taggedUsers: TaggedPerson[];
+  settaggedUsers: React.Dispatch<React.SetStateAction<TaggedPerson[]>>;
   onBack: () => void;
   onShare: () => void;
 }
 
+
+
+
+
+
+
+
 const ShareModal: React.FC<ShareModalProps> = ({
   selectedMedia,
-  caption,
-  setCaption,
-  taggedPeople,
-  setTaggedPeople,
+  content,
+  setcontent,
+  taggedUsers,
+  settaggedUsers,
+  visibility,
+  setVisibility,
   onBack,
   onShare
 }) => {
+
+
+  const  addpublic = (): void => {
+    setVisibility("public")
+  };
+  
+  const  addprivate = (): void => {
+    setVisibility("private");
+  };
+  
+
+
+
+
   return (
     <div className={styles.modal}>
       <div className={styles.shareModal}>
@@ -65,7 +90,7 @@ const ShareModal: React.FC<ShareModalProps> = ({
             />
           </div>
           
-          {/* Caption and Options */}
+          {/* content and Options */}
           <div className={styles.shareOptions}>
             {/* User Info */}
             <div className={styles.userInfo}>
@@ -73,26 +98,32 @@ const ShareModal: React.FC<ShareModalProps> = ({
               <span className={styles.username}>your_username</span>
             </div>
             
-            {/* Caption */}
-            <div className={styles.captionContainer}>
+            {/* content */}
+            <div className={styles.contentContainer}>
               <textarea
-                value={caption}
-                onChange={(e) => setCaption(e.target.value)}
-                placeholder="Write a caption..."
-                className={styles.captionInput}
+                value={content}
+                onChange={(e) => setcontent(e.target.value)}
+                placeholder="Write a content..."
+                className={styles.contentInput}
                 maxLength={2200}
               />
             </div>
             
-            <div className={styles.captionCounter}>
-              {caption.length}/2,200
+            <div className={styles.contentCounter}>
+              {content.length}/2,200
             </div>
             
             {/* Tagged People */}
             <TagInput
-              taggedPeople={taggedPeople}
-              setTaggedPeople={setTaggedPeople}
+              taggedUsers={taggedUsers}
+              settaggedUsers={settaggedUsers}
             />
+            <button onClick={addpublic} >
+              public 
+            </button>
+            <button onClick={addprivate}>
+              private
+            </button>
             
             {/* Share Options */}
             {/* <div className={styles.shareOptionsList}>
