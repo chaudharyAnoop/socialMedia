@@ -5,12 +5,12 @@
 // import Navbar from "../components/Navbar";
 
 import ChatContainer from "../../components/chat/ChatContainer";
-import NoChatSelected from "../../components/chat/NoChatSelected";
+// import NoChatSelected from "../../components/chat/NoChatSelected";
 import Sidebar from "../../components/chat/Sidebar";
-import { useChatStore } from "../../redux/useChatStore";
+// import { useChatStore } from "../../redux/useChatStore";
 
 const HomePage = () => {
-  const { selectedUser } = useChatStore();
+  // const { selectedUser } = useChatStore();
 
   return (
     <div className="h-screen bg-black">
@@ -19,7 +19,7 @@ const HomePage = () => {
         <div className="bg-gray-900 rounded-lg shadow-cl w-full max-w-6xl h-[calc(100vh-8rem)]">
           <div className="flex h-full rounded-lg overflow-hidden">
             <Sidebar />
-            {!selectedUser ? <NoChatSelected /> : <ChatContainer />}
+            <ChatContainer />
           </div>
         </div>
       </div>

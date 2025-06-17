@@ -16,7 +16,6 @@ import LoginForm from "./components/AuthForm/LoginForm";
 import { AuthProvider } from "./contexts/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Dashboard from "./components/Dashboard/Dashboard";
-import HomePage from "./pages/chat/HomePage";
 
 const LandingPage = lazy(() => import("./pages/LandingPage/LandingPage"));
 const AdminPage = lazy(() => import("./pages/AdminPage/AdminPage"));
@@ -170,14 +169,14 @@ const AppContent: React.FC = () => {
               </ProtectedRoute>
             }
           />
-          {/* <Route
-            path="/chat"
+          <Route
+            path="/create"
             element={
               <ProtectedRoute>
-                <HomePage />
+                <InstagramCreatePost />
               </ProtectedRoute>
             }
-          /> */}
+          />
           <Route
             path="/admin"
             element={
