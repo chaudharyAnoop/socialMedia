@@ -1,0 +1,291 @@
+/* components/SearchModal/SearchModal.module.css */
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  z-index: 1000;
+  padding: 40px 20px;
+}
+
+.modal {
+  background: var(--ig-primary-background);
+  border-radius: 16px;
+  width: 100%;
+  max-width: 600px;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--ig-separator);
+}
+
+.searchContainer {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 12px;
+  width: 20px;
+  height: 20px;
+  color: var(--ig-secondary-text);
+  pointer-events: none;
+}
+
+.searchInput {
+  width: 100%;
+  background: var(--ig-secondary-background);
+  border: none;
+  border-radius: 12px;
+  padding: 12px 12px 12px 44px;
+  color: var(--ig-primary-text);
+  font-size: 16px;
+}
+
+.searchInput:focus {
+  outline: 2px solid var(--ig-primary-button);
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 8px;
+  min-width: auto;
+  min-height: auto;
+}
+
+.closeIcon {
+  width: 20px;
+  height: 20px;
+  color: var(--ig-primary-text);
+}
+
+.tabs {
+  display: flex;
+  border-bottom: 1px solid var(--ig-separator);
+}
+
+.tab {
+  flex: 1;
+  background: none;
+  border: none;
+  padding: 16px;
+  color: var(--ig-secondary-text);
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.2s;
+  border-bottom: 2px solid transparent;
+  min-width: auto;
+  min-height: auto;
+}
+
+.tab.active {
+  color: var(--ig-primary-text);
+  border-bottom-color: var(--ig-primary-text);
+}
+
+.results {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+}
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.emptyIcon {
+  width: 48px;
+  height: 48px;
+  color: var(--ig-secondary-text);
+  margin-bottom: 16px;
+}
+
+.emptyText {
+  color: var(--ig-secondary-text);
+  font-size: 16px;
+  margin: 0;
+}
+
+.postsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+}
+
+.postItem {
+  position: relative;
+  aspect-ratio: 1;
+  cursor: pointer;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.postImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.carouselIndicator {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+}
+
+.carouselIcon {
+  width: 8px;
+  height: 8px;
+  background: white;
+  border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.postOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.postItem:hover .postOverlay {
+  opacity: 1;
+}
+
+.postStats {
+  color: white;
+  font-weight: 600;
+  text-align: center;
+}
+
+.usersList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.userItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px;
+  border-radius: 8px;
+  transition: background-color 0.2s;
+}
+
+.userItem:hover {
+  background: var(--ig-highlight-background);
+}
+
+.userAvatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.userInfo {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.userDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.username {
+  font-weight: 600;
+  color: var(--ig-primary-text);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.verified {
+  color: var(--ig-primary-button);
+  font-size: 12px;
+}
+
+.fullName {
+  color: var(--ig-secondary-text);
+  font-size: 14px;
+}
+
+.followers {
+  color: var(--ig-secondary-text);
+  font-size: 12px;
+}
+
+.followButton {
+  background: var(--ig-primary-button);
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  min-width: auto;
+  min-height: auto;
+}
+
+.followButton:hover {
+  background: var(--ig-primary-button-hover);
+}
+
+@media (max-width: 640px) {
+  .backdrop {
+    padding: 0;
+    align-items: stretch;
+  }
+  
+  .modal {
+    border-radius: 0;
+    max-height: 100vh;
+    height: 100vh;
+  }
+  
+  .postsGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2px;
+  }
+  
+  .userAvatar {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .followButton {
+    padding: 6px 12px;
+    font-size: 14px;
+  }
+}

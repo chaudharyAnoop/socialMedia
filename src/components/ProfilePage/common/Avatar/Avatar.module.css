@@ -1,0 +1,93 @@
+/* components/common/Avatar/Avatar.module.css */
+.avatarContainer {
+  cursor: pointer;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform var(--ig-animation-fast);
+}
+
+.avatarContainer:hover {
+  transform: scale(1.02);
+}
+
+.avatarInner {
+  background: var(--ig-primary-background);
+  border-radius: 50%;
+  padding: var(--ig-avatar-story-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatarImage {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--ig-stroke);
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.small {
+  width: 32px;
+  height: 32px;
+}
+
+.medium {
+  width: 66px;
+  height: 66px;
+}
+
+.large {
+  width: 150px;
+  height: 150px;
+}
+
+.storyUnviewed {
+  background: var(--ig-story-ring-new);
+  padding: 3px;
+}
+
+.storyViewed {
+  background: var(--ig-story-ring-seen);
+  padding: 3px;
+}
+
+.storyUnviewed .avatarImage,
+.storyViewed .avatarImage {
+  border: 2px solid var(--ig-primary-background);
+}
+
+.storyUnviewed .avatarInner,
+.storyViewed .avatarInner {
+  padding: 2px;
+}
+
+/* Mobile adjustments */
+@media (max-width: 735px) {
+  .large {
+    width: 77px;
+    height: 77px;
+  }
+  
+  .medium {
+    width: 56px;
+    height: 56px;
+  }
+  
+  .small {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+/* Very small mobile */
+@media (max-width: 480px) {
+  .large {
+    width: 77px;
+    height: 77px;
+  }
+}

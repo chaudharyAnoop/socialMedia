@@ -1,0 +1,147 @@
+/* styles/variables.css */
+:root {
+  /* Instagram Dark Theme Colors (matching your image) */
+  --ig-primary-background: #000000;
+  --ig-secondary-background: #000000;
+  --ig-tertiary-background: #262626;
+  --ig-elevated-background: #262626;
+  --ig-highlight-background: #1a1a1a;
+  
+  /* Text Colors */
+  --ig-primary-text: #ffffff;
+  --ig-secondary-text: #a8a8a8;
+  --ig-tertiary-text: #737373;
+  --ig-quaternary-text: #8e8e8e;
+  
+  /* Border Colors */
+  --ig-stroke: #262626;
+  --ig-separator: #363636;
+  --ig-border-light: #404040;
+  
+  /* Button Colors */
+  --ig-primary-button: #0095f6;
+  --ig-primary-button-hover: #1877f2;
+  --ig-secondary-button: #262626;
+  --ig-secondary-button-hover: #363636;
+  --ig-tertiary-button: #121212;
+  --ig-danger-button: #ed4956;
+  
+  /* Brand Colors */
+  --ig-blue: #0095f6;
+  --ig-heart-color: #ff3040;
+  --ig-link-color: #e0f1ff;
+  --ig-success-color: #42d883;
+  --ig-warning-color: #ff9500;
+  
+  /* Story Ring Colors */
+  --ig-story-ring-new: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  --ig-story-ring-seen: #737373;
+  --ig-avatar-story-border: 2px;
+  
+  /* Typography - Instagram Font Stack */
+  --ig-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --ig-font-size-caption: 12px;
+  --ig-font-size-footnote: 11px;
+  --ig-font-size-body: 14px;
+  --ig-font-size-callout: 16px;
+  --ig-font-size-title3: 20px;
+  --ig-font-size-title2: 24px;
+  --ig-font-size-title1: 28px;
+  
+  /* Font Weights */
+  --ig-font-weight-light: 300;
+  --ig-font-weight-normal: 400;
+  --ig-font-weight-medium: 500;
+  --ig-font-weight-semibold: 600;
+  --ig-font-weight-bold: 700;
+  
+  /* Spacing - Instagram specific spacing */
+  --ig-spacing-2: 2px;
+  --ig-spacing-4: 4px;
+  --ig-spacing-8: 8px;
+  --ig-spacing-12: 12px;
+  --ig-spacing-16: 16px;
+  --ig-spacing-20: 20px;
+  --ig-spacing-24: 24px;
+  --ig-spacing-32: 32px;
+  --ig-spacing-40: 40px;
+  --ig-spacing-48: 48px;
+  
+  /* Border Radius */
+  --ig-border-radius-button: 8px;
+  --ig-border-radius-input: 6px;
+  --ig-border-radius-card: 12px;
+  --ig-border-radius-avatar: 50%;
+  --ig-border-radius-small: 4px;
+  
+  /* Shadows for dark theme */
+  --ig-shadow-1: 0 0 5px 1px rgba(255, 255, 255, 0.03);
+  --ig-shadow-2: 0 2px 4px rgba(255, 255, 255, 0.03);
+  --ig-shadow-elevated: 0 8px 30px rgba(0, 0, 0, 0.8);
+  --ig-shadow-dropdown: 0 4px 12px rgba(0, 0, 0, 0.9);
+  
+  /* Transitions */
+  --ig-animation-fast: 0.1s ease-out;
+  --ig-animation-medium: 0.2s ease-out;
+  --ig-animation-slow: 0.3s ease-out;
+  
+  /* Layout Constants */
+  --ig-max-width: 975px;
+  --ig-nav-max-width: 975px;
+  --ig-nav-height: 54px;
+  --ig-mobile-breakpoint: 735px;
+  --ig-tablet-breakpoint: 1024px;
+  
+  /* Z-index scale */
+  --ig-z-base: 0;
+  --ig-z-docked: 10;
+  --ig-z-dropdown: 1000;
+  --ig-z-sticky: 1020;
+  --ig-z-banner: 1030;
+  --ig-z-overlay: 1040;
+  --ig-z-modal: 1050;
+  --ig-z-popover: 1060;
+  --ig-z-tooltip: 1070;
+  
+  /* Settings Dropdown Specific */
+  --ig-dropdown-background: #262626;
+  --ig-dropdown-border: #363636;
+  --ig-dropdown-hover: #363636;
+  --ig-dropdown-text: #ffffff;
+  --ig-dropdown-secondary-text: #a8a8a8;
+}
+
+/* Light Mode (optional - for future use) */
+@media (prefers-color-scheme: light) {
+  :root {
+    --ig-primary-background: #ffffff;
+    --ig-secondary-background: #fafafa;
+    --ig-tertiary-background: #ffffff;
+    --ig-elevated-background: #ffffff;
+    --ig-highlight-background: #fafafa;
+    
+    --ig-primary-text: #262626;
+    --ig-secondary-text: #8e8e8e;
+    --ig-tertiary-text: #c7c7c7;
+    --ig-quaternary-text: #8e8e8e;
+    
+    --ig-stroke: #dbdbdb;
+    --ig-separator: #efefef;
+    --ig-border-light: #efefef;
+    
+    --ig-secondary-button: #efefef;
+    --ig-secondary-button-hover: #dbdbdb;
+    --ig-tertiary-button: #ffffff;
+    
+    --ig-shadow-1: 0 0 5px 1px rgba(0, 0, 0, 0.0975);
+    --ig-shadow-2: 0 2px 4px rgba(0, 0, 0, 0.1);
+    --ig-shadow-elevated: 0 8px 30px rgba(0, 0, 0, 0.12);
+    --ig-shadow-dropdown: 0 4px 12px rgba(0, 0, 0, 0.15);
+    
+    --ig-dropdown-background: #ffffff;
+    --ig-dropdown-border: #dbdbdb;
+    --ig-dropdown-hover: #fafafa;
+    --ig-dropdown-text: #262626;
+    --ig-dropdown-secondary-text: #8e8e8e;
+  }
+}

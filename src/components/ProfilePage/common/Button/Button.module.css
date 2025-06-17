@@ -1,0 +1,123 @@
+/* components/common/Button/Button.module.css */
+.button {
+  border-radius: var(--ig-border-radius-button);
+  font-weight: var(--ig-font-weight-semibold);
+  transition: all var(--ig-animation-fast);
+  cursor: pointer;
+  border: 1px solid transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  font-size: var(--ig-font-size-body);
+  line-height: 18px;
+  font-family: var(--ig-font-family);
+  user-select: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.button:active {
+  transform: scale(0.98);
+}
+
+.button:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.primary {
+  background-color: var(--ig-primary-button);
+  color: white;
+  border-color: var(--ig-primary-button);
+}
+
+.primary:hover {
+  background-color: var(--ig-primary-button-hover);
+  border-color: var(--ig-primary-button-hover);
+}
+
+.secondary {
+  background-color: var(--ig-secondary-button);
+  color: var(--ig-primary-text);
+  border-color: var(--ig-stroke);
+}
+
+.secondary:hover {
+  background-color: var(--ig-secondary-button-hover);
+}
+
+.ghost {
+  background-color: transparent;
+  color: var(--ig-primary-text);
+  border-color: transparent;
+}
+
+.ghost:hover {
+  background-color: var(--ig-highlight-background);
+}
+
+.small {
+  padding: 4px 8px;
+  font-size: var(--ig-font-size-caption);
+  line-height: 16px;
+  height: 24px;
+}
+
+.medium {
+  padding: 7px 16px;
+  height: 32px;
+}
+
+.large {
+  padding: 12px 24px;
+  font-size: var(--ig-font-size-callout);
+  line-height: 20px;
+  height: 44px;
+}
+
+.disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.disabled:hover {
+  transform: none !important;
+}
+
+/* Instagram-specific button variations */
+.followButton {
+  min-width: 90px;
+}
+
+.messageButton {
+  min-width: 85px;
+}
+
+/* Loading state */
+.button.loading {
+  color: transparent;
+}
+
+.button.loading::after {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  top: 50%;
+  left: 50%;
+  margin-left: -8px;
+  margin-top: -8px;
+  border: 2px solid transparent;
+  border-top-color: currentColor;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

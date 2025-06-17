@@ -1,7 +1,7 @@
 import styles from "./App.module.css";
 import React, { useEffect } from "react";
 import {
-  Route, Routes
+  Route, Routes,
   BrowserRouter,
   Navigate,
   useLocation,

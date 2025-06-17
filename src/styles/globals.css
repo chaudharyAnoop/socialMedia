@@ -1,16 +1,16 @@
 /* styles/globals.css */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
-/* Instagram Dark Theme CSS Variables - Final Merged Version */
+/* Instagram Dark Theme CSS Variables */
 :root {
-  /* Typography - Enhanced with Inter font */
+  /* Typography */
   --ig-font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   --ig-font-size-footnote: 11px;
   --ig-font-size-caption: 12px;
   --ig-font-size-body: 14px;
   --ig-font-size-callout: 16px;
   --ig-font-size-title3: 20px;
-  --ig-font-size-title2: 24px; /* Updated from variables.css */
+  --ig-font-size-title2: 22px;
   --ig-font-size-title1: 28px;
   --ig-font-weight-light: 300;
   --ig-font-weight-normal: 400;
@@ -18,43 +18,35 @@
   --ig-font-weight-semibold: 600;
   --ig-font-weight-bold: 700;
   
-  /* Colors - Enhanced Dark Theme (taking best from both) */
+  /* Colors - Dark Theme */
   --ig-primary-background: #000000;
-  --ig-secondary-background: #000000; /* From variables.css */
-  --ig-tertiary-background: #262626; /* From variables.css */
+  --ig-secondary-background: #121212;
+  --ig-tertiary-background: #1a1a1a;
   --ig-elevated-background: #262626;
-  --ig-highlight-background: #1a1a1a; /* From variables.css */
+  --ig-highlight-background: rgba(255, 255, 255, 0.1);
   
   --ig-primary-text: #ffffff;
   --ig-secondary-text: #a8a8a8;
   --ig-tertiary-text: #737373;
-  --ig-quaternary-text: #8e8e8e; /* Added from variables.css */
   
-  --ig-separator: #363636; /* From variables.css */
+  --ig-separator: #262626;
   --ig-stroke: #262626;
   --ig-stroke-light: #363636;
-  --ig-border-light: #404040; /* Added from variables.css */
   
   --ig-primary-button: #0095f6;
   --ig-primary-button-hover: #1877f2;
-  --ig-secondary-button: #262626; /* From variables.css */
-  --ig-secondary-button-hover: #363636; /* From variables.css */
-  --ig-tertiary-button: #121212; /* Added from variables.css */
-  --ig-danger-button: #ed4956; /* Added from variables.css */
+  --ig-secondary-button: transparent;
+  --ig-secondary-button-hover: #1a1a1a;
   
   --ig-link-color: #e0f1ff;
   --ig-highlight-color: #ed4956;
   --ig-heart-color: #ff3040;
-  --ig-blue: #0095f6; /* Added from variables.css */
-  --ig-success-color: #42d883; /* Added from variables.css */
-  --ig-warning-color: #ff9500; /* Added from variables.css */
   
   /* Story gradients */
   --ig-story-ring-new: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
-  --ig-story-ring-seen: #737373; /* From variables.css */
-  --ig-avatar-story-border: 2px; /* Added from variables.css */
+  --ig-story-ring-seen: #262626;
   
-  /* Spacing - Enhanced */
+  /* Spacing */
   --ig-spacing-2: 2px;
   --ig-spacing-4: 4px;
   --ig-spacing-8: 8px;
@@ -64,7 +56,6 @@
   --ig-spacing-24: 24px;
   --ig-spacing-32: 32px;
   --ig-spacing-40: 40px;
-  --ig-spacing-48: 48px; /* Added from variables.css */
   
   /* Border radius */
   --ig-border-radius-small: 4px;
@@ -72,44 +63,23 @@
   --ig-border-radius-large: 12px;
   --ig-border-radius-button: 8px;
   --ig-border-radius-input: 6px;
-  --ig-border-radius-card: 12px; /* From variables.css */
-  --ig-border-radius-avatar: 50%; /* Added from variables.css */
+  --ig-border-radius-card: 16px;
   
-  /* Layout - Enhanced */
+  /* Layout */
   --ig-max-width: 975px;
-  --ig-nav-max-width: 975px; /* Added from variables.css */
-  --ig-nav-height: 54px; /* From variables.css */
-  --ig-mobile-breakpoint: 735px; /* Added from variables.css */
-  --ig-tablet-breakpoint: 1024px; /* Added from variables.css */
+  --ig-nav-height: 60px;
   
-  /* Z-index scale - Complete from variables.css */
-  --ig-z-base: 0;
-  --ig-z-docked: 10;
-  --ig-z-dropdown: 1000;
-  --ig-z-sticky: 1020; /* From variables.css */
-  --ig-z-banner: 1030;
-  --ig-z-overlay: 1040;
-  --ig-z-modal: 1050; /* From variables.css */
-  --ig-z-popover: 1060;
-  --ig-z-tooltip: 1070;
+  /* Z-index scale */
+  --ig-z-sticky: 100;
+  --ig-z-modal: 1000;
   
-  /* Animations - From variables.css (faster) */
-  --ig-animation-fast: 0.1s ease-out;
-  --ig-animation-medium: 0.2s ease-out;
-  --ig-animation-slow: 0.3s ease-out;
+  /* Animations */
+  --ig-animation-fast: 0.15s ease-out;
+  --ig-animation-medium: 0.3s ease-out;
+  --ig-animation-slow: 0.5s ease-out;
   
-  /* Shadows - Enhanced for dark theme */
-  --ig-shadow-1: 0 0 5px 1px rgba(255, 255, 255, 0.03); /* From variables.css */
-  --ig-shadow-2: 0 2px 4px rgba(255, 255, 255, 0.03); /* From variables.css */
-  --ig-shadow-elevated: 0 8px 30px rgba(0, 0, 0, 0.8); /* From variables.css */
-  --ig-shadow-dropdown: 0 4px 12px rgba(0, 0, 0, 0.9); /* From variables.css */
-  
-  /* Settings Dropdown Specific - From variables.css */
-  --ig-dropdown-background: #262626;
-  --ig-dropdown-border: #363636;
-  --ig-dropdown-hover: #363636;
-  --ig-dropdown-text: #ffffff;
-  --ig-dropdown-secondary-text: #a8a8a8;
+  /* Shadows */
+  --ig-shadow-elevated: 0 8px 30px rgba(0, 0, 0, 0.3);
   
   /* Legacy variable mappings for existing components */
   --color-background-dark: var(--ig-primary-background);
@@ -120,46 +90,6 @@
   --color-text-secondary: var(--ig-secondary-text);
 }
 
-/* Light mode override - Enhanced from both files */
-@media (prefers-color-scheme: light) {
-  :root {
-    --ig-primary-background: #ffffff;
-    --ig-secondary-background: #fafafa;
-    --ig-tertiary-background: #ffffff; /* From variables.css */
-    --ig-elevated-background: #ffffff;
-    --ig-highlight-background: #fafafa; /* From variables.css */
-    
-    --ig-primary-text: #262626;
-    --ig-secondary-text: #8e8e8e;
-    --ig-tertiary-text: #c7c7c7;
-    --ig-quaternary-text: #8e8e8e;
-    
-    --ig-separator: #efefef; /* From variables.css */
-    --ig-stroke: #dbdbdb;
-    --ig-stroke-light: #efefef;
-    --ig-border-light: #efefef;
-    
-    --ig-secondary-button: #efefef; /* From variables.css */
-    --ig-secondary-button-hover: #dbdbdb; /* From variables.css */
-    --ig-tertiary-button: #ffffff;
-    
-    --ig-link-color: #0095f6;
-    --ig-story-ring-seen: #dbdbdb;
-    
-    --ig-shadow-1: 0 0 5px 1px rgba(0, 0, 0, 0.0975); /* From variables.css */
-    --ig-shadow-2: 0 2px 4px rgba(0, 0, 0, 0.1); /* From variables.css */
-    --ig-shadow-elevated: 0 8px 30px rgba(0, 0, 0, 0.12); /* From variables.css */
-    --ig-shadow-dropdown: 0 4px 12px rgba(0, 0, 0, 0.15); /* From variables.css */
-    
-    --ig-dropdown-background: #ffffff;
-    --ig-dropdown-border: #dbdbdb;
-    --ig-dropdown-hover: #fafafa;
-    --ig-dropdown-text: #262626;
-    --ig-dropdown-secondary-text: #8e8e8e;
-  }
-}
-
-/* Base styles */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -197,24 +127,6 @@ body {
   padding: 0;
 }
 
-.main {
-  position: relative;
-  width: 100%;
-  background: var(--ig-primary-background);
-}
-
-.nav {
-  width: 100%;
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  background: var(--ig-primary-background);
-  border-bottom: 1px solid var(--ig-stroke);
-  position: sticky;
-  top: 0;
-  z-index: var(--ig-z-sticky);
-}
-
 .container {
   max-width: var(--ig-max-width);
   width: 100%;
@@ -230,7 +142,7 @@ body {
   background-color: var(--ig-primary-background);
 }
 
-/* Instagram-specific scrollbar styling */
+/* Instagram-specific scrollbar styling for dark theme */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -249,7 +161,7 @@ body {
   background: var(--ig-secondary-text);
 }
 
-/* Focus styles matching Instagram theme */
+/* Focus styles matching Instagram dark theme */
 button:focus-visible,
 input:focus-visible,
 textarea:focus-visible {
@@ -257,7 +169,7 @@ textarea:focus-visible {
   outline-offset: 2px;
 }
 
-/* Button reset with Instagram styling */
+/* Button reset with Instagram dark styling */
 button {
   font-family: inherit;
   font-size: inherit;
@@ -279,7 +191,7 @@ button:active {
   transform: scale(0.98);
 }
 
-/* Link styles */
+/* Link styles for dark theme */
 a {
   color: var(--ig-link-color);
   text-decoration: none;
@@ -303,7 +215,7 @@ img {
   -webkit-user-drag: none;
 }
 
-/* Instagram animations */
+/* Instagram loading animation */
 @keyframes pulse {
   0%, 100% {
     opacity: 1;
@@ -317,6 +229,7 @@ img {
   animation: pulse 1.5s ease-in-out infinite;
 }
 
+/* Instagram fade in animation */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -332,6 +245,7 @@ img {
   animation: fadeIn 0.3s ease-out;
 }
 
+/* Instagram slide up animation */
 @keyframes slideUp {
   from {
     opacity: 0;
@@ -347,6 +261,7 @@ img {
   animation: slideUp 0.4s ease-out;
 }
 
+/* Heart beat animation for likes */
 @keyframes heartBeat {
   0% { transform: scale(1); }
   15% { transform: scale(1.2); }
@@ -376,15 +291,10 @@ img {
     min-height: 40px; /* Slightly smaller on tiny screens */
     min-width: 40px;
   }
-  
-  .main {
-    height: 100vh;
-    overflow: hidden;
-  }
 }
 
-/* Mobile-first responsive design */
-@media (max-width: 520px) {
+/* Mobile-first responsive design - Instagram breakpoints */
+@media (max-width: 735px) {
   html {
     font-size: var(--ig-font-size-body);
   }
@@ -392,18 +302,6 @@ img {
   .app {
     padding: 0;
     background: var(--ig-primary-background);
-  }
-  
-  .main {
-    height: 100vh;
-    overflow: hidden;
-  }
-  
-  .nav {
-    width: 100vw;
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
   }
   
   .container {
@@ -424,63 +322,6 @@ img {
   
   a {
     min-height: 44px;
-  }
-}
-
-/* Medium mobile to small tablet */
-@media screen and (min-width: 521px) and (max-width: 900px) {
-  .main {
-    height: 100vh;
-    overflow: hidden;
-  }
-  
-  .nav {
-    width: 100vw;
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-  }
-  
-  .container {
-    border-left: 1px solid var(--ig-stroke);
-    border-right: 1px solid var(--ig-stroke);
-  }
-  
-  /* Optimize touch targets for tablet */
-  button {
-    min-height: 48px;
-    min-width: 48px;
-  }
-}
-
-/* Desktop and large screens */
-@media screen and (min-width: 901px) {
-  .main {
-    position: relative;
-    height: 100vh;
-    overflow: hidden;
-  }
-  
-  .nav {
-    width: 100vw;
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-  }
-  
-  .app {
-    background: var(--ig-primary-background);
-    padding: 0;
-  }
-  
-  /* Restore normal button sizes on desktop */
-  button {
-    min-height: auto;
-    min-width: auto;
-  }
-  
-  a {
-    min-height: auto;
   }
 }
 
@@ -511,11 +352,53 @@ img {
 
 /* Touch device optimizations */
 @media (hover: none) and (pointer: coarse) {
+  /* Remove hover effects on touch devices */
+  *:hover {
+    /* Reset any problematic hover states */
+  }
+  
   /* Better touch feedback */
   button:active,
   a:active {
     background-color: var(--ig-highlight-background);
     transform: scale(0.95);
+  }
+}
+
+/* Tablet styles */
+@media (min-width: 736px) and (max-width: 1024px) {
+  .container {
+    border-left: 1px solid var(--ig-stroke);
+    border-right: 1px solid var(--ig-stroke);
+  }
+  
+  .app {
+    background: var(--ig-primary-background);
+    padding: var(--ig-spacing-20) 0;
+  }
+  
+  /* Optimize touch targets for tablet */
+  button {
+    min-height: 48px;
+    min-width: 48px;
+  }
+}
+
+/* Desktop styles */
+@media (min-width: 1025px) {
+  .app {
+    background: var(--ig-primary-background);
+    padding: 0;
+  }
+  
+  /* Restore normal button sizes on desktop */
+  button {
+    min-height: auto;
+    min-width: auto;
+  }
+  
+  a {
+    min-height: auto;
   }
 }
 
@@ -542,34 +425,7 @@ img {
   }
 }
 
-/* Large screen optimizations */
-@media (min-width: 1200px) {
-  .container {
-    box-shadow: 0 0 0 1px var(--ig-stroke);
-  }
-}
-
-/* Ultra-wide screen handling */
-@media (min-width: 1600px) {
-  .app {
-    background: linear-gradient(135deg, #000000 0%, #111111 100%);
-  }
-}
-
-/* Print styles */
-@media print {
-  .app {
-    background: white !important;
-    color: black !important;
-  }
-  
-  * {
-    background: transparent !important;
-    color: black !important;
-  }
-}
-
-/* Instagram-specific utility classes - Enhanced */
+/* Instagram-specific utility classes for dark theme */
 .ig-button-primary {
   background: var(--ig-primary-button);
   color: white;
@@ -602,30 +458,6 @@ img {
   background: var(--ig-secondary-button-hover);
 }
 
-.ig-button-tertiary {
-  background: var(--ig-tertiary-button);
-  color: var(--ig-primary-text);
-  border-radius: var(--ig-border-radius-button);
-  padding: 8px 16px;
-  font-weight: var(--ig-font-weight-semibold);
-  font-size: var(--ig-font-size-body);
-  line-height: 18px;
-  border: 1px solid var(--ig-stroke);
-  transition: background-color var(--ig-animation-fast);
-}
-
-.ig-button-danger {
-  background: var(--ig-danger-button);
-  color: white;
-  border-radius: var(--ig-border-radius-button);
-  padding: 8px 16px;
-  font-weight: var(--ig-font-weight-semibold);
-  font-size: var(--ig-font-size-body);
-  line-height: 18px;
-  border: 1px solid transparent;
-  transition: background-color var(--ig-animation-fast);
-}
-
 .ig-text-primary {
   color: var(--ig-primary-text);
 }
@@ -638,19 +470,73 @@ img {
   color: var(--ig-tertiary-text);
 }
 
-.ig-text-quaternary {
-  color: var(--ig-quaternary-text);
-}
-
-/* Instagram story ring gradient - Enhanced */
+/* Instagram story ring gradient */
 .ig-story-ring-new {
   background: var(--ig-story-ring-new);
   border-radius: 50%;
-  padding: var(--ig-avatar-story-border);
+  padding: 2px;
 }
 
 .ig-story-ring-seen {
   background: var(--ig-story-ring-seen);
   border-radius: 50%;
-  padding: var(--ig-avatar-story-border);
+  padding: 2px;
+}
+
+/* Large screen optimizations */
+@media (min-width: 1200px) {
+  .container {
+    box-shadow: 0 0 0 1px var(--ig-stroke);
+  }
+}
+
+/* Ultra-wide screen handling */
+@media (min-width: 1600px) {
+  .app {
+    background: linear-gradient(135deg, #000000 0%, #111111 100%);
+  }
+}
+
+/* Print styles */
+@media print {
+  .app {
+    background: white !important;
+    color: black !important;
+  }
+  
+  * {
+    background: transparent !important;
+    color: black !important;
+  }
+}
+
+
+
+
+/* CSS Variables for consistent styling */
+:root {
+  --ig-primary-background: #ffffff;
+  --ig-secondary-background: #fafafa;
+  --ig-highlight-background: rgba(0, 0, 0, 0.05);
+  --ig-primary-text: #262626;
+  --ig-secondary-text: #8e8e8e;
+  --ig-tertiary-text: #c7c7c7;
+  --ig-separator: #dbdbdb;
+  --ig-primary-button: #0095f6;
+  --ig-primary-button-hover: #1877f2;
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ig-primary-background: #000000;
+    --ig-secondary-background: #121212;
+    --ig-highlight-background: rgba(255, 255, 255, 0.1);
+    --ig-primary-text: #ffffff;
+    --ig-secondary-text: #a8a8a8;
+    --ig-tertiary-text: #737373;
+    --ig-separator: #363636;
+    --ig-primary-button: #0095f6;
+    --ig-primary-button-hover: #1877f2;
+  }
 }

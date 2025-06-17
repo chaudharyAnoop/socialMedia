@@ -1,0 +1,133 @@
+/* components/SettingsDropdown/SettingsDropdown.module.css */
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: var(--ig-z-modal);
+  animation: fadeIn var(--ig-animation-medium);
+}
+
+.dropdown {
+  background: var(--ig-dropdown-background);
+  border-radius: var(--ig-border-radius-card);
+  box-shadow: var(--ig-shadow-dropdown);
+  min-width: 230px;
+  max-width: 400px;
+  overflow: hidden;
+  animation: slideUp var(--ig-animation-medium);
+  border: 1px solid var(--ig-dropdown-border);
+}
+
+.menuItem {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: var(--ig-spacing-16);
+  padding: var(--ig-spacing-16) var(--ig-spacing-20);
+  background: transparent;
+  border: none;
+  color: var(--ig-dropdown-text);
+  font-size: var(--ig-font-size-body);
+  font-weight: var(--ig-font-weight-normal);
+  text-align: left;
+  cursor: pointer;
+  transition: background-color var(--ig-animation-fast);
+  font-family: var(--ig-font-family);
+  line-height: 20px;
+}
+
+.menuItem:hover {
+  background-color: var(--ig-dropdown-hover);
+}
+
+.menuItem:active {
+  background-color: var(--ig-secondary-button-hover);
+}
+
+.icon {
+  width: 16px;
+  height: 16px;
+  color: var(--ig-dropdown-text);
+  flex-shrink: 0;
+}
+
+.label {
+  flex: 1;
+  color: var(--ig-dropdown-text);
+}
+
+.divider {
+  height: 1px;
+  background-color: var(--ig-dropdown-border);
+  margin: var(--ig-spacing-8) 0;
+}
+
+.cancelButton {
+  width: 100%;
+  padding: var(--ig-spacing-16) var(--ig-spacing-20);
+  background: transparent;
+  border: none;
+  color: var(--ig-dropdown-text);
+  font-size: var(--ig-font-size-body);
+  font-weight: var(--ig-font-weight-medium);
+  text-align: center;
+  cursor: pointer;
+  transition: background-color var(--ig-animation-fast);
+  font-family: var(--ig-font-family);
+  line-height: 20px;
+}
+
+.cancelButton:hover {
+  background-color: var(--ig-dropdown-hover);
+}
+
+.cancelButton:active {
+  background-color: var(--ig-secondary-button-hover);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Mobile styles */
+@media (max-width: 735px) {
+  .dropdown {
+    min-width: 280px;
+    max-width: calc(100vw - 40px);
+    margin: 0 20px;
+  }
+  
+  .menuItem {
+    padding: var(--ig-spacing-20) var(--ig-spacing-24);
+    font-size: var(--ig-font-size-callout);
+  }
+  
+  .icon {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .cancelButton {
+    padding: var(--ig-spacing-20) var(--ig-spacing-24);
+    font-size: var(--ig-font-size-callout);
+  }
+}

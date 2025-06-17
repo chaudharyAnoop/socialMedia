@@ -1,0 +1,313 @@
+/* components/CreatePostModal/CreatePostModal.module.css */
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.modal {
+  background: var(--ig-primary-background);
+  border-radius: 16px;
+  width: 100%;
+  max-width: 600px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--ig-separator);
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--ig-primary-text);
+  margin: 0;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 8px;
+  transition: background-color 0.2s;
+  min-width: auto;
+  min-height: auto;
+}
+
+.closeButton:hover {
+  background: var(--ig-highlight-background);
+}
+
+.closeIcon {
+  width: 20px;
+  height: 20px;
+  color: var(--ig-primary-text);
+}
+
+.content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+}
+
+.uploadSection {
+  margin-bottom: 24px;
+}
+
+.dropZone {
+  border: 2px dashed var(--ig-separator);
+  border-radius: 12px;
+  padding: 40px 20px;
+  text-align: center;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.dropZone.dragActive {
+  border-color: var(--ig-primary-button);
+  background: rgba(0, 149, 246, 0.1);
+}
+
+.uploadIcon {
+  width: 48px;
+  height: 48px;
+  color: var(--ig-secondary-text);
+  margin: 0 auto 16px;
+}
+
+.uploadText {
+  color: var(--ig-primary-text);
+  font-size: 20px;
+  margin: 0 0 16px 0;
+}
+
+.uploadButton {
+  background: var(--ig-primary-button);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.uploadButton:hover {
+  background: var(--ig-primary-button-hover);
+}
+
+.fileInput {
+  display: none;
+}
+
+.selectedImages {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 12px;
+}
+
+.imagePreview {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.previewImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.removeImage {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  background: rgba(0, 0, 0, 0.8);
+  border: none;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  min-width: auto;
+  min-height: auto;
+}
+
+.removeIcon {
+  width: 12px;
+  height: 12px;
+  color: white;
+}
+
+.addMore {
+  aspect-ratio: 1;
+  border: 2px dashed var(--ig-separator);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.addMore:hover {
+  border-color: var(--ig-primary-button);
+}
+
+.addIcon {
+  width: 24px;
+  height: 24px;
+  color: var(--ig-secondary-text);
+}
+
+.detailsSection {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label {
+  font-weight: 600;
+  color: var(--ig-primary-text);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.labelIcon {
+  width: 16px;
+  height: 16px;
+}
+
+.captionInput {
+  background: var(--ig-secondary-background);
+  border: 1px solid var(--ig-separator);
+  border-radius: 8px;
+  padding: 12px;
+  color: var(--ig-primary-text);
+  font-family: inherit;
+  resize: vertical;
+  min-height: 100px;
+}
+
+.captionInput:focus {
+  outline: none;
+  border-color: var(--ig-primary-button);
+}
+
+.charCount {
+  text-align: right;
+  font-size: 12px;
+  color: var(--ig-secondary-text);
+}
+
+.locationInput {
+  background: var(--ig-secondary-background);
+  border: 1px solid var(--ig-separator);
+  border-radius: 8px;
+  padding: 12px;
+  color: var(--ig-primary-text);
+  font-family: inherit;
+}
+
+.locationInput:focus {
+  outline: none;
+  border-color: var(--ig-primary-button);
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-top: 1px solid var(--ig-separator);
+  gap: 12px;
+}
+
+.cancelButton {
+  background: none;
+  border: 1px solid var(--ig-separator);
+  color: var(--ig-primary-text);
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  min-width: auto;
+  min-height: auto;
+}
+
+.cancelButton:hover {
+  background: var(--ig-highlight-background);
+}
+
+.shareButton {
+  background: var(--ig-primary-button);
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  min-width: auto;
+  min-height: auto;
+}
+
+.shareButton:hover:not(:disabled) {
+  background: var(--ig-primary-button-hover);
+}
+
+.shareButton:disabled {
+  background: var(--ig-tertiary-text);
+  cursor: not-allowed;
+}
+
+@media (max-width: 640px) {
+  .modal {
+    margin: 0;
+    border-radius: 0;
+    max-height: 100vh;
+    height: 100vh;
+  }
+  
+  .content {
+    padding: 16px;
+  }
+  
+  .dropZone {
+    padding: 30px 16px;
+  }
+  
+  .uploadText {
+    font-size: 18px;
+  }
+  
+  .selectedImages {
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 8px;
+  }
+}

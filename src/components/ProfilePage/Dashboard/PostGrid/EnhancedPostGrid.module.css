@@ -1,0 +1,578 @@
+/* components/PostGrid/EnhancedPostGrid.module.css */
+.grid {
+  padding: 0 4px;
+  background-color: var(--color-background-dark, #000);
+}
+
+.postsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+}
+
+.reelsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 4px;
+}
+
+.taggedGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+}
+
+.postItem {
+  position: relative;
+  aspect-ratio: 1;
+  cursor: pointer;
+  overflow: hidden;
+  background-color: var(--color-background-dark, #1a1a1a);
+  border-radius: 4px;
+}
+
+.reelItem {
+  aspect-ratio: 9/16;
+}
+
+/* Image Container for Double-Tap */
+.imageContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  /* Better touch response */
+  touch-action: manipulation;
+}
+
+.postImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+  user-select: none;
+  -webkit-user-drag: none;
+  pointer-events: none;
+}
+
+.postItem:hover .postImage {
+  transform: scale(1.02);
+}
+
+/* Heart Animation Styles */
+.heartAnimation {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 10;
+}
+
+.animatedHeart {
+  width: 80px;
+  height: 80px;
+  color: #ff3040;
+  fill: #ff3040;
+  filter: drop-shadow(0 0 10px rgba(255, 48, 64, 0.5));
+  animation: heartBurst 1s ease-out forwards;
+}
+
+@keyframes heartBurst {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  15% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+  30% {
+    transform: scale(0.95);
+    opacity: 1;
+  }
+  45% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+  60% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+/* Liked state styles */
+.liked {
+  color: #ff3040 !important;
+  fill: #ff3040 !important;
+  transition: all 0.2s ease;
+}
+
+.videoIndicator {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 2;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 4px;
+  padding: 4px;
+  backdrop-filter: blur(4px);
+}
+
+.playIcon {
+  width: 14px;
+  height: 14px;
+  color: white;
+  fill: white;
+}
+
+.muteButton {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  z-index: 3;
+  background: rgba(0, 0, 0, 0.6);
+  border: none;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(4px);
+  /* Better touch target */
+  min-width: 44px;
+  min-height: 44px;
+}
+
+.muteButton:hover {
+  background: rgba(0, 0, 0, 0.8);
+  transform: scale(1.1);
+}
+
+.muteButton:active {
+  transform: scale(0.95);
+}
+
+.muteIcon {
+  width: 14px;
+  height: 14px;
+  color: white;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: all 0.2s ease;
+  border-radius: 4px;
+  pointer-events: none;
+}
+
+.overlay.visible {
+  background-color: rgba(0, 0, 0, 0.3);
+  opacity: 1;
+}
+
+.stats {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  color: white;
+}
+
+.stat {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.statIcon {
+  width: 22px;
+  height: 22px;
+  fill: white;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.5));
+  transition: all 0.2s ease;
+}
+
+.statNumber {
+  font-weight: 600;
+  font-size: 16px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.reelInfo {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.6));
+  padding: 20px 8px 8px;
+  pointer-events: none;
+}
+
+.reelStats {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
+
+.reelStat {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: white;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.reelStatIcon {
+  width: 16px;
+  height: 16px;
+  fill: white;
+  transition: all 0.2s ease;
+}
+
+.skeletonPost {
+  aspect-ratio: 1;
+  border-radius: 4px;
+  overflow: hidden;
+  background-color: var(--color-background-dark, #1a1a1a);
+}
+
+.skeletonImage {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, #2a2a2a 25%, #3a3a3a 50%, #2a2a2a 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  text-align: center;
+  background-color: var(--color-background-dark, #000);
+}
+
+.emptyIcon {
+  font-size: 60px;
+  margin-bottom: 16px;
+  opacity: 0.6;
+}
+
+.emptyTitle {
+  font-size: 24px;
+  font-weight: 300;
+  color: var(--color-text-primary, #ffffff);
+  margin: 0 0 8px 0;
+}
+
+.emptyText {
+  font-size: 14px;
+  color: var(--color-text-secondary, #a8a8a8);
+  margin: 0;
+  max-width: 300px;
+  line-height: 1.4;
+}
+
+/* ===== RESPONSIVE BREAKPOINTS ===== */
+
+/* Ultra small mobile devices (320-360px) */
+@media (max-width: 360px) {
+  .grid {
+    padding: 0 1px;
+  }
+  
+  .postsGrid,
+  .taggedGrid {
+    gap: 1px;
+  }
+  
+  .reelsGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+  }
+  
+  .animatedHeart {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .statNumber {
+    font-size: 12px;
+  }
+  
+  .statIcon {
+    width: 18px;
+    height: 18px;
+  }
+  
+  .muteButton {
+    width: 24px;
+    height: 24px;
+    min-width: 40px;
+    min-height: 40px;
+  }
+  
+  .videoIndicator {
+    top: 4px;
+    right: 4px;
+    padding: 2px;
+  }
+  
+  .playIcon {
+    width: 10px;
+    height: 10px;
+  }
+  
+  .emptyTitle {
+    font-size: 18px;
+  }
+  
+  .emptyText {
+    font-size: 12px;
+  }
+  
+  .emptyIcon {
+    font-size: 40px;
+  }
+}
+
+/* Small mobile devices (361-480px) */
+@media (min-width: 361px) and (max-width: 480px) {
+  .animatedHeart {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .reelsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Standard mobile devices (481-735px) */
+@media (min-width: 481px) and (max-width: 735px) {
+  .grid {
+    padding: 0 2px;
+  }
+
+  .postsGrid,
+  .taggedGrid {
+    gap: 2px;
+  }
+
+  .reelsGrid {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 2px;
+  }
+
+  .animatedHeart {
+    width: 70px;
+    height: 70px;
+  }
+
+  .videoIndicator {
+    top: 6px;
+    right: 6px;
+    padding: 3px;
+  }
+
+  .playIcon {
+    width: 12px;
+    height: 12px;
+  }
+
+  .muteButton {
+    bottom: 6px;
+    right: 6px;
+    width: 26px;
+    height: 26px;
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .muteIcon {
+    width: 12px;
+    height: 12px;
+  }
+
+  .stats {
+    gap: 16px;
+  }
+
+  .statIcon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .statNumber {
+    font-size: 14px;
+  }
+
+  .emptyIcon {
+    font-size: 48px;
+  }
+
+  .emptyTitle {
+    font-size: 20px;
+  }
+
+  .emptyText {
+    font-size: 13px;
+  }
+}
+
+/* Tablet devices (736-1024px) */
+@media (min-width: 736px) and (max-width: 1024px) {
+  .reelsGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .animatedHeart {
+    width: 85px;
+    height: 85px;
+  }
+  
+  .muteButton {
+    width: 32px;
+    height: 32px;
+    min-width: 48px;
+    min-height: 48px;
+  }
+  
+  .muteIcon {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+/* Tablet landscape optimization */
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+  .reelsGrid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Desktop devices (1025px+) */
+@media (min-width: 1025px) {
+  .animatedHeart {
+    width: 90px;
+    height: 90px;
+  }
+  
+  .muteButton {
+    width: 32px;
+    height: 32px;
+    min-width: auto;
+    min-height: auto;
+  }
+  
+  .muteIcon {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+/* Large desktop optimization */
+@media (min-width: 1200px) {
+  .grid {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  
+  .animatedHeart {
+    width: 100px;
+    height: 100px;
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  /* Disable hover effects on touch devices */
+  .postItem:hover .postImage {
+    transform: none;
+  }
+  
+  /* Hide overlay on touch devices */
+  .overlay {
+    display: none;
+  }
+  
+  /* Show reel stats permanently on touch devices */
+  .reelInfo {
+    opacity: 1;
+  }
+  
+  /* Better touch feedback */
+  .imageContainer:active {
+    opacity: 0.8;
+  }
+}
+
+/* High DPI displays optimization */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .animatedHeart {
+    filter: drop-shadow(0 0 12px rgba(255, 48, 64, 0.6));
+  }
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .heartBurst {
+    animation-duration: 0.2s;
+  }
+  
+  .postImage {
+    transition: none;
+  }
+  
+  .muteButton,
+  .statIcon,
+  .reelStatIcon {
+    transition: none;
+  }
+}
+
+/* Landscape mobile orientation */
+@media (max-height: 500px) and (orientation: landscape) and (max-width: 935px) {
+  .emptyState {
+    padding: 30px 20px;
+  }
+  
+  .emptyIcon {
+    font-size: 40px;
+  }
+  
+  .emptyTitle {
+    font-size: 18px;
+  }
+}

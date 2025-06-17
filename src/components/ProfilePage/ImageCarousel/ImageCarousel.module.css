@@ -1,0 +1,243 @@
+/* components/ImageCarousel/ImageCarousel.module.css */
+
+.container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 8px;
+  background-color: #000;
+}
+
+.container:focus {
+  outline: 2px solid #0095f6;
+  outline-offset: 2px;
+}
+
+/* Single image */
+.singleImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Image container and track */
+.imageContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.imageTrack {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  will-change: transform;
+}
+
+.image {
+  flex: 0 0 100%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  user-select: none;
+  -webkit-user-drag: none;
+  -webkit-touch-callout: none;
+}
+
+/* Navigation arrows */
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.5);
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2;
+  transition: all 0.2s ease;
+  color: white;
+}
+
+.arrow:hover {
+  background: rgba(0, 0, 0, 0.7);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.arrow:active {
+  transform: translateY(-50%) scale(0.95);
+}
+
+.arrow:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: translateY(-50%);
+}
+
+.prevArrow {
+  left: 8px;
+}
+
+.nextArrow {
+  right: 8px;
+}
+
+.arrowIcon {
+  width: 18px;
+  height: 18px;
+}
+
+/* Mobile arrows - larger touch targets */
+@media (max-width: 768px) {
+  .arrow {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .arrowIcon {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .prevArrow {
+    left: 4px;
+  }
+  
+  .nextArrow {
+    right: 4px;
+  }
+}
+
+/* Image counter */
+.counter {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+  z-index: 2;
+  backdrop-filter: blur(4px);
+}
+
+/* Dots indicator */
+.dotsContainer {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 6px;
+  z-index: 2;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.dot:hover {
+  background: rgba(255, 255, 255, 0.6);
+  transform: scale(1.2);
+}
+
+.activeDot {
+  background: white;
+  transform: scale(1.2);
+}
+
+.activeDot:hover {
+  background: white;
+}
+
+/* Mobile dots - larger touch targets */
+@media (max-width: 768px) {
+  .dot {
+    width: 8px;
+    height: 8px;
+  }
+  
+  .dotsContainer {
+    gap: 8px;
+    bottom: 16px;
+  }
+}
+
+/* Loading state */
+.container[data-loading="true"] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f0f0f0;
+}
+
+.container[data-loading="true"]::after {
+  content: '';
+  width: 20px;
+  height: 20px;
+  border: 2px solid #dbdbdb;
+  border-top: 2px solid #0095f6;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+  .imageTrack {
+    transition: none !important;
+  }
+  
+  .arrow {
+    transition: none !important;
+  }
+  
+  .dot {
+    transition: none !important;
+  }
+  
+  .container[data-loading="true"]::after {
+    animation: none;
+  }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .arrow {
+    background: rgba(0, 0, 0, 0.9);
+    border: 1px solid white;
+  }
+  
+  .counter {
+    background: rgba(0, 0, 0, 0.9);
+    border: 1px solid white;
+  }
+  
+  .dot {
+    border: 1px solid white;
+  }
+  
+  .activeDot {
+    background: white;
+    border: 1px solid black;
+  }
+}

@@ -1,0 +1,614 @@
+/* components/ProfileHeader/ProfileHeader.module.css */
+.container {
+  padding: var(--ig-spacing-16) var(--ig-spacing-20);
+  position: relative;
+  background: var(--ig-primary-background);
+}
+
+.topSection {
+  display: flex;
+  gap: var(--ig-spacing-32);
+  margin-bottom: var(--ig-spacing-20);
+}
+
+.avatarSection {
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.infoSection {
+  flex: 1;
+  min-width: 0;
+}
+
+.headerRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: var(--ig-spacing-20);
+}
+
+.usernameContainer {
+  display: flex;
+  align-items: center;
+  gap: var(--ig-spacing-8);
+  flex: 1;
+  min-width: 0;
+}
+
+.username {
+  font-size: var(--ig-font-size-title3);
+  font-weight: var(--ig-font-weight-light);
+  margin: 0;
+  color: var(--ig-primary-text);
+  word-break: break-word;
+  line-height: 22px;
+}
+
+.verifiedBadge {
+  width: 18px;
+  height: 18px;
+  color: var(--ig-primary-button);
+  flex-shrink: 0;
+  margin-left: var(--ig-spacing-4);
+}
+
+.mobileActions {
+  display: none;
+}
+
+.mobileMoreButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: var(--ig-spacing-8);
+  border-radius: var(--ig-border-radius-button);
+  transition: background-color var(--ig-animation-fast);
+  color: var(--ig-primary-text);
+  min-width: 44px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mobileMoreButton:hover {
+  background: var(--ig-highlight-background);
+}
+
+.mobileMoreButton:active {
+  transform: scale(0.95);
+}
+
+.desktopActions {
+  display: flex;
+  gap: var(--ig-spacing-8);
+  flex-shrink: 0;
+  align-items: center;
+}
+
+.iconButton {
+  padding: var(--ig-spacing-8) !important;
+  min-width: 44px !important;
+  min-height: 44px !important;
+  background: var(--ig-secondary-button) !important;
+  border: 1px solid var(--ig-stroke) !important;
+  border-radius: var(--ig-border-radius-button) !important;
+  transition: all var(--ig-animation-fast) !important;
+  color: var(--ig-primary-text) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.iconButton:hover {
+  background: var(--ig-secondary-button-hover) !important;
+}
+
+.iconButton:active {
+  transform: scale(0.95) !important;
+}
+
+.mobileIconButton {
+  padding: var(--ig-spacing-8) !important;
+  min-width: 44px !important;
+  min-height: 44px !important;
+  background: var(--ig-secondary-button) !important;
+  border: 1px solid var(--ig-stroke) !important;
+  border-radius: var(--ig-border-radius-button) !important;
+  color: var(--ig-primary-text) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: all var(--ig-animation-fast) !important;
+}
+
+.mobileIconButton:hover {
+  background: var(--ig-secondary-button-hover) !important;
+}
+
+.mobileIconButton:active {
+  transform: scale(0.95) !important;
+}
+
+.icon {
+  width: 16px;
+  height: 16px;
+  color: var(--ig-primary-text);
+}
+
+.statsRow {
+  display: flex;
+  gap: var(--ig-spacing-40);
+  margin-bottom: var(--ig-spacing-20);
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  padding: var(--ig-spacing-4);
+  transition: all var(--ig-animation-fast);
+  border-radius: var(--ig-border-radius-input);
+  min-width: 44px;
+  min-height: 44px;
+  justify-content: center;
+}
+
+.stat:hover {
+  opacity: 0.7;
+  background: var(--ig-highlight-background);
+}
+
+.stat:active {
+  transform: scale(0.95);
+}
+
+.statNumber {
+  font-weight: var(--ig-font-weight-semibold);
+  font-size: var(--ig-font-size-callout);
+  color: var(--ig-primary-text);
+  line-height: 18px;
+}
+
+.statLabel {
+  color: var(--ig-primary-text);
+  font-size: var(--ig-font-size-body);
+  line-height: 18px;
+  font-weight: var(--ig-font-weight-normal);
+}
+
+.bioSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ig-spacing-4);
+}
+
+.fullName {
+  font-weight: var(--ig-font-weight-semibold);
+  font-size: var(--ig-font-size-body);
+  color: var(--ig-primary-text);
+  line-height: 18px;
+}
+
+.bio {
+  font-size: var(--ig-font-size-body);
+  white-space: pre-line;
+  line-height: 20px;
+  color: var(--ig-primary-text);
+  word-wrap: break-word;
+}
+
+.website {
+  color: var(--ig-link-color);
+  font-size: var(--ig-font-size-body);
+  font-weight: var(--ig-font-weight-semibold);
+  text-decoration: none;
+  line-height: 18px;
+  display: inline-block;
+  width: fit-content;
+  padding: var(--ig-spacing-4);
+  border-radius: var(--ig-border-radius-input);
+  min-height: 32px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.website:hover {
+  text-decoration: underline;
+  background: var(--ig-highlight-background);
+}
+
+.website:active {
+  transform: scale(0.98);
+}
+
+.mobileActionsRow {
+  display: none;
+  gap: var(--ig-spacing-8);
+  margin-top: var(--ig-spacing-16);
+}
+
+.mobileButton {
+  flex: 1;
+  height: 44px;
+  font-size: var(--ig-font-size-body);
+  font-weight: var(--ig-font-weight-semibold);
+  border-radius: var(--ig-border-radius-button);
+  transition: all var(--ig-animation-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mobileButton:active {
+  transform: scale(0.98);
+}
+
+/* ===== RESPONSIVE BREAKPOINTS ===== */
+
+/* Ultra small mobile (320-360px) */
+@media (max-width: 360px) {
+  .container {
+    padding: var(--ig-spacing-12);
+  }
+
+  .topSection {
+    gap: var(--ig-spacing-12);
+    margin-bottom: var(--ig-spacing-12);
+    align-items: flex-start;
+  }
+
+  .headerRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    margin-bottom: var(--ig-spacing-8);
+  }
+
+  .usernameContainer {
+    width: 100%;
+    margin-bottom: var(--ig-spacing-8);
+    justify-content: space-between;
+  }
+
+  .username {
+    font-size: 18px;
+    flex: 1;
+    line-height: 22px;
+  }
+
+  .verifiedBadge {
+    width: 16px;
+    height: 16px;
+  }
+
+  .mobileActions {
+    display: block;
+  }
+
+  .desktopActions {
+    display: none;
+  }
+
+  .statsRow {
+    justify-content: flex-start;
+    gap: var(--ig-spacing-16);
+    margin-bottom: var(--ig-spacing-8);
+    padding: 0;
+  }
+
+  .stat {
+    align-items: center;
+    text-align: center;
+    min-width: auto;
+    padding: var(--ig-spacing-2);
+  }
+
+  .statNumber {
+    font-size: 14px;
+    line-height: 16px;
+  }
+
+  .statLabel {
+    font-size: var(--ig-font-size-caption);
+    line-height: 14px;
+  }
+
+  .mobileActionsRow {
+    display: flex;
+  }
+
+  .mobileButton {
+    height: 40px;
+    font-size: var(--ig-font-size-caption);
+  }
+
+  .bioSection {
+    margin-bottom: var(--ig-spacing-12);
+  }
+
+  .fullName {
+    font-size: var(--ig-font-size-caption);
+    line-height: 14px;
+  }
+
+  .bio {
+    font-size: var(--ig-font-size-caption);
+    line-height: 16px;
+  }
+
+  .website {
+    font-size: var(--ig-font-size-caption);
+    min-height: 28px;
+  }
+}
+
+/* Standard mobile (361-735px) */
+@media (min-width: 361px) and (max-width: 735px) {
+  .container {
+    padding: var(--ig-spacing-16);
+  }
+
+  .topSection {
+    gap: var(--ig-spacing-16);
+    margin-bottom: var(--ig-spacing-16);
+    align-items: flex-start;
+  }
+
+  .headerRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    margin-bottom: var(--ig-spacing-12);
+  }
+
+  .usernameContainer {
+    width: 100%;
+    margin-bottom: var(--ig-spacing-8);
+    justify-content: space-between;
+  }
+
+  .username {
+    font-size: var(--ig-font-size-title2);
+    flex: 1;
+    line-height: 26px;
+  }
+
+  .verifiedBadge {
+    width: 20px;
+    height: 20px;
+  }
+
+  .mobileActions {
+    display: block;
+  }
+
+  .desktopActions {
+    display: none;
+  }
+
+  .statsRow {
+    justify-content: flex-start;
+    gap: var(--ig-spacing-24);
+    margin-bottom: var(--ig-spacing-12);
+    padding: 0 var(--ig-spacing-4);
+  }
+
+  .stat {
+    align-items: center;
+    text-align: center;
+    min-width: auto;
+  }
+
+  .statNumber {
+    font-size: 18px;
+    line-height: 20px;
+  }
+
+  .statLabel {
+    font-size: var(--ig-font-size-body);
+    line-height: 16px;
+  }
+
+  .mobileActionsRow {
+    display: flex;
+  }
+
+  .mobileButton {
+    height: 44px;
+  }
+
+  .bioSection {
+    margin-bottom: var(--ig-spacing-16);
+  }
+
+  .fullName {
+    line-height: 16px;
+  }
+
+  .bio {
+    line-height: 18px;
+  }
+}
+
+/* Small mobile landscape */
+@media (max-width: 480px) and (orientation: landscape) {
+  .container {
+    padding: var(--ig-spacing-8) var(--ig-spacing-16);
+  }
+
+  .topSection {
+    gap: var(--ig-spacing-12);
+    margin-bottom: var(--ig-spacing-8);
+  }
+
+  .statsRow {
+    gap: var(--ig-spacing-20);
+    margin-bottom: var(--ig-spacing-8);
+  }
+
+  .statNumber {
+    font-size: 16px;
+  }
+
+  .statLabel {
+    font-size: var(--ig-font-size-caption);
+  }
+
+  .username {
+    font-size: 20px;
+  }
+
+  .bioSection {
+    margin-bottom: var(--ig-spacing-8);
+  }
+
+  .mobileButton {
+    height: 40px;
+  }
+}
+
+/* Tablet devices (736-1024px) */
+@media (min-width: 736px) and (max-width: 1024px) {
+  .container {
+    padding: var(--ig-spacing-20) var(--ig-spacing-24);
+  }
+
+  .topSection {
+    gap: var(--ig-spacing-40);
+  }
+
+  .username {
+    font-size: 24px;
+  }
+
+  .verifiedBadge {
+    width: 20px;
+    height: 20px;
+  }
+
+  .statsRow {
+    gap: var(--ig-spacing-32);
+  }
+
+  .statNumber {
+    font-size: 20px;
+  }
+
+  .stat {
+    min-width: 48px;
+    min-height: 48px;
+  }
+
+  .iconButton,
+  .mobileIconButton {
+    min-width: 48px !important;
+    min-height: 48px !important;
+  }
+
+  .icon {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+/* Desktop devices (1025px+) */
+@media (min-width: 1025px) {
+  .container {
+    padding: var(--ig-spacing-20) var(--ig-spacing-32);
+  }
+
+  .iconButton,
+  .mobileIconButton {
+    min-width: auto !important;
+    min-height: auto !important;
+    padding: var(--ig-spacing-8) !important;
+  }
+
+  .stat {
+    min-width: auto;
+    min-height: auto;
+    padding: var(--ig-spacing-4);
+  }
+
+  .website {
+    min-height: auto;
+    padding: var(--ig-spacing-2);
+  }
+}
+
+/* Large desktop optimization */
+@media (min-width: 1200px) {
+  .container {
+    padding: var(--ig-spacing-24) var(--ig-spacing-40);
+  }
+
+  .topSection {
+    gap: var(--ig-spacing-48);
+  }
+
+  .username {
+    font-size: 28px;
+  }
+
+  .statsRow {
+    gap: var(--ig-spacing-48);
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .stat:hover {
+    opacity: 1;
+    background: none;
+  }
+
+  .iconButton:hover,
+  .mobileIconButton:hover {
+    background: var(--ig-secondary-button) !important;
+  }
+
+  .website:hover {
+    background: none;
+    text-decoration: none;
+  }
+
+  /* Better touch feedback */
+  .stat:active {
+    background: var(--ig-highlight-background);
+  }
+
+  .website:active {
+    background: var(--ig-highlight-background);
+  }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .iconButton,
+  .mobileIconButton {
+    border: 2px solid var(--ig-primary-text) !important;
+  }
+
+  .stat,
+  .website {
+    border: 1px solid var(--ig-secondary-text);
+  }
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .stat,
+  .iconButton,
+  .mobileIconButton,
+  .website,
+  .mobileButton {
+    transition: none;
+  }
+}
