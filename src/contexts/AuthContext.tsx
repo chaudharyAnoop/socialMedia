@@ -92,10 +92,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           return { success: true, requiresOTP: true };
         }
 
-        setUser(data.accessToken);
+        setUser(data.access_token);
         localStorage.setItem(
           "instagram_user",
-          JSON.stringify(data.accessToken)
+          JSON.stringify(data.access_token)
         );
         return { success: true };
       } else {
@@ -172,7 +172,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         };
 
         setUser(mockUser);
-        localStorage.setItem("instagram_user", JSON.stringify(mockUser));
+        // localStorage.setItem("instagram_user", JSON.stringify(mockUser));
         return { success: true };
       } else {
         return {
@@ -193,14 +193,14 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       };
 
       setUser(mockUser);
-      localStorage.setItem("instagram_user", JSON.stringify(mockUser));
+      // localStorage.setItem("instagram_user", JSON.stringify(mockUser));
       return { success: true };
     }
   };
 
   const logout = () => {
     setUser(null);
-    localStorage.removeItem("instagram_user");
+    // localStorage.removeItem("instagram_user");
   };
 
   const value: AuthContextType = {

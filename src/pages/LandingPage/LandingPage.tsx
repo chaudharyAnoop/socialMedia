@@ -62,7 +62,10 @@ function LandingPage() {
                   title={"post.title"}
                   likecount={"sadasdfdsf"}
                   body={"post.toString()"}
-                  imgUrl={`https://dummy-project-bucket.s3.ap-south-1.amazonaws.com/media/1750074781800-y8cnbn.png`}
+                  imgUrl={
+                    `https://dummy-project-bucket.s3.ap-south-1.amazonaws.com/` +
+                    `${post.media[0]}`
+                  }
                   alt={"post.title"}
                   postId={post._id.toString()}
                 />
@@ -76,7 +79,10 @@ function LandingPage() {
               title={"post.title"}
               likecount={"post.reactions.likes.toString()"}
               body={"post.body"}
-              imgUrl={`https://picsum.photos/2000/2000?random=${post._id}`}
+              imgUrl={
+                `https://dummy-project-bucket.s3.ap-south-1.amazonaws.com/` +
+                `${post.media[0]}`
+              }
               alt={"post.title"}
               postId={post._id.toString()}
             />
