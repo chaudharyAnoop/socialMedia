@@ -1,7 +1,9 @@
 import styles from "./App.module.css";
 import React, { useEffect } from "react";
+
 import {
-  Route, Routes,
+  Route,
+  Routes,
   Navigate,
   useLocation,
   BrowserRouter,
@@ -9,6 +11,7 @@ import {
 import NavigationBar from "./components/NavigationBar/NavigationBar";
 import QuickAccess from "./components/QuickAccess/QuickAccess";
 import { Suspense, lazy } from "react";
+import RouteChangeHandler from "./components/RouteChangeHandler";
 import ExplorePage from "./pages/explore/ExplorePage";
 import Signin from "./pages/Signin/Signin";
 import {
@@ -16,7 +19,7 @@ import {
   requestNotificationPermission,
 } from "./firebase/firebase";
 import InstagramCreatePost from "./pages/InstagramCreatePost/InstagramCreatePost";
-import  LoginForm  from "./components/AuthForm/LoginForm";
+import LoginForm from "./components/AuthForm/LoginForm";
 import { AuthProvider } from "./contexts/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Dashboard from "./components/Dashboard/Dashboard";
@@ -79,51 +82,51 @@ const AdminPage = lazy(() => import("./pages/AdminPage/AdminPage"));
 //                 <Route
 //                   path="/"
 //                   element={
-//                     
+//                     <ProtectedRoute>
 //                       <LandingPage />
-//                     
+//                     </ProtectedRoute>
 //                   }
 //                 />
 //                 <Route
 //                   path="/explore"
 //                   element={
-//                     
+//                     <ProtectedRoute>
 //                       <ExplorePage />
-//                     
+//                     </ProtectedRoute>
 //                   }
 //                 />
 //                 <Route
 //                   path="/create"
 //                   element={
-//                     
+//                     <ProtectedRoute>
 //                       <InstagramCreatePost />
-//                     
+//                     </ProtectedRoute>
 //                   }
 //                 />
 //                 <Route
 //                   path="/admin"
 //                   element={
-//                     
+//                     <ProtectedRoute>
 //                       <AdminPage />
-//                     
+//                     </ProtectedRoute>
 //                   }
 //                 />
 //                 <Route path="/signin" element={<Signin />} />
 //                 <Route
 //                   path="/dashboard"
 //                   element={
-//                     
+//                     <ProtectedRoute>
 //                       <Dashboard />
-//                     
+//                     </ProtectedRoute>
 //                   }
 //                 />
 //                 {/* Redirect any unmatched routes to signin or landing based on auth state */}
 //                 <Route
 //                   path="*"
 //                   element={
-//                     
+//                     <ProtectedRoute>
 //                       <Navigate to="/" replace />
-//                     
+//                     </ProtectedRoute>
 //                   }
 //                 />
 //               </Routes>
@@ -152,42 +155,50 @@ const AppContent: React.FC = () => {
           <Route
             path="/"
             element={
-              
+              <ProtectedRoute>
                 <LandingPage />
-                
+              </ProtectedRoute>
             }
           />
           <Route
             path="/explore"
             element={
-              
+              <ProtectedRoute>
                 <ExplorePage />
-                
+              </ProtectedRoute>
             }
           />
           <Route
             path="/create"
             element={
-              
+              <ProtectedRoute>
                 <InstagramCreatePost />
-                
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/create"
+            element={
+              <ProtectedRoute>
+                <InstagramCreatePost />
+              </ProtectedRoute>
             }
           />
           <Route
             path="/admin"
             element={
-              
+              <ProtectedRoute>
                 <AdminPage />
-                
+              </ProtectedRoute>
             }
           />
           <Route path="/signin" element={<Signin />} />
           <Route
             path="/dashboard"
             element={
-              
+              <ProtectedRoute>
                 <Dashboard />
-                
+              </ProtectedRoute>
             }
           />
         </Routes>

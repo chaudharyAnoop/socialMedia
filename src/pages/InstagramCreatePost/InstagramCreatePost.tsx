@@ -22,16 +22,10 @@ interface TaggedPerson {
   id: string;
   name: string;
 }
-
 let token = localStorage.getItem("instagram_user");
 let cleanedUser = token?.slice(1, -1);
-const headers = {
-  "Content-Type": "application/json",
-  Authorization:` Bearer ${cleanedUser}`,
-};
 
 const InstagramCreatePost: React.FC = () => {
-  
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
   const [selectedMedia, setSelectedMedia] = useState<SelectedMedia[]>([]);
@@ -63,8 +57,7 @@ const InstagramCreatePost: React.FC = () => {
     settaggedUsers([]);
     setmediaKeys([]);
   };
-  
-  const token  = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODQ4MDNjNTA1NzRjNGVlNDFlZDIxYTgiLCJlbWFpbCI6ImFrc2hhdEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImRldmljZUlkIjoidGVzdC1kZXZpY2UiLCJpcEFkZHJlc3MiOiIxMjcuMC4wLjEiLCJ1c2VyQWdlbnQiOiJQb3N0bWFuUnVudGltZS83LjI5LjAiLCJpYXQiOjE3NTAwNzQ3MTcsImV4cCI6MTc1MDE2MTExNywic3ViIjoiNjg0ODAzYzUwNTc0YzRlZTQxZWQyMWE4In0.chBN1DBNLUADQ2LLYQKwinmCUioW2EowVK6JKu6kh00";
+  // const token  = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODQ4MDNjNTA1NzRjNGVlNDFlZDIxYTgiLCJlbWFpbCI6ImFrc2hhdEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImRldmljZUlkIjoidGVzdC1kZXZpY2UiLCJpcEFkZHJlc3MiOiIxMjcuMC4wLjEiLCJ1c2VyQWdlbnQiOiJQb3N0bWFuUnVudGltZS83LjI5LjAiLCJpYXQiOjE3NTAwNzQ3MTcsImV4cCI6MTc1MDE2MTExNywic3ViIjoiNjg0ODAzYzUwNTc0YzRlZTQxZWQyMWE4In0.chBN1DBNLUADQ2LLYQKwinmCUioW2EowVK6JKu6kh00";
 //here we send the request to gaurav with link,content,tags people  
   // const handleShare = (): void => {
   //   console.log('Sharing post:', {
