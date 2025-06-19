@@ -1,26 +1,28 @@
 import React, { useState, useEffect } from "react";
 import { Formik, Form } from "formik";
 import FormikInput from "../FormInput/FormikInput";
-import { otpSchema } from "../../utils/validationSchemas";
+import PasswordStrength from "../PasswordStrength/PasswordStrength";
+import { resetPasswordSchema } from "../../utils/validationSchemas";
 import { useAuth } from "../../contexts/AuthContext";
-import styles from "./OTPVerification.module.css";
+import styles from "./PasswordReset.module.css";
 
-interface OTPVerificationProps {
+interface PasswordResetProps {
   email: string;
-  onVerified: () => void;
+  onPasswordReset: () => void;
   onBack: () => void;
 }
 
-const OTPVerification: React.FC<OTPVerificationProps> = ({
+const PasswordReset: React.FC<PasswordResetProps> = ({
   email,
-  onVerified,
+  onPasswordReset,
   onBack,
 }) => {
-  const { verifyOTP, loading } = useAuth();
+  const { resetPassword, loading } = useAuth();
   const [timer, setTimer] = useState(60);
   const [canResend, setCanResend] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [showPasswordStrength, setShowPasswordStrength] = useState(false);
 
   useEffect(() => {
     if (timer > 0) {
@@ -34,7 +36,7 @@ const OTPVerification: React.FC<OTPVerificationProps> = ({
   }, [timer]);
 
   const handleSubmit = async (
-    values: { otp: string },
+    values: { otp: string; newPassword: string; confirmPassword: string },
     { setSubmitting }: any
   ) => {
     setError("");
@@ -42,19 +44,17 @@ const OTPVerification: React.FC<OTPVerificationProps> = ({
     setSubmitting(true);
 
     try {
-      // For email verification during registration
-      await verifyOTP(email, values.otp);
-      setSuccess("Email verified successfully! Redirecting to login...");
+      await resetPassword(email, values.otp, values.newPassword);
+      setSuccess("Password reset successfully! Redirecting to login...");
       setTimeout(() => {
-        onVerified();
+        onPasswordReset();
       }, 1500);
     } catch (error: any) {
-      // Stay on the same page and show error - DO NOT redirect
       const errorMessage =
         error.response?.data?.message ||
-        "Invalid OTP. Please check your code and try again.";
+        "Invalid OTP or failed to reset password. Please try again.";
       setError(errorMessage);
-      console.error("OTP Verification Error:", error);
+      console.error("Password Reset Error:", error);
     } finally {
       setSubmitting(false);
     }
@@ -77,27 +77,50 @@ const OTPVerification: React.FC<OTPVerificationProps> = ({
   };
 
   return (
-    <div className={styles.otpContainer}>
+    <div className={styles.resetContainer}>
       <h1 className={styles.logo}>Instagram</h1>
 
       <div className={styles.subtitle}>
         Enter the 6-digit code we sent to
         <br />
         <span className={styles.emailHighlight}>{email}</span>
+        <br />
+        and create your new password
       </div>
 
       <Formik
-        initialValues={{ otp: "" }}
-        validationSchema={otpSchema}
+        initialValues={{ otp: "", newPassword: "", confirmPassword: "" }}
+        validationSchema={resetPasswordSchema}
         onSubmit={handleSubmit}
       >
-        {({ isSubmitting }) => (
+        {({ isSubmitting, values }) => (
           <Form>
             <FormikInput
               name="otp"
               type="text"
               placeholder="6-digit code"
               maxLength={6}
+            />
+
+            <FormikInput
+              name="newPassword"
+              type="password"
+              placeholder="New Password"
+              showPasswordToggle
+              onFocus={() => setShowPasswordStrength(true)}
+              onBlur={() => setShowPasswordStrength(false)}
+            />
+
+            <PasswordStrength
+              password={values.newPassword}
+              showStrength={showPasswordStrength}
+            />
+
+            <FormikInput
+              name="confirmPassword"
+              type="password"
+              placeholder="Confirm New Password"
+              showPasswordToggle
             />
 
             {error && <div className={styles.error}>{error}</div>}
@@ -109,7 +132,9 @@ const OTPVerification: React.FC<OTPVerificationProps> = ({
               disabled={loading || isSubmitting}
               className={styles.submitButton}
             >
-              {loading || isSubmitting ? "Verifying..." : "Verify"}
+              {loading || isSubmitting
+                ? "Resetting Password..."
+                : "Reset Password"}
             </button>
           </Form>
         )}
@@ -130,10 +155,10 @@ const OTPVerification: React.FC<OTPVerificationProps> = ({
       </div>
 
       <button onClick={onBack} className={styles.backButton}>
-        Back to sign up
+        Back to login
       </button>
     </div>
   );
 };
 
-export default OTPVerification;
+export default PasswordReset;

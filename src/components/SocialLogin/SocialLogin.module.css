@@ -1,39 +1,45 @@
-.socialContainer {
-  margin: 20px 0;
+.socialLogin {
+  width: 100%;
+  margin: 24px 0;
 }
 
 .divider {
   display: flex;
   align-items: center;
   margin: 18px 0;
-  color: var(--text-secondary);
-  font-size: 13px;
-  text-transform: uppercase;
-  font-weight: 600;
+  width: 100%;
 }
 
-.divider::before,
-.divider::after {
-  content: '';
+.line {
   flex: 1;
   height: 1px;
-  background: var(--border-color);
+  background-color: #363636;
 }
 
-.divider span {
-  padding: 0 18px;
+@media (prefers-color-scheme: light) {
+  .line {
+    background-color: #dbdbdb;
+  }
 }
 
-.socialButton {
+.orText {
+  margin: 0 18px;
+  color: #8e8e8e;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.facebookButton {
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  width: 100%;
   padding: 8px 16px;
-  background: transparent;
+  background: none;
   border: none;
-  color: var(--button-primary);
+  color: #385185;
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
@@ -41,27 +47,17 @@
   text-decoration: none;
 }
 
-.socialButton:hover {
-  opacity: 0.7;
-  text-decoration: none;
+.facebookButton:hover {
+  opacity: 0.8;
 }
 
-.socialButton svg {
-  width: 16px;
-  height: 16px;
+.facebookButton:active {
+  opacity: 0.6;
 }
 
-.forgotPassword {
-  text-align: center;
-  margin-top: 12px;
-}
-
-.forgotPassword a {
-  color: var(--text-primary);
-  font-size: 12px;
-  text-decoration: none;
-}
-
-.forgotPassword a:hover {
-  text-decoration: underline;
+@media (max-width: 768px) {
+  .facebookButton {
+    padding: 12px 16px;
+    font-size: 14px;
+  }
 }
