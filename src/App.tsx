@@ -1,6 +1,6 @@
 import styles from "./App.module.css";
 import React, { useEffect } from "react";
-
+import { ToastContainer, toast } from 'react-toastify';
 import {
   Route,
   Routes,
@@ -23,6 +23,7 @@ import LoginForm from "./components/AuthForm/LoginForm";
 import { AuthProvider } from "./contexts/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Dashboard from "./components/Dashboard/Dashboard";
+import NotificationsPage from "./pages/notifications/NotificationsPage/NotificationsPage";
 
 const LandingPage = lazy(() => import("./pages/LandingPage/LandingPage"));
 const AdminPage = lazy(() => import("./pages/AdminPage/AdminPage"));
@@ -171,17 +172,17 @@ const AppContent: React.FC = () => {
           <Route
             path="/create"
             element={
-              <ProtectedRoute>
+              // <ProtectedRoute>
                 <InstagramCreatePost />
-              </ProtectedRoute>
+              // </ProtectedRoute>
             }
           />
           <Route
             path="/create"
             element={
-              <ProtectedRoute>
+              // <ProtectedRoute>
                 <InstagramCreatePost />
-              </ProtectedRoute>
+              // </ProtectedRoute>
             }
           />
           <Route
@@ -201,8 +202,27 @@ const AppContent: React.FC = () => {
               </ProtectedRoute>
             }
           />
+          <Route
+            path="/noti"
+            element={
+              // <ProtectedRoute>
+                <NotificationsPage/>
+              // </ProtectedRoute>
+            }
+          />
         </Routes>
       </Suspense>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       {!isSignin && <QuickAccess />}
     </div>
   );

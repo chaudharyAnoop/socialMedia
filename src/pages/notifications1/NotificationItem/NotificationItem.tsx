@@ -173,7 +173,6 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
             onClick={handleFollowToggle}
           >
             {notification.isFollowing ? 'Following' : 'Follow Back'}
-            
           </button>
         ) : null}
       </div>

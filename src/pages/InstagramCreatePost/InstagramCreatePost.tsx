@@ -6,6 +6,7 @@ import { Plus } from 'lucide-react';
 import axios from 'axios';
 import { AxiosResponse  , AxiosError} from 'axios';
 import { uploadmedia } from './baseURL';
+import { useNavigate } from 'react-router-dom';
 
 interface SelectedMedia {
   file: File;
@@ -31,10 +32,12 @@ const InstagramCreatePost: React.FC = () => {
   const [selectedMedia, setSelectedMedia] = useState<SelectedMedia[]>([]);
   const [content, setcontent] = useState('');
   const [taggedUsers, settaggedUsers] = useState<TaggedPerson[]>([]);
-  const [visibility,setVisibility] = useState<any>("");
+  const [visibility,setVisibility] = useState<any>("public");
   const [timestamp, setTimestamp] = useState<string>('');
   const [mediaKeys, setmediaKeys] = useState<string[]>([]);
 
+
+  const Navigate = useNavigate();
 
 
   const closeCreateModal = (): void => {
@@ -97,13 +100,14 @@ const InstagramCreatePost: React.FC = () => {
   //   closeShareModal();
   // };
   const handleShare = async (): Promise<void> => {
-    console.log('Sharing post:', {
-      content,
-      taggedUsers: taggedUsers.map(p => p.name),
-      mediaKeys,
-      visibility
-    });
+    // console.log('Sharing post:', {
+    //   content,
+    //   taggedUsers: taggedUsers.map(p => p.name),
+    //   mediaKeys,
+    //   visibility
+    // });
      // Upload all files to S3 first
+     
      const uploadedUrls: string[] = [];
      for (const media of selectedMedia) {
       if (!media.presignedData) continue;
@@ -117,15 +121,24 @@ const InstagramCreatePost: React.FC = () => {
       uploadedUrls.push(media.presignedData.fileKey);
     }
     setmediaKeys(uploadedUrls);
-    const taggedUsersData = taggedUsers.length > 0 
-      ? taggedUsers.map(p => p.name)
-      : "";
-    const payload = {
-      mediaKeys,
-      content,
-      taggedUsers: taggedUsersData,
-      visibility
-    };
+    // const taggedUsersData = taggedUsers.length > 0 
+    //   ? taggedUsers.map(p => p.id)
+    //   : "";
+      const payload: {
+        uploadedUrls: string[];
+        content: string;
+        taggedUsers?: string[];
+        visibility: string;
+      } = {
+        uploadedUrls,
+        content,
+        visibility
+      };
+
+// Only add taggedUsers if there are any
+if (taggedUsers.length > 0) {
+  payload.taggedUsers = taggedUsers.map(p => p.id);
+}
     axios.post(
       uploadmedia,
       payload,
@@ -145,8 +158,9 @@ const InstagramCreatePost: React.FC = () => {
     });
   
     // console.log("Final POST Payload:", payload);
-
+    console.log(mediaKeys);
     closeShareModal();
+    Navigate("/")
   };
   
 

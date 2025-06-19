@@ -5,7 +5,7 @@ import React, {
   useEffect,
   type ReactNode,
 } from "react";
-
+import { token as sfcmToken } from "../firebase/firebase";
 interface User {
   id: string;
   username: string;
@@ -74,24 +74,82 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     setIsLoading(false);
   }, []);
 
+  // const login = async (email: string, password: string) => {
+  //   try {
+  //     const response = await fetch("http://172.50.5.102:3011/auth/login", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({ email, password }),
+  //     });
+
+  //     const data = await response.json();
+  //     console.log(data);
+
+  //     if (response.ok) {
+  //       if (data.requiresOTP) {
+  //         return { success: true, requiresOTP: true };
+  //       }
+
+  //       setUser(data.access_token);
+  //       localStorage.setItem(
+  //         "instagram_user",
+  //         JSON.stringify(data.access_token)
+  //       );
+  //       return { success: true };
+  //     } else {
+  //       return { success: false, message: data.message || "Login failed" };
+  //     }
+  //   } catch (error) {
+  //     // Mock successful login for demo purposes
+  //     const mockUser: User = {
+  //       id: "1",
+  //       username: email.split("@")[0],
+  //       email,
+  //       fullName: "Demo User",
+  //       bio: "Welcome to Instagram clone!",
+  //       profilePicture: "",
+  //       emailVerified: true,
+  //     };
+
+  //     setUser(mockUser);
+  //     localStorage.setItem("instagram_user", JSON.stringify(mockUser));
+  //     return { success: true };
+  //   }
+  // };
   const login = async (email: string, password: string) => {
+    setIsLoading(true);
     try {
+      // Generate a device ID (you can use any method to generate a unique ID)
+      const deviceId = generateDeviceId();
+      // Get client IP address (this is a simplified version)
+      const ipAddress = await getClientIP();
+      const userAgent = navigator.userAgent;
+      console.log(sfcmToken);
       const response = await fetch("http://172.50.5.102:3011/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ 
+          email, 
+          password,
+          deviceId,
+          ipAddress,
+          userAgent,
+          fcmToken: sfcmToken // Default for web
+        }),
       });
-
+  
       const data = await response.json();
       console.log(data);
-
+  
       if (response.ok) {
         if (data.requiresOTP) {
           return { success: true, requiresOTP: true };
         }
-
+  
         setUser(data.access_token);
         localStorage.setItem(
           "instagram_user",
@@ -102,20 +160,33 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         return { success: false, message: data.message || "Login failed" };
       }
     } catch (error) {
-      // Mock successful login for demo purposes
-      const mockUser: User = {
-        id: "1",
-        username: email.split("@")[0],
-        email,
-        fullName: "Demo User",
-        bio: "Welcome to Instagram clone!",
-        profilePicture: "",
-        emailVerified: true,
-      };
-
-      setUser(mockUser);
-      localStorage.setItem("instagram_user", JSON.stringify(mockUser));
-      return { success: true };
+      console.error("Login error:", error);
+      return { success: false, message: "Network error occurred" };
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  
+  // Helper function to generate a device ID
+  const generateDeviceId = (): string => {
+    // You can implement a more sophisticated device ID generation
+    // This is a simple version using browser fingerprinting
+    const navigatorInfo = `${navigator.userAgent}${navigator.hardwareConcurrency}${screen.width}${screen.height}`;
+    return btoa(navigatorInfo).substring(0, 32);
+  };
+  
+  // Helper function to get client IP (simplified version)
+  const getClientIP = async (): Promise<string> => {
+    try {
+      // This is a simple approach - in production you might want to:
+      // 1. Get the IP from your backend during initial page load
+      // 2. Or use a third-party service
+      const response = await fetch('https://api.ipify.org?format=json');
+      const data = await response.json();
+      return data.ip || 'unknown';
+    } catch (error) {
+      console.error("Could not get IP address:", error);
+      return 'unknown';
     }
   };
 

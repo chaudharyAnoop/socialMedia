@@ -122,7 +122,7 @@ const handleFiles = async (files: File[]): Promise<void> => {
       },{
         timeout : 10000
       });
-      
+      console.log(data);
       newMedia.push({
         file,
         preview: URL.createObjectURL(file),
@@ -130,6 +130,7 @@ const handleFiles = async (files: File[]): Promise<void> => {
         presignedData: data.urls[0] // Store the presigned URL data
       });
     }
+    
     setSelectedMedia(prev => [...prev, ...newMedia]);
   } catch (error : any) {
     if(error.code  === "ECONNABORTED" ){

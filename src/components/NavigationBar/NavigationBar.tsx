@@ -21,6 +21,7 @@ import {
   FaTimes,
   FaTimesCircle,
   FaUser,
+
 } from "react-icons/fa";
 import {
   FaCircleInfo,
@@ -28,6 +29,7 @@ import {
   FaMessage,
   FaPerson,
 } from "react-icons/fa6";
+import { CgLogOut } from "react-icons/cg";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "../../redux/store";
 import { toggleNavigationBar } from "../../redux/navigationBarSlice";
@@ -38,6 +40,11 @@ function NavigationBar() {
   const isSidebarVisible = useSelector(
     (state: RootState) => state.sidebar.isVisible
   );
+  const logoutHnadler = async () =>{
+
+
+
+  }
   return (
     <div className={styles.outer}>
       <div className={isSidebarVisible ? styles.main : styles.hideMain}>
@@ -106,7 +113,7 @@ function NavigationBar() {
             </NavLink>
           </li>{" "}
           <li className={styles.list_li}>
-            <NavLink to="/" className={styles.link}>
+            <NavLink to="/noti" className={styles.link}>
               <div className={styles.tile}>
                 <div className={styles.name}>
                   <FaRegHeart className={styles.icon} />
@@ -133,6 +140,17 @@ function NavigationBar() {
                 <div className={styles.name}>
                   <FaRegUser className={styles.icon} />
                   <p className={styles.head}> Profile</p>
+                </div>
+                {/* <p className={styles.val}>10</p> */}
+              </div>
+            </NavLink>
+          </li>
+          <li className={styles.list_li}>
+            <NavLink to="/" className={styles.link} onClick={logoutHnadler}>
+              <div className={styles.tile}>
+                <div className={styles.name}>
+                  <CgLogOut className={styles.icon} />
+                  <p className={styles.head}> Logout</p>
                 </div>
                 {/* <p className={styles.val}>10</p> */}
               </div>

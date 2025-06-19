@@ -1,5 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getMessaging, getToken,onMessage} from 'firebase/messaging';
+import { toast } from 'react-toastify'
 
 const firebaseConfig = {
   apiKey: "AIzaSyDTH8dvQznTaJRnl8NbZHPfMIMWLplKZvo",
@@ -33,7 +34,7 @@ export const requestNotificationPermission = async (): Promise<void> => {
       return;
     }
 
-    const token = await getToken(messaging, {
+      token = await getToken(messaging, {
       vapidKey: VAPID_KEY,
     });
 
@@ -49,12 +50,44 @@ export const requestNotificationPermission = async (): Promise<void> => {
   }
 };
 
+// export const onFirebaseMessage = () =>
+//     new Promise((resolve) => {
+//       onMessage(messaging, (payload) => {
+//         console.log(' Message received in foreground:', payload);
+//         resolve(payload);
+//       });
+//     });
+
 export const onFirebaseMessage = () =>
-    new Promise((resolve) => {
-      onMessage(messaging, (payload) => {
-        console.log(' Message received in foreground:', payload);
-        resolve(payload);
-      });
+  new Promise((resolve) => {
+    onMessage(messaging, (payload) => {
+      console.log(' Message received in foreground:', payload);
+
+      
+      const notificationTitle = payload?.notification?.title || 'New Notification';
+      const notificationBody = payload?.notification?.body || '';
+
+      toast.info(
+        <div>
+          <strong>{notificationTitle}</strong>
+          <div>{notificationBody}</div>
+        </div>,
+        {
+          position: 'top-center',
+          autoClose: 5000,
+          closeOnClick: true,
+        }
+      );
+
+      resolve(payload);
     });
+  });
+
+
+
+
+    
 
 export { token } ;
+
+
