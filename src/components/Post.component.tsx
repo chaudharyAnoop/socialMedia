@@ -1240,7 +1240,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "../styles/Post.module.css";
-import { FaHeart, FaRegBookmark, FaTimes } from "react-icons/fa";
+import { FaHeart, FaRegBookmark, FaRegHeart, FaTimes } from "react-icons/fa";
 import { MessageCircle, Send } from "lucide-react";
 import {
   fetchComments,
@@ -1261,6 +1261,7 @@ interface CircularImageProps {
   title: string;
   likecount: string;
   postId: string;
+  isLiked: boolean;
 }
 
 export default function Post({
@@ -1270,6 +1271,7 @@ export default function Post({
   title,
   likecount,
   postId,
+  isLiked,
 }: CircularImageProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [isImageLoading, setIsImageLoading] = useState(true);
@@ -1440,7 +1442,11 @@ export default function Post({
       <div className={styles.likes}>
         <div className={styles.interactions}>
           <button onClick={handleLikePost}>
-            <FaHeart className={styles.icon} />
+            {isLiked ? (
+              <FaHeart className={styles.icon} />
+            ) : (
+              <FaRegHeart className={styles.iconUnliked} />
+            )}
           </button>
           <MessageCircle className={styles.icon} />
           <Send className={styles.icon} />

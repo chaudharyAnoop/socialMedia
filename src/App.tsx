@@ -24,6 +24,7 @@ import { AuthProvider } from "./contexts/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Dashboard from "./components/Dashboard/Dashboard";
 import GetUser from "./pages/GetUser";
+import UserProfile from "./components/UserProfile";
 
 const LandingPage = lazy(() => import("./pages/LandingPage/LandingPage"));
 const AdminPage = lazy(() => import("./pages/AdminPage/AdminPage"));
@@ -165,7 +166,7 @@ const AppContent: React.FC = () => {
             path="/explore"
             element={
               <ProtectedRoute>
-                <ExplorePage />
+                <UserProfile />
               </ProtectedRoute>
             }
           />
@@ -202,7 +203,7 @@ const AppContent: React.FC = () => {
               </ProtectedRoute>
             }
           />
-        <Route path="/user/:userId" element={<GetUser />} />
+          <Route path="/user/:userId" element={<GetUser />} />
         </Routes>
       </Suspense>
       {!isSignin && <QuickAccess />}

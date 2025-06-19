@@ -1,26 +1,10 @@
-import React, { useState } from "react";
-import { AuthProvider, useAuth } from "../../contexts/AuthContext";
-import LoginForm from "../../components/AuthForm/LoginForm";
-import SignupForm from "../../components/AuthForm/SignupForm";
-import Dashboard from "../../components/Dashboard/Dashboard";
-import OTPVerification from "../../components/OTPVerification/OTPVerification";
-import "./Signin.css";
+import React from "react";
+import { useAuth } from "../../contexts/AuthContext";
 import { Navigate } from "react-router-dom";
+import AuthForm from "../../components/AuthForm/AuthForm";
 
-type AuthView = "login" | "signup" | "otp";
-
-const AppContent: React.FC = () => {
+function Signin() {
   const { user, isLoading } = useAuth();
-  const [currentView, setCurrentView] = useState<AuthView>("login");
-  const [otpEmail, setOtpEmail] = useState("");
-
-  const handleSwitchToSignup = () => setCurrentView("signup");
-  const handleSwitchToLogin = () => setCurrentView("login");
-  const handleShowOTP = (email: string) => {
-    setOtpEmail(email);
-    setCurrentView("otp");
-  };
-  const handleBackFromOTP = () => setCurrentView("login");
 
   if (isLoading) {
     return (
@@ -47,65 +31,11 @@ const AppContent: React.FC = () => {
     );
   }
 
-  // if (user) {
-  //   return <Dashboard />;
-  // }
-
-  // if (currentView === 'otp') {
-  //   return (
-  //     <OTPVerification
-  //       email={otpEmail}
-  //       onBack={handleBackFromOTP}
-  //     />
-  //   );
-  // }
-
-  // if (currentView === 'signup') {
-  //   return (
-  //     <SignupForm
-  //       onSwitchToLogin={handleSwitchToLogin}
-  //       onShowOTP={handleShowOTP}
-  //     />
-  //   );
-  // }
-
-  // return (
-  //   <LoginForm
-  //     onSwitchToSignup={handleSwitchToSignup}
-  //     onShowOTP={handleShowOTP}
-  //   />
-  // );
   if (user) {
     return <Navigate to="/" replace />;
   }
 
-  if (currentView === "otp") {
-    return <OTPVerification email={otpEmail} onBack={handleBackFromOTP} />;
-  }
-
-  if (currentView === "signup") {
-    return (
-      <SignupForm
-        onSwitchToLogin={handleSwitchToLogin}
-        onShowOTP={handleShowOTP}
-      />
-    );
-  }
-
-  return (
-    <LoginForm
-      onSwitchToSignup={handleSwitchToSignup}
-      onShowOTP={handleShowOTP}
-    />
-  );
-};
-
-function App() {
-  return (
-    <AuthProvider>
-      <AppContent />
-    </AuthProvider>
-  );
+  return <AuthForm />;
 }
 
-export default App;
+export default Signin;

@@ -1,109 +1,161 @@
-import React, { useState } from 'react';
-import { Formik, Form } from 'formik';
-import { useAuth } from '../../contexts/AuthContext';
-import { loginValidationSchema } from '../../utils/validationSchemas';
-import FormikInput from '../FormInput/FormikInput';
-import SocialLogin from '../SocialLogin/SocialLogin';
-import styles from './AuthForm.module.css';
+import React, { useState } from "react";
+import { Formik, Form } from "formik";
+import FormikInput from "../FormInput/FormikInput";
+import SocialLogin from "../SocialLogin/SocialLogin";
+import {
+  loginSchema,
+  forgotPasswordSchema,
+} from "../../utils/validationSchemas";
+import { useAuth } from "../../contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
+import styles from "./AuthForm.module.css";
 
 interface LoginFormProps {
-  onSwitchToSignup: () => void;
-  onShowOTP: (email: string) => void;
+  onSignupClick: () => void;
+  onForgotPassword: (email: string) => void;
 }
 
-interface LoginFormValues {
-  email: string;
-  password: string;
-}
+const LoginForm: React.FC<LoginFormProps> = ({
+  onSignupClick,
+  onForgotPassword,
+}) => {
+  const { login, forgotPassword, loading } = useAuth();
+  const [error, setError] = useState("");
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
+  const [forgotPasswordMessage, setForgotPasswordMessage] = useState("");
+  const navigate = useNavigate();
 
-const LoginForm: React.FC<LoginFormProps> = ({ onSwitchToSignup, onShowOTP }) => {
-  const { login } = useAuth();
-  const [serverError, setServerError] = useState('');
-
-  const initialValues: LoginFormValues = {
-    email: '',
-    password: '',
-  };
-
-  const handleSubmit = async (
-    values: LoginFormValues,
-    { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
-  ) => {
-    setServerError('');
-    
+  const handleLogin = async (values: { email: string; password: string }) => {
+    setError("");
     try {
-      const result = await login(values.email, values.password);
-      
-      if (result.success) {
-        if (result.requiresOTP) {
-          onShowOTP(values.email);
-        }
-        // If login is successful without OTP, the AuthContext will handle the state change
-      } else {
-        setServerError(result.message || 'Login failed. Please try again.');
-      }
-    } catch (error) {
-      setServerError('An unexpected error occurred. Please try again.');
-    } finally {
-      setSubmitting(false);
+      await login(values.email, values.password);
+      navigate("/");
+    } catch (error: any) {
+      setError(
+        error.response?.data?.message || "Login failed. Please try again."
+      );
     }
   };
 
-  return (
-    <div className={styles.authContainer}>
-      <div className={styles.authWrapper}>
-        <div className={styles.authBox}>
-          <div className={styles.logo}>
-            <h1 className={styles.logoText}>Instagram</h1>
-          </div>
+  const handleForgotPasswordSubmit = async (values: { email: string }) => {
+    setError("");
+    setForgotPasswordMessage("");
+    try {
+      await forgotPassword(values.email);
+      setForgotPasswordMessage("OTP sent to your email");
+      onForgotPassword(values.email);
+    } catch (error: any) {
+      setError(error.response?.data?.message || "Email not found");
+    }
+  };
+
+  if (showForgotPassword) {
+    return (
+      <div className={styles.formContainer}>
+        <div className={styles.form}>
+          <h1 className={styles.logo}>Instagram</h1>
+          <p className={styles.subtitle}>
+            Enter your email and we'll send you a link to get back into your
+            account.
+          </p>
 
           <Formik
-            initialValues={initialValues}
-            validationSchema={loginValidationSchema}
-            onSubmit={handleSubmit}
+            initialValues={{ email: "" }}
+            validationSchema={forgotPasswordSchema}
+            onSubmit={handleForgotPasswordSubmit}
           >
-            {({ isSubmitting, isValid, dirty }) => (
-              <Form className={styles.form}>
-                {serverError && (
-                  <div className={styles.errorMessage}>{serverError}</div>
-                )}
+            <Form>
+              <FormikInput name="email" type="email" placeholder="Email" />
 
-                <FormikInput
-                  type="text"
-                  name="email"
-                  placeholder="Phone number, username or email address"
-                  autoComplete="username"
-                />
+              {error && <div className={styles.error}>{error}</div>}
+              {forgotPasswordMessage && (
+                <div className={styles.success}>{forgotPasswordMessage}</div>
+              )}
 
-                <FormikInput
-                  type="password"
-                  name="password"
-                  placeholder="Password"
-                  autoComplete="current-password"
-                  showPasswordToggle={true}
-                />
-
-                <button
-                  type="submit"
-                  className={`${styles.submitButton} ${isSubmitting ? styles.loading : ''}`}
-                  disabled={!isValid || !dirty || isSubmitting}
-                >
-                  {isSubmitting && <div className={styles.spinner}></div>}
-                  Log in
-                </button>
-              </Form>
-            )}
+              <button
+                type="submit"
+                disabled={loading}
+                className={styles.submitButton}
+              >
+                {loading ? "Sending..." : "Send Login Link"}
+              </button>
+            </Form>
           </Formik>
 
-          <SocialLogin showForgotPassword />
+          <div className={styles.divider}>
+            <div className={styles.line}></div>
+            <span className={styles.orText}>OR</span>
+            <div className={styles.line}></div>
+          </div>
+
+          <button
+            onClick={() => setShowForgotPassword(false)}
+            className={styles.linkButton}
+          >
+            Back to Login
+          </button>
         </div>
 
-        <div className={styles.switchBox}>
-          Don't have an account?{' '}
-          <a href="#" onClick={(e) => { e.preventDefault(); onSwitchToSignup(); }}>
+        <div className={styles.switchForm}>
+          <span>Don't have an account? </span>
+          <button onClick={onSignupClick} className={styles.linkButton}>
             Sign up
-          </a>
+          </button>
         </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className={styles.formContainer}>
+      <div className={styles.form}>
+        <h1 className={styles.logo}>Instagram</h1>
+
+        <Formik
+          initialValues={{ email: "", password: "" }}
+          validationSchema={loginSchema}
+          onSubmit={handleLogin}
+        >
+          <Form>
+            <FormikInput
+              name="email"
+              type="email"
+              placeholder="Phone number, username or email address"
+            />
+            <FormikInput
+              name="password"
+              type="password"
+              placeholder="Password"
+              showPasswordToggle
+            />
+
+            {error && <div className={styles.error}>{error}</div>}
+
+            <button
+              type="submit"
+              disabled={loading}
+              className={styles.submitButton}
+            >
+              {loading ? "Logging in..." : "Log In"}
+            </button>
+          </Form>
+        </Formik>
+
+        <SocialLogin />
+
+        <button
+          onClick={() => setShowForgotPassword(true)}
+          className={styles.linkButton}
+        >
+          Forgotten your password?
+        </button>
+      </div>
+
+      <div className={styles.switchForm}>
+        <span>Don't have an account? </span>
+        <button onClick={onSignupClick} className={styles.linkButton}>
+          Sign up
+        </button>
       </div>
     </div>
   );
