@@ -73,52 +73,129 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
     setIsLoading(false);
   }, []);
+  // =========================================================================
+
+  // const login = async (email: string, password: string) => {
+  //   try {
+  //     const response = await fetch("http://172.50.5.102:3011/auth/login", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({ email, password}),
+  //     });
+
+  //     const data = await response.json();
+  //     console.log(data);
+
+  //     if (response.ok) {
+  //       if (data.requiresOTP) {
+  //         return { success: true, requiresOTP: true };
+  //       }
+
+  //       setUser(data.access_token);
+  //       localStorage.setItem(
+  //         "instagram_user",
+  //         JSON.stringify(data.access_token)
+  //       );
+  //       return { success: true };
+  //     } else {
+  //       return { success: false, message: data.message || "Login failed" };
+  //     }
+  //   } catch (error) {
+  //     // Mock successful login for demo purposes
+  //     const mockUser: User = {
+  //       id: "1",
+  //       username: email.split("@")[0],
+  //       email,
+  //       fullName: "Demo User",
+  //       bio: "Welcome to Instagram clone!",
+  //       profilePicture: "",
+  //       emailVerified: true,
+  //     };
+
+  //     setUser(mockUser);
+  //     localStorage.setItem("instagram_user", JSON.stringify(mockUser));
+  //     return { success: true };
+  //   }
+  // };
+
+  // =========================================================================
 
   const login = async (email: string, password: string) => {
-    try {
-      const response = await fetch("http://172.50.5.102:3011/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
+  setIsLoading(true);
+  try {
+    // Generate a device ID (you can use any method to generate a unique ID)
+    const deviceId = generateDeviceId();
+    // Get client IP address (this is a simplified version)
+    const ipAddress = await getClientIP();
+    const userAgent = navigator.userAgent;
 
-      const data = await response.json();
-      console.log(data);
+    const response = await fetch("http://172.50.5.102:3011/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ 
+        email, 
+        password,
+        deviceId,
+        ipAddress,
+        userAgent,
+        fcmToken: "fcm_token_web" // Default for web
+      }),
+    });
 
-      if (response.ok) {
-        if (data.requiresOTP) {
-          return { success: true, requiresOTP: true };
-        }
+    const data = await response.json();
+    console.log(data);
 
-        setUser(data.access_token);
-        localStorage.setItem(
-          "instagram_user",
-          JSON.stringify(data.access_token)
-        );
-        return { success: true };
-      } else {
-        return { success: false, message: data.message || "Login failed" };
+    if (response.ok) {
+      if (data.requiresOTP) {
+        return { success: true, requiresOTP: true };
       }
-    } catch (error) {
-      // Mock successful login for demo purposes
-      const mockUser: User = {
-        id: "1",
-        username: email.split("@")[0],
-        email,
-        fullName: "Demo User",
-        bio: "Welcome to Instagram clone!",
-        profilePicture: "",
-        emailVerified: true,
-      };
 
-      setUser(mockUser);
-      localStorage.setItem("instagram_user", JSON.stringify(mockUser));
+      setUser(data.access_token);
+      localStorage.setItem(
+        "instagram_user",
+        JSON.stringify(data.access_token)
+      );
       return { success: true };
+    } else {
+      return { success: false, message: data.message || "Login failed" };
     }
-  };
+  } catch (error) {
+    console.error("Login error:", error);
+    return { success: false, message: "Network error occurred" };
+  } finally {
+    setIsLoading(false);
+  }
+};
 
+// Helper function to generate a device ID
+const generateDeviceId = (): string => {
+  // You can implement a more sophisticated device ID generation
+  // This is a simple version using browser fingerprinting
+  const navigatorInfo = `${navigator.userAgent}${navigator.hardwareConcurrency}${screen.width}${screen.height}`;
+  return btoa(navigatorInfo).substring(0, 32);
+};
+
+// Helper function to get client IP (simplified version)
+const getClientIP = async (): Promise<string> => {
+  try {
+    // This is a simple approach - in production you might want to:
+    // 1. Get the IP from your backend during initial page load
+    // 2. Or use a third-party service
+    const response = await fetch('https://api.ipify.org?format=json');
+    const data = await response.json();
+    return data.ip || 'unknown';
+  } catch (error) {
+    console.error("Could not get IP address:", error);
+    return 'unknown';
+  }
+};
+// =======================================================================
+
+  
   const register = async (userData: RegisterData) => {
     try {
       const response = await fetch("/auth/register", {
