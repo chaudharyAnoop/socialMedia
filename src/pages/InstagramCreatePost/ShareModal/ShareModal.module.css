@@ -1,193 +1,242 @@
-.modalOverlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 50;
-    padding: 16px;
-    animation: fadeIn 0.3s ease-out forwards;
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+  padding: 16px;
+}
+
+.shareModal {
+  background-color: white;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 64rem;
+  max-height: 90vh;
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.modalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid #e5e7eb;
+  position: relative;
+}
+
+.modalHeaderButton {
+  position: absolute;
+  padding: 4px;
+  background-color: transparent;
+  border: none;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  left: 16px;
+}
+
+.modalHeaderButton:hover {
+  background-color: #f3f4f6;
+}
+
+.modalHeaderButtonRight {
+  position: absolute;
+  right: 16px;
+  color: #3b82f6;
+  font-weight: 600;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.modalHeaderButtonRight:hover {
+  color: #2563eb;
+}
+
+.modalTitle {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.shareContent {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  max-height: calc(90vh - 60px);
+}
+
+.shareImageContainer {
+  aspect-ratio: 1 / 1;
+  background-color: #f3f4f6;
+  position: relative;
+}
+
+.shareOptions {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.userAvatar {
+  width: 32px;
+  height: 32px;
+  background: linear-gradient(to right, #a855f7, #ec4899);
+  border-radius: 50%;
+}
+
+.username {
+  font-weight: 600;
+  color: #111827;
+}
+
+.contentContainer {
+  flex: 1;
+  margin-bottom: 16px;
+}
+
+.contentInput {
+  width: 100%;
+  height: 128px;
+  padding: 12px;
+  border: none;
+  resize: none;
+  font-size: 0.875rem;
+  font-family: inherit;
+  outline: none;
+}
+
+.contentCounter {
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin-bottom: 16px;
+}
+
+.shareOptionsList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.shareOption {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.shareOptionLeft {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.shareOptionLabel {
+  font-size: 0.875rem;
+  color: #374151;
+}
+
+.shareOptionButton {
+  color: #3b82f6;
+  font-size: 0.875rem;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.shareOptionButton:hover {
+  color: #2563eb;
+}
+
+
+.publicButton{
+ margin-bottom: 5px;
+}
+
+/* Responsive styles */
+@media (min-width: 1024px) {
+  .shareContent {
+    flex-direction: row;
   }
-  
-  .modalContent {
-    background-color: white;
-    border-radius: 12px;
-    width: 100%;
-    max-width: 32rem;
-    max-height: 90vh;
-    overflow: hidden;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-    animation: modalSlideIn 0.3s ease-out forwards;
-  }
-  
-  .modalHeader {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 16px;
-    border-bottom: 1px solid #e5e7eb;
-    position: relative;
-  }
-  
-  .closeButton {
-    position: absolute;
-    left: 16px;
-    padding: 4px;
-    background-color: transparent;
-    border: none;
-    border-radius: 9999px;
-    cursor: pointer;
-    transition: background-color 0.2s;
-  }
-  
-  .closeButton:hover {
-    background-color: #f3f4f6 !important;
-  }
-  
-  .modalTitle {
-    font-size: 1.125rem;
-    font-weight: 600;
-    color: #111827;
-  }
-  
-  .nextButton {
-    position: absolute;
-    right: 16px;
-    color: #3b82f6;
-    background-color: transparent;
-    border: none;
-    font-weight: 600;
-    cursor: pointer;
-    transition: color 0.2s;
-  }
-  
-  .nextButton:hover {
-    color: #2563eb !important;
-  }
-  
-  .shareModalContent {
-    display: flex;
-  }
-  
-  .shareImagePreview {
+
+  .shareImageContainer {
     width: 50%;
-    aspect-ratio: 1;
-    background-color: #f3f4f6;
   }
-  
-  .image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  
-  .shareCaptionArea {
-    width: 50%;
-    padding: 16px;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .shareUserInfo {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 16px;
-  }
-  
-  .avatar {
-    width: 32px;
-    height: 32px;
-    background: linear-gradient(to right, #a855f7, #ec4899);
-    border-radius: 50%;
-  }
-  
-  .username {
-    font-weight: 600;
-    color: #111827;
-  }
-  
-  .captionContainer {
-    flex: 1;
-  }
-  
-  .shareCaptionInput {
-    width: 100%;
-    height: 128px;
-    padding: 12px;
-    border: none;
-    resize: none;
-    font-size: 0.875rem;
-    font-family: inherit;
-  }
-  
-  .shareCaptionInput:focus {
-    outline: none;
-  }
-  
-  .characterCount {
-    font-size: 0.75rem;
-    color: #9ca3af;
-    margin-bottom: 16px;
-  }
-  
+
   .shareOptions {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
+    width: 50%;
   }
-  
-  .shareOption {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+}
+
+/* Dark mode styles */
+@media (prefers-color-scheme: dark) {
+  .shareModal {
+    background-color: #1e293b;
+    color: #e5e7eb;
+    box-shadow: 0 25px 50px -12px rgba(255, 255, 255, 0.1);
   }
-  
-  .shareOptionLabel {
-    font-size: 0.875rem;
-    color: #374151;
+
+  .modalHeader {
+    border-bottom: 1px solid #334155;
   }
-  
-  .shareOptionButton {
+
+  .modalHeaderButton:hover {
+    background-color: #334155;
+  }
+
+  .modalHeaderButtonRight {
+    color: #60a5fa;
+  }
+
+  .modalHeaderButtonRight:hover {
     color: #3b82f6;
-    background-color: transparent;
-    border: none;
-    font-size: 0.875rem;
-    cursor: pointer;
   }
-  
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      background-color: rgba(0, 0, 0, 0);
-    }
-    to {
-      opacity: 1;
-      background-color: rgba(0, 0, 0, 0.5);
-    }
+
+  .modalTitle {
+    color: #f1f5f9;
   }
-  
-  @keyframes modalSlideIn {
-    from {
-      transform: scale(0.9) translateY(-10px);
-      opacity: 0;
-    }
-    to {
-      transform: scale(1) translateY(0);
-      opacity: 1;
-    }
+
+  .shareImageContainer {
+    background-color: #334155;
   }
-  @media screen and (min-width: 900px) {
-    @media (prefers-color-scheme: dark) {}
+
+  .username {
+    color: #f1f5f9;
   }
-  
-  @media screen and (max-width: 900px) and (min-width: 520px) {
-    @media (prefers-color-scheme: dark) {}
+
+  .contentInput {
+    background-color: #0f172a;
+    color: #f1f5f9;
   }
-  
-  @media screen and (max-width: 520px) {
-    @media (prefers-color-scheme: dark) {}
+
+  .contentCounter {
+    color: #94a3b8;
   }
+
+  .shareOptionLabel {
+    color: #cbd5e1;
+  }
+
+  .shareOptionButton {
+    color: #60a5fa;
+  }
+
+  .shareOptionButton:hover {
+    color: #3b82f6;
+  }
+}

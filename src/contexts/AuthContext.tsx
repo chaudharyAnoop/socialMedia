@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  type ReactNode,
+} from "react";
 
 interface User {
   id: string;
@@ -13,9 +19,17 @@ interface User {
 interface AuthContextType {
   user: User | null;
   isLoading: boolean;
-  login: (email: string, password: string) => Promise<{ success: boolean; message?: string; requiresOTP?: boolean }>;
-  register: (userData: RegisterData) => Promise<{ success: boolean; message?: string; requiresOTP?: boolean }>;
-  verifyOTP: (email: string, otp: string) => Promise<{ success: boolean; message?: string }>;
+  login: (
+    email: string,
+    password: string
+  ) => Promise<{ success: boolean; message?: string; requiresOTP?: boolean }>;
+  register: (
+    userData: RegisterData
+  ) => Promise<{ success: boolean; message?: string; requiresOTP?: boolean }>;
+  verifyOTP: (
+    email: string,
+    otp: string
+  ) => Promise<{ success: boolean; message?: string }>;
   logout: () => void;
   isAuthenticated: boolean;
 }
@@ -34,7 +48,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
+    throw new Error("useAuth must be used within an AuthProvider");
   }
   return context;
 };
@@ -49,12 +63,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   useEffect(() => {
     // Check for existing session on mount
-    const savedUser = localStorage.getItem('instagram_user');
+    const savedUser = localStorage.getItem("instagram_user");
     if (savedUser) {
       try {
         setUser(JSON.parse(savedUser));
       } catch (error) {
-        localStorage.removeItem('instagram_user');
+        localStorage.removeItem("instagram_user");
       }
     }
     setIsLoading(false);
@@ -62,51 +76,55 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const login = async (email: string, password: string) => {
     try {
-      const response = await fetch('/auth/login', {
-        method: 'POST',
+      const response = await fetch("http://172.50.5.102:3011/auth/login", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ email, password }),
       });
 
       const data = await response.json();
+      console.log(data);
 
       if (response.ok) {
         if (data.requiresOTP) {
           return { success: true, requiresOTP: true };
         }
-        
-        setUser(data.user);
-        localStorage.setItem('instagram_user', JSON.stringify(data.user));
+
+        setUser(data.access_token);
+        localStorage.setItem(
+          "instagram_user",
+          JSON.stringify(data.access_token)
+        );
         return { success: true };
       } else {
-        return { success: false, message: data.message || 'Login failed' };
+        return { success: false, message: data.message || "Login failed" };
       }
     } catch (error) {
       // Mock successful login for demo purposes
       const mockUser: User = {
-        id: '1',
-        username: email.split('@')[0],
+        id: "1",
+        username: email.split("@")[0],
         email,
-        fullName: 'Demo User',
-        bio: 'Welcome to Instagram clone!',
-        profilePicture: '',
+        fullName: "Demo User",
+        bio: "Welcome to Instagram clone!",
+        profilePicture: "",
         emailVerified: true,
       };
-      
+
       setUser(mockUser);
-      localStorage.setItem('instagram_user', JSON.stringify(mockUser));
+      localStorage.setItem("instagram_user", JSON.stringify(mockUser));
       return { success: true };
     }
   };
 
   const register = async (userData: RegisterData) => {
     try {
-      const response = await fetch('/auth/register', {
-        method: 'POST',
+      const response = await fetch("/auth/register", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           ...userData,
@@ -119,7 +137,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       if (response.status === 201) {
         return { success: true, requiresOTP: true };
       } else {
-        return { success: false, message: data.message || 'Registration failed' };
+        return {
+          success: false,
+          message: data.message || "Registration failed",
+        };
       }
     } catch (error) {
       // Mock successful registration for demo purposes
@@ -129,10 +150,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const verifyOTP = async (email: string, otp: string) => {
     try {
-      const response = await fetch('/auth/verify-otp', {
-        method: 'POST',
+      const response = await fetch("/auth/verify-otp", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ email, otp }),
       });
@@ -141,42 +162,45 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
       if (response.ok) {
         const mockUser: User = {
-          id: '1',
-          username: email.split('@')[0],
+          id: "1",
+          username: email.split("@")[0],
           email,
-          fullName: 'New User',
-          bio: 'Welcome to Instagram!',
-          profilePicture: '',
+          fullName: "New User",
+          bio: "Welcome to Instagram!",
+          profilePicture: "",
           emailVerified: true,
         };
-        
+
         setUser(mockUser);
-        localStorage.setItem('instagram_user', JSON.stringify(mockUser));
+        // localStorage.setItem("instagram_user", JSON.stringify(mockUser));
         return { success: true };
       } else {
-        return { success: false, message: data.message || 'OTP verification failed' };
+        return {
+          success: false,
+          message: data.message || "OTP verification failed",
+        };
       }
     } catch (error) {
       // Mock successful OTP verification for demo purposes
       const mockUser: User = {
-        id: '1',
-        username: email.split('@')[0],
+        id: "1",
+        username: email.split("@")[0],
         email,
-        fullName: 'New User',
-        bio: 'Welcome to Instagram!',
-        profilePicture: '',
+        fullName: "New User",
+        bio: "Welcome to Instagram!",
+        profilePicture: "",
         emailVerified: true,
       };
-      
+
       setUser(mockUser);
-      localStorage.setItem('instagram_user', JSON.stringify(mockUser));
+      // localStorage.setItem("instagram_user", JSON.stringify(mockUser));
       return { success: true };
     }
   };
 
   const logout = () => {
     setUser(null);
-    localStorage.removeItem('instagram_user');
+    // localStorage.removeItem("instagram_user");
   };
 
   const value: AuthContextType = {
