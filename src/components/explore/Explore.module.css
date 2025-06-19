@@ -17,6 +17,18 @@
     background: #1a1a1a;
   }
 }
+.exploreContainer {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden; /* prevent body scroll hijack */
+}
+
+.contentWrapper {
+  flex: 1;
+  overflow-y: auto;
+  padding-bottom: 80px; /* space for modal or floating UI */
+}
 
 .postImage {
   width: 100%;

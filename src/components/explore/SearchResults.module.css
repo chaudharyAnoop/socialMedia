@@ -8,6 +8,16 @@
   color: #262626;
   margin: 0 0 16px 0;
 }
+.loadingContainer {
+  text-align: center;
+  padding: 2rem;
+}
+
+.loadingText {
+  font-weight: 500;
+  color: #666;
+}
+
 
 @media (prefers-color-scheme: dark) {
   .sectionHeader {
