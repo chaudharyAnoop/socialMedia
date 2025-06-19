@@ -172,17 +172,17 @@ const AppContent: React.FC = () => {
           <Route
             path="/create"
             element={
-              // <ProtectedRoute>
+              <ProtectedRoute>
                 <InstagramCreatePost />
-              // </ProtectedRoute>
+              </ProtectedRoute>
             }
           />
           <Route
             path="/create"
             element={
-              // <ProtectedRoute>
+              <ProtectedRoute>
                 <InstagramCreatePost />
-              // </ProtectedRoute>
+              </ProtectedRoute>
             }
           />
           <Route
@@ -205,9 +205,9 @@ const AppContent: React.FC = () => {
           <Route
             path="/noti"
             element={
-              // <ProtectedRoute>
+              <ProtectedRoute>
                 <NotificationsPage/>
-              // </ProtectedRoute>
+              </ProtectedRoute>
             }
           />
         </Routes>
