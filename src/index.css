@@ -33,7 +33,7 @@ body {
   height: 100vh;
   border: none;
   outline: none;
-  overflow: hidden;
+  overflow-x: hidden;
   overflow-y: auto;
   padding: 0;
 }
