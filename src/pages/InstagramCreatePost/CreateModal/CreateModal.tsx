@@ -1,20 +1,26 @@
-import React, { useRef, ChangeEvent, useState } from "react";
-import { X } from "lucide-react";
-import styles from "./CreateModal.module.css";
-import DropZone from "../DropZone/DropZone";
-import MediaCarousel from "../MediaCarousel/MediaCarousel";
-import axios from "axios";
-import { Presign_Generation } from "../baseURL";
+import React, { useRef, ChangeEvent, useState } from 'react';
+import { X } from 'lucide-react';
+import styles from './CreateModal.module.css';
+import DropZone from '../DropZone/DropZone';
+import MediaCarousel from '../MediaCarousel/MediaCarousel';
+import axios from 'axios';
+import { Presign_Generation } from '../baseURL';
 
 interface SelectedMedia {
   file: File;
   preview: string;
-  type: "image" | "video";
+  type: 'image' | 'video';
+  presignedData?: {
+    uploadUrl: string;
+    publicUrl: string;
+    fileKey: string;
+  };
 }
 
 interface CreateModalProps {
-  setmediaKeys: React.Dispatch<React.SetStateAction<string[]>>;
-  setTimestamp: React.Dispatch<React.SetStateAction<string>>;
+  closeCreateModal:()=>void;
+  setmediaKeys:React.Dispatch<React.SetStateAction<string[]>>;
+  setTimestamp:React.Dispatch<React.SetStateAction<string>>;
   selectedMedia: SelectedMedia[];
   setSelectedMedia: React.Dispatch<React.SetStateAction<SelectedMedia[]>>;
   onClose: () => void;
@@ -22,12 +28,13 @@ interface CreateModalProps {
 }
 
 const CreateModal: React.FC<CreateModalProps> = ({
+  closeCreateModal,
   setmediaKeys,
   setTimestamp,
   selectedMedia,
   setSelectedMedia,
   onClose,
-  onNext,
+  onNext
 }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [loading, setLoading] = useState(false); // 👈 loader state
@@ -37,71 +44,126 @@ const CreateModal: React.FC<CreateModalProps> = ({
     handleFiles(files);
   };
 
-  //-----------------------------------------------------------------------------
-  //this is the  code which is used to pass the data
-  //actual api calling
-  const handleFiles = async (files: File[]): Promise<void> => {
-    setLoading(true);
 
-    const mediaFiles = files.filter(
-      (file) => file.type.startsWith("image/") || file.type.startsWith("video/")
-    );
+//-----------------------------------------------------------------------------
+//generate and upoad on s3 same time
+//this is the  code which is used to pass the data
+//actual api calling 
+// const handleFiles = async (files: File[]): Promise<void> => {
+//   setLoading(true);
 
-    const newMedia: SelectedMedia[] = mediaFiles.map((file) => ({
-      file,
-      preview: URL.createObjectURL(file),
-      type: file.type.startsWith("image/") ? "image" : "video",
-    }));
+//   const mediaFiles = files.filter(file =>
+//     file.type.startsWith('image/') || file.type.startsWith('video/')
+//   );
 
-    try {
-      const mediaKeys: string[] = [];
+//   const newMedia: SelectedMedia[] = mediaFiles.map(file => ({
+//     file,
+//     preview: URL.createObjectURL(file),
+//     type: file.type.startsWith('image/') ? 'image' : 'video',
+//   }));
+//   setSelectedMedia(prev => [...prev, ...newMedia]);
+//   try {
+//     const mediaKeys: string[] = [];
 
-      for (const file of mediaFiles) {
-        // 1️⃣ Request presigned URL from your backend
-        const { data } = await axios.post(
-          "http://172.50.5.88:3000/media/uploadMedia",
-          {
-            files: [`${file.name}`],
-          }
-        );
+//     for (const file of mediaFiles) {
+//       // 1️⃣ Request presigned URL from your backend
+//       const { data } = await axios.post("http://172.50.5.88:3000/media/uploadMedia", {
+//         files: [`${file.name}`]
+//       },{
+//         timeout: 10000, // 👈 timeout in milliseconds (10 sec)
+//       });
+      
+//       console.log(data.urls[0]);
+//       const uploadurl =  data.urls[0].uploadUrl;
+//       console.log(uploadurl);
+      
+//       // 2️⃣ Upload the file directly to S3 using the pre-signed PUT URL
+//       // here we put data.urls.uploadUrL
+//       await axios.put(uploadurl, file, {
+//         headers: {
+//           'Content-Type': file.type,
+//         },
+        
+//       });
 
-        console.log(data.urls[0]);
-        const uploadurl = data.urls[0].uploadUrl;
-        console.log(uploadurl);
+//       // 3️⃣ Collect the public S3 URL
+//       mediaKeys.push(data.urls[0].fileKey);
+//     }
 
-        // 2️⃣ Upload the file directly to S3 using the pre-signed PUT URL
-        // here we put data.urls.uploadUrL
-        await axios.put(uploadurl, file, {
-          headers: {
-            "Content-Type": file.type,
-          },
-        });
+//     setmediaKeys(prev => [...prev, ...mediaKeys]);
+//     setTimestamp(new Date().toISOString());
+//   } catch (error : any) {
+//     if(error.code  === "ECONNABORTED" ){
+//       console.log('request time out');
+//     }
+//     console.error('S3 Upload failed:', error);
+//   } finally {
+//     setLoading(false);
+//   }
 
-        // 3️⃣ Collect the public S3 URL
-        mediaKeys.push(data.urls[0].fileKey);
-      }
+//   // setSelectedMedia(prev => [...prev, ...newMedia]);
+// };
 
-      setmediaKeys((prev) => [...prev, ...mediaKeys]);
-      setTimestamp(new Date().toISOString());
-    } catch (error) {
-      console.error("S3 Upload failed:", error);
-    } finally {
-      setLoading(false);
+
+const handleFiles = async (files: File[]): Promise<void> => {
+  setLoading(true);
+
+  const mediaFiles = files.filter(file =>
+    file.type.startsWith('image/') || file.type.startsWith('video/')
+  );
+
+  try {
+    const newMedia: SelectedMedia[] = [];
+    
+    for (const file of mediaFiles) {
+      // Request presigned URL but don't upload yet
+      const { data } = await axios.post("http://172.50.5.88:3000/media/uploadMedia", {
+        files: [`${file.name}`]
+      },{
+        timeout : 10000
+      });
+      console.log(data);
+      newMedia.push({
+        file,
+        preview: URL.createObjectURL(file),
+        type: file.type.startsWith('image/') ? 'image' : 'video',
+        presignedData: data.urls[0] // Store the presigned URL data
+      });
     }
+    
+    setSelectedMedia(prev => [...prev, ...newMedia]);
+  } catch (error : any) {
+    if(error.code  === "ECONNABORTED" ){
+            console.log('request time out');
+            closeCreateModal();
+          }
+    
+    console.error('S3 Upload failed:', error);
+    console.error('Failed to get presigned URLs:', error);
+    
+    closeCreateModal();
+  } finally {
+    setLoading(false);
+  }
+};
 
-    setSelectedMedia((prev) => [...prev, ...newMedia]);
-  };
+
+
 
   const openFileSelector = (): void => {
     fileInputRef.current?.click();
   };
 
   return (
+    <>
     <div className={styles.modal}>
       <div className={styles.modalContent}>
         {/* Modal Header */}
         <div className={styles.modalHeader}>
-          <button onClick={onClose} className={styles.modalHeaderButton}>
+          <button
+            onClick={onClose}
+            className={styles.modalHeaderButton}
+          >
             <X size={24} color="#6b7280" />
           </button>
           <h3 className={styles.modalTitle}>Create new post</h3>
@@ -111,7 +173,7 @@ const CreateModal: React.FC<CreateModalProps> = ({
               disabled={loading} // 👈 disable while loading
               className={styles.modalHeaderButtonRight}
             >
-              {loading ? "Loading..." : "Next"} {/* 👈 loader text */}
+              {loading ? 'Loading...' : 'Next'} {/* 👈 loader text */}
             </button>
           )}
         </div>
@@ -141,6 +203,17 @@ const CreateModal: React.FC<CreateModalProps> = ({
         </div>
       </div>
     </div>
+    {loading && (
+      <div className={styles.loaderOverlay}>
+        <div className={styles.loaderContainer}>
+          <div className={styles.circularLoader}></div>
+          <p className={styles.loaderText}>Processing files...</p>
+        </div>
+      </div>)}
+      </>
+
+
+
   );
 };
 

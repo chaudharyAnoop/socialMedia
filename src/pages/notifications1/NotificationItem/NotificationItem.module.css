@@ -1,0 +1,182 @@
+/* src/components/Notifications/NotificationItem.module.css */
+.notificationItem {
+    position: relative;
+    overflow: hidden;
+    margin: 8px 16px;
+    border-radius: 16px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  }
+  
+  .deleteBackground {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 80px;
+    background-color: #ff3040;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.2s ease;
+  }
+  
+  .notificationContent {
+    display: flex;
+    align-items: center;
+    padding: 16px;
+    background-color: #ffffff;
+    gap: 16px;
+    position: relative;
+    border-left: none;
+    border-radius: 16px;
+  }
+  
+  .unread {
+    background-color: #f8f9ff;
+    border-left-width: 4px;
+    border-left-style: solid;
+  }
+  
+  .avatarContainer {
+    position: relative;
+    flex-shrink: 0;
+  }
+  
+  .avatarBorder {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: #ffffff;
+    border: 3px solid;
+    padding: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .avatar {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ffffff;
+  }
+  
+  .iconContainer {
+    position: absolute;
+    bottom: -2px;
+    right: -2px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    padding: 6px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .content {
+    flex: 1;
+    min-width: 0;
+  }
+  
+  .text {
+    font-size: 15px;
+    color: #1c1e21;
+    line-height: 1.4;
+    margin-bottom: 4px;
+    word-break: break-word;
+  }
+  
+  .username {
+    font-weight: 700;
+  }
+  
+  .actionText {
+    color: #65676b;
+    font-weight: 400;
+  }
+  
+  .timestamp {
+    font-size: 13px;
+    color: #8a8d91;
+    font-weight: 500;
+  }
+  
+  .postImage {
+    flex-shrink: 0;
+  }
+  
+  .image {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    object-fit: cover;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  
+  .followButton {
+    background-color: #1877f2;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    flex-shrink: 0;
+    box-shadow: 0 2px 4px rgba(24, 119, 242, 0.2);
+    transition: all 0.2s ease;
+    transform: translateY(0);
+  }
+  
+  .followButton:hover {
+    background-color: #166fe5;
+    box-shadow: 0 4px 8px rgba(24, 119, 242, 0.3);
+  }
+  
+  @media (min-width: 769px) {
+    .notificationContent {
+      padding: 20px;
+    }
+    
+    .avatarBorder {
+      width: 56px;
+      height: 56px;
+    }
+    
+    .text {
+      font-size: 16px;
+    }
+    
+    .image {
+      width: 56px;
+      height: 56px;
+    }
+    
+    .followButton {
+      padding: 12px 20px;
+    }
+    /* Add to existing NotificationItem.module.css */
+.followingButton {
+    background-color: #4CAF50 !important;
+    box-shadow: 0 2px 4px rgba(76, 175, 80, 0.2) !important;
+  }
+  
+  .followingButton:hover {
+    background-color: #43A047 !important;
+    box-shadow: 0 4px 8px rgba(76, 175, 80, 0.3) !important;
+  }
+  }
+  @media screen and (min-width: 900px) {
+    @media (prefers-color-scheme: dark) {}
+  }
+  
+  @media screen and (max-width: 900px) and (min-width: 520px) {
+    @media (prefers-color-scheme: dark) {}
+  }
+  
+  @media screen and (max-width: 520px) {
+    @media (prefers-color-scheme: dark) {}
+  }

@@ -1,82 +1,213 @@
-/* src/components/Notifications/NotificationsPage.module.css */
 .page {
-    min-height: 100vh;
+  width: 100%;
+  max-width: 100vw;
+  min-height: 100vh;
+  background-color: #000000;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  padding-bottom: 20px;
+  box-sizing: border-box;
+  margin: 0 auto;
+  transition: all 0.3s ease;
+}
+
+.container {
+  max-width: 100%;
+  margin: 0 auto;
+  background-color: transparent;
+  min-height: 100vh;
+}
+
+.notificationsContainer {
+  padding-top: 16px;
+  padding-bottom: 20px;
+}
+
+.swipeInstruction {
+  text-align: center;
+  padding: 12px 20px;
+  color: #8a8d91;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.emptyState {
+  text-align: center;
+  padding: 80px 20px;
+  color: #8a8d91;
+}
+
+.emptyIcon {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background-color: #e3f2fd;
+  border: 3px solid #1877f2;
+  margin: 0 auto 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.emptyTitle {
+  font-size: 24px;
+  margin-bottom: 12px;
+  font-weight: 600;
+  color: #f1f3f5;
+}
+
+.emptyText {
+  font-size: 16px;
+  color: #b0b3b8;
+  max-width: 300px;
+  margin: 0 auto;
+  line-height: 1.4;
+}
+
+.scrollContainer {
+  max-height: 75vh;
+  overflow-y: auto;
+  padding-right: 6px;
+  margin-top: 12px;
+}
+
+.scrollContainer::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scrollContainer::-webkit-scrollbar-track {
+  background: #f0f0f0;
+}
+
+.scrollContainer::-webkit-scrollbar-thumb {
+  background: #c0c0c0;
+  border-radius: 8px;
+}
+
+/* 🌞 Light Mode */
+@media (prefers-color-scheme: light) {
+  .page {
     background-color: #ffffff;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    padding-bottom: 20px;
-  }
-  
-  .container {
-    max-width: 100%;
-    margin: 0 auto;
-    background-color: transparent;
-    min-height: 100vh;
-  }
-  
-  .notificationsContainer {
-    padding-top: 16px;
-    padding-bottom: 20px;
-  }
-  
-  .swipeInstruction {
-    text-align: center;
-    padding: 12px 20px;
-    color: #8a8d91;
-    font-size: 13px;
-    font-weight: 500;
-  }
-  
-  .emptyState {
-    text-align: center;
-    padding: 80px 20px;
-    color: #8a8d91;
-  }
-  
-  .emptyIcon {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    background-color: #e3f2fd;
-    border: 3px solid #1877f2;
-    margin: 0 auto 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .emptyTitle {
-    font-size: 24px;
-    margin-bottom: 12px;
-    font-weight: 600;
-    color: #1c1e21;
-  }
-  
-  .emptyText {
-    font-size: 16px;
-    color: #65676b;
-    max-width: 300px;
-    margin: 0 auto;
-    line-height: 1.4;
-  }
-  
-  @media (min-width: 769px) {
-    .page {
-      padding-bottom: 40px;
-    }
-    
-    .container {
-      max-width: 800px;
-    }
   }
 
-  @media screen and (min-width: 900px) {
-    @media (prefers-color-scheme: dark) {}
+  .emptyTitle {
+    color: #1c1e21;
   }
-  
-  @media screen and (max-width: 900px) and (min-width: 520px) {
-    @media (prefers-color-scheme: dark) {}
+
+  .emptyText,
+  .swipeInstruction,
+  .emptyState {
+    color: #65676b;
   }
-  
-  @media screen and (max-width: 520px) {
-    @media (prefers-color-scheme: dark) {}
+
+  .emptyIcon {
+    background-color: #e3f2fd;
+    border-color: #1877f2;
   }
+
+  .scrollContainer::-webkit-scrollbar-track {
+    background: #f0f0f0;
+  }
+
+  .scrollContainer::-webkit-scrollbar-thumb {
+    background: #c0c0c0;
+  }
+}
+
+/* 🌚 Dark Mode */
+@media (prefers-color-scheme: dark) {
+  .page {
+    background-color: #000000;
+  }
+
+  .emptyTitle {
+    color: #e4e6eb;
+  }
+
+  .emptyText,
+  .swipeInstruction,
+  .emptyState {
+    color: #b0b3b8;
+  }
+
+  .emptyIcon {
+    background-color: #2a2d32;
+    border-color: #3a86ff;
+  }
+
+  .scrollContainer::-webkit-scrollbar-track {
+    background: #1e1e1e;
+  }
+
+  .scrollContainer::-webkit-scrollbar-thumb {
+    background: #555;
+  }
+
+  .scrollContainer::-webkit-scrollbar-thumb:hover {
+    background: #777;
+  }
+}
+
+/* 📱 Small screens */
+@media screen and (max-width: 520px) {
+  .page {
+    width: 100vw;
+    padding: 0 10px 20px;
+  }
+
+  .swipeInstruction {
+    font-size: 12px;
+    padding: 10px 15px;
+  }
+
+  .emptyState {
+    padding: 40px 10px;
+  }
+
+  .emptyIcon {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 16px;
+  }
+
+  .emptyTitle {
+    font-size: 20px;
+  }
+
+  .emptyText {
+    font-size: 14px;
+    max-width: 250px;
+  }
+}
+
+/* 💻 Medium screens */
+@media screen and (min-width: 521px) and (max-width: 899px) {
+  .page {
+    width: 90vw;
+    padding: 0 16px 30px;
+  }
+
+  .container {
+    max-width: 700px;
+  }
+
+  .emptyState {
+    padding: 60px 15px;
+  }
+
+  .emptyIcon {
+    width: 100px;
+    height: 100px;
+  }
+}
+
+/* 🖥️ Large screens */
+@media screen and (min-width: 900px) {
+  .page {
+    width: 40vw;
+    padding-bottom: 40px;
+  }
+
+  .container {
+    max-width: 800px;
+  }
+}

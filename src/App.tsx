@@ -1,6 +1,6 @@
 import styles from "./App.module.css";
 import React, { useEffect } from "react";
-
+import { ToastContainer, toast } from 'react-toastify';
 import {
   Route,
   Routes,
@@ -23,8 +23,7 @@ import LoginForm from "./components/AuthForm/LoginForm";
 import { AuthProvider } from "./contexts/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Dashboard from "./components/Dashboard/Dashboard";
-import UserProfile from "./components/UserProfile";
-import GetUser from "./pages/GetUser";
+import NotificationsPage from "./pages/notifications/NotificationsPage/NotificationsPage";
 
 const LandingPage = lazy(() => import("./pages/LandingPage/LandingPage"));
 const AdminPage = lazy(() => import("./pages/AdminPage/AdminPage"));
@@ -166,7 +165,7 @@ const AppContent: React.FC = () => {
             path="/explore"
             element={
               <ProtectedRoute>
-                <UserProfile />
+                <ExplorePage />
               </ProtectedRoute>
             }
           />
@@ -203,9 +202,27 @@ const AppContent: React.FC = () => {
               </ProtectedRoute>
             }
           />
-          <Route path="/user/:userId" element={<GetUser />} />
+          <Route
+            path="/noti"
+            element={
+              <ProtectedRoute>
+                <NotificationsPage/>
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </Suspense>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       {!isSignin && <QuickAccess />}
     </div>
   );

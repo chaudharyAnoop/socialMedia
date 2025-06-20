@@ -118,12 +118,20 @@ const ShareModal: React.FC<ShareModalProps> = ({
               taggedUsers={taggedUsers}
               settaggedUsers={settaggedUsers}
             />
-            <button onClick={addpublic} >
-              public 
-            </button>
-            <button onClick={addprivate}>
-              private
-            </button>
+            <div className={styles.toggleButtonGroup}>
+  <button
+    className={`${styles.toggleButton} ${visibility === 'public' ? styles.active : ''}`}
+    onClick={() => setVisibility('public')}
+  >
+    Public Post
+  </button>
+  <button
+    className={`${styles.toggleButton} ${visibility === 'private' ? styles.active : ''}`}
+    onClick={() => setVisibility('private')}
+  >
+    Private Post
+  </button>
+</div>
             
             {/* Share Options */}
             {/* <div className={styles.shareOptionsList}>

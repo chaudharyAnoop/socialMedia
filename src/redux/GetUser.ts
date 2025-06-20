@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 // Define interfaces (reusing User from userSearchSlice)
 interface User {
@@ -41,8 +41,8 @@ const initialState: UserState = {
 };
 
 // Token setup
-let token = localStorage.getItem("instagram_user");
-let cleanedUser = token?.slice(1, -1);
+const token = localStorage.getItem("instagram_user");
+const cleanedUser = token?.slice(1, -1);
 const headers = {
   "Content-Type": "application/json",
   Authorization: `Bearer ${cleanedUser}`,

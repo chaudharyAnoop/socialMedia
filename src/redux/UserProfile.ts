@@ -49,8 +49,8 @@ const initialState: UserSearchState = {
   error: null,
 };
 
-let token = localStorage.getItem("instagram_user");
-let cleanedUser = token?.slice(1, -1);
+const token = localStorage.getItem("instagram_user");
+const cleanedUser = token?.slice(1, -1);
 const headers = {
   "Content-Type": "application/json",
   Authorization: `Bearer ${cleanedUser}`,
