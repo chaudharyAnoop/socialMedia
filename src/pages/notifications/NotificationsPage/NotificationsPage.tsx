@@ -42,7 +42,7 @@ const NotificationsPage: React.FC = () => {
     );
   }, [notifications, activeFilter]);
   let token = localStorage.getItem("instagram_user");
-  let cleanedUser = token?.slice(1, -1);
+  let cleanedUser = token;
   useEffect(() => {
     const fetchNotifications = async () => {
       try {

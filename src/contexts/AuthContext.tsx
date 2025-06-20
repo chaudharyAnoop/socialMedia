@@ -7,6 +7,7 @@ import React, {
 } from "react";
 import axios from "axios";
 import { Navigate } from "react-router-dom";
+import { token as ftoken } from "../firebase/firebase";
 
 interface User {
   id: string;
@@ -221,11 +222,12 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
       const deviceId = generateDeviceId();
       const ipAddress = await getClientIP();
       const userAgent = navigator.userAgent;
+      const firetoken = ftoken;
 
       const response = await axios.post("/auth/login", {
         email,
         password,
-        fcmToken: "fcm_token_web", // Default for web
+        fcmToken: firetoken, // Default for web
         deviceId,
         ipAddress,
         userAgent,

@@ -23,8 +23,8 @@ interface TaggedPerson {
   id: string;
   name: string;
 }
-let token = localStorage.getItem("instagram_user");
-let cleanedUser = token?.slice(1, -1);
+// const token = localStorage.getItem("instagram_user");
+// const cleanedUser = token;
 
 const InstagramCreatePost: React.FC = () => {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
@@ -107,6 +107,9 @@ const InstagramCreatePost: React.FC = () => {
     //   visibility
     // });
      // Upload all files to S3 first
+
+
+const token = localStorage.getItem("instagram_user");
      
      const media: string[] = [];
      for (const singlemedia of selectedMedia) {
@@ -146,7 +149,7 @@ if (taggedUsers.length > 0) {
       {
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${cleanedUser}`, // if needed token is above in this file dont find here and there
+          'Authorization': `Bearer ${token}`, 
         },
        
       }

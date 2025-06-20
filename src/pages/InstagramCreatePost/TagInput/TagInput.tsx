@@ -24,7 +24,7 @@ interface TagInputProps {
 }
 
 let token = localStorage.getItem("instagram_user");
-let cleanedUser = token?.slice(1, -1);
+let cleanedUser = token;
 
 // Get token from props or context instead of localStorage
 // const token = "your-auth-token-here"; // Replace with proper token management
