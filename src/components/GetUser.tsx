@@ -42,7 +42,7 @@ const GetUser: React.FC = () => {
         {user.profilePicture && (
           <img
             src={user.profilePicture}
-            alt={${user.username}'s profile}
+            alt={`${user.username}'s profile`}
             className={styles.profilePicture}
           />
         )}
