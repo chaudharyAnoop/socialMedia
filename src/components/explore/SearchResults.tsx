@@ -10,6 +10,7 @@ import {
   type Post,
 } from "../../redux/slices/exploreSlice";
 
+
 const SearchResults: React.FC = () => {
   const { searchResults, isSearching, isSearchingLoading, error } = useAppSelector(
     (state) => state.explore
