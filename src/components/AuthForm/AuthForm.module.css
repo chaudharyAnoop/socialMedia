@@ -1,270 +1,205 @@
 .authContainer {
-  min-height: 100vh;
-  width: 100vw;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 20px;
-  /* background: var(--bg-secondary); */
-  background: var(--bg-primary);
-}
-
-.authWrapper {
   width: 100%;
-  max-width: 450px;
+  max-width: 600px;
 }
 
-.authBox {
-  background: var(--bg-primary);
-  border: 1px solid var(--border-color);
-  border-radius: 1px;
-  padding: 40px 40px 20px;
-  margin-bottom: 10px;
-}
-
-.logo {
-  text-align: center;
-  margin-bottom: 32px;
-}
-
-.logoText {
-  font-family: 'Billabong', cursive;
-  font-size: 48px;
-  color: var(--text-primary);
-  margin: 0;
-  font-weight: normal;
-}
-
-.subtitle {
-  text-align: center;
-  color: var(--text-secondary);
-  font-size: 17px;
-  font-weight: 600;
-  margin: 0 40px 20px;
-  line-height: 20px;
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 400px;
 }
 
 .form {
   width: 100%;
+  padding: 40px;
+  border: 1px solid #363636;
+  border-radius: 1px;
+  background-color: #000000;
+  margin-bottom: 10px;
+}
+
+@media (prefers-color-scheme: light) {
+  .form {
+    background-color: #ffffff;
+    border-color: #dbdbdb;
+  }
+}
+
+.logo {
+  font-size: 51px;
+  font-weight: 300;
+  color: #ffffff;
+  text-align: center;
+  margin-bottom: 24px;
+  font-family: 'Billabong', cursive, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  letter-spacing: 1px;
+}
+
+@media (prefers-color-scheme: light) {
+  .logo {
+    color: #262626;
+  }
+}
+
+.subtitle {
+  color: #8e8e8e;
+  font-size: 17px;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 24px;
+  line-height: 20px;
 }
 
 .submitButton {
   width: 100%;
   padding: 8px 16px;
-  background: var(--button-primary);
-  color: white;
+  background-color: #0095f6;
+  color: #ffffff;
   border: none;
   border-radius: 4px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  margin-top: 8px;
-  transition: background-color 0.2s ease;
-  position: relative;
-  min-height: 36px;
-}
-
-.submitButton:hover:not(:disabled) {
-  background: var(--button-primary-hover);
-}
-
-.submitButton:disabled {
-  opacity: 0.3;
-  cursor: not-authorized;
-}
-
-.submitButton.loading {
-  color: transparent;
-}
-
-.spinner {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 16px;
-  height: 16px;
-  border: 2px solid transparent;
-  border-top: 2px solid white;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  0% {
-    transform: translate(-50%, -50%) rotate(0deg);
-  }
-
-  100% {
-    transform: translate(-50%, -50%) rotate(360deg);
-  }
-}
-
-.switchBox {
-  background: var(--bg-primary);
-  border: 1px solid var(--border-color);
-  border-radius: 1px;
-  padding: 20px;
-  text-align: center;
-  font-size: 14px;
-  color: var(--text-primary);
-}
-
-.switchBox a {
-  color: var(--button-primary);
-  font-weight: 600;
-  text-decoration: none;
-}
-
-.switchBox a:hover {
-  text-decoration: underline;
-}
-
-.errorMessage {
-  background: rgba(237, 73, 86, 0.1);
-  color: var(--error-color);
-  padding: 12px;
-  border-radius: 4px;
-  font-size: 14px;
-  margin-bottom: 16px;
-  text-align: center;
-}
-
-.terms {
-  text-align: center;
-  color: var(--text-secondary);
-  font-size: 12px;
-  margin: 20px 0;
-  line-height: 16px;
-}
-
-.terms a {
-  color: var(--text-secondary);
-  font-weight: 600;
-}
-
-.fileInput {
-  display: none;
-}
-
-.fileInputLabel {
-  display: block;
-  width: 100%;
-  padding: 12px 16px;
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-color);
-  border-radius: 3px;
-  font-size: 12px;
-  color: var(--text-secondary);
-  cursor: pointer;
-  transition: border-color 0.2s ease;
-  text-align: center;
-  margin-bottom: 6px;
-}
-
-.fileInputLabel:hover {
-  border-color: var(--text-secondary);
-}
-
-.fileInputLabel.hasFile {
-  color: var(--text-primary);
-  background: var(--bg-primary);
-}
-
-/* OTP Verification Styles */
-.otpContainer {
-  text-align: center;
-}
-
-.otpIcon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 64px;
-  height: 64px;
-  margin: 0 auto 24px;
-  background: var(--bg-secondary);
-  border-radius: 12px;
-  position: relative;
-}
-
-.otpIcon svg {
-  width: 32px;
-  height: 32px;
-  color: var(--text-primary);
-}
-
-.otpIcon::after {
-  content: '';
-  position: absolute;
-  bottom: -4px;
-  right: -4px;
-  width: 20px;
-  height: 20px;
-  background: var(--error-color);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.otpIcon::before {
-  content: '♥';
-  position: absolute;
-  bottom: -2px;
-  right: -2px;
-  font-size: 12px;
-  color: white;
-  z-index: 1;
-}
-
-.otpTitle {
-  font-size: 16px;
-  font-weight: 600;
-  color: var(--text-primary);
-  margin-bottom: 16px;
-}
-
-.otpDescription {
-  color: var(--text-secondary);
-  font-size: 14px;
-  line-height: 20px;
-  margin-bottom: 24px;
-}
-
-.otpDescription a {
-  color: var(--button-primary);
-  font-weight: 600;
-}
-
-.backButton {
-  background: none;
-  border: none;
-  color: var(--button-primary);
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
   margin-top: 16px;
-  padding: 8px 0;
+  transition: background-color 0.2s ease;
 }
 
-.backButton:hover {
+.submitButton:hover:not(:disabled) {
+  background-color: #1877f2;
+}
+
+.submitButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.switchForm {
+  width: 100%;
+  padding: 20px 40px;
+  border: 1px solid #363636;
+  border-radius: 1px;
+  background-color: #000000;
+  text-align: center;
+  color: #ffffff;
+  font-size: 14px;
+}
+
+@media (prefers-color-scheme: light) {
+  .switchForm {
+    background-color: #ffffff;
+    border-color: #dbdbdb;
+    color: #262626;
+  }
+}
+
+.linkButton {
+  background: none;
+  border: none;
+  color: #0095f6;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  padding: 0;
+  margin-left: 4px;
+}
+
+.linkButton:hover {
   text-decoration: underline;
 }
 
+.error {
+  color: #ed4956;
+  font-size: 12px;
+  text-align: center;
+  margin-top: 8px;
+  padding: 8px;
+  background-color: rgba(237, 73, 86, 0.1);
+  border-radius: 4px;
+}
+
+.success {
+  color: #66bb6a;
+  font-size: 12px;
+  text-align: center;
+  margin-top: 8px;
+  padding: 8px;
+  background-color: rgba(102, 187, 106, 0.1);
+  border-radius: 4px;
+}
+
+.terms {
+  color: #8e8e8e;
+  font-size: 12px;
+  text-align: center;
+  margin: 16px 0 8px 0;
+  line-height: 16px;
+}
+
+.link {
+  color: #8e8e8e;
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  margin: 18px 0;
+  width: 100%;
+}
+
+.line {
+  flex: 1;
+  height: 1px;
+  background-color: #363636;
+}
+
+@media (prefers-color-scheme: light) {
+  .line {
+    background-color: #dbdbdb;
+  }
+}
+
+.orText {
+  margin: 0 18px;
+  color: #8e8e8e;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
 @media (max-width: 768px) {
-  .authBox {
-    padding: 40px 20px 20px;
-    border: none;
-    background: transparent;
+  .formContainer {
+    max-width: 100%;
   }
 
-  .switchBox {
+  .form {
     border: none;
-    background: transparent;
+    padding: 20px;
+    background-color: #000000;
   }
 
-  .authContainer {
-    padding: 0;
+  .switchForm {
+    border: none;
+    background-color: #000000;
+  }
+
+  @media (prefers-color-scheme: light) {
+    .form {
+      background-color: #ffffff;
+    }
+
+    .switchForm {
+      background-color: #ffffff;
+    }
   }
 }

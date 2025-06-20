@@ -29,7 +29,7 @@
 
 .searchInput {
   width: 100%;
-  padding: 8px 16px 8px 40px;
+  padding: 8px 36px 8px 40px; /* updated for space between Search and X */
   background: #efefef;
   border: 1px solid transparent;
   border-radius: 8px;
@@ -60,6 +60,33 @@
 
 .searchInput::placeholder {
   color: #8e8e8e;
+}
+
+/* 🔍 Clear Button inside search bar */
+.clearButton {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  color: #8e8e8e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.clearIcon {
+  width: 16px;
+  height: 16px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .clearButton {
+    color: #bbb;
+  }
 }
 
 .categoryTabsContainer {
@@ -113,12 +140,12 @@
   display: block;
 }
 
-/* Mobile styles */
+/* 📱 Mobile styles */
 @media screen and (max-width: 900px) {
   .searchRelativeContainer {
     max-width: 100%;
   }
-  
+
   .categoryTabsContainer {
     gap: 40px;
   }
@@ -128,19 +155,19 @@
   .headerContainer {
     margin-bottom: 16px;
   }
-  
+
   .searchBarWrapper {
     margin-bottom: 16px;
   }
-  
+
   .categoryTabsContainer {
     gap: 20px;
   }
-  
+
   .categoryButtonText {
     display: none;
   }
-  
+
   .categoryButton {
     padding: 12px 8px;
   }

@@ -1,205 +1,131 @@
-import React, { useState } from 'react';
-import { Formik, Form, Field } from 'formik';
-import { useAuth } from '../../contexts/AuthContext';
-import { signupValidationSchema } from '../../utils/validationSchemas';
-import FormikInput from '../FormInput/FormikInput';
-import PasswordStrength from '../PasswordStrength/PasswordStrength';
-import SocialLogin from '../SocialLogin/SocialLogin';
-import styles from './AuthForm.module.css';
+import React, { useState } from "react";
+import { Formik, Form } from "formik";
+import FormikInput from "../FormInput/FormikInput";
+import SocialLogin from "../SocialLogin/SocialLogin";
+import PasswordStrength from "../PasswordStrength/PasswordStrength";
+import { registerSchema } from "../../utils/validationSchemas";
+import { useAuth } from "../../contexts/AuthContext";
+import styles from "./AuthForm.module.css";
 
 interface SignupFormProps {
-  onSwitchToLogin: () => void;
-  onShowOTP: (email: string) => void;
+  onLoginClick: () => void;
+  onSignupSuccess: (email: string) => void;
 }
 
-interface SignupFormValues {
-  email: string;
-  username: string;
-  fullName: string;
-  password: string;
-  confirmPassword: string;
-  bio: string;
-  profilePicture: string;
-}
+const SignupForm: React.FC<SignupFormProps> = ({
+  onLoginClick,
+  onSignupSuccess,
+}) => {
+  const { register, loading } = useAuth();
+  const [error, setError] = useState("");
+  const [showPasswordStrength, setShowPasswordStrength] = useState(false);
 
-const SignupForm: React.FC<SignupFormProps> = ({ onSwitchToLogin, onShowOTP }) => {
-  const { register } = useAuth();
-  const [serverError, setServerError] = useState('');
-
-  const initialValues: SignupFormValues = {
-    email: '',
-    username: '',
-    fullName: '',
-    password: '',
-    confirmPassword: '',
-    bio: '',
-    profilePicture: '',
-  };
-
-  const handleFileChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    setFieldValue: (field: string, value: any) => void
-  ) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      // In a real app, you would upload the file and get a URL
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setFieldValue('profilePicture', reader.result as string);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const handleSubmit = async (
-    values: SignupFormValues,
-    { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
-  ) => {
-    setServerError('');
-    
+  const handleSignup = async (values: any) => {
+    setError("");
     try {
-      const result = await register({
-        email: values.email,
+      await register({
         username: values.username,
-        fullName: values.fullName,
+        email: values.email,
         password: values.password,
+        fullName: values.fullName,
         bio: values.bio,
-        profilePicture: values.profilePicture,
+        isPrivate: false,
       });
-      
-      if (result.success) {
-        if (result.requiresOTP) {
-          onShowOTP(values.email);
-        }
-      } else {
-        setServerError(result.message || 'Registration failed. Please try again.');
-      }
-    } catch (error) {
-      setServerError('An unexpected error occurred. Please try again.');
-    } finally {
-      setSubmitting(false);
+      onSignupSuccess(values.email);
+    } catch (error: any) {
+      setError(
+        error.response?.data?.message ||
+          "Registration failed. Please try again."
+      );
     }
   };
 
   return (
-    <div className={styles.authContainer}>
-      <div className={styles.authWrapper}>
-        <div className={styles.authBox}>
-          <div className={styles.logo}>
-            <h1 className={styles.logoText}>Instagram</h1>
-          </div>
-          
-          <p className={styles.subtitle}>
-            Sign up to see photos and videos from your friends.
-          </p>
+    <div className={styles.formContainer}>
+      <div className={styles.form}>
+        <h1 className={styles.logo}>Instagram</h1>
+        <p className={styles.subtitle}>
+          Sign up to see photos and videos from your friends.
+        </p>
 
-          <SocialLogin />
+        <SocialLogin />
 
-          <Formik
-            initialValues={initialValues}
-            validationSchema={signupValidationSchema}
-            onSubmit={handleSubmit}
-          >
-            {({ isSubmitting, isValid, dirty, values, setFieldValue }) => (
-              <Form className={styles.form}>
-                {serverError && (
-                  <div className={styles.errorMessage}>{serverError}</div>
-                )}
+        <Formik
+          initialValues={{
+            email: "",
+            password: "",
+            confirmPassword: "",
+            fullName: "",
+            username: "",
+            bio: "",
+          }}
+          validationSchema={registerSchema}
+          onSubmit={handleSignup}
+        >
+          {({ values }) => (
+            <Form>
+              <FormikInput
+                name="email"
+                type="email"
+                placeholder="Mobile number or email address"
+              />
+              <FormikInput
+                name="password"
+                type="password"
+                placeholder="Password"
+                showPasswordToggle
+                onFocus={() => setShowPasswordStrength(true)}
+                onBlur={() => setShowPasswordStrength(false)}
+              />
+              <PasswordStrength
+                password={values.password}
+                showStrength={showPasswordStrength}
+              />
+              <FormikInput
+                name="confirmPassword"
+                type="password"
+                placeholder="Confirm Password"
+                showPasswordToggle
+              />
+              <FormikInput
+                name="fullName"
+                type="text"
+                placeholder="Full Name"
+              />
+              <FormikInput name="username" type="text" placeholder="Username" />
+              <FormikInput
+                name="bio"
+                type="text"
+                placeholder="Bio (optional)"
+              />
 
-                <FormikInput
-                  type="email"
-                  name="email"
-                  placeholder="Mobile number or email address"
-                  autoComplete="email"
-                />
+              {error && <div className={styles.error}>{error}</div>}
 
-                <FormikInput
-                  type="password"
-                  name="password"
-                  placeholder="Password"
-                  autoComplete="new-password"
-                  showPasswordToggle={true}
-                />
+              <p className={styles.terms}>
+                By signing up, you agree to our{" "}
+                <a href="#" className={styles.link}>
+                  Terms
+                </a>
+                .
+              </p>
 
-                <PasswordStrength password={values.password} />
+              <button
+                type="submit"
+                disabled={loading}
+                className={styles.submitButton}
+              >
+                {loading ? "Signing up..." : "Sign Up"}
+              </button>
+            </Form>
+          )}
+        </Formik>
+      </div>
 
-                <FormikInput
-                  type="password"
-                  name="confirmPassword"
-                  placeholder="Confirm Password"
-                  autoComplete="new-password"
-                  showPasswordToggle={true}
-                />
-
-                <FormikInput
-                  type="text"
-                  name="fullName"
-                  placeholder="Full Name"
-                  autoComplete="name"
-                />
-
-                <FormikInput
-                  type="text"
-                  name="username"
-                  placeholder="Username"
-                  autoComplete="username"
-                />
-
-                <FormikInput
-                  type="text"
-                  name="bio"
-                  placeholder="Bio (optional)"
-                />
-
-                <Field name="profilePicture">
-                  {({ field }: any) => (
-                    <>
-                      <input
-                        type="file"
-                        id="profilePicture"
-                        accept="image/*"
-                        onChange={(e) => handleFileChange(e, setFieldValue)}
-                        className={styles.fileInput}
-                      />
-                      <label 
-                        htmlFor="profilePicture" 
-                        className={`${styles.fileInputLabel} ${field.value ? styles.hasFile : ''}`}
-                      >
-                        {field.value ? 'Profile picture selected' : 'Choose profile picture (optional)'}
-                      </label>
-                    </>
-                  )}
-                </Field>
-
-                <div className={styles.terms}>
-                  People who use our service may have uploaded your contact information to Instagram.{' '}
-                  <a href="#" onClick={(e) => e.preventDefault()}>Learn more</a>
-                  <br /><br />
-                  By signing up, you agree to our{' '}
-                  <a href="#" onClick={(e) => e.preventDefault()}>Terms</a>,{' '}
-                  <a href="#" onClick={(e) => e.preventDefault()}>Privacy Policy</a> and{' '}
-                  <a href="#" onClick={(e) => e.preventDefault()}>Cookies Policy</a>.
-                </div>
-
-                <button
-                  type="submit"
-                  className={`${styles.submitButton} ${isSubmitting ? styles.loading : ''}`}
-                  disabled={!isValid || !dirty || isSubmitting}
-                >
-                  {isSubmitting && <div className={styles.spinner}></div>}
-                  Sign Up
-                </button>
-              </Form>
-            )}
-          </Formik>
-        </div>
-
-        <div className={styles.switchBox}>
-          Have an account?{' '}
-          <a href="#" onClick={(e) => { e.preventDefault(); onSwitchToLogin(); }}>
-            Log in
-          </a>
-        </div>
+      <div className={styles.switchForm}>
+        <span>Have an account? </span>
+        <button onClick={onLoginClick} className={styles.linkButton}>
+          Log in
+        </button>
       </div>
     </div>
   );

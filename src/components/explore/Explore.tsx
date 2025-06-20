@@ -1,24 +1,31 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ExploreHeader from "./ExploreHeader";
 import ExploreGrid from "./ExploreGrid";
 import SearchResults from "./SearchResults";
 import PostModal from "./PostModal";
-
-// Import the CSS module
-import styles from "./Explore.module.css"; // Verify this path is correct
-import { useAppSelector } from "../../redux/hooks";
+import styles from "./Explore.module.css";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { fetchFeedPosts } from "../../redux/slices/exploreSlice";
 
 const Explore: React.FC = () => {
-  const { isSearching } = useAppSelector((state) => state.explore);
+  const dispatch = useAppDispatch();
+  const { isSearching, posts, page, error, isLoading } = useAppSelector(
+    (state) => state.explore
+  );
+
+  useEffect(() => {
+   
+    if (posts.length === 0 && !isLoading && !isSearching) {
+      dispatch(fetchFeedPosts(page));
+    }
+  }, [dispatch, posts.length, page, isLoading, isSearching]);
 
   return (
-    // Apply the CSS module class to the main container
-    // Use styles.exploreContainer
     <div className={styles.exploreContainer}>
       <ExploreHeader />
-      {/* Apply the CSS module class to the content wrapper */}
-      {/* Use styles.contentWrapper */}
       <div className={styles.contentWrapper}>
+        {error && <div className={styles.errorMessage}>Error: {error}</div>}
+        {isLoading && <div className={styles.loadingMessage}>Loading...</div>}
         {isSearching ? <SearchResults /> : <ExploreGrid />}
       </div>
       <PostModal />

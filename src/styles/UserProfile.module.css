@@ -1,0 +1,415 @@
+.container {
+    max-width: 100%;
+    height: 100%;
+    margin: 0 auto;
+    padding: 24px;
+    background-color: #ffffff;
+    color: #1f2937;
+}
+
+.form {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.input {
+    flex: 1;
+    padding: 8px;
+    border: none;
+    outline: none;
+    height: 30px;
+    border-radius: 6px;
+    font-size: 16px;
+    background-color: #e9e9e9;
+    color: #1f2937;
+}
+
+.input:focus {
+    outline: none;
+    border-color: #000000;
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.5);
+    background-color: #fff;
+}
+
+.searchButton {
+    padding: 8px 16px;
+    background-color: #242424;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.searchButton:hover:not(:disabled) {
+    background-color: #000000;
+}
+
+.searchButton:disabled {
+    background-color: #93c5fd;
+    cursor: not-allowed;
+}
+
+.clearButton {
+    padding: 8px 16px;
+    background-color: #6b7280;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.clearButton:hover {
+    background-color: #4b5563;
+}
+
+.error {
+    margin-bottom: 16px;
+    padding: 16px;
+    background-color: #fee2e2;
+    color: #b91c1c;
+    border-radius: 4px;
+}
+
+.loading {
+    text-align: center;
+    font-size: 16px;
+}
+
+.noResults {
+    text-align: center;
+    color: #6b7280;
+    font-size: 16px;
+}
+
+.resultsInfo {
+    margin-bottom: 16px;
+    font-size: 15px;
+    font-weight: bold;
+    color: #4b5563;
+}
+
+.userGrid {
+    height: 100vh;
+    display: grid;
+    gap: 16px;
+    overflow-y: auto;
+    padding-right: 8px;
+}
+
+.userGrid::-webkit-scrollbar {
+    width: 8px;
+}
+
+.userGrid::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 4px;
+}
+
+.userGrid::-webkit-scrollbar-thumb {
+    background: grey;
+    border-radius: 4px;
+}
+
+.userGrid::-webkit-scrollbar-thumb:hover {
+    background: transparent;
+}
+
+.userCard {
+    padding: 16px;
+    border: 2px solid white;
+    border-radius: 4px;
+    background-color: rgb(245, 245, 245);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+
+}
+
+.userCard:hover {
+    background-color: #f9fafb;
+    border-color: #d1d5db;
+}
+
+.profilePicture {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 8px;
+}
+
+.userName {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.userUsername {
+    font-size: 14px;
+    color: #6b7280;
+    margin-bottom: 4px;
+}
+
+.userEmail {
+    font-size: 14px;
+    color: #6b7280;
+    margin-bottom: 4px;
+}
+
+.userBio {
+    font-size: 14px;
+    color: #4b5563;
+    margin-bottom: 8px;
+}
+
+.userStats {
+    display: flex;
+    gap: 16px;
+    font-size: 14px;
+    color: #4b5563;
+}
+
+/* Dark theme */
+@media (prefers-color-scheme: dark) {
+    .container {
+        background-color: rgb(0, 0, 0);
+        color: #f9fafb;
+        height: 100%;
+    }
+
+    .input {
+        background-color: rgb(32, 32, 32);
+        color: #f9fafb;
+        border-color: #4b5563;
+    }
+
+    .input:focus {
+        background-color: black;
+        border-color: #000000;
+        box-shadow: 0 0 0 2px rgba(78, 78, 78, 0.5);
+    }
+
+    .userCard {
+        background-color: rgb(24, 24, 24);
+        border-color: black;
+    }
+
+    .userCard:hover {
+        background-color: #000000;
+        border: 2px solid rgb(138, 195, 204);
+    }
+
+    .searchButton {
+        padding: 8px 16px;
+        background-color: #272727;
+        color: rgb(228, 228, 228);
+        border: none;
+        border-radius: 4px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    .searchButton:hover:not(:disabled) {
+        background-color: #568a8b;
+    }
+
+    .searchButton:disabled {
+        background-color: #93c5fd;
+        cursor: not-allowed;
+    }
+
+    .clearButton {
+        padding: 8px 16px;
+        background-color: #111111;
+        color: rgb(207, 207, 207);
+        border: none;
+        border-radius: 4px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    .clearButton:hover {
+        background-color: #4b5563;
+    }
+
+    .error {
+        background-color: #7f1d1d;
+        color: #fee2e2;
+    }
+
+    .noResults {
+        color: #9ca3af;
+    }
+
+    .resultsInfo {
+        color: #dbdbdb;
+    }
+
+    .userUsername {
+        color: #9ca3af;
+    }
+
+    .userEmail {
+        color: #9ca3af;
+    }
+
+    .userBio {
+        color: #d1d5db;
+    }
+
+    .userStats {
+        color: #d1d5db;
+    }
+
+    .userGrid::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    .userGrid::-webkit-scrollbar-thumb {
+        background: #5c5d5e;
+    }
+
+    .userGrid::-webkit-scrollbar-thumb:hover {
+        background: #d1d5db;
+    }
+}
+
+/* Desktop (min-width: 900px) */
+@media screen and (min-width: 900px) {
+    .container {
+        width: 50vw;
+        height: 100vh;
+        padding: 32px;
+    }
+
+    .title {
+        font-size: 28px;
+    }
+
+    .form {
+        gap: 20px;
+    }
+
+    .input {
+        padding: 10px;
+        font-size: 18px;
+    }
+
+    .searchButton,
+    .clearButton {
+        padding: 10px 20px;
+        font-size: 18px;
+    }
+
+    .userGrid {
+        grid-template-columns: repeat(2, 1fr);
+        height: 100vh;
+    }
+
+    .userCard {
+        padding: 20px;
+    }
+
+    .profilePicture {
+        width: 80px;
+        height: 80px;
+    }
+}
+
+/* Tablet (max-width: 900px and min-width: 520px) */
+@media screen and (max-width: 900px) and (min-width: 520px) {
+    .container {
+        max-width: 100%;
+        padding: 16px;
+    }
+
+    .title {
+        font-size: 22px;
+    }
+
+    .form {
+        gap: 12px;
+    }
+
+    .input {
+        padding: 8px;
+        font-size: 14px;
+    }
+
+    .searchButton,
+    .clearButton {
+        padding: 8px 12px;
+        font-size: 14px;
+    }
+
+    .userGrid {
+        grid-template-columns: 1fr;
+        max-height: 400px;
+    }
+
+    .userCard {
+        padding: 12px;
+    }
+
+    .profilePicture {
+        width: 56px;
+        height: 56px;
+    }
+}
+
+/* Mobile (max-width: 520px) */
+@media screen and (max-width: 520px) {
+    .container {
+        max-width: 100%;
+        padding: 12px;
+    }
+
+    .title {
+        font-size: 20px;
+        margin-bottom: 12px;
+    }
+
+    .form {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .input {
+        padding: 6px;
+        font-size: 14px;
+    }
+
+    .searchButton,
+    .clearButton {
+        padding: 6px 12px;
+        font-size: 14px;
+        width: 100%;
+    }
+
+    .userGrid {
+        grid-template-columns: 1fr;
+        max-height: 300px;
+    }
+
+    .userCard {
+        padding: 10px;
+    }
+
+    .profilePicture {
+        width: 48px;
+        height: 48px;
+    }
+
+    .userName {
+        font-size: 16px;
+    }
+
+    .userUsername,
+    .userEmail,
+    .userBio,
+    .userStats {
+        font-size: 12px;
+    }
+}
