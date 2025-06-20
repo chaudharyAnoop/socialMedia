@@ -34,8 +34,10 @@ import type { AppDispatch, RootState } from "../../redux/store";
 import { toggleNavigationBar } from "../../redux/navigationBarSlice";
 import { Home, MessageCircle } from "lucide-react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function NavigationBar() {
+  const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const isSidebarVisible = useSelector(
     (state: RootState) => state.sidebar.isVisible
@@ -52,8 +54,9 @@ function NavigationBar() {
     const res = await axios.post("http://172.50.5.102:3011/auth/logout", {
       headers,
     });
-    if (res.status === 200) {
+    if (res.status === 201) {
       localStorage.clear();
+      window.location.reload();
     }
   };
   return (
