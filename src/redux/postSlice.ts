@@ -75,7 +75,7 @@ export const likePost = createAsyncThunk<
   { rejectValue: string }
 >("posts/likePost", async (postId, { rejectWithValue }) => {
   try {
-    const token = localStorage.getItem("instagram_user")?.slice(1, -1);
+    const token = localStorage.getItem("instagram_user");
     const headers = {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,

@@ -6,7 +6,7 @@ import React, {
   ReactNode,
 } from "react";
 import axios from "axios";
-import { Navigate } from "react-router-dom";
+// import { Navigate } from "react-router-dom";
 
 interface User {
   id: string;
@@ -26,6 +26,7 @@ interface AuthContextType {
   login: (email: string, password: string) => Promise<any>;
   register: (userData: RegisterData) => Promise<any>;
   verifyOTP: (email: string, otp: string) => Promise<any>;
+  resendOTP: (email: string) => Promise<any>;
   forgotPassword: (email: string) => Promise<any>;
   resetPassword: (
     email: string,
@@ -318,6 +319,21 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     }
   };
 
+  const resendOTP = async (email: string) => {
+    setLoading(true);
+    try {
+      const response = await axios.post("/auth/resend-otp", {
+        email,
+      });
+      return response.data;
+    } catch (error) {
+      console.error("Resend OTP error:", error);
+      throw error;
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const resetPassword = async (
     email: string,
     otp: string,
@@ -360,6 +376,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
         logout,
         loading,
         checkAuthStatus,
+        resendOTP,
       }}
     >
       {children}

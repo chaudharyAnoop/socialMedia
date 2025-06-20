@@ -1314,6 +1314,7 @@ export default function Post({
   };
 
   const handleLikeComment = (commentId: string) => {
+    console.log(commentId);
     dispatch(likeComment(commentId));
   };
 
@@ -1361,7 +1362,12 @@ export default function Post({
         </div>
         <p className={styles.commentContent}>{comment.content}</p>
         <div className={styles.commentActions}>
-          <button onClick={() => handleLikeComment(comment._id)}>
+          <button
+            onClick={() => {
+              console.log(comment.commentId);
+              handleLikeComment(comment.commentId);
+            }}
+          >
             <FaHeart /> {comment.likes || 0}
           </button>
           <button
