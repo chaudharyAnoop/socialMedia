@@ -7,7 +7,7 @@ import axios from "axios";
 
 interface Post {
   _id: number;
-  UserId: string; // Primary user identifier
+  UserId: string;
   username: string;
   commentCount: number;
   reactionCount: number;
@@ -15,7 +15,7 @@ interface Post {
   tags: string[];
   media: string[];
   reactions: number;
-  isLiked: boolean; // Represents likes
+  isLiked: boolean;
 }
 
 interface PostsState {
@@ -83,7 +83,7 @@ export const likePost = createAsyncThunk<
     console.log(token);
     const response = await axios.post(
       `http://172.50.5.102:3000/posts/${postId}/like`,
-      { userId: "Anoop Kumar Chaudhary" }, // Assuming userId is sent for tracking
+      { userId: "Anoop Kumar Chaudhary" },
       { headers }
     );
     return { postId, reactions: response.data.reactions };
