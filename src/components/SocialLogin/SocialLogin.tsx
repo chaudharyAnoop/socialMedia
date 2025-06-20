@@ -1,47 +1,27 @@
-import React from 'react';
-import { Facebook } from 'lucide-react';
-import styles from './SocialLogin.module.css';
+import React from "react";
+import { Facebook } from "lucide-react";
+import styles from "./SocialLogin.module.css";
 
 interface SocialLoginProps {
-  showForgotPassword?: boolean;
   onFacebookLogin?: () => void;
 }
 
-const SocialLogin: React.FC<SocialLoginProps> = ({ 
-  showForgotPassword = false,
-  onFacebookLogin 
-}) => {
-  const handleFacebookLogin = () => {
-    if (onFacebookLogin) {
-      onFacebookLogin();
-    } else {
-      // Mock Facebook login
-      alert('Facebook login would be implemented here');
-    }
-  };
-
+const SocialLogin: React.FC<SocialLoginProps> = ({ onFacebookLogin }) => {
   return (
-    <div className={styles.socialContainer}>
+    <div className={styles.socialLogin}>
       <div className={styles.divider}>
-        <span>OR</span>
+        <div className={styles.line}></div>
+        <span className={styles.orText}>OR</span>
+        <div className={styles.line}></div>
       </div>
-      
-      <button 
-        type="button" 
-        className={styles.socialButton}
-        onClick={handleFacebookLogin}
+      <button
+        type="button"
+        className={styles.facebookButton}
+        onClick={onFacebookLogin}
       >
-        <Facebook />
-        Log in with Facebook
+        <Facebook size={20} />
+        <span>Log in with Facebook</span>
       </button>
-      
-      {showForgotPassword && (
-        <div className={styles.forgotPassword}>
-          <a href="#" onClick={(e) => e.preventDefault()}>
-            Forgotten your password?
-          </a>
-        </div>
-      )}
     </div>
   );
 };

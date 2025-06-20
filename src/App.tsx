@@ -1,11 +1,12 @@
 import styles from "./App.module.css";
 import React, { useEffect } from "react";
+
 import {
-  BrowserRouter,
-  Routes,
   Route,
+  Routes,
   Navigate,
   useLocation,
+  BrowserRouter,
 } from "react-router-dom";
 import NavigationBar from "./components/NavigationBar/NavigationBar";
 import QuickAccess from "./components/QuickAccess/QuickAccess";
@@ -18,10 +19,12 @@ import {
   requestNotificationPermission,
 } from "./firebase/firebase";
 import InstagramCreatePost from "./pages/InstagramCreatePost/InstagramCreatePost";
-import  LoginForm  from "./components/AuthForm/LoginForm";
+import LoginForm from "./components/AuthForm/LoginForm";
 import { AuthProvider } from "./contexts/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Dashboard from "./components/Dashboard/Dashboard";
+import UserProfile from "./components/UserProfile";
+import GetUser from "./components/GetUser";
 
 const LandingPage = lazy(() => import("./pages/LandingPage/LandingPage"));
 const AdminPage = lazy(() => import("./pages/AdminPage/AdminPage"));
@@ -176,6 +179,14 @@ const AppContent: React.FC = () => {
             }
           />
           <Route
+            path="/create"
+            element={
+              <ProtectedRoute>
+                <InstagramCreatePost />
+              </ProtectedRoute>
+            }
+          />
+          <Route
             path="/admin"
             element={
               <ProtectedRoute>
@@ -192,6 +203,7 @@ const AppContent: React.FC = () => {
               </ProtectedRoute>
             }
           />
+          <Route path="/user/:userId" element={<GetUser />} />
         </Routes>
       </Suspense>
       {!isSignin && <QuickAccess />}
