@@ -28,16 +28,37 @@ import {
   FaMessage,
   FaPerson,
 } from "react-icons/fa6";
+import { CgLogOut } from "react-icons/cg";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "../../redux/store";
 import { toggleNavigationBar } from "../../redux/navigationBarSlice";
 import { Home, MessageCircle } from "lucide-react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function NavigationBar() {
+  const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const isSidebarVisible = useSelector(
     (state: RootState) => state.sidebar.isVisible
   );
+
+  const logoutHnadler = async () => {
+    const token = localStorage.getItem("instagram_user");
+    const cleanedUser = token;
+    console.log(token);
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    };
+    const res = await axios.post("http://172.50.5.102:3011/auth/logout", {
+      headers,
+    });
+    if (res.status === 201) {
+      localStorage.clear();
+      window.location.reload();
+    }
+  };
   return (
     <div className={styles.outer}>
       <div className={isSidebarVisible ? styles.main : styles.hideMain}>
@@ -95,7 +116,7 @@ function NavigationBar() {
             </NavLink>
           </li>{" "}
           <li className={styles.list_li}>
-            <NavLink to="/auth" className={styles.link}>
+            <NavLink to="/chat" className={styles.link}>
               <div className={styles.tile}>
                 <div className={styles.name}>
                   <MessageCircle className={styles.icon} />
@@ -106,7 +127,7 @@ function NavigationBar() {
             </NavLink>
           </li>{" "}
           <li className={styles.list_li}>
-            <NavLink to="/" className={styles.link}>
+            <NavLink to="/noti" className={styles.link}>
               <div className={styles.tile}>
                 <div className={styles.name}>
                   <FaRegHeart className={styles.icon} />
@@ -133,6 +154,17 @@ function NavigationBar() {
                 <div className={styles.name}>
                   <FaRegUser className={styles.icon} />
                   <p className={styles.head}> Profile</p>
+                </div>
+                {/* <p className={styles.val}>10</p> */}
+              </div>
+            </NavLink>
+          </li>
+          <li className={styles.list_li}>
+            <NavLink to="/" className={styles.link} onClick={logoutHnadler}>
+              <div className={styles.tile}>
+                <div className={styles.name}>
+                  <CgLogOut className={styles.icon} />
+                  <p className={styles.head}> Logout</p>
                 </div>
                 {/* <p className={styles.val}>10</p> */}
               </div>

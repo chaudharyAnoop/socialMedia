@@ -1,13 +1,21 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import {
+  createSlice,
+  createAsyncThunk,
+  type PayloadAction,
+} from "@reduxjs/toolkit";
 import axios from "axios";
 
 interface Post {
-  id: number;
-  title: string;
-  body: string;
-  userId: number;
+  _id: number;
+  UserId: string; // Primary user identifier
+  username: string;
+  commentCount: number;
+  reactionCount: number;
+  content: string;
   tags: string[];
+  media: string[];
   reactions: number;
+  isLiked: boolean; // Represents likes
 }
 
 interface PostsState {
@@ -34,16 +42,15 @@ export const fetchPosts = createAsyncThunk<
   { rejectValue: string }
 >("posts/fetchPosts", async ({ page, limit }, { rejectWithValue }) => {
   try {
-    let token = localStorage.getItem("instagram_user");
-    let cleanedUser = token?.slice(1, -1);
-    console.log(cleanedUser);
+    const token = localStorage.getItem("instagram_user");
     const headers = {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${cleanedUser}`,
+      Authorization: `Bearer ${token}`,
       "X-Custom-Header": "CustomValue",
     };
+    console.log(token);
     const response = await axios.get<{
-      posts: Post[];
+      data: Post[];
       total: number;
       skip: number;
       limit: number;
@@ -53,13 +60,38 @@ export const fetchPosts = createAsyncThunk<
       }`,
       { headers }
     );
-    console.log(response.data.posts);
-    return { posts: response.data.posts, total: response.data.total };
+    return { posts: response.data.data, total: response.data.total };
   } catch (error) {
     if (axios.isAxiosError(error)) {
       return rejectWithValue(error.message);
     }
     return rejectWithValue("An unexpected error occurred");
+  }
+});
+
+export const likePost = createAsyncThunk<
+  { postId: number; reactions: number },
+  number,
+  { rejectValue: string }
+>("posts/likePost", async (postId, { rejectWithValue }) => {
+  try {
+    const token = localStorage.getItem("instagram_user");
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    };
+    console.log(token);
+    const response = await axios.post(
+      `http://172.50.5.102:3000/posts/${postId}/like`,
+      { userId: "Anoop Kumar Chaudhary" }, // Assuming userId is sent for tracking
+      { headers }
+    );
+    return { postId, reactions: response.data.reactions };
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      return rejectWithValue(error.message);
+    }
+    return rejectWithValue("Failed to like post");
   }
 });
 
@@ -81,17 +113,36 @@ const postsSlice = createSlice({
         state.status = "loading";
         state.error = null;
       })
-      .addCase(fetchPosts.fulfilled, (state, action) => {
-        state.status = "succeeded";
-        state.posts = [...state.posts, ...action.payload.posts];
-        state.page += 1;
-        state.hasMore =
-          state.posts.length < action.payload.total &&
-          action.payload.posts.length > 0;
-      })
+      .addCase(
+        fetchPosts.fulfilled,
+        (state, action: PayloadAction<{ posts: Post[]; total: number }>) => {
+          state.status = "succeeded";
+          state.posts = [...state.posts, ...action.payload.posts];
+          state.page += 1;
+          state.hasMore =
+            state.posts.length < action.payload.total &&
+            action.payload.posts.length > 0;
+        }
+      )
       .addCase(fetchPosts.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload || "Failed to fetch posts";
+      })
+      .addCase(
+        likePost.fulfilled,
+        (
+          state,
+          action: PayloadAction<{ postId: number; reactions: number }>
+        ) => {
+          const { postId, reactions } = action.payload;
+          const post = state.posts.find((p) => p._id === postId);
+          if (post) {
+            post.reactions = reactions;
+          }
+        }
+      )
+      .addCase(likePost.rejected, (state, action) => {
+        state.error = action.payload || "Failed to like post";
       });
   },
 });

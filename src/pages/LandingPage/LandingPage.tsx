@@ -34,9 +34,10 @@ function LandingPage() {
 
   useEffect(() => {
     if (status === "idle") {
-      dispatch(fetchPosts({ page: 1, limit: 20 }));
+      dispatch(fetchPosts({ page: 1, limit: 5 }));
     }
   }, [status, dispatch]);
+  console.log(posts);
 
   return (
     <div className={styles.main}>
@@ -55,27 +56,36 @@ function LandingPage() {
         {posts.map((post, index) => {
           if (posts.length === index + 1) {
             return (
-              <div ref={lastPostElementRef} key={post.id}>
+              <div ref={lastPostElementRef} key={post._id}>
                 <Post
                   key={uuidv4()}
-                  title={"post.title"}
-                  likecount={"post.reactions.likes.toString()"}
-                  body={"post.body"}
-                  imgUrl={`https://picsum.photos/2000/2000?random=${post.id}`}
+                  title={post.username}
+                  likecount={post.reactionCount.toString()}
+                  body={post.content}
+                  isLiked={post.isLiked}
+                  imgUrl={
+                    `https://dummy-project-bucket.s3.ap-south-1.amazonaws.com/` +
+                    `${post.media[0]}`
+                  }
                   alt={"post.title"}
+                  postId={post._id.toString()}
                 />
-                <p>vkjvhhv</p>
               </div>
             );
           }
           return (
             <Post
               key={uuidv4()}
-              title={"post.title"}
-              likecount={"post.reactions.likes.toString()"}
-              body={"post.body"}
-              imgUrl={`https://picsum.photos/2000/2000?random=${post.id}`}
+              title={post.username}
+              likecount={post.reactionCount.toString()}
+              body={post.content}
+              isLiked={post.isLiked}
+              imgUrl={
+                `https://dummy-project-bucket.s3.ap-south-1.amazonaws.com/` +
+                `${post.media[0]}`
+              }
               alt={"post.title"}
+              postId={post._id.toString()}
             />
           );
         })}

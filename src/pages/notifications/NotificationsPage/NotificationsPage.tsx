@@ -1,22 +1,28 @@
+
+
 import React, {
   useState,
   useMemo,
   useCallback,
   lazy,
-  Suspense
+  Suspense,
+  useEffect
 } from 'react';
+
+import axios from 'axios';
 import { NotificationData, sampleNotifications } from '../../../data/notifications';
 import styles from './NotificationsPage.module.css';
 import { Heart } from 'lucide-react';
-
-// Lazy load components
+import { formatNotification } from '../formatNotification';
+import { Notification_URL } from '../BaseUrl';
+// Lazy loaded components
 const NotificationHeader = lazy(() => import('../NotificationHeader/NotificationHeader'));
 const FilterTabs = lazy(() => import('../FilterTabs/FilterTabs'));
 const NotificationItem = lazy(() => import('../NotificationItem/NotificationItem'));
 
 const NotificationsPage: React.FC = () => {
   const [activeFilter, setActiveFilter] = useState<string>('all');
-  const [notifications, setNotifications] = useState<NotificationData[]>(sampleNotifications);
+  const [notifications, setNotifications] = useState<NotificationData[]>([]);
 
   const handleDeleteNotification = useCallback((id: string) => {
     setNotifications(prev => prev.filter(notification => notification.id !== id));
@@ -35,6 +41,33 @@ const NotificationsPage: React.FC = () => {
       activeFilter === 'all' ? true : notification.type === activeFilter
     );
   }, [notifications, activeFilter]);
+  let token = localStorage.getItem("instagram_user");
+  let cleanedUser = token;
+  useEffect(() => {
+    const fetchNotifications = async () => {
+      try {
+        const res = await axios.get(Notification_URL, {
+          headers: {
+            Authorization: `Bearer ${cleanedUser}`
+          }
+        });// Replace with your actual endpoint
+        console.log(res);
+        const rawData = res.data.data || [] ;
+        console.log(rawData);
+
+        const formatted: NotificationData[] = rawData
+          ?.map(formatNotification)
+          ?.filter((n : any): n is NotificationData => n !== null); // Remove unsupported types
+
+        setNotifications(formatted);
+      } catch (err) {
+        console.error('Error fetching notifications:', err);
+        setNotifications(sampleNotifications); // fallback
+      }
+    };
+    
+    fetchNotifications();
+  }, []);
 
   return (
     <div className={styles.page}>
@@ -52,34 +85,37 @@ const NotificationsPage: React.FC = () => {
         </Suspense>
 
         <div className={styles.notificationsContainer}>
-          {filteredNotifications.length > 0 ? (
-            <>
-              <div className={styles.swipeInstruction}>
-                ← Swipe left to delete notifications
-              </div>
-              <Suspense fallback={<div>Loading notifications...</div>}>
-                {filteredNotifications.map((notification) => (
-                  <NotificationItem
-                    key={notification.id}
-                    notification={notification}
-                    onDelete={handleDeleteNotification}
-                    onFollowToggle={handleFollowToggle}
-                  />
-                ))}
-              </Suspense>
-            </>
-          ) : (
-            <div className={styles.emptyState}>
-              <div className={styles.emptyIcon}>
-                <Heart size={48} color="#1877f2" />
-              </div>
-              <div className={styles.emptyTitle}>No notifications</div>
-              <div className={styles.emptyText}>
-                You're all caught up! Check back later for new notifications.
-              </div>
-            </div>
-          )}
+  {filteredNotifications.length > 0 ? (
+    <>
+      <div className={styles.swipeInstruction}>
+        ← Swipe left to delete notifications
+      </div>
+      <Suspense fallback={<div>Loading notifications...</div>}>
+        <div className={styles.scrollContainer}>
+          {filteredNotifications?.map((notification) => (
+            <NotificationItem
+              key={notification.id}
+              notification={notification}
+              onDelete={handleDeleteNotification}
+              onFollowToggle={handleFollowToggle}
+            />
+          ))}
         </div>
+      </Suspense>
+    </>
+  ) : (
+    <div className={styles.emptyState}>
+      <div className={styles.emptyIcon}>
+        <Heart size={48} color="#1877f2" />
+      </div>
+      <div className={styles.emptyTitle}>No notifications</div>
+      <div className={styles.emptyText}>
+        You're all caught up! Check back later for new notifications.
+      </div>
+    </div>
+  )}
+</div>
+
       </div>
     </div>
   );

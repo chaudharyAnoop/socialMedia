@@ -1,114 +1,137 @@
-import React from 'react';
-import { Formik, Form } from 'formik';
-import { useAuth } from '../../contexts/AuthContext';
-import { otpValidationSchema } from '../../utils/validationSchemas';
-import FormikInput from '../FormInput/FormikInput';
-import { Mail } from 'lucide-react';
-import styles from '../AuthForm/AuthForm.module.css';
+import React, { useState, useEffect } from "react";
+import { Formik, Form } from "formik";
+import FormikInput from "../FormInput/FormikInput";
+import { otpSchema } from "../../utils/validationSchemas";
+import { useAuth } from "../../contexts/AuthContext";
+import styles from "./OTPVerification.module.css";
 
 interface OTPVerificationProps {
   email: string;
+  onVerified: () => void;
   onBack: () => void;
 }
 
-interface OTPFormValues {
-  otp: string;
-}
+const OTPVerification: React.FC<OTPVerificationProps> = ({
+  email,
+  onVerified,
+  onBack,
+}) => {
+  const { verifyOTP, resendOTP, loading } = useAuth();
+  const [timer, setTimer] = useState(60);
+  const [canResend, setCanResend] = useState(false);
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
-const OTPVerification: React.FC<OTPVerificationProps> = ({ email, onBack }) => {
-  const { verifyOTP } = useAuth();
-
-  const initialValues: OTPFormValues = {
-    otp: '',
-  };
+  useEffect(() => {
+    if (timer > 0) {
+      const interval = setInterval(() => {
+        setTimer(timer - 1);
+      }, 1000);
+      return () => clearInterval(interval);
+    } else {
+      setCanResend(true);
+    }
+  }, [timer]);
 
   const handleSubmit = async (
-    values: OTPFormValues,
-    { setSubmitting, setStatus }: { setSubmitting: (isSubmitting: boolean) => void; setStatus: (status: any) => void }
+    values: { otp: string },
+    { setSubmitting }: any
   ) => {
-    setStatus(null);
-    
+    setError("");
+    setSuccess("");
+    setSubmitting(true);
+
     try {
-      const result = await verifyOTP(email, values.otp);
-      
-      if (!result.success) {
-        setStatus(result.message || 'Invalid verification code. Please try again.');
-      }
-      // If successful, the AuthContext will handle the state change
-    } catch (error) {
-      setStatus('An unexpected error occurred. Please try again.');
+      // For email verification during registration
+      await verifyOTP(email, values.otp);
+      setSuccess("Email verified successfully! Redirecting to login...");
+      setTimeout(() => {
+        onVerified();
+      }, 1500);
+    } catch (error: any) {
+      // Stay on the same page and show error - DO NOT redirect
+      const errorMessage =
+        error.response?.data?.message ||
+        "Invalid OTP. Please check your code and try again.";
+      setError(errorMessage);
+      console.error("OTP Verification Error:", error);
     } finally {
       setSubmitting(false);
     }
   };
 
-  const handleResendCode = () => {
-    // In a real app, this would resend the OTP
-    alert('Verification code resent to ' + email);
+  const handleResend = async () => {
+    setTimer(60);
+    setCanResend(false);
+    setError("");
+    setSuccess("New OTP sent to your email");
+
+    try {
+      await resendOTP(email);
+      console.log("Resending OTP to:", email);
+    } catch (error) {
+      setError("Failed to resend OTP. Please try again.");
+      setCanResend(true);
+      setTimer(0);
+    }
   };
 
   return (
-    <div className={styles.authContainer}>
-      <div className={styles.authWrapper}>
-        <div className={styles.authBox}>
-          <div className={styles.otpContainer}>
-            <div className={styles.otpIcon}>
-              <Mail />
-            </div>
-            
-            <h2 className={styles.otpTitle}>Enter confirmation code</h2>
-            
-            <p className={styles.otpDescription}>
-              Enter the confirmation code that we sent to{' '}
-              <strong>{email}</strong>.{' '}
-              <a href="#" onClick={(e) => { e.preventDefault(); handleResendCode(); }}>
-                Resend code.
-              </a>
-            </p>
+    <div className={styles.otpContainer}>
+      <h1 className={styles.logo}>Instagram</h1>
 
-            <Formik
-              initialValues={initialValues}
-              validationSchema={otpValidationSchema}
-              onSubmit={handleSubmit}
-            >
-              {({ isSubmitting, isValid, dirty, status }) => (
-                <Form className={styles.form}>
-                  {status && (
-                    <div className={styles.errorMessage}>{status}</div>
-                  )}
-
-                  <FormikInput
-                    type="text"
-                    name="otp"
-                    placeholder="Confirmation code"
-                    autoComplete="one-time-code"
-                  />
-
-                  <button
-                    type="submit"
-                    className={`${styles.submitButton} ${isSubmitting ? styles.loading : ''}`}
-                    disabled={!isValid || !dirty || isSubmitting}
-                  >
-                    {isSubmitting && <div className={styles.spinner}></div>}
-                    Next
-                  </button>
-                </Form>
-              )}
-            </Formik>
-
-            <button className={styles.backButton} onClick={onBack}>
-              Go back
-            </button>
-          </div>
-        </div>
-
-        <div className={styles.switchBox}>
-          Have an account?{' '}
-          <a href="#" onClick={(e) => { e.preventDefault(); onBack(); }}>
-            Log in
-          </a>
-        </div>
+      <div className={styles.subtitle}>
+        Enter the 6-digit code we sent to
+        <br />
+        <span className={styles.emailHighlight}>{email}</span>
       </div>
+
+      <Formik
+        initialValues={{ otp: "" }}
+        validationSchema={otpSchema}
+        onSubmit={handleSubmit}
+      >
+        {({ isSubmitting }) => (
+          <Form>
+            <FormikInput
+              name="otp"
+              type="text"
+              placeholder="6-digit code"
+              maxLength={6}
+            />
+
+            {error && <div className={styles.error}>{error}</div>}
+
+            {success && <div className={styles.success}>{success}</div>}
+
+            <button
+              type="submit"
+              disabled={loading || isSubmitting}
+              className={styles.submitButton}
+            >
+              {loading || isSubmitting ? "Verifying..." : "Verify"}
+            </button>
+          </Form>
+        )}
+      </Formik>
+
+      <div>
+        {canResend ? (
+          <button
+            onClick={handleResend}
+            className={styles.resendButton}
+            disabled={loading}
+          >
+            Resend code
+          </button>
+        ) : (
+          <div className={styles.resendText}>Resend code in {timer}s</div>
+        )}
+      </div>
+
+      <button onClick={onBack} className={styles.backButton}>
+        Back to sign up
+      </button>
     </div>
   );
 };

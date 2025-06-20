@@ -1,11 +1,11 @@
 import { useRef, useState } from "react";
-import { useChatStore } from "../store/useChatStore";
+// import { useChatStore } from "../store/useChatStore";
 import { Image, Send, X } from "lucide-react";
 import toast from "react-hot-toast";
 import { type MessageData } from "../types/types";
 
 const MessageInput: React.FC = () => {
-   const [text, setText] = useState<string>("");
+  const [text, setText] = useState<string>("");
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { sendMessage } = useChatStore();
@@ -34,7 +34,10 @@ const MessageInput: React.FC = () => {
     if (!text.trim() && !imagePreview) return;
 
     try {
-      await sendMessage({ text: text.trim(), image: imagePreview } as MessageData);
+      await sendMessage({
+        text: text.trim(),
+        image: imagePreview,
+      } as MessageData);
       setText("");
       setImagePreview(null);
       if (fileInputRef.current) fileInputRef.current.value = "";
