@@ -166,7 +166,7 @@ const AppContent: React.FC = () => {
             path="/explore"
             element={
               <ProtectedRoute>
-                <UserProfile />
+                <ExplorePage />
               </ProtectedRoute>
             }
           />
