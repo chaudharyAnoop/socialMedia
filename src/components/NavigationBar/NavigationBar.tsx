@@ -21,7 +21,6 @@ import {
   FaTimes,
   FaTimesCircle,
   FaUser,
-
 } from "react-icons/fa";
 import {
   FaCircleInfo,
@@ -42,20 +41,21 @@ function NavigationBar() {
     (state: RootState) => state.sidebar.isVisible
   );
 
- 
-  const logoutHnadler = async () =>{
-   const res =  await axios.post("http://172.50.5.102:3011/auth/logout",{
-
-      headers : {
-        // "Authorization" : `Bearer ${}`
-      }
-
-
-
-   })
-
-
-  }
+  const logoutHnadler = async () => {
+    const token = localStorage.getItem("instagram_user");
+    const cleanedUser = token;
+    console.log(token);
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    };
+    const res = await axios.post("http://172.50.5.102:3011/auth/logout", {
+      headers,
+    });
+    if (res.status === 200) {
+      localStorage.clear();
+    }
+  };
   return (
     <div className={styles.outer}>
       <div className={isSidebarVisible ? styles.main : styles.hideMain}>
