@@ -1,0 +1,85 @@
+
+.container {
+  display: flex;
+  position: relative;
+  height: 100vh;
+  background-color: #000000;
+  color: #ffffff;
+   width: 100%;
+  overflow: hidden;
+}
+
+.chatList {
+  width: 100%;
+  height: 100vh;
+  border-right: 1px solid #1f2937;
+  display: flex;
+  flex-direction: column;
+   transition: transform 0.3s ease;
+}
+
+@media (min-width: 640px) {
+  .chatList {
+    width: clamp(280px, 30%, 320px);
+  }
+}
+
+@media (min-width: 1024px) {
+  .chatList {
+    width: clamp(320px, 25%, 384px);
+  }
+}
+
+.chatListHidden {
+  display: none;
+}
+
+.chatWindow {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease;
+}
+
+.chatWindowHidden {
+  display: none;
+}
+
+.emptyState {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  
+  padding: 1rem;
+}
+
+.emptyStateContent {
+  text-align: center;
+  color: #9ca3af;
+}
+
+.emptyStateIcon {
+  font-size: clamp(2.5rem, 8vw, 4rem);
+  margin-bottom: 1rem;
+}
+
+.emptyStateTitle {
+   font-size: clamp(1rem, 4vw, 1.25rem);
+  font-weight: 300;
+  margin-bottom: 0.5rem;
+}
+
+.emptyStateDescription {
+   font-size: clamp(0.75rem, 3vw, 0.875rem);
+  max-width: 80%;
+  margin: 0 auto;
+}
+
+@media (min-width: 640px) {
+  .chatListHidden,
+  .chatWindowHidden {
+    display: flex;
+  }
+}
