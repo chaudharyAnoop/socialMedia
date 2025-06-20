@@ -80,6 +80,7 @@ export const likePost = createAsyncThunk<
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     };
+    console.log(token);
     const response = await axios.post(
       `http://172.50.5.102:3000/posts/${postId}/like`,
       { userId: "Anoop Kumar Chaudhary" }, // Assuming userId is sent for tracking

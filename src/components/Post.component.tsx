@@ -1344,7 +1344,7 @@ export default function Post({
       [commentId]: !prev[commentId],
     }));
     if (!showReplies[commentId]) {
-      dispatch(fetchAllReplies(commentId)); // Fetch replies when toggled
+      dispatch(fetchAllReplies(commentId));
     }
   };
 
@@ -1380,7 +1380,7 @@ export default function Post({
           >
             Reply
           </button>
-          <button onClick={() => toggleReplies(comment._id)}>
+          <button onClick={() => toggleReplies(comment.commentId)}>
             {showReplies[comment._id]
               ? "Hide Replies"
               : `View ${comment.replies?.length || 0} Replies`}
