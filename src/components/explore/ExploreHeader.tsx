@@ -69,10 +69,7 @@ const ExploreHeader: React.FC = () => {
   }, []);
 
   const categories = [
-    { icon: Grid3X3, label: "All", active: true },
-    { icon: UserCheck, label: "People", active: false },
-    { icon: Tag, label: "Tags", active: false },
-    { icon: Bookmark, label: "Saved", active: false },
+    { icon: Grid3X3, label: "All", active: true }
   ];
 
   const handleCategoryClick = (label: string) => {

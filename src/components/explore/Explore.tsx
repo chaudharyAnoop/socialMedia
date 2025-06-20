@@ -14,7 +14,7 @@ const Explore: React.FC = () => {
   );
 
   useEffect(() => {
-    // Fetch initial posts only if none are loaded and not already loading
+   
     if (posts.length === 0 && !isLoading && !isSearching) {
       dispatch(fetchFeedPosts(page));
     }

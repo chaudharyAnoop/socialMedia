@@ -1,9 +1,21 @@
+/* Ensure the grid wrapper takes full width and removes default margins */
+.gridWrapper {
+  width: 100%;
+  max-width: 1200px; /* Optional: Set a max-width for large screens */
+  margin: 0 auto; /* Center the grid horizontally */
+  padding: 0; /* Remove any padding that might cause extra space */
+}
+
+/* Grid container for posts */
 .gridContainer {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 4px;
+  width: 100%; /* Ensure grid takes full width of parent */
+  box-sizing: border-box; /* Prevent padding from affecting width */
 }
 
+/* Individual post item */
 .gridItem {
   position: relative;
   aspect-ratio: 1;
@@ -12,23 +24,27 @@
   background: #f5f5f5;
 }
 
+/* Dark mode support */
 @media (prefers-color-scheme: dark) {
   .gridItem {
     background: #1a1a1a;
   }
 }
 
-.postImage {
+/* Styling for images and videos */
+.postMedia { /* Changed from .postImage to match React component's class */
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: transform 0.2s ease;
 }
 
-.gridItem:hover .postImage {
+/* Zoom effect on hover */
+.gridItem:hover .postMedia {
   transform: scale(1.05);
 }
 
+/* Video play button indicator */
 .videoIndicator {
   position: absolute;
   top: 8px;
@@ -47,6 +63,7 @@
   height: 16px;
 }
 
+/* Hover overlay for like/comment counts */
 .hoverOverlay {
   position: absolute;
   inset: 0;
@@ -62,12 +79,14 @@
   opacity: 1;
 }
 
+/* Container for overlay buttons */
 .overlayContent {
   display: flex;
   gap: 24px;
   color: white;
 }
 
+/* Like and comment buttons */
 .overlayButton {
   display: flex;
   align-items: center;
@@ -95,55 +114,95 @@
   font-size: 14px;
 }
 
-/* Mobile styles */
+/* Content overlay for post text */
+.contentOverlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  padding: 8px;
+  overflow: hidden;
+}
+
+.postContent {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.4;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Loading and error messages */
+.loadingMessage,
+.errorMessage,
+.noPostsMessage {
+  text-align: center;
+  padding: 16px;
+  font-size: 16px;
+  color: #333;
+}
+
+@media (prefers-color-scheme: dark) {
+  .loadingMessage,
+  .errorMessage,
+  .noPostsMessage {
+    color: #ccc;
+  }
+}
+
+/* Tablet styles */
 @media screen and (max-width: 900px) {
   .gridContainer {
     gap: 2px;
   }
-  
+
   .overlayContent {
     gap: 16px;
   }
-  
+
   .overlayButtonSvg {
     width: 18px;
     height: 18px;
   }
-  
+
   .overlayButtonText {
     font-size: 12px;
   }
 }
 
+/* Mobile styles */
 @media screen and (max-width: 520px) {
   .gridContainer {
     gap: 1px;
   }
-  
+
   .videoIndicator {
     top: 4px;
     right: 4px;
     padding: 2px;
   }
-  
+
   .videoIndicatorSvg {
     width: 12px;
     height: 12px;
   }
-  
+
   .overlayContent {
     gap: 12px;
   }
-  
+
   .overlayButton {
     padding: 4px;
   }
-  
+
   .overlayButtonSvg {
     width: 16px;
     height: 16px;
   }
-  
+
   .overlayButtonText {
     font-size: 11px;
   }

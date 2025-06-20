@@ -1,9 +1,8 @@
-
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { AppDispatch, RootState } from "../redux/store";
-import { fetchUser, clearUser, UserState } from "../redux/GetUser";
+import { fetchUser, clearUser, UserState, User } from "../redux/GetUser";
 import styles from "../styles/GetUser.module.css";
 
 const GetUser: React.FC = () => {
@@ -43,7 +42,7 @@ const GetUser: React.FC = () => {
         {user.profilePicture && (
           <img
             src={user.profilePicture}
-            alt={`${user.username} profile`}
+            alt='{${user.username}profile}'
             className={styles.profilePicture}
           />
         )}

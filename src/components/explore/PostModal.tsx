@@ -65,11 +65,8 @@ const PostModal: React.FC = () => {
     console.log(`More options for post ${selectedPost.id}`);
   };
 
-  // Use the first media URL if available, otherwise fallback to a placeholder
-  const mediaUrl =
-    selectedPost.media && selectedPost.media.length > 0
-      ? selectedPost.media[0]
-      : `https://picsum.photos/seed/${selectedPost.id}/600/600`;
+  // Use selectedPost.imageUrl directly, as it already contains the correct URL
+  const mediaUrl = selectedPost.imageUrl;
 
   return (
     <div
@@ -135,7 +132,7 @@ const PostModal: React.FC = () => {
             </div>
           </div>
 
-          {/* Post Content */}
+          {/* Post Content (Caption) */}
           {selectedPost.content && (
             <div className={styles.postContentSection}>
               <p className={styles.postContent}>

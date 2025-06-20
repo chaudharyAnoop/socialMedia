@@ -61,10 +61,8 @@ const ExploreGrid: React.FC = () => {
       <div className={styles.gridContainer}>
         {posts.map((post, index) => {
           const isLast = index === posts.length - 1;
-          const mediaUrl =
-            post.media && post.media.length > 0
-              ? post.media[0]
-              : `https://picsum.photos/seed/${post.id}/500/500`;
+          // CORRECTED: Use post.imageUrl directly as it contains the processed URL
+          const mediaUrl = post.imageUrl; 
 
           return (
             <div
@@ -86,6 +84,8 @@ const ExploreGrid: React.FC = () => {
                   playsInline
                   preload="metadata"
                   aria-label="Video post"
+                  // Added onError for video as well
+                  onError={() => console.error(`Failed to load video: ${mediaUrl}`)}
                 />
               ) : (
                 <img
@@ -93,6 +93,7 @@ const ExploreGrid: React.FC = () => {
                   alt={`Post by ${post.username}`}
                   className={styles.postMedia}
                   loading="lazy"
+                  onError={() => console.error(`Failed to load image: ${mediaUrl}`)}
                 />
               )}
 

@@ -2,16 +2,17 @@ import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 
 const BASE_URL_USER = "http://172.50.5.102:3011";
 const BASE_URL_FEED = "http://172.50.5.102:3000";
+const S3_BASE_URL = "https://dummy-project-bucket.s3.ap-south-1.amazonaws.com/"; // NEW: S3 Base URL
 
-// Interfaces aligned with feed and user response data
+
 export interface Post {
   id: string;
-  content: string;
+  imageUrl: string; 
+  content?: string; 
   username: string;
   likes: number;
   comments: number;
   isVideo: boolean;
-  media: string[];
   isLiked?: boolean;
 }
 
@@ -42,7 +43,6 @@ interface ExploreState {
   isSearching: boolean;
 }
 
-// Initial state with page set to 1 to avoid validation errors
 const initialState: ExploreState = {
   posts: [],
   page: 1,
@@ -58,7 +58,6 @@ const initialState: ExploreState = {
   isSearching: false,
 };
 
-// Retrieve auth token from localStorage
 const getAuthHeaders = (): HeadersInit => {
   const rawAuthData = localStorage.getItem("instagram_user");
   let token: string | null = null;
@@ -88,7 +87,7 @@ const getAuthHeaders = (): HeadersInit => {
   return headers;
 };
 
-// Thunk to fetch search results (users and posts)
+
 export const fetchSearchResults = createAsyncThunk(
   "explore/fetchSearchResults",
   async (query: string, { rejectWithValue }) => {
@@ -131,10 +130,10 @@ export const fetchSearchResults = createAsyncThunk(
         id: p._id,
         content: p.content || "",
         username: p.username || `user${p.UserId || p._id}`,
-        likes: p.likes || 0,
-        comments: p.comments?.length || 0,
-        isVideo: p.type === "video" || false,
-        media: p.media || [],
+        likes: p.reactionCount || 0,
+        comments: p.commentCount || 0,
+        isVideo: p.media && p.media.length > 0 && typeof p.media[0] === 'string' && (p.media[0].endsWith('.mp4') || p.media[0].endsWith('.mov') || p.media[0].endsWith('.webm')),
+        imageUrl: p.media && p.media.length > 0 ? `${S3_BASE_URL}${p.media[0]}` : `https://picsum.photos/seed/${p._id || p.id}/500/500`,
         isLiked: false,
       }));
 
@@ -152,10 +151,9 @@ export const fetchSearchResults = createAsyncThunk(
   }
 );
 
-// Thunk to fetch feed posts
 export const fetchFeedPosts = createAsyncThunk(
   "explore/fetchFeedPosts",
-  async (page: number = 1, { rejectWithValue }) => {
+  async (page: number = 5, { rejectWithValue }) => {
     if (!Number.isInteger(page) || page < 1) {
       console.error(`Invalid page value: ${page}`);
       return rejectWithValue("Invalid page number: Page must be a positive integer.");
@@ -168,7 +166,7 @@ export const fetchFeedPosts = createAsyncThunk(
 
     try {
       console.log(`Fetching feed posts for page ${page} with headers:`, headers);
-      const res = await fetch(`${BASE_URL_FEED}/posts/feed?page=${page}`, {
+      const res = await fetch(`${BASE_URL_FEED}/posts/explore?page=${page}`, {
         headers,
       });
 
@@ -202,10 +200,11 @@ export const fetchFeedPosts = createAsyncThunk(
           id: p._id,
           content: p.content || "",
           username: p.username || `user${p.UserId || p._id}`,
-          likes: p.likes || 0,
-          comments: p.comments?.length || 0,
-          isVideo: p.type === "video" || false,
-          media: p.media || [],
+          likes: p.reactionCount || 0,
+          comments: p.commentCount || 0,
+          isVideo: p.media && p.media.length > 0 && typeof p.media[0] === 'string' && (p.media[0].endsWith('.mp4') || p.media[0].endsWith('.mov') || p.media[0].endsWith('.webm')),
+          // CORRECTED LINE: Prepend S3_BASE_URL
+          imageUrl: p.media && p.media.length > 0 ? `${S3_BASE_URL}${p.media[0]}` : `https://picsum.photos/seed/${p._id}/500/500`,
           isLiked: false,
         }));
       } else {
@@ -224,7 +223,6 @@ export const fetchFeedPosts = createAsyncThunk(
   }
 );
 
-// Redux slice
 const exploreSlice = createSlice({
   name: "explore",
   initialState,
