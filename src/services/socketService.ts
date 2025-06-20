@@ -1,5 +1,11 @@
+<<<<<<< HEAD
 import mitt from 'mitt';
 import { chatApi, ApiMessage } from './chatApi';
+=======
+// src/services/socketService.ts
+import mitt from 'mitt';
+import { ApiMessage } from './chatApi';
+>>>>>>> e6615082c7a0c3ff326a20bfea11961738310bcc
 
 const mockSocket = mitt();
 const CURRENT_USER_ID = 'current_user_id';
@@ -27,12 +33,17 @@ export const socketService = {
       joinedRooms.push(roomId);
     }
   },
+<<<<<<< HEAD
   sendMessage: async (messageData: {
+=======
+  sendMessage: (messageData: {
+>>>>>>> e6615082c7a0c3ff326a20bfea11961738310bcc
     senderId: string;
     receiverId: string;
     roomId: string;
     content: string;
   }) => {
+<<<<<<< HEAD
     try {
       const message: ApiMessage = await chatApi.sendMessage(messageData);
       // Emit new message event
@@ -52,6 +63,37 @@ export const socketService = {
       }
     } catch (error) {
       console.error('Failed to send message:', error);
+=======
+    const message: ApiMessage = {
+      _id: `msg_${Date.now()}`,
+      senderId: messageData.senderId,
+      receiverId: messageData.receiverId,
+      roomId: messageData.roomId,
+      content: messageData.content,
+      isRead: false,
+      isDelivered: true,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
+    // Simulate new message event
+    mockSocket.emit('newMessage', message);
+    // Simulate auto-reply from other user after a delay
+    if (messageData.senderId === CURRENT_USER_ID && joinedRooms.includes(messageData.roomId)) {
+      setTimeout(() => {
+        const reply: ApiMessage = {
+          _id: `msg_${Date.now()}`,
+          senderId: messageData.receiverId,
+          receiverId: CURRENT_USER_ID,
+          roomId: messageData.roomId,
+          content: `Reply to: ${messageData.content}`,
+          isRead: false,
+          isDelivered: true,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        };
+        mockSocket.emit('newMessage', reply);
+      }, 2000);
+>>>>>>> e6615082c7a0c3ff326a20bfea11961738310bcc
     }
   },
   sendTyping: (roomId: string, isTyping: boolean) => {

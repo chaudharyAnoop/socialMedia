@@ -1,8 +1,15 @@
+<<<<<<< HEAD
 import { ApiConversation, ApiMessage, FollowingUser, FollowingResponse } from './chatApi';
 
 const CURRENT_USER_ID = 'current_user_id';
 const STORAGE_KEY_CONVERSATIONS = 'mock_conversations';
 const STORAGE_KEY_MESSAGES = 'mock_messages';
+=======
+// src/services/chatApi.ts
+import { ApiConversation, ApiMessage, FollowingUser, FollowingResponse } from './chatApi';
+
+const CURRENT_USER_ID = 'current_user_id';
+>>>>>>> e6615082c7a0c3ff326a20bfea11961738310bcc
 
 // Mock data for followed users
 const mockFollowingUsers: FollowingUser[] = [
@@ -109,6 +116,7 @@ const mockMessages: { [roomId: string]: ApiMessage[] } = {
   ],
 };
 
+<<<<<<< HEAD
 // Load mock data from localStorage or use defaults
 const loadMockData = () => {
   try {
@@ -137,6 +145,11 @@ const saveMockData = () => {
     console.error('Failed to save mock data to localStorage:', error);
   }
 };
+=======
+// Mock storage for new conversations and messages
+let mockConversationStore = [...mockConversations];
+let mockMessageStore = { ...mockMessages };
+>>>>>>> e6615082c7a0c3ff326a20bfea11961738310bcc
 
 export interface ApiConversation {
   _id: string;
@@ -189,7 +202,10 @@ export const chatApi = {
       updatedAt: new Date().toISOString(),
     };
     mockConversationStore.push(newConversation);
+<<<<<<< HEAD
     saveMockData();
+=======
+>>>>>>> e6615082c7a0c3ff326a20bfea11961738310bcc
     return newConversation;
   },
   sendMessage: async (messageData: {
@@ -204,7 +220,11 @@ export const chatApi = {
       receiverId: messageData.receiverId,
       roomId: messageData.roomId,
       content: messageData.content,
+<<<<<<< HEAD
       isRead: messageData.senderId === CURRENT_USER_ID, // Auto-mark as read if sent by current user
+=======
+      isRead: false,
+>>>>>>> e6615082c7a0c3ff326a20bfea11961738310bcc
       isDelivered: true,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
@@ -229,7 +249,10 @@ export const chatApi = {
           }
         : conv
     );
+<<<<<<< HEAD
     saveMockData();
+=======
+>>>>>>> e6615082c7a0c3ff326a20bfea11961738310bcc
     return newMessage;
   },
   markMessagesDelivered: async (messageIds: string[]): Promise<void> => {
@@ -238,7 +261,10 @@ export const chatApi = {
         messageIds.includes(msg._id) ? { ...msg, isDelivered: true } : msg
       );
     });
+<<<<<<< HEAD
     saveMockData();
+=======
+>>>>>>> e6615082c7a0c3ff326a20bfea11961738310bcc
   },
   markMessageDelivered: async (messageId: string): Promise<void> => {
     Object.keys(mockMessageStore).forEach(roomId => {
@@ -246,7 +272,10 @@ export const chatApi = {
         msg._id === messageId ? { ...msg, isDelivered: true } : msg
       );
     });
+<<<<<<< HEAD
     saveMockData();
+=======
+>>>>>>> e6615082c7a0c3ff326a20bfea11961738310bcc
   },
   markMessageRead: async (messageId: string): Promise<void> => {
     Object.keys(mockMessageStore).forEach(roomId => {
@@ -254,7 +283,10 @@ export const chatApi = {
         msg._id === messageId ? { ...msg, isRead: true } : msg
       );
     });
+<<<<<<< HEAD
     saveMockData();
+=======
+>>>>>>> e6615082c7a0c3ff326a20bfea11961738310bcc
   },
   markRoomMessagesRead: async (roomId: string): Promise<void> => {
     if (mockMessageStore[roomId]) {
@@ -262,7 +294,10 @@ export const chatApi = {
         ...msg,
         isRead: true,
       }));
+<<<<<<< HEAD
       saveMockData();
+=======
+>>>>>>> e6615082c7a0c3ff326a20bfea11961738310bcc
     }
   },
   getConversations: async (): Promise<ApiConversation[]> => {
@@ -302,7 +337,10 @@ export const chatApi = {
         return msg;
       });
     });
+<<<<<<< HEAD
     saveMockData();
+=======
+>>>>>>> e6615082c7a0c3ff326a20bfea11961738310bcc
     if (!updatedMessage) throw new Error('Message not found');
     return updatedMessage;
   },
@@ -310,7 +348,10 @@ export const chatApi = {
     Object.keys(mockMessageStore).forEach(roomId => {
       mockMessageStore[roomId] = mockMessageStore[roomId].filter(msg => msg._id !== messageId);
     });
+<<<<<<< HEAD
     saveMockData();
+=======
+>>>>>>> e6615082c7a0c3ff326a20bfea11961738310bcc
   },
   getFollowing: async (query: string = '', page: number = 1): Promise<FollowingResponse> => {
     const itemsPerPage = 10;

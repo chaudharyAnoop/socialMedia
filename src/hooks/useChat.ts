@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+// src/hooks/useChat.ts
+>>>>>>> e6615082c7a0c3ff326a20bfea11961738310bcc
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { socketService } from '../services/socketService';
 import { chatApi, ApiMessage, ApiConversation, FollowingUser, FollowingResponse } from '../services/chatApi';
@@ -25,7 +29,11 @@ export const useChat = () => {
       setConversations(prev => 
         prev.map(conv => 
           conv.id === apiMessage.roomId 
+<<<<<<< HEAD
             ? { ...conv, lastMessage: message, unreadCount: apiMessage.senderId !== CURRENT_USER_ID ? conv.unreadCount + 1 : conv.unreadCount }
+=======
+            ? { ...conv, lastMessage: message, unreadCount: conv.unreadCount + 1 }
+>>>>>>> e6615082c7a0c3ff326a20bfea11961738310bcc
             : conv
         )
       );
@@ -88,7 +96,11 @@ export const useChat = () => {
         username: `user_${otherUserId.slice(-4)}`,
         avatar: `https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face`,
         isOnline: onlineUsers.has(otherUserId),
+<<<<<<< HEAD
         lastSeen: new Date(apiConv.updatedAt),
+=======
+        lastSeen: new Date(),
+>>>>>>> e6615082c7a0c3ff326a20bfea11961738310bcc
       },
       lastMessage: apiConv.lastMessage ? convertApiMessageToMessage({
         _id: apiConv.lastMessage._id,
@@ -171,6 +183,10 @@ export const useChat = () => {
         content: content.trim(),
       };
       socketService.sendMessage(messageData);
+<<<<<<< HEAD
+=======
+      await chatApi.sendMessage(messageData);
+>>>>>>> e6615082c7a0c3ff326a20bfea11961738310bcc
     } catch (error) {
       console.error('Failed to send message:', error);
     }
@@ -191,6 +207,7 @@ export const useChat = () => {
   const markMessagesAsRead = useCallback(async (roomId: string) => {
     try {
       await chatApi.markRoomMessagesRead(roomId);
+<<<<<<< HEAD
       setMessages(prev => {
         const newMessages = { ...prev };
         if (newMessages[roomId]) {
@@ -206,6 +223,8 @@ export const useChat = () => {
           conv.id === roomId ? { ...conv, unreadCount: 0 } : conv
         )
       );
+=======
+>>>>>>> e6615082c7a0c3ff326a20bfea11961738310bcc
     } catch (error) {
       console.error('Failed to mark messages as read:', error);
     }
