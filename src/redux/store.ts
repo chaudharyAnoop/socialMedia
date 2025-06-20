@@ -3,6 +3,7 @@ import sidebarReducer from "./navigationBarSlice";
 import postReducer from "./postSlice";
 import exploreReducer from "./slices/exploreSlice";
 import commentReducer from "./commentSlice";
+import userReducer from "./userProfile"
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     posts: postReducer,
     explore: exploreReducer,
     comments: commentReducer,
+    user:userReducer
   },
 });
 

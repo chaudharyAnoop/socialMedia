@@ -3,511 +3,511 @@
 
 /* Instagram Dark Theme CSS Variables */
 :root {
-  /* Typography */
-  --ig-font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  --ig-font-size-footnote: 11px;
-  --ig-font-size-caption: 12px;
-  --ig-font-size-body: 14px;
-  --ig-font-size-callout: 16px;
-  --ig-font-size-title3: 20px;
-  --ig-font-size-title2: 22px;
-  --ig-font-size-title1: 28px;
-  --ig-font-weight-light: 300;
-  --ig-font-weight-normal: 400;
-  --ig-font-weight-medium: 500;
-  --ig-font-weight-semibold: 600;
-  --ig-font-weight-bold: 700;
-  
-  /* Colors - Dark Theme */
-  --ig-primary-background: #000000;
-  --ig-secondary-background: #121212;
-  --ig-tertiary-background: #1a1a1a;
-  --ig-elevated-background: #262626;
-  --ig-highlight-background: rgba(255, 255, 255, 0.1);
-  
-  --ig-primary-text: #ffffff;
-  --ig-secondary-text: #a8a8a8;
-  --ig-tertiary-text: #737373;
-  
-  --ig-separator: #262626;
-  --ig-stroke: #262626;
-  --ig-stroke-light: #363636;
-  
-  --ig-primary-button: #0095f6;
-  --ig-primary-button-hover: #1877f2;
-  --ig-secondary-button: transparent;
-  --ig-secondary-button-hover: #1a1a1a;
-  
-  --ig-link-color: #e0f1ff;
-  --ig-highlight-color: #ed4956;
-  --ig-heart-color: #ff3040;
-  
-  /* Story gradients */
-  --ig-story-ring-new: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
-  --ig-story-ring-seen: #262626;
-  
-  /* Spacing */
-  --ig-spacing-2: 2px;
-  --ig-spacing-4: 4px;
-  --ig-spacing-8: 8px;
-  --ig-spacing-12: 12px;
-  --ig-spacing-16: 16px;
-  --ig-spacing-20: 20px;
-  --ig-spacing-24: 24px;
-  --ig-spacing-32: 32px;
-  --ig-spacing-40: 40px;
-  
-  /* Border radius */
-  --ig-border-radius-small: 4px;
-  --ig-border-radius-medium: 8px;
-  --ig-border-radius-large: 12px;
-  --ig-border-radius-button: 8px;
-  --ig-border-radius-input: 6px;
-  --ig-border-radius-card: 16px;
-  
-  /* Layout */
-  --ig-max-width: 975px;
-  --ig-nav-height: 60px;
-  
-  /* Z-index scale */
-  --ig-z-sticky: 100;
-  --ig-z-modal: 1000;
-  
-  /* Animations */
-  --ig-animation-fast: 0.15s ease-out;
-  --ig-animation-medium: 0.3s ease-out;
-  --ig-animation-slow: 0.5s ease-out;
-  
-  /* Shadows */
-  --ig-shadow-elevated: 0 8px 30px rgba(0, 0, 0, 0.3);
-  
-  /* Legacy variable mappings for existing components */
-  --color-background-dark: var(--ig-primary-background);
-  --color-background-light: var(--ig-tertiary-background);
-  --color-text: var(--ig-primary-text);
-  --color-text-light: var(--ig-secondary-text);
-  --color-text-primary: var(--ig-primary-text);
-  --color-text-secondary: var(--ig-secondary-text);
+/* Typography */
+--ig-font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+--ig-font-size-footnote: 11px;
+--ig-font-size-caption: 12px;
+--ig-font-size-body: 14px;
+--ig-font-size-callout: 16px;
+--ig-font-size-title3: 20px;
+--ig-font-size-title2: 22px;
+--ig-font-size-title1: 28px;
+--ig-font-weight-light: 300;
+--ig-font-weight-normal: 400;
+--ig-font-weight-medium: 500;
+--ig-font-weight-semibold: 600;
+--ig-font-weight-bold: 700;
+
+/* Colors - Dark Theme */
+--ig-primary-background: #000000;
+--ig-secondary-background: #121212;
+--ig-tertiary-background: #1a1a1a;
+--ig-elevated-background: #262626;
+--ig-highlight-background: rgba(255, 255, 255, 0.1);
+
+--ig-primary-text: #ffffff;
+--ig-secondary-text: #a8a8a8;
+--ig-tertiary-text: #737373;
+
+--ig-separator: #262626;
+--ig-stroke: #262626;
+--ig-stroke-light: #363636;
+
+--ig-primary-button: #0095f6;
+--ig-primary-button-hover: #1877f2;
+--ig-secondary-button: transparent;
+--ig-secondary-button-hover: #1a1a1a;
+
+--ig-link-color: #e0f1ff;
+--ig-highlight-color: #ed4956;
+--ig-heart-color: #ff3040;
+
+/* Story gradients */
+--ig-story-ring-new: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+--ig-story-ring-seen: #262626;
+
+/* Spacing */
+--ig-spacing-2: 2px;
+--ig-spacing-4: 4px;
+--ig-spacing-8: 8px;
+--ig-spacing-12: 12px;
+--ig-spacing-16: 16px;
+--ig-spacing-20: 20px;
+--ig-spacing-24: 24px;
+--ig-spacing-32: 32px;
+--ig-spacing-40: 40px;
+
+/* Border radius */
+--ig-border-radius-small: 4px;
+--ig-border-radius-medium: 8px;
+--ig-border-radius-large: 12px;
+--ig-border-radius-button: 8px;
+--ig-border-radius-input: 6px;
+--ig-border-radius-card: 16px;
+
+/* Layout */
+--ig-max-width: 975px;
+--ig-nav-height: 60px;
+
+/* Z-index scale */
+--ig-z-sticky: 100;
+--ig-z-modal: 1000;
+
+/* Animations */
+--ig-animation-fast: 0.15s ease-out;
+--ig-animation-medium: 0.3s ease-out;
+--ig-animation-slow: 0.5s ease-out;
+
+/* Shadows */
+--ig-shadow-elevated: 0 8px 30px rgba(0, 0, 0, 0.3);
+
+/* Legacy variable mappings for existing components */
+--color-background-dark: var(--ig-primary-background);
+--color-background-light: var(--ig-tertiary-background);
+--color-text: var(--ig-primary-text);
+--color-text-light: var(--ig-secondary-text);
+--color-text-primary: var(--ig-primary-text);
+--color-text-secondary: var(--ig-secondary-text);
 }
 
 * {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+box-sizing: border-box;
+margin: 0;
+padding: 0;
 }
 
 html {
-  font-family: var(--ig-font-family);
-  line-height: 1.5;
-  color: var(--ig-primary-text);
-  font-size: var(--ig-font-size-body);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
-  background-color: var(--ig-primary-background);
-  /* Prevent iOS text size adjustment */
-  -webkit-text-size-adjust: 100%;
-  -ms-text-size-adjust: 100%;
+font-family: var(--ig-font-family);
+line-height: 1.5;
+color: var(--ig-primary-text);
+font-size: var(--ig-font-size-body);
+-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;
+text-rendering: optimizeLegibility;
+background-color: var(--ig-primary-background);
+/* Prevent iOS text size adjustment */
+-webkit-text-size-adjust: 100%;
+-ms-text-size-adjust: 100%;
 }
 
 body {
-  background-color: var(--ig-primary-background);
-  overflow-x: hidden;
-  min-height: 100vh;
-  color: var(--ig-primary-text);
-  /* Prevent pull-to-refresh on iOS */
-  overscroll-behavior: contain;
+background-color: var(--ig-primary-background);
+overflow-x: hidden;
+min-height: 100vh;
+color: var(--ig-primary-text);
+/* Prevent pull-to-refresh on iOS */
+overscroll-behavior: contain;
 }
 
 .app {
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  background: var(--ig-primary-background);
-  padding: 0;
+min-height: 100vh;
+display: flex;
+justify-content: center;
+background: var(--ig-primary-background);
+padding: 0;
 }
 
 .container {
-  max-width: var(--ig-max-width);
-  width: 100%;
-  background: var(--ig-primary-background);
-  min-height: 100vh;
-  position: relative;
-  border-left: 1px solid var(--ig-stroke);
-  border-right: 1px solid var(--ig-stroke);
+max-width: var(--ig-max-width);
+width: 100%;
+background: var(--ig-primary-background);
+min-height: 100vh;
+position: relative;
+border-left: 1px solid var(--ig-stroke);
+border-right: 1px solid var(--ig-stroke);
 }
 
 .content {
-  padding-bottom: var(--ig-spacing-32);
-  background-color: var(--ig-primary-background);
+padding-bottom: var(--ig-spacing-32);
+background-color: var(--ig-primary-background);
 }
 
 /* Instagram-specific scrollbar styling for dark theme */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+width: 8px;
+height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: transparent;
+background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--ig-tertiary-text);
-  border-radius: 4px;
+background: var(--ig-tertiary-text);
+border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--ig-secondary-text);
+background: var(--ig-secondary-text);
 }
 
 /* Focus styles matching Instagram dark theme */
 button:focus-visible,
 input:focus-visible,
 textarea:focus-visible {
-  outline: 2px solid var(--ig-primary-button);
-  outline-offset: 2px;
+outline: 2px solid var(--ig-primary-button);
+outline-offset: 2px;
 }
 
 /* Button reset with Instagram dark styling */
 button {
-  font-family: inherit;
-  font-size: inherit;
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-weight: var(--ig-font-weight-semibold);
-  transition: all var(--ig-animation-fast);
-  color: var(--ig-primary-text);
-  /* Better touch targets */
-  min-height: 44px;
-  min-width: 44px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+font-family: inherit;
+font-size: inherit;
+background: none;
+border: none;
+cursor: pointer;
+font-weight: var(--ig-font-weight-semibold);
+transition: all var(--ig-animation-fast);
+color: var(--ig-primary-text);
+/* Better touch targets */
+min-height: 44px;
+min-width: 44px;
+display: inline-flex;
+align-items: center;
+justify-content: center;
 }
 
 button:active {
-  transform: scale(0.98);
+transform: scale(0.98);
 }
 
 /* Link styles for dark theme */
 a {
-  color: var(--ig-link-color);
-  text-decoration: none;
-  font-weight: var(--ig-font-weight-semibold);
-  /* Better touch targets */
-  min-height: 44px;
-  display: inline-flex;
-  align-items: center;
+color: var(--ig-link-color);
+text-decoration: none;
+font-weight: var(--ig-font-weight-semibold);
+/* Better touch targets */
+min-height: 44px;
+display: inline-flex;
+align-items: center;
 }
 
 a:hover {
-  text-decoration: underline;
+text-decoration: underline;
 }
 
 /* Image optimization */
 img {
-  max-width: 100%;
-  height: auto;
-  display: block;
-  user-select: none;
-  -webkit-user-drag: none;
+max-width: 100%;
+height: auto;
+display: block;
+user-select: none;
+-webkit-user-drag: none;
 }
 
 /* Instagram loading animation */
 @keyframes pulse {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.4;
-  }
+0%, 100% {
+opacity: 1;
+}
+50% {
+opacity: 0.4;
+}
 }
 
 .loading {
-  animation: pulse 1.5s ease-in-out infinite;
+animation: pulse 1.5s ease-in-out infinite;
 }
 
 /* Instagram fade in animation */
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+from {
+opacity: 0;
+transform: translateY(8px);
+}
+to {
+opacity: 1;
+transform: translateY(0);
+}
 }
 
 .fade-in {
-  animation: fadeIn 0.3s ease-out;
+animation: fadeIn 0.3s ease-out;
 }
 
 /* Instagram slide up animation */
 @keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(16px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+from {
+opacity: 0;
+transform: translateY(16px);
+}
+to {
+opacity: 1;
+transform: translateY(0);
+}
 }
 
 .slide-up {
-  animation: slideUp 0.4s ease-out;
+animation: slideUp 0.4s ease-out;
 }
 
 /* Heart beat animation for likes */
 @keyframes heartBeat {
-  0% { transform: scale(1); }
-  15% { transform: scale(1.2); }
-  30% { transform: scale(1); }
-  45% { transform: scale(1.1); }
-  60% { transform: scale(1); }
+0% { transform: scale(1); }
+15% { transform: scale(1.2); }
+30% { transform: scale(1); }
+45% { transform: scale(1.1); }
+60% { transform: scale(1); }
 }
 
 .heart-beat {
-  animation: heartBeat 0.8s ease-in-out;
+animation: heartBeat 0.8s ease-in-out;
 }
 
 /* ===== RESPONSIVE BREAKPOINTS ===== */
 
 /* Ultra small mobile devices (Galaxy Fold, etc.) */
 @media (max-width: 360px) {
-  html {
-    font-size: 13px; /* Slightly smaller base font */
-  }
-  
-  .container {
-    border-left: none;
-    border-right: none;
-  }
-  
-  button {
-    min-height: 40px; /* Slightly smaller on tiny screens */
-    min-width: 40px;
-  }
+html {
+font-size: 13px; /* Slightly smaller base font */
+}
+
+.container {
+border-left: none;
+border-right: none;
+}
+
+button {
+min-height: 40px; /* Slightly smaller on tiny screens */
+min-width: 40px;
+}
 }
 
 /* Mobile-first responsive design - Instagram breakpoints */
 @media (max-width: 735px) {
-  html {
-    font-size: var(--ig-font-size-body);
-  }
-  
-  .app {
-    padding: 0;
-    background: var(--ig-primary-background);
-  }
-  
-  .container {
-    border-left: none;
-    border-right: none;
-    box-shadow: none;
-  }
-  
-  body {
-    background: var(--ig-primary-background);
-  }
-  
-  /* Ensure all touch targets are accessible */
-  button {
-    min-height: 44px;
-    min-width: 44px;
-  }
-  
-  a {
-    min-height: 44px;
-  }
+html {
+font-size: var(--ig-font-size-body);
+}
+
+.app {
+padding: 0;
+background: var(--ig-primary-background);
+}
+
+.container {
+border-left: none;
+border-right: none;
+box-shadow: none;
+}
+
+body {
+background: var(--ig-primary-background);
+}
+
+/* Ensure all touch targets are accessible */
+button {
+min-height: 44px;
+min-width: 44px;
+}
+
+a {
+min-height: 44px;
+}
 }
 
 /* Prevent zoom on input focus (iOS Safari) */
 @media screen and (max-width: 735px) {
-  input[type="text"],
-  input[type="email"],
-  input[type="password"],
-  input[type="search"],
-  textarea {
-    font-size: 16px; /* Prevent zoom on iOS */
-    transform: translateZ(0);
-  }
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="search"],
+textarea {
+font-size: 16px; /* Prevent zoom on iOS */
+transform: translateZ(0);
+}
 }
 
 /* Safe area handling for iOS devices */
 @supports (padding: max(0px)) {
-  body {
-    padding-left: env(safe-area-inset-left);
-    padding-right: env(safe-area-inset-right);
-  }
-  
-  .container {
-    padding-left: max(0px, env(safe-area-inset-left));
-    padding-right: max(0px, env(safe-area-inset-right));
-  }
+body {
+padding-left: env(safe-area-inset-left);
+padding-right: env(safe-area-inset-right);
+}
+
+.container {
+padding-left: max(0px, env(safe-area-inset-left));
+padding-right: max(0px, env(safe-area-inset-right));
+}
 }
 
 /* Touch device optimizations */
 @media (hover: none) and (pointer: coarse) {
-  /* Remove hover effects on touch devices */
-  *:hover {
-    /* Reset any problematic hover states */
-  }
-  
-  /* Better touch feedback */
-  button:active,
-  a:active {
-    background-color: var(--ig-highlight-background);
-    transform: scale(0.95);
-  }
+/* Remove hover effects on touch devices */
+*:hover {
+/* Reset any problematic hover states */
+}
+
+/* Better touch feedback */
+button:active,
+a:active {
+background-color: var(--ig-highlight-background);
+transform: scale(0.95);
+}
 }
 
 /* Tablet styles */
 @media (min-width: 736px) and (max-width: 1024px) {
-  .container {
-    border-left: 1px solid var(--ig-stroke);
-    border-right: 1px solid var(--ig-stroke);
-  }
-  
-  .app {
-    background: var(--ig-primary-background);
-    padding: var(--ig-spacing-20) 0;
-  }
-  
-  /* Optimize touch targets for tablet */
-  button {
-    min-height: 48px;
-    min-width: 48px;
-  }
+.container {
+border-left: 1px solid var(--ig-stroke);
+border-right: 1px solid var(--ig-stroke);
+}
+
+.app {
+background: var(--ig-primary-background);
+padding: var(--ig-spacing-20) 0;
+}
+
+/* Optimize touch targets for tablet */
+button {
+min-height: 48px;
+min-width: 48px;
+}
 }
 
 /* Desktop styles */
 @media (min-width: 1025px) {
-  .app {
-    background: var(--ig-primary-background);
-    padding: 0;
-  }
-  
-  /* Restore normal button sizes on desktop */
-  button {
-    min-height: auto;
-    min-width: auto;
-  }
-  
-  a {
-    min-height: auto;
-  }
+.app {
+background: var(--ig-primary-background);
+padding: 0;
+}
+
+/* Restore normal button sizes on desktop */
+button {
+min-height: auto;
+min-width: auto;
+}
+
+a {
+min-height: auto;
+}
 }
 
 /* High contrast mode support */
 @media (prefers-contrast: high) {
-  button {
-    border: 2px solid currentColor;
-  }
-  
-  .overlay {
-    background-color: rgba(0, 0, 0, 0.9) !important;
-  }
+button {
+border: 2px solid currentColor;
+}
+
+.overlay {
+background-color: rgba(0, 0, 0, 0.9) !important;
+}
 }
 
 /* Reduced motion support */
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
+*,
+*::before,
+*::after {
+animation-duration: 0.01ms !important;
+animation-iteration-count: 1 !important;
+transition-duration: 0.01ms !important;
+scroll-behavior: auto !important;
+}
 }
 
 /* Instagram-specific utility classes for dark theme */
 .ig-button-primary {
-  background: var(--ig-primary-button);
-  color: white;
-  border-radius: var(--ig-border-radius-button);
-  padding: 8px 16px;
-  font-weight: var(--ig-font-weight-semibold);
-  font-size: var(--ig-font-size-body);
-  line-height: 18px;
-  border: 1px solid transparent;
-  transition: background-color var(--ig-animation-fast);
+background: var(--ig-primary-button);
+color: white;
+border-radius: var(--ig-border-radius-button);
+padding: 8px 16px;
+font-weight: var(--ig-font-weight-semibold);
+font-size: var(--ig-font-size-body);
+line-height: 18px;
+border: 1px solid transparent;
+transition: background-color var(--ig-animation-fast);
 }
 
 .ig-button-primary:hover {
-  background: var(--ig-primary-button-hover);
+background: var(--ig-primary-button-hover);
 }
 
 .ig-button-secondary {
-  background: var(--ig-secondary-button);
-  color: var(--ig-primary-text);
-  border-radius: var(--ig-border-radius-button);
-  padding: 8px 16px;
-  font-weight: var(--ig-font-weight-semibold);
-  font-size: var(--ig-font-size-body);
-  line-height: 18px;
-  border: 1px solid var(--ig-stroke);
-  transition: background-color var(--ig-animation-fast);
+background: var(--ig-secondary-button);
+color: var(--ig-primary-text);
+border-radius: var(--ig-border-radius-button);
+padding: 8px 16px;
+font-weight: var(--ig-font-weight-semibold);
+font-size: var(--ig-font-size-body);
+line-height: 18px;
+border: 1px solid var(--ig-stroke);
+transition: background-color var(--ig-animation-fast);
 }
 
 .ig-button-secondary:hover {
-  background: var(--ig-secondary-button-hover);
+background: var(--ig-secondary-button-hover);
 }
 
 .ig-text-primary {
-  color: var(--ig-primary-text);
+color: var(--ig-primary-text);
 }
 
 .ig-text-secondary {
-  color: var(--ig-secondary-text);
+color: var(--ig-secondary-text);
 }
 
 .ig-text-tertiary {
-  color: var(--ig-tertiary-text);
+color: var(--ig-tertiary-text);
 }
 
 /* Instagram story ring gradient */
 .ig-story-ring-new {
-  background: var(--ig-story-ring-new);
-  border-radius: 50%;
-  padding: 2px;
+background: var(--ig-story-ring-new);
+border-radius: 50%;
+padding: 2px;
 }
 
 .ig-story-ring-seen {
-  background: var(--ig-story-ring-seen);
-  border-radius: 50%;
-  padding: 2px;
+background: var(--ig-story-ring-seen);
+border-radius: 50%;
+padding: 2px;
 }
 
 /* Large screen optimizations */
 @media (min-width: 1200px) {
-  .container {
-    box-shadow: 0 0 0 1px var(--ig-stroke);
-  }
+.container {
+box-shadow: 0 0 0 1px var(--ig-stroke);
+}
 }
 
 /* Ultra-wide screen handling */
 @media (min-width: 1600px) {
-  .app {
-    background: linear-gradient(135deg, #000000 0%, #111111 100%);
-  }
+.app {
+background: linear-gradient(135deg, #000000 0%, #111111 100%);
+}
 }
 
 /* Print styles */
 @media print {
-  .app {
-    background: white !important;
-    color: black !important;
-  }
-  
-  * {
-    background: transparent !important;
-    color: black !important;
-  }
+.app {
+background: white !important;
+color: black !important;
+}
+
+* {
+background: transparent !important;
+color: black !important;
+}
 }
 
 
@@ -515,28 +515,128 @@ img {
 
 /* CSS Variables for consistent styling */
 :root {
-  --ig-primary-background: #ffffff;
-  --ig-secondary-background: #fafafa;
-  --ig-highlight-background: rgba(0, 0, 0, 0.05);
-  --ig-primary-text: #262626;
-  --ig-secondary-text: #8e8e8e;
-  --ig-tertiary-text: #c7c7c7;
-  --ig-separator: #dbdbdb;
-  --ig-primary-button: #0095f6;
-  --ig-primary-button-hover: #1877f2;
+--ig-primary-background: #ffffff;
+--ig-secondary-background: #fafafa;
+--ig-highlight-background: rgba(0, 0, 0, 0.05);
+--ig-primary-text: #262626;
+--ig-secondary-text: #8e8e8e;
+--ig-tertiary-text: #c7c7c7;
+--ig-separator: #dbdbdb;
+--ig-primary-button: #0095f6;
+--ig-primary-button-hover: #1877f2;
 }
 
 /* Dark mode */
 @media (prefers-color-scheme: dark) {
-  :root {
-    --ig-primary-background: #000000;
-    --ig-secondary-background: #121212;
-    --ig-highlight-background: rgba(255, 255, 255, 0.1);
-    --ig-primary-text: #ffffff;
-    --ig-secondary-text: #a8a8a8;
-    --ig-tertiary-text: #737373;
-    --ig-separator: #363636;
-    --ig-primary-button: #0095f6;
-    --ig-primary-button-hover: #1877f2;
+:root {
+--ig-primary-background: #000000;
+--ig-secondary-background: #121212;
+--ig-highlight-background: rgba(255, 255, 255, 0.1);
+--ig-primary-text: #ffffff;
+--ig-secondary-text: #a8a8a8;
+--ig-tertiary-text: #737373;
+--ig-separator: #363636;
+--ig-primary-button: #0095f6;
+--ig-primary-button-hover: #1877f2;
+}
+}
+
+
+/* PROFILE PAGE SCROLL FIX - UPDATED VERSION */
+
+/* Only override height constraints for profile page content, not layout containers */
+body.profile-page-active .app .container {
+  height: auto !important;
+  min-height: 100vh !important;
+  overflow-y: auto !important;
+}
+
+/* Allow profile page content to scroll while maintaining layout */
+body.profile-page-active .content {
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
+}
+
+/* Profile page wrapper - only affects content area */
+.profile-page-container {
+  height: auto !important;
+  min-height: calc(100vh - var(--ig-nav-height, 60px)) !important;
+  overflow-y: auto !important;
+  position: relative !important;
+}
+
+/* Keep the main layout structure intact for sidebar/navigation sync */
+body.profile-page-active .main {
+  /* Don't override main height - keep layout structure */
+  overflow: visible !important;
+}
+
+/* Preserve navigation layout */
+body.profile-page-active .nav {
+  /* Keep original nav behavior */
+  position: sticky !important;
+  top: 0 !important;
+  z-index: var(--ig-z-sticky) !important;
+}
+
+/* Mobile specific fixes - preserve layout */
+@media (max-width: 520px) {
+  body.profile-page-active .profile-page-container {
+    height: auto !important;
+    min-height: calc(100vh - 60px) !important;
+    overflow-y: auto !important;
+  }
+  
+  /* Don't override main layout on mobile */
+  body.profile-page-active .main {
+    height: 100vh !important; /* Restore original mobile height */
+    overflow: hidden !important; /* Restore original mobile overflow */
+  }
+  
+  /* Only allow container to scroll */
+  body.profile-page-active .app .container {
+    height: 100vh !important;
+    overflow-y: auto !important;
+  }
+}
+
+/* Tablet specific fixes */
+@media screen and (min-width: 521px) and (max-width: 900px) {
+  body.profile-page-active .profile-page-container {
+    height: auto !important;
+    min-height: calc(100vh - 60px) !important;
+    overflow-y: auto !important;
+  }
+  
+  /* Preserve tablet layout */
+  body.profile-page-active .main {
+    height: 100vh !important;
+    overflow: hidden !important;
+  }
+  
+  body.profile-page-active .app .container {
+    height: 100vh !important;
+    overflow-y: auto !important;
+  }
+}
+
+/* Desktop specific fixes */
+@media screen and (min-width: 901px) {
+  body.profile-page-active .profile-page-container {
+    height: auto !important;
+    min-height: calc(100vh - 60px) !important;
+    overflow-y: auto !important;
+  }
+  
+  /* Preserve desktop layout structure */
+  body.profile-page-active .main {
+    height: 100vh !important;
+    overflow: hidden !important;
+  }
+  
+  body.profile-page-active .app .container {
+    height: 100vh !important;
+    overflow-y: auto !important;
   }
 }

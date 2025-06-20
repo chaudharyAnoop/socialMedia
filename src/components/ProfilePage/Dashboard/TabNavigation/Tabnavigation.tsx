@@ -1,7 +1,7 @@
 // components/TabNavigation/TabNavigation.tsx
 import React from 'react';
 import { Grid, Play, User } from 'lucide-react';
-import type { TabType } from '../../types';
+import type { TabType } from '../../../../types';
 import styles from './TabNavigation.module.css';
 
 interface TabNavigationProps {

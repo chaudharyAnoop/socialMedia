@@ -1,8 +1,245 @@
+// // components/PostGrid/EnhancedPostGrid.tsx
+// import React, { useState, useRef, useCallback } from 'react';
+// import { Heart, MessageCircle, Play, Volume2, VolumeX } from 'lucide-react';
+// import type { Post, TabType } from '../../../../types';
+// import { formatNumber } from '../../../../utils/formatters';
+// import styles from './EnhancedPostGrid.module.css';
+
+// interface EnhancedPostGridProps {
+//   posts: Post[];
+//   onPostClick: (post: Post) => void;
+//   activeTab: TabType;
+//   loading?: boolean;
+//   // Add the missing props with default values
+//   likedPosts?: Set<string>;
+//   onLike?: (postId: string) => void;
+// }
+
+// const EnhancedPostGrid: React.FC<EnhancedPostGridProps> = ({ 
+//   posts, 
+//   onPostClick, 
+//   activeTab,
+//   loading = false,
+//   likedPosts = new Set(), // Default to empty Set
+//   onLike // Can be undefined
+// }) => {
+//   const [hoveredPost, setHoveredPost] = useState<string | null>(null);
+//   const [mutedVideos, setMutedVideos] = useState<Set<string>>(new Set());
+//   const [heartAnimations, setHeartAnimations] = useState<Set<string>>(new Set());
+  
+//   // Refs for double-tap detection
+//   const lastTapRef = useRef<{ [key: string]: number }>({});
+//   const singleTapTimeoutRef = useRef<{ [key: string]: ReturnType<typeof setTimeout> }>({});
+
+//   const toggleMute = (postId: string, e: React.MouseEvent) => {
+//     e.stopPropagation();
+//     setMutedVideos(prev => {
+//       const newSet = new Set(prev);
+//       if (newSet.has(postId)) {
+//         newSet.delete(postId);
+//       } else {
+//         newSet.add(postId);
+//       }
+//       return newSet;
+//     });
+//   };
+
+//   const handleLike = useCallback((postId: string) => {
+//     // Only call onLike if it exists
+//     if (onLike) {
+//       onLike(postId);
+//     }
+//   }, [onLike]);
+
+//   const triggerHeartAnimation = useCallback((postId: string) => {
+//     setHeartAnimations(prev => new Set(prev).add(postId));
+//     setTimeout(() => {
+//       setHeartAnimations(prev => {
+//         const newSet = new Set(prev);
+//         newSet.delete(postId);
+//         return newSet;
+//       });
+//     }, 1000);
+//   }, []);
+
+//   const handleImageClick = useCallback((post: Post, e: React.MouseEvent) => {
+//     e.stopPropagation();
+//     const postId = post.id;
+//     const currentTime = Date.now();
+//     const tapLength = 300; // Maximum time between taps for double-tap
+
+//     if (lastTapRef.current[postId] && (currentTime - lastTapRef.current[postId]) < tapLength) {
+//       // Double tap detected
+//       if (singleTapTimeoutRef.current[postId]) {
+//         clearTimeout(singleTapTimeoutRef.current[postId]);
+//       }
+      
+//       // Only like if not already liked and onLike exists
+//       if (onLike && !likedPosts.has(postId)) {
+//         handleLike(postId);
+//         triggerHeartAnimation(postId);
+//       } else if (onLike) {
+//         // Still show animation even if already liked
+//         triggerHeartAnimation(postId);
+//       }
+      
+//       lastTapRef.current[postId] = 0; // Reset
+//     } else {
+//       // Single tap - set timeout to open modal if no second tap comes
+//       lastTapRef.current[postId] = currentTime;
+      
+//       singleTapTimeoutRef.current[postId] = setTimeout(() => {
+//         onPostClick(post);
+//       }, tapLength);
+//     }
+//   }, [likedPosts, handleLike, triggerHeartAnimation, onPostClick, onLike]);
+
+//   // Touch handlers for mobile
+//   const handleTouchEnd = useCallback((post: Post, e: React.TouchEvent) => {
+//     e.preventDefault();
+//     handleImageClick(post, e as any);
+//   }, [handleImageClick]);
+
+//   const getGridClass = () => {
+//     switch (activeTab) {
+//       case 'reels':
+//         return styles.reelsGrid;
+//       case 'tagged':
+//         return styles.taggedGrid;
+//       default:
+//         return styles.postsGrid;
+//     }
+//   };
+
+//   if (loading) {
+//     return (
+//       <div className={`${styles.grid} ${getGridClass()}`}>
+//         {Array.from({ length: 12 }).map((_, i) => (
+//           <div key={i} className={styles.skeletonPost}>
+//             <div className={styles.skeletonImage} />
+//           </div>
+//         ))}
+//       </div>
+//     );
+//   }
+
+//   if (posts.length === 0) {
+//     return (
+//       <div className={styles.emptyState}>
+//         <div className={styles.emptyIcon}>
+//           {activeTab === 'posts' && '📷'}
+//           {activeTab === 'reels' && '🎬'}
+//           {activeTab === 'tagged' && '🏷️'}
+//         </div>
+//         <h3 className={styles.emptyTitle}>
+//           {activeTab === 'posts' && 'No posts yet'}
+//           {activeTab === 'reels' && 'No reels yet'}
+//           {activeTab === 'tagged' && 'No tagged posts'}
+//         </h3>
+//         <p className={styles.emptyText}>
+//           {activeTab === 'posts' && 'When you share photos, they will appear on your profile.'}
+//           {activeTab === 'reels' && 'Share your first reel to get started.'}
+//           {activeTab === 'tagged' && 'When people tag you in photos, they\'ll appear here.'}
+//         </p>
+//       </div>
+//     );
+//   }
+
+//   return (
+//     <div className={`${styles.grid} ${getGridClass()}`}>
+//       {posts.map(post => (
+//         <div
+//           key={post.id}
+//           className={`${styles.postItem} ${activeTab === 'reels' ? styles.reelItem : ''}`}
+//           onMouseEnter={() => setHoveredPost(post.id)}
+//           onMouseLeave={() => setHoveredPost(null)}
+//         >
+//           <div 
+//             className={styles.imageContainer}
+//             onClick={(e) => handleImageClick(post, e)}
+//             onTouchEnd={(e) => handleTouchEnd(post, e)}
+//           >
+//             <img
+//               src={post.imageUrl}
+//               alt="Post"
+//               className={styles.postImage}
+//               loading="lazy"
+//               draggable={false}
+//             />
+            
+//             {/* Heart Animation */}
+//             {heartAnimations.has(post.id) && (
+//               <div className={styles.heartAnimation}>
+//                 <Heart className={styles.animatedHeart} />
+//               </div>
+//             )}
+//           </div>
+          
+//           {post.isVideo && (
+//             <>
+//               <div className={styles.videoIndicator}>
+//                 <Play className={styles.playIcon} />
+//               </div>
+//               {activeTab === 'reels' && (
+//                 <button 
+//                   className={styles.muteButton}
+//                   onClick={(e) => toggleMute(post.id, e)}
+//                 >
+//                   {mutedVideos.has(post.id) ? (
+//                     <VolumeX className={styles.muteIcon} />
+//                   ) : (
+//                     <Volume2 className={styles.muteIcon} />
+//                   )}
+//                 </button>
+//               )}
+//             </>
+//           )}
+          
+//           <div className={`${styles.overlay} ${hoveredPost === post.id ? styles.visible : ''}`}>
+//             <div className={styles.stats}>
+//               <div className={styles.stat}>
+//                 <Heart className={`${styles.statIcon} ${likedPosts.has(post.id) ? styles.liked : ''}`} />
+//                 <span className={styles.statNumber}>
+//                   {formatNumber(post.likes + (likedPosts.has(post.id) ? 1 : 0))}
+//                 </span>
+//               </div>
+//               <div className={styles.stat}>
+//                 <MessageCircle className={styles.statIcon} />
+//                 <span className={styles.statNumber}>{formatNumber(post.comments)}</span>
+//               </div>
+//             </div>
+//           </div>
+
+//           {activeTab === 'reels' && (
+//             <div className={styles.reelInfo}>
+//               <div className={styles.reelStats}>
+//                 <div className={styles.reelStat}>
+//                   <Heart className={`${styles.reelStatIcon} ${likedPosts.has(post.id) ? styles.liked : ''}`} />
+//                   <span>{formatNumber(post.likes + (likedPosts.has(post.id) ? 1 : 0))}</span>
+//                 </div>
+//                 <div className={styles.reelStat}>
+//                   <MessageCircle className={styles.reelStatIcon} />
+//                   <span>{formatNumber(post.comments)}</span>
+//                 </div>
+//               </div>
+//             </div>
+//           )}
+//         </div>
+//       ))}
+//     </div>
+//   );
+// };
+
+// export default EnhancedPostGrid;
+
+
+
+
 // components/PostGrid/EnhancedPostGrid.tsx
 import React, { useState, useRef, useCallback } from 'react';
-import { Heart, MessageCircle, Play, Volume2, VolumeX } from 'lucide-react';
-import type { Post, TabType } from '../../../types';
-import { formatNumber } from '../../../utils/formatters';
+import { Heart, MessageCircle, Play, Volume2, VolumeX, MoreHorizontal, Trash2 } from 'lucide-react';
+import type { Post, TabType } from '../../../../types';
+import { formatNumber } from '../../../../utils/formatters';
 import styles from './EnhancedPostGrid.module.css';
 
 interface EnhancedPostGridProps {
@@ -10,9 +247,10 @@ interface EnhancedPostGridProps {
   onPostClick: (post: Post) => void;
   activeTab: TabType;
   loading?: boolean;
-  // Add the missing props with default values
   likedPosts?: Set<string>;
   onLike?: (postId: string) => void;
+  onDeletePost?: (postId: string) => void; // New prop for delete functionality
+  isOwnProfile?: boolean; // To show delete button only on own profile
 }
 
 const EnhancedPostGrid: React.FC<EnhancedPostGridProps> = ({ 
@@ -20,12 +258,15 @@ const EnhancedPostGrid: React.FC<EnhancedPostGridProps> = ({
   onPostClick, 
   activeTab,
   loading = false,
-  likedPosts = new Set(), // Default to empty Set
-  onLike // Can be undefined
+  likedPosts = new Set(),
+  onLike,
+  onDeletePost,
+  isOwnProfile = true
 }) => {
   const [hoveredPost, setHoveredPost] = useState<string | null>(null);
   const [mutedVideos, setMutedVideos] = useState<Set<string>>(new Set());
   const [heartAnimations, setHeartAnimations] = useState<Set<string>>(new Set());
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState<string | null>(null);
   
   // Refs for double-tap detection
   const lastTapRef = useRef<{ [key: string]: number }>({});
@@ -45,7 +286,6 @@ const EnhancedPostGrid: React.FC<EnhancedPostGridProps> = ({
   };
 
   const handleLike = useCallback((postId: string) => {
-    // Only call onLike if it exists
     if (onLike) {
       onLike(postId);
     }
@@ -62,30 +302,43 @@ const EnhancedPostGrid: React.FC<EnhancedPostGridProps> = ({
     }, 1000);
   }, []);
 
+  // Handle delete post with confirmation
+  const handleDeleteClick = (postId: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    setShowDeleteConfirm(postId);
+  };
+
+  const confirmDelete = (postId: string) => {
+    if (onDeletePost) {
+      onDeletePost(postId);
+    }
+    setShowDeleteConfirm(null);
+  };
+
+  const cancelDelete = () => {
+    setShowDeleteConfirm(null);
+  };
+
   const handleImageClick = useCallback((post: Post, e: React.MouseEvent) => {
     e.stopPropagation();
     const postId = post.id;
     const currentTime = Date.now();
-    const tapLength = 300; // Maximum time between taps for double-tap
+    const tapLength = 300;
 
     if (lastTapRef.current[postId] && (currentTime - lastTapRef.current[postId]) < tapLength) {
-      // Double tap detected
       if (singleTapTimeoutRef.current[postId]) {
         clearTimeout(singleTapTimeoutRef.current[postId]);
       }
       
-      // Only like if not already liked and onLike exists
       if (onLike && !likedPosts.has(postId)) {
         handleLike(postId);
         triggerHeartAnimation(postId);
       } else if (onLike) {
-        // Still show animation even if already liked
         triggerHeartAnimation(postId);
       }
       
-      lastTapRef.current[postId] = 0; // Reset
+      lastTapRef.current[postId] = 0;
     } else {
-      // Single tap - set timeout to open modal if no second tap comes
       lastTapRef.current[postId] = currentTime;
       
       singleTapTimeoutRef.current[postId] = setTimeout(() => {
@@ -94,7 +347,6 @@ const EnhancedPostGrid: React.FC<EnhancedPostGridProps> = ({
     }
   }, [likedPosts, handleLike, triggerHeartAnimation, onPostClick, onLike]);
 
-  // Touch handlers for mobile
   const handleTouchEnd = useCallback((post: Post, e: React.TouchEvent) => {
     e.preventDefault();
     handleImageClick(post, e as any);
@@ -146,87 +398,126 @@ const EnhancedPostGrid: React.FC<EnhancedPostGridProps> = ({
   }
 
   return (
-    <div className={`${styles.grid} ${getGridClass()}`}>
-      {posts.map(post => (
-        <div
-          key={post.id}
-          className={`${styles.postItem} ${activeTab === 'reels' ? styles.reelItem : ''}`}
-          onMouseEnter={() => setHoveredPost(post.id)}
-          onMouseLeave={() => setHoveredPost(null)}
-        >
-          <div 
-            className={styles.imageContainer}
-            onClick={(e) => handleImageClick(post, e)}
-            onTouchEnd={(e) => handleTouchEnd(post, e)}
+    <>
+      <div className={`${styles.grid} ${getGridClass()}`}>
+        {posts.map(post => (
+          <div
+            key={post.id}
+            className={`${styles.postItem} ${activeTab === 'reels' ? styles.reelItem : ''}`}
+            onMouseEnter={() => setHoveredPost(post.id)}
+            onMouseLeave={() => setHoveredPost(null)}
           >
-            <img
-              src={post.imageUrl}
-              alt="Post"
-              className={styles.postImage}
-              loading="lazy"
-              draggable={false}
-            />
+            <div 
+              className={styles.imageContainer}
+              onClick={(e) => handleImageClick(post, e)}
+              onTouchEnd={(e) => handleTouchEnd(post, e)}
+            >
+              <img
+                src={post.imageUrl}
+                alt="Post"
+                className={styles.postImage}
+                loading="lazy"
+                draggable={false}
+              />
+              
+              {/* Heart Animation */}
+              {heartAnimations.has(post.id) && (
+                <div className={styles.heartAnimation}>
+                  <Heart className={styles.animatedHeart} />
+                </div>
+              )}
+
+              {/* Delete Button - Only show on own profile */}
+              {isOwnProfile && (
+                <button 
+                  className={styles.deleteButton}
+                  onClick={(e) => handleDeleteClick(post.id, e)}
+                  title="Delete post"
+                >
+                  <Trash2 className={styles.deleteIcon} />
+                </button>
+              )}
+            </div>
             
-            {/* Heart Animation */}
-            {heartAnimations.has(post.id) && (
-              <div className={styles.heartAnimation}>
-                <Heart className={styles.animatedHeart} />
+            {post.isVideo && (
+              <>
+                <div className={styles.videoIndicator}>
+                  <Play className={styles.playIcon} />
+                </div>
+                {activeTab === 'reels' && (
+                  <button 
+                    className={styles.muteButton}
+                    onClick={(e) => toggleMute(post.id, e)}
+                  >
+                    {mutedVideos.has(post.id) ? (
+                      <VolumeX className={styles.muteIcon} />
+                    ) : (
+                      <Volume2 className={styles.muteIcon} />
+                    )}
+                  </button>
+                )}
+              </>
+            )}
+            
+            <div className={`${styles.overlay} ${hoveredPost === post.id ? styles.visible : ''}`}>
+              <div className={styles.stats}>
+                <div className={styles.stat}>
+                  <Heart className={`${styles.statIcon} ${likedPosts.has(post.id) ? styles.liked : ''}`} />
+                  <span className={styles.statNumber}>
+                    {formatNumber(post.likes + (likedPosts.has(post.id) ? 1 : 0))}
+                  </span>
+                </div>
+                <div className={styles.stat}>
+                  <MessageCircle className={styles.statIcon} />
+                  <span className={styles.statNumber}>{formatNumber(post.comments)}</span>
+                </div>
+              </div>
+            </div>
+
+            {activeTab === 'reels' && (
+              <div className={styles.reelInfo}>
+                <div className={styles.reelStats}>
+                  <div className={styles.reelStat}>
+                    <Heart className={`${styles.reelStatIcon} ${likedPosts.has(post.id) ? styles.liked : ''}`} />
+                    <span>{formatNumber(post.likes + (likedPosts.has(post.id) ? 1 : 0))}</span>
+                  </div>
+                  <div className={styles.reelStat}>
+                    <MessageCircle className={styles.reelStatIcon} />
+                    <span>{formatNumber(post.comments)}</span>
+                  </div>
+                </div>
               </div>
             )}
           </div>
-          
-          {post.isVideo && (
-            <>
-              <div className={styles.videoIndicator}>
-                <Play className={styles.playIcon} />
-              </div>
-              {activeTab === 'reels' && (
-                <button 
-                  className={styles.muteButton}
-                  onClick={(e) => toggleMute(post.id, e)}
-                >
-                  {mutedVideos.has(post.id) ? (
-                    <VolumeX className={styles.muteIcon} />
-                  ) : (
-                    <Volume2 className={styles.muteIcon} />
-                  )}
-                </button>
-              )}
-            </>
-          )}
-          
-          <div className={`${styles.overlay} ${hoveredPost === post.id ? styles.visible : ''}`}>
-            <div className={styles.stats}>
-              <div className={styles.stat}>
-                <Heart className={`${styles.statIcon} ${likedPosts.has(post.id) ? styles.liked : ''}`} />
-                <span className={styles.statNumber}>
-                  {formatNumber(post.likes + (likedPosts.has(post.id) ? 1 : 0))}
-                </span>
-              </div>
-              <div className={styles.stat}>
-                <MessageCircle className={styles.statIcon} />
-                <span className={styles.statNumber}>{formatNumber(post.comments)}</span>
-              </div>
+        ))}
+      </div>
+
+      {/* Delete Confirmation Modal */}
+      {showDeleteConfirm && (
+        <div className={styles.deleteModal}>
+          <div className={styles.deleteModalContent}>
+            <h3 className={styles.deleteModalTitle}>Delete post?</h3>
+            <p className={styles.deleteModalText}>
+              Are you sure you want to delete this post? This action cannot be undone.
+            </p>
+            <div className={styles.deleteModalButtons}>
+              <button 
+                className={styles.deleteConfirmButton}
+                onClick={() => confirmDelete(showDeleteConfirm)}
+              >
+                Delete
+              </button>
+              <button 
+                className={styles.deleteCancelButton}
+                onClick={cancelDelete}
+              >
+                Cancel
+              </button>
             </div>
           </div>
-
-          {activeTab === 'reels' && (
-            <div className={styles.reelInfo}>
-              <div className={styles.reelStats}>
-                <div className={styles.reelStat}>
-                  <Heart className={`${styles.reelStatIcon} ${likedPosts.has(post.id) ? styles.liked : ''}`} />
-                  <span>{formatNumber(post.likes + (likedPosts.has(post.id) ? 1 : 0))}</span>
-                </div>
-                <div className={styles.reelStat}>
-                  <MessageCircle className={styles.reelStatIcon} />
-                  <span>{formatNumber(post.comments)}</span>
-                </div>
-              </div>
-            </div>
-          )}
         </div>
-      ))}
-    </div>
+      )}
+    </>
   );
 };
 

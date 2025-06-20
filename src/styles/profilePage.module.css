@@ -1,0 +1,549 @@
+/* profilePage.module.css */
+
+/* CSS Variables for Theming */
+:root {
+  /* Light Theme Colors */
+  --bg-primary: #ffffff;
+  --bg-secondary: #fafafa;
+  --bg-tertiary: #f0f0f0;
+  --text-primary: #262626;
+  --text-secondary: #8e8e8e;
+  --text-tertiary: #c7c7c7;
+  --border-color: #dbdbdb;
+  --button-primary: #0095f6;
+  --button-primary-hover: #1877f2;
+  --button-secondary: #efefef;
+  --button-secondary-hover: #dbdbdb;
+  --error-color: #ed4956;
+  --success-color: #00d87a;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Dark Theme Colors */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-primary: #000000;
+    --bg-secondary: #1a1a1a;
+    --bg-tertiary: #262626;
+    --text-primary: #ffffff;
+    --text-secondary: #a8a8a8;
+    --text-tertiary: #737373;
+    --border-color: #363636;
+    --button-primary: #0095f6;
+    --button-primary-hover: #1877f2;
+    --button-secondary: #363636;
+    --button-secondary-hover: #464646;
+    --error-color: #ff3040;
+    --success-color: #00d87a;
+    --shadow-sm: 0 1px 3px rgba(255, 255, 255, 0.05);
+    --shadow-md: 0 4px 12px rgba(255, 255, 255, 0.1);
+  }
+}
+
+/* Base Styles */
+* {
+  box-sizing: border-box;
+}
+
+.loading,
+.error {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  font-size: 16px;
+}
+
+.error {
+  color: var(--error-color);
+}
+
+.profileContainer {
+  min-height: 100vh;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Profile Header Section */
+.profileHeader {
+  background-color: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-color);
+  transition: background-color 0.3s ease;
+}
+
+.avatar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.avatarPlaceholder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, var(--button-primary) 0%, #dd2a7b 50%, #f58529 100%);
+  color: white;
+  font-weight: 600;
+  border-radius: 50%;
+  transition: transform 0.2s ease;
+}
+
+.avatarPlaceholder:hover {
+  transform: scale(1.05);
+}
+
+.profileInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.usernameRow {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.username {
+  font-size: 28px;
+  font-weight: 300;
+  margin: 0;
+  color: var(--text-primary);
+}
+
+.editButton {
+  padding: 8px 24px;
+  background-color: var(--button-secondary);
+  color: var(--text-primary);
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.editButton:hover {
+  background-color: var(--button-secondary-hover);
+  transform: translateY(-1px);
+}
+
+.editButton:active {
+  transform: translateY(0);
+}
+
+.stats {
+  display: flex;
+  gap: 40px;
+  font-size: 16px;
+  color: var(--text-primary);
+}
+
+.stats span {
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.stats span:hover {
+  color: var(--text-secondary);
+}
+
+.stats strong {
+  font-weight: 600;
+  margin-right: 4px;
+}
+
+.accountDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.accountDetails p {
+  margin: 0;
+}
+
+.accountDetails strong {
+  color: var(--text-primary);
+  font-weight: 600;
+  margin-right: 8px;
+}
+
+/* Posts Section */
+.postsSection {
+  padding: 40px 0;
+}
+
+.postsSection h2 {
+  font-size: 24px;
+  font-weight: 600;
+  margin: 0 0 30px 0;
+  color: var(--text-primary);
+  text-align: center;
+  position: relative;
+}
+
+.postsSection h2::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 2px;
+  background-color: var(--button-primary);
+}
+
+.noPosts {
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 16px;
+  padding: 60px 20px;
+}
+
+.postsGrid {
+  display: grid;
+  gap: 28px;
+}
+
+.postPlaceholder {
+  background-color: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  overflow: hidden;
+  position: relative;
+}
+
+.postPlaceholder::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+}
+
+.postPlaceholder:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+.postPlaceholder:hover::before {
+  transform: translateX(100%);
+}
+
+.logoutButton {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  padding: 12px 32px;
+  background-color: var(--error-color);
+  color: white;
+  border: none;
+  border-radius: 24px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: var(--shadow-md);
+  transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+  z-index: 1000;
+}
+
+.logoutButton:hover {
+  background-color: #dc2626;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(220, 38, 38, 0.3);
+}
+
+.logoutButton:active {
+  transform: translateY(0);
+}
+
+/* Desktop Styles - 900px and up */
+@media screen and (min-width: 900px) {
+  .profileContainer {
+    padding: 60px 20px 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .profileHeader {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 60px;
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 40px;
+  }
+
+  .avatarPlaceholder {
+    width: 150px;
+    height: 150px;
+    font-size: 60px;
+  }
+
+  .postsGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .postPlaceholder {
+    aspect-ratio: 1;
+    min-height: 300px;
+  }
+
+  /* Dark mode specific for desktop */
+  @media (prefers-color-scheme: dark) {
+    .profileHeader {
+      box-shadow: 0 1px 3px rgba(255, 255, 255, 0.05);
+    }
+    
+    .postPlaceholder:hover {
+      box-shadow: 0 8px 24px rgba(255, 255, 255, 0.1);
+    }
+  }
+}
+
+/* Tablet Styles - 520px to 900px */
+@media screen and (max-width: 900px) and (min-width: 520px) {
+  .profileContainer {
+    padding: 40px 20px;
+  }
+
+  .profileHeader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    padding: 30px;
+    margin-bottom: 30px;
+    text-align: center;
+  }
+
+  .avatarPlaceholder {
+    width: 120px;
+    height: 120px;
+    font-size: 48px;
+  }
+
+  .usernameRow {
+    justify-content: center;
+  }
+
+  .username {
+    font-size: 24px;
+  }
+
+  .stats {
+    justify-content: center;
+    gap: 30px;
+    font-size: 15px;
+  }
+
+  .accountDetails {
+    align-items: center;
+    text-align: left;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  .postsGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .postPlaceholder {
+    aspect-ratio: 1;
+    min-height: 200px;
+  }
+
+  .logoutButton {
+    bottom: 20px;
+    right: 20px;
+    padding: 10px 24px;
+    font-size: 14px;
+  }
+
+  /* Dark mode specific for tablet */
+  @media (prefers-color-scheme: dark) {
+    .profileHeader {
+      background-color: var(--bg-tertiary);
+      border: 1px solid var(--border-color);
+    }
+  }
+}
+
+/* Mobile Styles - up to 520px */
+@media screen and (max-width: 520px) {
+  .profileContainer {
+    padding: 20px 16px;
+  }
+
+  .profileHeader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+    border-radius: 12px;
+  }
+
+  .avatarPlaceholder {
+    width: 90px;
+    height: 90px;
+    font-size: 36px;
+  }
+
+  .usernameRow {
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+  }
+
+  .username {
+    font-size: 20px;
+  }
+
+  .editButton {
+    width: 100%;
+    max-width: 200px;
+    padding: 10px 20px;
+  }
+
+  .stats {
+    justify-content: space-around;
+    width: 100%;
+    gap: 10px;
+    font-size: 14px;
+    flex-wrap: wrap;
+  }
+
+  .stats span {
+    flex: 1;
+    min-width: 80px;
+    text-align: center;
+  }
+
+  .accountDetails {
+    font-size: 13px;
+    gap: 6px;
+    width: 100%;
+  }
+
+  .postsSection {
+    padding: 20px 0;
+  }
+
+  .postsSection h2 {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+
+  .postsGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .postPlaceholder {
+    aspect-ratio: 1;
+    min-height: 150px;
+    font-size: 12px;
+    border-radius: 6px;
+  }
+
+  .logoutButton {
+    position: relative;
+    bottom: auto;
+    right: auto;
+    width: 100%;
+    margin-top: 40px;
+    padding: 12px 24px;
+    font-size: 14px;
+    border-radius: 8px;
+  }
+
+  /* Dark mode specific for mobile */
+  @media (prefers-color-scheme: dark) {
+    .profileHeader {
+      background-color: var(--bg-secondary);
+      border: none;
+    }
+
+    .editButton {
+      background-color: var(--bg-tertiary);
+      border: 1px solid var(--border-color);
+    }
+
+    .postPlaceholder {
+      background-color: var(--bg-secondary);
+    }
+  }
+}
+
+/* Loading Animation */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading::after {
+  content: '';
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--border-color);
+  border-top-color: var(--button-primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  position: absolute;
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Focus styles for keyboard navigation */
+.editButton:focus,
+.logoutButton:focus,
+.stats span:focus {
+  outline: 2px solid var(--button-primary);
+  outline-offset: 2px;
+}
+
+/* Print styles */
+@media print {
+  .logoutButton {
+    display: none;
+  }
+
+  .profileContainer {
+    background: white;
+    color: black;
+  }
+}

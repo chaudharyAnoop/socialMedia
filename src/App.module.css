@@ -197,6 +197,57 @@ body {
   padding: 0;
 }
 
+/* App.module.css - Preserve original layout */
+
+.main {
+  position: relative;
+  width: 100%;
+  background: var(--ig-primary-background);
+  /* Restore original responsive height behavior */
+}
+
+.nav {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  background: var(--ig-primary-background);
+  border-bottom: 1px solid var(--ig-stroke);
+  position: sticky;
+  top: 0;
+  z-index: var(--ig-z-sticky);
+}
+
+/* Only target profile content, not layout structure */
+:global(.profile-page-container) {
+  height: auto !important;
+  overflow-y: auto !important;
+  padding-bottom: 2rem;
+}
+
+/* Responsive behavior - keep original layout */
+@media (max-width: 520px) {
+  .main {
+    height: 100vh;
+    overflow: hidden;
+  }
+}
+
+@media screen and (min-width: 521px) and (max-width: 900px) {
+  .main {
+    height: 100vh;
+    overflow: hidden;
+  }
+}
+
+@media screen and (min-width: 901px) {
+  .main {
+    height: 100vh;
+    overflow: hidden;
+  }
+}
+
+/* 
 .main {
   position: relative;
   width: 100%;
@@ -213,7 +264,7 @@ body {
   position: sticky;
   top: 0;
   z-index: var(--ig-z-sticky);
-}
+} */
 
 .container {
   max-width: var(--ig-max-width);

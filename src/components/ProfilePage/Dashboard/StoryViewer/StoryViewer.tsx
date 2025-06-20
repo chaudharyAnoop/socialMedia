@@ -1,7 +1,7 @@
 // components/StoryViewer/StoryViewer.tsx
 import React, { useState, useEffect, useRef } from 'react';
 import { X, Heart, Send, MoreHorizontal, Volume2, VolumeX, Play, Pause } from 'lucide-react';
-import type { Story, UserProfile } from '../../../types';
+import type { Story, UserProfile } from '../../../../types';
 import Avatar from '../../common/Avatar/Avatar';
 import styles from './StoryViewer.module.css';
 

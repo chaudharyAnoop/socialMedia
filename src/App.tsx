@@ -1,10 +1,12 @@
 import styles from "./App.module.css";
 import React, { useEffect } from "react";
+
 import {
-  Route, Routes,
-  BrowserRouter,
+  Route,
+  Routes,
   Navigate,
   useLocation,
+  BrowserRouter,
 } from "react-router-dom";
 import NavigationBar from "./components/NavigationBar/NavigationBar";
 import QuickAccess from "./components/QuickAccess/QuickAccess";
@@ -17,10 +19,12 @@ import {
   requestNotificationPermission,
 } from "./firebase/firebase";
 import InstagramCreatePost from "./pages/InstagramCreatePost/InstagramCreatePost";
-import  LoginForm  from "./components/AuthForm/LoginForm";
+import LoginForm from "./components/AuthForm/LoginForm";
 import { AuthProvider } from "./contexts/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Dashboard from "./components/Dashboard/Dashboard";
+import ProfilePage from "./pages/ProfilePage/ProfilePg";
+import ProfilePageUser from "./pages/UserProfile";
 
 const LandingPage = lazy(() => import("./pages/LandingPage/LandingPage"));
 const AdminPage = lazy(() => import("./pages/AdminPage/AdminPage"));
@@ -144,9 +148,28 @@ const AdminPage = lazy(() => import("./pages/AdminPage/AdminPage"));
 const AppContent: React.FC = () => {
   const location = useLocation();
   const isSignin = location.pathname === "/signin";
+  const isProfile = location.pathname === "/profile"; // Add this line
+
+  // Add useEffect to manage body classes based on route
+  useEffect(() => {
+    // Clean up previous route classes
+    document.body.classList.remove('profile-page-active', 'signin-page-active');
+    
+    // Add current route class
+    if (isProfile) {
+      document.body.classList.add('profile-page-active');
+    } else if (isSignin) {
+      document.body.classList.add('signin-page-active');
+    }
+    
+    // Cleanup on unmount
+    return () => {
+      document.body.classList.remove('profile-page-active', 'signin-page-active');
+    };
+  }, [isProfile, isSignin]);
 
   return (
-    <div className={styles.nav}>
+    <div className={`${styles.nav} ${isProfile ? 'profile-page-wrapper' : ''}`}>
       {!isSignin && <NavigationBar />}
       <Suspense fallback={<div aria-busy="true" style={{ display: "none" }} />}>
         <Routes>
@@ -154,7 +177,7 @@ const AppContent: React.FC = () => {
             path="/"
             element={
               <ProtectedRoute>
-                <LandingPage />
+                <LandingPage/>
               </ProtectedRoute>
             }
           />
@@ -191,12 +214,105 @@ const AppContent: React.FC = () => {
               </ProtectedRoute>
             }
           />
+          <Route
+  path="/profile"
+  element={
+    <ProtectedRoute>
+      <div className="profile-page-container" style={{ height: 'auto', overflowY: 'auto' }}>
+        <ProfilePage/>
+      </div>
+    </ProtectedRoute>
+  }
+/>
         </Routes>
       </Suspense>
       {!isSignin && <QuickAccess />}
     </div>
   );
 };
+
+
+
+
+
+
+
+
+
+// const AppContent: React.FC = () => {
+//   const location = useLocation();
+//   const isSignin = location.pathname === "/signin";
+
+//   return (
+//     <div className={styles.nav}>
+//       {!isSignin && <NavigationBar />}
+//       <Suspense fallback={<div aria-busy="true" style={{ display: "none" }} />}>
+//         <Routes>
+//           <Route
+//             path="/"
+//             element={
+//               <ProtectedRoute>
+//                 <LandingPage/>
+//               </ProtectedRoute>
+//             }
+//           />
+//           <Route
+//             path="/explore"
+//             element={
+//               <ProtectedRoute>
+//                 <ExplorePage />
+//               </ProtectedRoute>
+//             }
+//           />
+//           <Route
+//             path="/create"
+//             element={
+//               <ProtectedRoute>
+//                 <InstagramCreatePost />
+//               </ProtectedRoute>
+//             }
+//           />
+//           <Route
+//             path="/create"
+//             element={
+//               <ProtectedRoute>
+//                 <InstagramCreatePost />
+//               </ProtectedRoute>
+//             }
+//           />
+//           <Route
+//             path="/admin"
+//             element={
+//               <ProtectedRoute>
+//                 <AdminPage />
+//               </ProtectedRoute>
+//             }
+//           />
+//           <Route path="/signin" element={<Signin />} />
+//           <Route
+//             path="/dashboard"
+//             element={
+//               <ProtectedRoute>
+//                 <Dashboard />
+//               </ProtectedRoute>
+//             }
+            
+//           />
+//           <Route
+//             path="/profile"
+//             element={
+//               <ProtectedRoute>
+//                 <ProfilePage/>
+//               </ProtectedRoute>
+//             }
+            
+//           />
+//         </Routes>
+//       </Suspense>
+//       {!isSignin && <QuickAccess />}
+//     </div>
+//   );
+// };
 
 const App: React.FC = () => {
   useEffect(() => {

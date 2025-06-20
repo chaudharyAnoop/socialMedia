@@ -1,7 +1,7 @@
 // components/UnifiedStoriesHighlights.tsx
 import React from 'react';
 import { Plus } from 'lucide-react';
-import type { Story, Highlight } from '../types';
+import type { Story, Highlight } from '../../../types';
 
 interface UnifiedStoriesHighlightsProps {
   stories: Story[];

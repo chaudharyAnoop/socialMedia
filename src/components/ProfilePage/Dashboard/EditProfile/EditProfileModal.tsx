@@ -1,7 +1,7 @@
 // components/EditProfile/EditProfileModal.tsx
 import React, { useState, useRef } from 'react';
 import { X, Camera, Upload } from 'lucide-react';
-import type { UserProfile } from '../../../types';
+import type { UserProfile } from '../../../../types';
 import Avatar from '../../common/Avatar/Avatar';
 import Button from '../../common/Button/Button';
 import styles from './EditProfileModal.module.css';

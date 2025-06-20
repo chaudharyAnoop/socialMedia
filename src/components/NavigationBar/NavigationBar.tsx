@@ -95,7 +95,7 @@ function NavigationBar() {
             </NavLink>
           </li>{" "}
           <li className={styles.list_li}>
-            <NavLink to="/auth" className={styles.link}>
+            <NavLink to="/chat" className={styles.link}>
               <div className={styles.tile}>
                 <div className={styles.name}>
                   <MessageCircle className={styles.icon} />
@@ -128,7 +128,7 @@ function NavigationBar() {
             </NavLink>
           </li>
           <li className={styles.list_li}>
-            <NavLink to="/" className={styles.link}>
+            <NavLink to="profile" className={styles.link}>
               <div className={styles.tile}>
                 <div className={styles.name}>
                   <FaRegUser className={styles.icon} />

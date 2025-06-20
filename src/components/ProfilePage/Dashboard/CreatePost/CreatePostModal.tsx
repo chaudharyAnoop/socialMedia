@@ -1,7 +1,7 @@
 // components/CreatePost/CreatePostModal.tsx
 import React, { useState, useRef } from 'react';
 import { X, Upload, Image as ImageIcon, Video, ArrowLeft, MapPin, Users, Smile } from 'lucide-react';
-import { UserProfile } from '../../../types';
+import { UserProfile } from '../../../../types';
 import Avatar from '../../common/Avatar/Avatar';
 import Button from '../../common/Button/Button';
 import styles from './CreatePostModal.module.css';

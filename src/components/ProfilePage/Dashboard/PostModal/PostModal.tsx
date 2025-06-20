@@ -11,9 +11,9 @@ import {
   Volume2,
   VolumeX
 } from 'lucide-react';
-import type { Post, UserProfile, Comment } from '../../../types';
-import { formatNumber, formatTimeAgo } from '../../../utils/formatters';
-import { mockComments, getRandomComments } from '../../../data/mockData';
+import type { Post, UserProfile, Comment } from '../../../../types';
+import { formatNumber, formatTimeAgo } from '../../../../utils/formatters';
+import { mockComments, getRandomComments } from '../../../../data/mockData';
 import Avatar from '../../common/Avatar/Avatar';
 import styles from './PostModal.module.css';
 
