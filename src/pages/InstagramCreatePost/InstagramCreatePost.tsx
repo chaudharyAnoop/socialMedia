@@ -108,29 +108,30 @@ const InstagramCreatePost: React.FC = () => {
     // });
      // Upload all files to S3 first
      
-     const uploadedUrls: string[] = [];
-     for (const media of selectedMedia) {
-      if (!media.presignedData) continue;
+     const media: string[] = [];
+     for (const singlemedia of selectedMedia) {
+      if (!singlemedia.presignedData) continue;
       
-      await axios.put(media.presignedData.uploadUrl, media.file, {
+      await axios.put(singlemedia.presignedData.uploadUrl, singlemedia.file, {
         headers: {
-          'Content-Type': media.file.type,
+          'Content-Type': singlemedia.file.type,
         },
       });
       
-      uploadedUrls.push(media.presignedData.fileKey);
+      media.push(singlemedia.presignedData.fileKey);
     }
-    setmediaKeys(uploadedUrls);
+    console.log(media);
+    setmediaKeys(media);
     // const taggedUsersData = taggedUsers.length > 0 
     //   ? taggedUsers.map(p => p.id)
     //   : "";
       const payload: {
-        uploadedUrls: string[];
+        media: string[];
         content: string;
         taggedUsers?: string[];
         visibility: string;
       } = {
-        uploadedUrls,
+        media,
         content,
         visibility
       };
