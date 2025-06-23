@@ -1,4 +1,4 @@
-/* components/PostGrid/EnhancedPostGrid.module.css */
+/* components/PostGrid/EnhancedPostGrid.module.css - COMPLETE WITH DELETE FUNCTIONALITY */
 .grid {
   padding: 0 4px;
   background-color: var(--color-background-dark, #000);
@@ -64,6 +64,163 @@
 .postItem:hover .postImage {
   transform: scale(1.02);
 }
+
+/* ===== DELETE BUTTON FUNCTIONALITY - NEW ===== */
+.deleteButton {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(0, 0, 0, 0.7);
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all var(--ig-animation-medium, 0.3s ease);
+  z-index: 10;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.deleteButton:hover {
+  background: rgba(239, 73, 86, 0.9);
+  transform: scale(1);
+}
+
+.deleteButton:active {
+  transform: scale(0.95);
+}
+
+.deleteIcon {
+  width: 16px;
+  height: 16px;
+  color: white;
+}
+
+/* Show delete button on hover */
+.postItem:hover .deleteButton {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Delete Confirmation Modal */
+.deleteModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: var(--ig-z-modal, 1000);
+  padding: var(--ig-spacing-20, 20px);
+  animation: fadeIn 0.3s ease-out;
+}
+
+.deleteModalContent {
+  background: var(--ig-elevated-background, #262626);
+  border-radius: var(--ig-border-radius-large, 12px);
+  padding: var(--ig-spacing-32, 32px);
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+  box-shadow: var(--ig-shadow-elevated, 0 8px 32px rgba(0, 0, 0, 0.3));
+  animation: slideUp 0.3s ease-out;
+}
+
+.deleteModalTitle {
+  font-size: var(--ig-font-size-title3, 18px);
+  font-weight: var(--ig-font-weight-semibold, 600);
+  color: var(--ig-primary-text, #ffffff);
+  margin: 0 0 var(--ig-spacing-16, 16px) 0;
+}
+
+.deleteModalText {
+  font-size: var(--ig-font-size-body, 14px);
+  color: var(--ig-secondary-text, #a8a8a8);
+  line-height: 1.5;
+  margin: 0 0 var(--ig-spacing-32, 32px) 0;
+}
+
+.deleteModalButtons {
+  display: flex;
+  gap: var(--ig-spacing-12, 12px);
+  justify-content: center;
+}
+
+.deleteConfirmButton {
+  background: var(--ig-danger-button, #ed4956);
+  color: white;
+  border: none;
+  border-radius: var(--ig-border-radius-button, 8px);
+  padding: var(--ig-spacing-12, 12px) var(--ig-spacing-24, 24px);
+  font-size: var(--ig-font-size-body, 14px);
+  font-weight: var(--ig-font-weight-semibold, 600);
+  cursor: pointer;
+  transition: all var(--ig-animation-fast, 0.2s ease);
+  min-width: 80px;
+}
+
+.deleteConfirmButton:hover {
+  background: #d63447;
+  transform: translateY(-1px);
+}
+
+.deleteConfirmButton:active {
+  transform: translateY(0);
+}
+
+.deleteCancelButton {
+  background: var(--ig-secondary-button, #363636);
+  color: var(--ig-primary-text, #ffffff);
+  border: 1px solid var(--ig-stroke, #454545);
+  border-radius: var(--ig-border-radius-button, 8px);
+  padding: var(--ig-spacing-12, 12px) var(--ig-spacing-24, 24px);
+  font-size: var(--ig-font-size-body, 14px);
+  font-weight: var(--ig-font-weight-semibold, 600);
+  cursor: pointer;
+  transition: all var(--ig-animation-fast, 0.2s ease);
+  min-width: 80px;
+}
+
+.deleteCancelButton:hover {
+  background: var(--ig-secondary-button-hover, #404040);
+  transform: translateY(-1px);
+}
+
+.deleteCancelButton:active {
+  transform: translateY(0);
+}
+
+/* Modal animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== END DELETE FUNCTIONALITY ===== */
 
 /* Heart Animation Styles */
 .heartAnimation {
@@ -322,6 +479,37 @@
     gap: 1px;
   }
   
+  /* Mobile delete button adjustments */
+  .deleteButton {
+    opacity: 1;
+    transform: scale(1);
+    background: rgba(0, 0, 0, 0.8);
+    width: 28px;
+    height: 28px;
+    top: 6px;
+    right: 6px;
+  }
+  
+  .deleteIcon {
+    width: 14px;
+    height: 14px;
+  }
+  
+  .deleteModalContent {
+    padding: var(--ig-spacing-24, 24px);
+    margin: var(--ig-spacing-16, 16px);
+  }
+  
+  .deleteModalButtons {
+    flex-direction: column;
+  }
+  
+  .deleteConfirmButton,
+  .deleteCancelButton {
+    width: 100%;
+    min-width: unset;
+  }
+  
   .animatedHeart {
     width: 50px;
     height: 50px;
@@ -369,6 +557,18 @@
 
 /* Small mobile devices (361-480px) */
 @media (min-width: 361px) and (max-width: 480px) {
+  /* Mobile delete button always visible */
+  .deleteButton {
+    opacity: 1;
+    transform: scale(1);
+    background: rgba(0, 0, 0, 0.8);
+  }
+  
+  .deleteModalContent {
+    padding: var(--ig-spacing-24, 24px);
+    margin: var(--ig-spacing-16, 16px);
+  }
+  
   .animatedHeart {
     width: 60px;
     height: 60px;
@@ -393,6 +593,13 @@
   .reelsGrid {
     grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
     gap: 2px;
+  }
+  
+  /* Mobile delete button always visible */
+  .deleteButton {
+    opacity: 1;
+    transform: scale(1);
+    background: rgba(0, 0, 0, 0.8);
   }
 
   .animatedHeart {
@@ -517,6 +724,13 @@
 
 /* Touch device optimizations */
 @media (hover: none) and (pointer: coarse) {
+  /* Always show delete button on touch devices */
+  .deleteButton {
+    opacity: 1;
+    transform: scale(1);
+    background: rgba(0, 0, 0, 0.8);
+  }
+  
   /* Disable hover effects on touch devices */
   .postItem:hover .postImage {
     transform: none;
@@ -538,6 +752,31 @@
   }
 }
 
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .deleteButton {
+    background: rgba(0, 0, 0, 0.9);
+    border: 2px solid white;
+  }
+  
+  .deleteButton:hover {
+    background: var(--ig-danger-button, #ed4956);
+    border: 2px solid var(--ig-danger-button, #ed4956);
+  }
+}
+
+/* Focus states for accessibility */
+.deleteButton:focus-visible {
+  outline: 2px solid var(--ig-primary-button, #0095f6);
+  outline-offset: 2px;
+}
+
+.deleteConfirmButton:focus-visible,
+.deleteCancelButton:focus-visible {
+  outline: 2px solid var(--ig-primary-button, #0095f6);
+  outline-offset: 2px;
+}
+
 /* High DPI displays optimization */
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
   .animatedHeart {
@@ -547,6 +786,19 @@
 
 /* Reduced motion preferences */
 @media (prefers-reduced-motion: reduce) {
+  .deleteButton {
+    transition: opacity var(--ig-animation-fast, 0.2s ease);
+  }
+  
+  .deleteModalContent {
+    animation: none;
+  }
+  
+  .deleteConfirmButton:hover,
+  .deleteCancelButton:hover {
+    transform: none;
+  }
+  
   .heartBurst {
     animation-duration: 0.2s;
   }
@@ -574,5 +826,9 @@
   
   .emptyTitle {
     font-size: 18px;
+  }
+  
+  .deleteModal {
+    padding: var(--ig-spacing-16, 16px);
   }
 }

@@ -1,103 +1,72 @@
-import React from 'react';
-import styles from '../FormInput/FormInput.module.css';
+import React from "react";
+import { Check, X } from "lucide-react";
+import styles from "./PasswordStrength.module.css";
 
 interface PasswordStrengthProps {
   password: string;
+  showStrength: boolean;
 }
 
-export type PasswordStrengthLevel = 'weak' | 'fair' | 'good' | 'strong';
+const PasswordStrength: React.FC<PasswordStrengthProps> = ({
+  password,
+  showStrength,
+}) => {
+  const requirements = [
+    { test: (pwd: string) => pwd.length >= 8, text: "At least 8 characters" },
+    { test: (pwd: string) => /[A-Z]/.test(pwd), text: "One uppercase letter" },
+    { test: (pwd: string) => /[a-z]/.test(pwd), text: "One lowercase letter" },
+    { test: (pwd: string) => /[0-9]/.test(pwd), text: "One number" },
+    {
+      test: (pwd: string) => /[^A-Za-z0-9]/.test(pwd),
+      text: "One special character",
+    },
+  ];
 
-export const calculatePasswordStrength = (password: string): {
-  level: PasswordStrengthLevel;
-  score: number;
-  feedback: string;
-} => {
-  if (!password) {
-    return { level: 'weak', score: 0, feedback: '' };
-  }
-
-  let score = 0;
-  const feedback: string[] = [];
-
-  // Length check
-  if (password.length >= 8) {
-    score += 1;
-  } else {
-    feedback.push('At least 8 characters');
-  }
-
-  // Uppercase check
-  if (/[A-Z]/.test(password)) {
-    score += 1;
-  } else {
-    feedback.push('One uppercase letter');
-  }
-
-  // Lowercase check
-  if (/[a-z]/.test(password)) {
-    score += 1;
-  } else {
-    feedback.push('One lowercase letter');
-  }
-
-  // Number check
-  if (/\d/.test(password)) {
-    score += 1;
-  } else {
-    feedback.push('One number');
-  }
-
-  // Special character check
-  if (/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)) {
-    score += 1;
-  } else {
-    feedback.push('One special character');
-  }
-
-  let level: PasswordStrengthLevel;
-  let message: string;
-
-  if (score <= 1) {
-    level = 'weak';
-    message = 'Weak password';
-  } else if (score <= 2) {
-    level = 'fair';
-    message = 'Fair password';
-  } else if (score <= 3) {
-    level = 'good';
-    message = 'Good password';
-  } else {
-    level = 'strong';
-    message = 'Strong password';
-  }
-
-  return {
-    level,
-    score,
-    feedback: feedback.length > 0 ? `Missing: ${feedback.join(', ')}` : message,
+  const getStrengthLevel = () => {
+    const passedRequirements = requirements.filter((req) =>
+      req.test(password)
+    ).length;
+    if (passedRequirements <= 2) return { level: "weak", color: "#ed4956" };
+    if (passedRequirements <= 3) return { level: "medium", color: "#ffa726" };
+    if (passedRequirements <= 4) return { level: "good", color: "#42a5f5" };
+    return { level: "strong", color: "#66bb6a" };
   };
-};
 
-const PasswordStrength: React.FC<PasswordStrengthProps> = ({ password }) => {
-  const { level, score, feedback } = calculatePasswordStrength(password);
+  const strength = getStrengthLevel();
 
-  if (!password) return null;
+  if (!showStrength || !password) return null;
 
   return (
-    <div className={styles.passwordStrength}>
-      <span className={styles.strengthLabel}>Password strength</span>
-      <div className={styles.strengthBar}>
-        {[1, 2, 3, 4].map((segment) => (
-          <div
-            key={segment}
-            className={`${styles.strengthSegment} ${
-              segment <= score ? styles[level] : ''
-            }`}
-          />
-        ))}
+    <div className={styles.strengthContainer}>
+      <div className={styles.strengthHeader}>
+        <span className={styles.strengthLabel}>Password strength: </span>
+        <span
+          className={styles.strengthLevel}
+          style={{ color: strength.color }}
+        >
+          {strength.level}
+        </span>
       </div>
-      <div className={`${styles.strengthText} ${styles[level]}`}>
-        {feedback}
+      <div className={styles.requirementsList}>
+        {requirements.map((req, index) => {
+          const isPassed = req.test(password);
+          return (
+            <div key={index} className={styles.requirement}>
+              {isPassed ? (
+                <Check size={14} style={{ color: "#66bb6a" }} />
+              ) : (
+                <X size={14} style={{ color: "#8e8e8e" }} />
+              )}
+              <span
+                className={`${styles.requirementText} ${
+                  isPassed ? styles.requirementPassed : styles.requirementFailed
+                }`}
+              >
+                {req.text}
+              </span>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

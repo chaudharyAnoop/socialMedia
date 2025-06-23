@@ -1,6 +1,6 @@
 import styles from "./App.module.css";
 import React, { useEffect } from "react";
-
+import { ToastContainer, toast } from 'react-toastify';
 import {
   Route,
   Routes,
@@ -23,8 +23,9 @@ import LoginForm from "./components/AuthForm/LoginForm";
 import { AuthProvider } from "./contexts/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Dashboard from "./components/Dashboard/Dashboard";
+import ChatLayout from "./components/chat/ChatLayout";
 import ProfilePage from "./pages/ProfilePage/ProfilePg";
-import ProfilePageUser from "./pages/UserProfile";
+
 
 const LandingPage = lazy(() => import("./pages/LandingPage/LandingPage"));
 const AdminPage = lazy(() => import("./pages/AdminPage/AdminPage"));
@@ -205,6 +206,14 @@ const AppContent: React.FC = () => {
               </ProtectedRoute>
             }
           />
+          <Route
+            path="/chat"
+            element={
+              <ProtectedRoute>
+                <ChatLayout />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/signin" element={<Signin />} />
           <Route
             path="/dashboard"
@@ -215,17 +224,26 @@ const AppContent: React.FC = () => {
             }
           />
           <Route
-  path="/profile"
-  element={
-    <ProtectedRoute>
-      <div className="profile-page-container" style={{ height: 'auto', overflowY: 'auto' }}>
-        <ProfilePage/>
-      </div>
-    </ProtectedRoute>
-  }
-/>
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <ProfilePage />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </Suspense>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       {!isSignin && <QuickAccess />}
     </div>
   );

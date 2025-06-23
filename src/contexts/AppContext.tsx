@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useReducer, useEffect, type ReactNode } from 'react';
 import type { Post, UserProfile, Comment, Story, Highlight } from '../types';
-import { mockPosts, mockProfile, mockStories, mockHighlights } from '../data/mockData';
+import { mockPosts, mockProfile, } from '../data/mockData';
 
 // Extended types for dynamic features
 interface AppState {
@@ -161,8 +161,6 @@ const loadFromStorage = (): Partial<AppState> | null => {
 const initialState: AppState = {
   currentUser: mockProfile,
   posts: mockPosts,
-  stories: mockStories,
-  highlights: mockHighlights,
   likedPosts: new Set(),
   savedPosts: new Set(),
   followedUsers: new Set(),
@@ -177,6 +175,8 @@ const initialState: AppState = {
       createdAt: new Date(),
     }
   ],
+  stories: [],
+  highlights: []
 };
 
 // Reducer function

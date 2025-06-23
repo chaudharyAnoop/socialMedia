@@ -8,11 +8,14 @@ import axios from "axios";
 interface Post {
   _id: number;
   UserId: string; // Primary user identifier
-  title: string;
-  body: string;
+  username: string;
+  commentCount: number;
+  reactionCount: number;
+  content: string;
   tags: string[];
   media: string[];
-  reactions: number; // Represents likes
+  reactions: number;
+  isLiked: boolean; // Represents likes
 }
 
 interface PostsState {
@@ -39,12 +42,13 @@ export const fetchPosts = createAsyncThunk<
   { rejectValue: string }
 >("posts/fetchPosts", async ({ page, limit }, { rejectWithValue }) => {
   try {
-    const token = localStorage.getItem("instagram_user")?.slice(1, -1);
+    const token = localStorage.getItem("instagram_user");
     const headers = {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
       "X-Custom-Header": "CustomValue",
     };
+    console.log(token);
     const response = await axios.get<{
       data: Post[];
       total: number;
@@ -71,11 +75,12 @@ export const likePost = createAsyncThunk<
   { rejectValue: string }
 >("posts/likePost", async (postId, { rejectWithValue }) => {
   try {
-    const token = localStorage.getItem("instagram_user")?.slice(1, -1);
+    const token = localStorage.getItem("instagram_user");
     const headers = {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     };
+    console.log(token);
     const response = await axios.post(
       `http://172.50.5.102:3000/posts/${postId}/like`,
       { userId: "Anoop Kumar Chaudhary" }, // Assuming userId is sent for tracking

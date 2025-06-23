@@ -22,7 +22,20 @@ const MediaCarousel: React.FC<MediaCarouselProps> = ({
 }) => {
   const [currentMediaIndex, setCurrentMediaIndex] = useState(0);
 
+  // const removeMedia = (index: number): void => {
+  //   setSelectedMedia(prev => {
+  //     const newMedia = prev.filter((_, i) => i !== index);
+  //     if (currentMediaIndex >= newMedia.length) {
+  //       setCurrentMediaIndex(Math.max(0, newMedia.length - 1));
+  //     }
+  //     return newMedia;
+  //   });
+  // };
+
   const removeMedia = (index: number): void => {
+    // Revoke the object URL to prevent memory leaks
+    URL.revokeObjectURL(selectedMedia[index].preview);
+    
     setSelectedMedia(prev => {
       const newMedia = prev.filter((_, i) => i !== index);
       if (currentMediaIndex >= newMedia.length) {
