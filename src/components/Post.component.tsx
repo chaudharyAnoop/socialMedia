@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "../styles/Post.module.css";
 import { FaHeart, FaRegBookmark, FaRegHeart, FaTimes } from "react-icons/fa";
@@ -87,7 +87,7 @@ export default function Post({
           postId,
           parentCommentId: commentId,
           content: replyContent,
-          replyToUserId: commentId, // Adjust if replyToUserId is different
+          replyToUserId: commentId,
           commentId: postId,
         })
       );

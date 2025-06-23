@@ -1,3 +1,155 @@
+// import {
+//   createSlice,
+//   createAsyncThunk,
+//   type PayloadAction,
+// } from "@reduxjs/toolkit";
+// import axios from "axios";
+
+// interface Post {
+//   _id: number;
+//   UserId: string;
+//   username: string;
+//   commentCount: number;
+//   reactionCount: number;
+//   content: string;
+//   tags: string[];
+//   media: string[];
+//   reactions: number;
+//   isLiked: boolean;
+// }
+
+// interface PostsState {
+//   posts: Post[];
+//   status: "idle" | "loading" | "succeeded" | "failed";
+//   error: string | null;
+//   page: number;
+//   hasMore: boolean;
+//   limit: number;
+// }
+
+// const initialState: PostsState = {
+//   posts: [],
+//   status: "idle",
+//   error: null,
+//   page: 1,
+//   limit: 10,
+//   hasMore: true,
+// };
+
+// export const fetchPosts = createAsyncThunk<
+//   { posts: Post[]; total: number },
+//   { page: number; limit: number },
+//   { rejectValue: string }
+// >("posts/fetchPosts", async ({ page, limit }, { rejectWithValue }) => {
+//   try {
+//     const token = localStorage.getItem("instagram_user");
+//     const headers = {
+//       "Content-Type": "application/json",
+//       Authorization: `Bearer ${token}`,
+//       "X-Custom-Header": "CustomValue",
+//     };
+//     console.log(token);
+//     const response = await axios.get<{
+//       data: Post[];
+//       total: number;
+//       skip: number;
+//       limit: number;
+//     }>(
+//       `http://172.50.5.102:3000/posts/feed?limit=${limit}&skip=${
+//         (page - 1) * limit
+//       }`,
+//       { headers }
+//     );
+//     return { posts: response.data.data, total: response.data.total };
+//   } catch (error) {
+//     if (axios.isAxiosError(error)) {
+//       return rejectWithValue(error.message);
+//     }
+//     return rejectWithValue("An unexpected error occurred");
+//   }
+// });
+
+// export const likePost = createAsyncThunk<
+//   { postId: number; reactions: number },
+//   number,
+//   { rejectValue: string }
+// >("posts/likePost", async (postId, { rejectWithValue }) => {
+//   try {
+//     const token = localStorage.getItem("instagram_user");
+//     const headers = {
+//       "Content-Type": "application/json",
+//       Authorization: `Bearer ${token}`,
+//     };
+//     console.log(token);
+//     const response = await axios.post(
+//       `http://172.50.5.102:3000/posts/${postId}/like`,
+//       { userId: "Anoop Kumar Chaudhary" },
+//       { headers }
+//     );
+//     return { postId, reactions: response.data.reactions };
+//   } catch (error) {
+//     if (axios.isAxiosError(error)) {
+//       return rejectWithValue(error.message);
+//     }
+//     return rejectWithValue("Failed to like post");
+//   }
+// });
+
+// const postsSlice = createSlice({
+//   name: "posts",
+//   initialState,
+//   reducers: {
+//     resetPosts: (state) => {
+//       state.posts = [];
+//       state.page = 1;
+//       state.hasMore = true;
+//       state.status = "idle";
+//       state.error = null;
+//     },
+//   },
+//   extraReducers: (builder) => {
+//     builder
+//       .addCase(fetchPosts.pending, (state) => {
+//         state.status = "loading";
+//         state.error = null;
+//       })
+//       .addCase(
+//         fetchPosts.fulfilled,
+//         (state, action: PayloadAction<{ posts: Post[]; total: number }>) => {
+//           state.status = "succeeded";
+//           state.posts = [...state.posts, ...action.payload.posts];
+//           state.page += 1;
+//           state.hasMore =
+//             state.posts.length < action.payload.total &&
+//             action.payload.posts.length > 0;
+//         }
+//       )
+//       .addCase(fetchPosts.rejected, (state, action) => {
+//         state.status = "failed";
+//         state.error = action.payload || "Failed to fetch posts";
+//       })
+//       .addCase(
+//         likePost.fulfilled,
+//         (
+//           state,
+//           action: PayloadAction<{ postId: number; reactions: number }>
+//         ) => {
+//           const { postId, reactions } = action.payload;
+//           const post = state.posts.find((p) => p._id === postId);
+//           if (post) {
+//             post.reactions = reactions;
+//           }
+//         }
+//       )
+//       .addCase(likePost.rejected, (state, action) => {
+//         state.error = action.payload || "Failed to like post";
+//       });
+//   },
+// });
+
+// export const { resetPosts } = postsSlice.actions;
+// export default postsSlice.reducer;
+
 import {
   createSlice,
   createAsyncThunk,
@@ -41,14 +193,18 @@ export const fetchPosts = createAsyncThunk<
   { page: number; limit: number },
   { rejectValue: string }
 >("posts/fetchPosts", async ({ page, limit }, { rejectWithValue }) => {
+  if (page < 1 || limit < 1) {
+    return rejectWithValue("Invalid page or limit");
+  }
   try {
     const token = localStorage.getItem("instagram_user");
-    const headers = {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-      "X-Custom-Header": "CustomValue",
-    };
-    console.log(token);
+    const headers = token
+      ? {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+          "X-Custom-Header": "CustomValue",
+        }
+      : {};
     const response = await axios.get<{
       data: Post[];
       total: number;
@@ -60,12 +216,19 @@ export const fetchPosts = createAsyncThunk<
       }`,
       { headers }
     );
-    return { posts: response.data.data, total: response.data.total };
+    const posts = response.data?.data;
+    const total = response.data?.total;
+    if (!Array.isArray(posts) || typeof total !== "number") {
+      return rejectWithValue("Invalid posts or total data received");
+    }
+    return { posts, total };
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      return rejectWithValue(error.message);
+      return rejectWithValue(
+        error.response?.data?.message || "Failed to fetch posts"
+      );
     }
-    return rejectWithValue("An unexpected error occurred");
+    return rejectWithValue("Unexpected error occurred");
   }
 });
 
@@ -74,24 +237,34 @@ export const likePost = createAsyncThunk<
   number,
   { rejectValue: string }
 >("posts/likePost", async (postId, { rejectWithValue }) => {
+  if (!postId) {
+    return rejectWithValue("Post ID is required");
+  }
   try {
     const token = localStorage.getItem("instagram_user");
-    const headers = {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    };
-    console.log(token);
+    const headers = token
+      ? {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        }
+      : {};
     const response = await axios.post(
       `http://172.50.5.102:3000/posts/${postId}/like`,
       { userId: "Anoop Kumar Chaudhary" },
       { headers }
     );
-    return { postId, reactions: response.data.reactions };
+    const reactions = response.data?.reactions;
+    if (typeof reactions !== "number") {
+      return rejectWithValue("Invalid reactions data received");
+    }
+    return { postId, reactions };
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      return rejectWithValue(error.message);
+      return rejectWithValue(
+        error.response?.data?.message || "Failed to like post"
+      );
     }
-    return rejectWithValue("Failed to like post");
+    return rejectWithValue("Unexpected error occurred");
   }
 });
 
@@ -117,10 +290,10 @@ const postsSlice = createSlice({
         fetchPosts.fulfilled,
         (state, action: PayloadAction<{ posts: Post[]; total: number }>) => {
           state.status = "succeeded";
-          state.posts = [...state.posts, ...action.payload.posts];
+          state.posts = [...state.posts, ...(action.payload.posts || [])];
           state.page += 1;
           state.hasMore =
-            state.posts.length < action.payload.total &&
+            state.posts.length < (action.payload.total || 0) &&
             action.payload.posts.length > 0;
         }
       )
@@ -138,6 +311,7 @@ const postsSlice = createSlice({
           const post = state.posts.find((p) => p._id === postId);
           if (post) {
             post.reactions = reactions;
+            post.isLiked = true;
           }
         }
       )
