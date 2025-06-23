@@ -2,7 +2,11 @@
 
 import React, { createContext, useContext, useReducer, useEffect, type ReactNode } from 'react';
 import type { Post, UserProfile, Comment, Story, Highlight } from '../types';
+<<<<<<< HEAD
 import { mockPosts, mockProfile, } from '../data/mockData';
+=======
+import { mockPosts, mockProfile, mockStories, mockHighlights } from '../data/mockData';
+>>>>>>> develop
 
 // Extended types for dynamic features
 interface AppState {
@@ -161,6 +165,11 @@ const loadFromStorage = (): Partial<AppState> | null => {
 const initialState: AppState = {
   currentUser: mockProfile,
   posts: mockPosts,
+<<<<<<< HEAD
+=======
+  stories: mockStories,
+  highlights: mockHighlights,
+>>>>>>> develop
   likedPosts: new Set(),
   savedPosts: new Set(),
   followedUsers: new Set(),
@@ -175,8 +184,11 @@ const initialState: AppState = {
       createdAt: new Date(),
     }
   ],
+<<<<<<< HEAD
   stories: [],
   highlights: []
+=======
+>>>>>>> develop
 };
 
 // Reducer function
@@ -274,6 +286,13 @@ const appReducer = (state: AppState, action: AppAction): AppState => {
         likes: comment.likes || 0,
       };
 
+<<<<<<< HEAD
+=======
+      const deletePost = (postId: string) => {
+     setPosts(prev => prev.filter(post => post.id !== postId));
+      };
+
+>>>>>>> develop
       const updatedComments = {
         ...state.comments,
         [postId]: [...(state.comments[postId] || []), newComment],
@@ -370,6 +389,10 @@ export const usePosts = () => {
       dispatch({ type: 'UNSAVE_POST', payload: postId });
     },
     
+<<<<<<< HEAD
+=======
+    
+>>>>>>> develop
     addPost: (post: Omit<Post, 'id' | 'timestamp' | 'likes' | 'comments'>) => {
       dispatch({ type: 'ADD_POST', payload: post as Post });
     },
