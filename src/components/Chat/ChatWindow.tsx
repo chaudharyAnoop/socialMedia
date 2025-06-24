@@ -25,7 +25,6 @@ const ChatWindow = ({
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const typingTimeoutRef = useRef<NodeJS.Timeout>(null);
-
   // Scroll to bottom when new messages arrive
  useEffect(() => {
     if (messagesEndRef.current && messagesEndRef.current) {
@@ -59,7 +58,7 @@ const ChatWindow = ({
     // Set new timeout to stop typing
     typingTimeoutRef.current = setTimeout(() => {
       handleStopTyping();
-    }, 1000);
+    }, 3000);
   };
 
   const handleStopTyping = () => {

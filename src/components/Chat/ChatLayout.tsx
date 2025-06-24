@@ -2,31 +2,32 @@
 import { useState, useEffect } from 'react';
 import ChatList from './ChatList';
 import ChatWindow from './ChatWindow';
-import { Chat } from './types';
-import { useChat } from '../../hooks/useChat';
 import styles from './ChatLayout.module.css';
+import { useChat } from '../../hooks/useChat';
+import { Chat } from './types';
 import { chatApi } from '../../services/chatApi';
 
 const ChatLayout = () => {
   const [selectedChat, setSelectedChat] = useState<Chat | null>(null);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
-  
-  const {
-    conversations,
-    messages,
-    loading,
-    onlineUsers,
-    typingUsers,
-    loadConversations,
-    loadMessages,
-    sendMessage,
-    sendTyping,
-    markMessagesAsRead,
-  } = useChat();
+  const { conversations, messages, loading, error, loadConversations, loadMessages, sendMessage, sendTyping, markMessagesAsRead } = useChat();
 
   useEffect(() => {
     loadConversations();
   }, [loadConversations]);
+
+  // Restore selected chat from localStorage
+  useEffect(() => {
+    const savedChatId = localStorage.getItem('selectedChatId');
+    if (savedChatId && conversations.length > 0) {
+      const chat = conversations.find((c: { id: string; }) => c.id === savedChatId);
+      if (chat) {
+        setSelectedChat(chat);
+        loadMessages(savedChatId);
+        markMessagesAsRead(savedChatId);
+      }
+    }
+  }, [conversations, loadMessages, markMessagesAsRead]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -37,27 +38,40 @@ const ChatLayout = () => {
   }, []);
 
   const handleChatSelect = async (chat: Chat) => {
+   
     let selectedChatId = chat.id;
     if (chat.id.startsWith('temp_')) {
       try {
         const response = await chatApi.createConversation(chat.user.id);
         selectedChatId = response._id;
-        await loadConversations();
+         loadConversations();
       } catch (error) {
         console.error('Failed to create conversation:', error);
         return;
       }
     }
-    const newSelectedChat = conversations.find(c => c.id === selectedChatId) || {
-      ...chat,
-      id: selectedChatId,
-    };
+    const newSelectedChat = conversations.find((c: { id: any; }) => c.id === selectedChatId) || chat;
     setSelectedChat(newSelectedChat);
-    loadMessages(selectedChatId);
-    markMessagesAsRead(selectedChatId);
+    localStorage.setItem('selectedChatId', selectedChatId); // Save to localStorage
+    loadMessages(selectedChatId);  // fetching messages from server
+    markMessagesAsRead(selectedChatId);  // mark mesage as read , updating thier status
   };
 
-  if (loading && conversations.length === 0) {
+  if (error) {
+    return (
+      <div className={styles.container}>
+        <div className={styles.emptyState}>
+          <div className={styles.emptyStateContent}>
+            <div className={styles.emptyStateIcon}>⚠️</div>
+            <h2 className={styles.emptyStateTitle}>Error</h2>
+            <p className={styles.emptyStateDescription}>{error}</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (loading ) {
     return (
       <div className={styles.container}>
         <div className={styles.emptyState}>
@@ -72,26 +86,25 @@ const ChatLayout = () => {
 
   return (
     <div className={styles.container}>
-      <div className={`${styles.chatList} ${
-        isMobile && selectedChat ? styles.chatListHidden : ''
-      }`}>
-        <ChatList 
+      <div className={`${styles.chatList} ${isMobile && selectedChat ? styles.chatListHidden : ''}`}>
+        <ChatList
           chats={conversations}
           selectedChat={selectedChat}
           onChatSelect={handleChatSelect}
         />
       </div>
-      <div className={`${styles.chatWindow} ${
-        isMobile && !selectedChat ? styles.chatWindowHidden : ''
-      }`}>
+      <div className={`${styles.chatWindow} ${isMobile && !selectedChat ? styles.chatWindowHidden : ''}`}>
         {selectedChat ? (
-          <ChatWindow 
+          <ChatWindow
             chat={selectedChat}
             messages={messages[selectedChat.id] || []}
-            onBack={() => setSelectedChat(null)}
+            onBack={() => {
+              setSelectedChat(null);
+              localStorage.removeItem('selectedChatId'); // Clear localStorage on back
+            }}
             onSendMessage={(content) => sendMessage(selectedChat.id, content, selectedChat.user.id)}
             onTyping={(isTyping) => sendTyping(selectedChat.id, isTyping)}
-            typingUsers={typingUsers[selectedChat.id] || []}
+            typingUsers={[]}
           />
         ) : (
           <div className={styles.emptyState}>

@@ -23,7 +23,7 @@ import LoginForm from "./components/AuthForm/LoginForm";
 import { AuthProvider } from "./contexts/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Dashboard from "./components/Dashboard/Dashboard";
-import ChatLayout from "./components/chat/ChatLayout";
+import ChatLayout from "./components/Chat/ChatLayout";
 import NotificationsPage from "./pages/notifications/NotificationsPage/NotificationsPage";
 
 const LandingPage = lazy(() => import("./pages/LandingPage/LandingPage"));

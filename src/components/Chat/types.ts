@@ -1,4 +1,3 @@
-// src/components/chat/types.ts
 export interface User {
   id: string;
   username: string;
@@ -8,7 +7,7 @@ export interface User {
 }
 
 export interface Message {
-  roomId: any;
+  roomId: string | undefined;
   id: string;
   text: string;
   timestamp: Date;
@@ -18,7 +17,7 @@ export interface Message {
 }
 
 export interface Chat {
-  roomId: any;
+  roomId: string | undefined;
   id: string;
   user: User;
   lastMessage: Message;

@@ -28,6 +28,7 @@ interface AuthContextType {
   register: (userData: RegisterData) => Promise<any>;
   verifyOTP: (email: string, otp: string) => Promise<any>;
   forgotPassword: (email: string) => Promise<any>;
+  resendOTP: (email: string) => Promise<any>;
   resetPassword: (
     email: string,
     otp: string,
@@ -50,7 +51,7 @@ interface RegisterData {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-const API_BASE_URL = "http://172.50.5.102:3011";
+const API_BASE_URL = "http://172.50.5.116:3011";
 
 // Configure axios defaults
 axios.defaults.baseURL = API_BASE_URL;
@@ -68,6 +69,10 @@ const generateDeviceId = () => {
 };
 
 // Get client IP address (approximation)
+
+
+
+
 const getClientIP = async () => {
   try {
     const response = await fetch("https://api.ipify.org?format=json");
@@ -273,6 +278,21 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     }
   };
 
+  const resendOTP = async (email: string) => {
+    setLoading(true);
+    try {
+      const response = await axios.post("/auth/resend-otp", {
+        email,
+      });
+      return response.data;
+    } catch (error) {
+      console.error("Resend OTP error:", error);
+      throw error;
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const register = async (userData: RegisterData) => {
     setLoading(true);
     try {
@@ -296,6 +316,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
         email,
         otp,
       });
+      if (!response.data.success) {
+      throw new Error(response.data.message || 'OTP verification failed');
+    }
       return response.data;
     } catch (error) {
       console.error("OTP verification error:", error);
@@ -362,6 +385,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
         logout,
         loading,
         checkAuthStatus,
+        resendOTP,
       }}
     >
       {children}

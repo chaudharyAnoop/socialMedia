@@ -7,11 +7,11 @@ import { store } from "./redux/store.ts";
 import ErrorBoundary from "./components/ErrorBoundary.tsx";
 
 createRoot(document.getElementById("root")!).render(
-  <StrictMode>
+
     <Provider store={store}>
       <ErrorBoundary>
         <App />
       </ErrorBoundary>
     </Provider>
-  </StrictMode>
+ 
 );

@@ -10,7 +10,7 @@ interface ChatListProps {
   chats: Chat[];
   selectedChat: Chat | null;
   onChatSelect: (chat: Chat) => void;
-}
+}  
 
 const ChatList = ({ chats, selectedChat, onChatSelect }: ChatListProps) => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -25,12 +25,12 @@ const ChatList = ({ chats, selectedChat, onChatSelect }: ChatListProps) => {
   }, [searchQuery, loadFollowing]);
 
   const filteredChats = chats.filter(chat =>
-    chat.user.username.toLowerCase().includes(searchQuery.toLowerCase())
+    chat.user?.username?.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   const filteredFollowing = searchQuery.trim()
     ? following.filter(user =>
-        user.username.toLowerCase().includes(searchQuery.toLowerCase()) &&
+        user.username?.toLowerCase().includes(searchQuery.toLowerCase()) &&
         !chats.some(chat => chat.user.id === user.id)
       )
     : [];
@@ -47,9 +47,10 @@ const ChatList = ({ chats, selectedChat, onChatSelect }: ChatListProps) => {
     },
     unreadCount: 0,
     roomId: undefined,
-}));
-  const combinedChats = [...filteredChats, ...followingChats];
+  }));
 
+  const combinedChats = [...filteredChats, ...followingChats];
+  console.log(combinedChats)
   return (
     <div className={styles.container}>
       <div className={styles.header}>

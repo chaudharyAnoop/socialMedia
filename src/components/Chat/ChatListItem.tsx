@@ -8,6 +8,7 @@ interface ChatListItemProps {
 }
 
 const ChatListItem = ({ chat, isSelected, onClick }: ChatListItemProps) => {
+   const selectedChatId=localStorage.getItem('selectedChatId')
   const formatTime = (date: Date) => {
     const now = new Date();
     const diffInHours = (now.getTime() - date.getTime()) / (1000 * 60 * 60);
@@ -22,7 +23,6 @@ const ChatListItem = ({ chat, isSelected, onClick }: ChatListItemProps) => {
       return `${days}d`;
     }
   };
-
   return (
     <div
       onClick={onClick}
@@ -52,17 +52,17 @@ const ChatListItem = ({ chat, isSelected, onClick }: ChatListItemProps) => {
         </div>
         
         <div className={styles.bottomRow}>
-          <p className={`${styles.lastMessage} ${
+           {/* <p className={`${styles.lastMessage} ${
             chat.unreadCount > 0 ? styles.lastMessageUnread : ''
           }`}>
             {chat.lastMessage.senderId === 'current' && 'You: '}
             {chat.lastMessage.text}
-          </p>
+          </p>  */}
           
-          {chat.unreadCount > 0 && (
+          {chat.unreadCount > 0 && chat.id!=selectedChatId && (
             <div className={styles.unreadBadge}>
               <span className={styles.unreadCount}>
-                {chat.unreadCount}
+                {chat.unreadCount} + new Message
               </span>
             </div>
           )}
