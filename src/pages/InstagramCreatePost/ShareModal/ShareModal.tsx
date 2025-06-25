@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { ArrowLeft } from 'lucide-react';
 import styles from './ShareModal.module.css';
 import MediaCarousel from '../MediaCarousel/MediaCarousel';
@@ -18,21 +18,14 @@ interface TaggedPerson {
 interface ShareModalProps {
   selectedMedia: SelectedMedia[];
   content: string;
-  visibility:String;
-  setVisibility:any;
+  visibility: string;
+  setVisibility: React.Dispatch<React.SetStateAction<string>>;
   setcontent: React.Dispatch<React.SetStateAction<string>>;
   taggedUsers: TaggedPerson[];
   settaggedUsers: React.Dispatch<React.SetStateAction<TaggedPerson[]>>;
   onBack: () => void;
   onShare: () => void;
 }
-
-
-
-
-
-
-
 
 const ShareModal: React.FC<ShareModalProps> = ({
   selectedMedia,
@@ -45,121 +38,80 @@ const ShareModal: React.FC<ShareModalProps> = ({
   onBack,
   onShare
 }) => {
-
-
-  const  addpublic = (): void => {
-    setVisibility("public")
-  };
-  
-  const  addprivate = (): void => {
-    setVisibility("private");
-  };
-  
-
-
-
-
   return (
-    <div className={styles.modal}>
-      <div className={styles.shareModal}>
-        {/* Modal Header */}
-        <div className={styles.modalHeader}>
-          <button
-            onClick={onBack}
-            className={styles.modalHeaderButton}
-          >
+    <div className={styles?.modal}>
+      <div className={styles?.shareModal}>
+
+        
+        <div className={styles?.modalHeader}>
+          <button onClick={onBack} className={styles?.modalHeaderButton}>
             <ArrowLeft size={24} color="#6b7280" />
           </button>
-          <h3 className={styles.modalTitle}>Share</h3>
-          <button
-            onClick={onShare}
-            className={styles.modalHeaderButtonRight}
-          >
+          <h3 className={styles?.modalTitle}>Share</h3>
+          <button onClick={onShare} className={styles?.modalHeaderButtonRight}>
             Share
           </button>
         </div>
 
-        {/* Modal Content */}
-        <div className={styles.shareContent}>
-          {/* Image Preview */}
-          <div className={styles.shareImageContainer}>
+        
+        <div className={styles?.shareContent}>
+          
+          
+          <div className={styles?.shareImageContainer}>
             <MediaCarousel
               selectedMedia={selectedMedia}
-              setSelectedMedia={() => {}}
+              setSelectedMedia={() => {}} 
               shareMode
             />
           </div>
           
-          {/* content and Options */}
-          <div className={styles.shareOptions}>
-            {/* User Info */}
-            <div className={styles.userInfo}>
-              <div className={styles.userAvatar}></div>
-              <span className={styles.username}>your_username</span>
+          <div className={styles?.shareOptions}>
+            
+            <div className={styles?.userInfo}>
+              <div className={styles?.userAvatar}></div>
+              <span className={styles?.username}>yash rajput</span>
             </div>
             
-            {/* content */}
-            <div className={styles.contentContainer}>
+            <div className={styles?.contentContainer}>
               <textarea
                 value={content}
                 onChange={(e) => setcontent(e.target.value)}
                 placeholder="Write a content..."
-                className={styles.contentInput}
+                className={styles?.contentInput}
                 maxLength={2200}
               />
             </div>
             
-            <div className={styles.contentCounter}>
-              {content.length}/2,200
+            <div className={styles?.contentCounter}>
+              {content?.length}/2,200
             </div>
             
-            {/* Tagged People */}
             <TagInput
               taggedUsers={taggedUsers}
               settaggedUsers={settaggedUsers}
             />
-            <div className={styles.toggleButtonGroup}>
-  <button
-    className={`${styles.toggleButton} ${visibility === 'public' ? styles.active : ''}`}
-    onClick={() => setVisibility('public')}
-  >
-    Public Post
-  </button>
-  <button
-    className={`${styles.toggleButton} ${visibility === 'private' ? styles.active : ''}`}
-    onClick={() => setVisibility('private')}
-  >
-    Private Post
-  </button>
-</div>
-            
-            {/* Share Options */}
-            {/* <div className={styles.shareOptionsList}>
-              <div className={styles.shareOption}>
-                <div className={styles.shareOptionLeft}>
-                  <MapPin size={16} />
-                  <span className={styles.shareOptionLabel}>Add location</span>
-                </div>
-                <button className={styles.shareOptionButton}>
-                  Add
-                </button>
-              </div>
-              
-              <div className={styles.shareOption}>
-                <div className={styles.shareOptionLeft}>
-                  <Music size={16} />
-                  <span className={styles.shareOptionLabel}>Add music</span>
-                </div>
-                <button className={styles.shareOptionButton}>
-                  Add
-                </button>
-              </div>
-            </div> */}
+
+            <div className={styles?.toggleButtonGroup}>
+              <button
+                className={`${styles?.toggleButton} ${visibility === 'public' ? styles?.active : ''}`}
+                onClick={() => setVisibility('public')}
+              >
+                Public Post
+              </button>
+              <button
+                className={`${styles?.toggleButton} ${visibility === 'private' ? styles?.active : ''}`}
+                onClick={() => setVisibility('private')}
+              >
+                Private Post
+              </button>
+            </div>
+
           </div>
         </div>
+
       </div>
     </div>
   );
 };
 
-export default ShareModal;
+export default memo(ShareModal);

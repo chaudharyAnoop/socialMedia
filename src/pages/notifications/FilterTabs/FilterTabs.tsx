@@ -1,4 +1,4 @@
-import {memo} from 'react';
+import { memo } from 'react';
 import styles from './FilterTabs.module.css';
 import { NotificationData } from '../../../data/notifications';
 
@@ -21,22 +21,22 @@ const FilterTabs: React.FC<FilterTabsProps> = ({
   ];
 
   const getNotificationCount = (filterKey: string) => {
-    if (filterKey === 'all') return notifications.length;
-    return notifications.filter(n => n.type === filterKey).length;
+    if (filterKey === 'all') return notifications?.length || 0;
+    return notifications?.filter(n => n?.type === filterKey)?.length || 0;
   };
 
   return (
     <div className={styles.filterContainer}>
       <div className={styles.filterTabs}>
-        {filterOptions.map((filter) => {
-          const count = getNotificationCount(filter.key);
+        {filterOptions?.map((filter) => {
+          const count = getNotificationCount(filter?.key);
           return (
             <button
-              key={filter.key}
-              className={`${styles.filterTab} ${activeFilter === filter.key ? styles.active : ''}`}
-              onClick={() => onFilterChange(filter.key)}
+              key={filter?.key}
+              className={`${styles.filterTab} ${activeFilter === filter?.key ? styles.active : ''}`}
+              onClick={() => onFilterChange(filter?.key)}
             >
-              {filter.label}
+              {filter?.label}
               {count > 0 && <span className={styles.countBadge}>{count}</span>}
             </button>
           );

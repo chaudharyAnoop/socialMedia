@@ -50,7 +50,7 @@ interface RegisterData {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-const API_BASE_URL = "http://172.50.5.102:3011";
+const API_BASE_URL = "http://172.50.5.102:3011";//previos url
 
 // Configure axios defaults
 axios.defaults.baseURL = API_BASE_URL;

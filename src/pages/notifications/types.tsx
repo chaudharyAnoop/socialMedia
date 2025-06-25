@@ -1,9 +1,9 @@
-import React , {ReactNode} from "react";
+import   {ReactNode} from "react";
 
 
 export interface NotificationData {
     id: string;
-    type: 'like' | 'follow' | 'comment' | 'mention'; // filterable types only
+    type: 'like' | 'follow' | 'comment' | 'mention'; 
     user: {
       username: string;
       avatar: string | ReactNode;

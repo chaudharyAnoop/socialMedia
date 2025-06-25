@@ -23,8 +23,6 @@ interface TaggedPerson {
   id: string;
   name: string;
 }
-// const token = localStorage.getItem("instagram_user");
-// const cleanedUser = token;
 
 const InstagramCreatePost: React.FC = () => {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
@@ -60,74 +58,28 @@ const InstagramCreatePost: React.FC = () => {
     settaggedUsers([]);
     setmediaKeys([]);
   };
-  // const token  = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODQ4MDNjNTA1NzRjNGVlNDFlZDIxYTgiLCJlbWFpbCI6ImFrc2hhdEBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImRldmljZUlkIjoidGVzdC1kZXZpY2UiLCJpcEFkZHJlc3MiOiIxMjcuMC4wLjEiLCJ1c2VyQWdlbnQiOiJQb3N0bWFuUnVudGltZS83LjI5LjAiLCJpYXQiOjE3NTAwNzQ3MTcsImV4cCI6MTc1MDE2MTExNywic3ViIjoiNjg0ODAzYzUwNTc0YzRlZTQxZWQyMWE4In0.chBN1DBNLUADQ2LLYQKwinmCUioW2EowVK6JKu6kh00";
-//here we send the request to gaurav with link,content,tags people  
-  // const handleShare = (): void => {
-  //   console.log('Sharing post:', {
-  //     content,
-  //     taggedUsers: taggedUsers.map(p => p.name),
-  //     mediaKeys,
-  //     visibility
-  //   });
 
-    
-  //   const payload = {
-  //     mediaKeys,
-  //     content,
-  //     // taggedUsers: taggedUsers.map(p => p.name),
-  //     visibility
-  //   };
-  //   axios.post(
-  //     uploadmedia,
-  //     payload,
-  //     {
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //         'Authorization': `Bearer ${token}`, // if needed token is above in this file dont find here and there
-  //       },
-       
-  //     }
-  //   )
-  //   .then((response : AxiosResponse) => {
-  //     console.log('Posted successfully', response.data);
-  //   })
-  //   .catch((error:AxiosError) => {
-  //     console.error('Error posting data', error);
-  //   });
-  
-  //   // console.log("Final POST Payload:", payload);
-
-  //   closeShareModal();
-  // };
   const handleShare = async (): Promise<void> => {
-    // console.log('Sharing post:', {
-    //   content,
-    //   taggedUsers: taggedUsers.map(p => p.name),
-    //   mediaKeys,
-    //   visibility
-    // });
-     // Upload all files to S3 first
+   
 
 
 const token = localStorage.getItem("instagram_user");
      
      const media: string[] = [];
      for (const singlemedia of selectedMedia) {
-      if (!singlemedia.presignedData) continue;
+      if (!singlemedia?.presignedData) continue;
       
-      await axios.put(singlemedia.presignedData.uploadUrl, singlemedia.file, {
+      await axios.put(singlemedia?.presignedData?.uploadUrl, singlemedia?.file, {
         headers: {
-          'Content-Type': singlemedia.file.type,
+          'Content-Type': singlemedia?.file?.type,
         },
       });
       
-      media.push(singlemedia.presignedData.fileKey);
+      media.push(singlemedia?.presignedData?.fileKey);
     }
-    console.log(media);
+
     setmediaKeys(media);
-    // const taggedUsersData = taggedUsers.length > 0 
-    //   ? taggedUsers.map(p => p.id)
-    //   : "";
+  
       const payload: {
         media: string[];
         content: string;
@@ -138,10 +90,8 @@ const token = localStorage.getItem("instagram_user");
         content,
         visibility
       };
-
-// Only add taggedUsers if there are any
-if (taggedUsers.length > 0) {
-  payload.taggedUsers = taggedUsers.map(p => p.id);
+if (taggedUsers?.length > 0) {
+  payload.taggedUsers = taggedUsers?.map(p => p?.id);
 }
     axios.post(
       uploadmedia,
@@ -155,14 +105,11 @@ if (taggedUsers.length > 0) {
       }
     )
     .then((response : AxiosResponse) => {
-      console.log('Posted successfully', response.data);
+      console.log('Posted successfully', response?.data);
     })
     .catch((error:AxiosError) => {
       console.error('Error posting data', error);
-    });
-  
-    // console.log("Final POST Payload:", payload);
-    console.log(mediaKeys);
+    });  
     closeShareModal();
     Navigate("/")
   };
@@ -170,7 +117,6 @@ if (taggedUsers.length > 0) {
 
   return (
     <div className={styles.container}>
-      {/* Main Header */}
       <header className={styles.header}>
         <div className={styles.headerContent}>
           <h1 className={styles.title}>
@@ -186,7 +132,6 @@ if (taggedUsers.length > 0) {
         </div>
       </header>
 
-      {/* Main Content */}
       <main className={styles.main}>
         <div className={styles.welcome}>
           <h2 className={styles.welcomeTitle}>
@@ -198,7 +143,6 @@ if (taggedUsers.length > 0) {
         </div>
       </main>
 
-      {/* Modals */}
       {isCreateModalOpen && (
         <CreateModal
           closeCreateModal={closeCreateModal}

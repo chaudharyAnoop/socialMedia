@@ -133,11 +133,10 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
       >
         <div className={styles.avatarContainer}>
           <div className={styles.avatarBorder} style={{ borderColor: getTypeColor() }}>
-            <img
-              src={notification.user.avatar}
-              alt={notification.user.username}
-              className={styles.avatar}
-            />
+            
+              {notification.user.avatar}
+              
+          
           </div>
           <div className={styles.iconContainer}>
             {getIcon()}

@@ -1,4 +1,3 @@
-// src/components/Notifications/NotificationHeader.tsx
 import React , {memo} from 'react';
 import styles from './NotificationHeader.module.css';
 

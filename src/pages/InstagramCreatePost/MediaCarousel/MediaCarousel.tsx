@@ -22,18 +22,9 @@ const MediaCarousel: React.FC<MediaCarouselProps> = ({
 }) => {
   const [currentMediaIndex, setCurrentMediaIndex] = useState(0);
 
-  // const removeMedia = (index: number): void => {
-  //   setSelectedMedia(prev => {
-  //     const newMedia = prev.filter((_, i) => i !== index);
-  //     if (currentMediaIndex >= newMedia.length) {
-  //       setCurrentMediaIndex(Math.max(0, newMedia.length - 1));
-  //     }
-  //     return newMedia;
-  //   });
-  // };
+ 
 
   const removeMedia = (index: number): void => {
-    // Revoke the object URL to prevent memory leaks
     URL.revokeObjectURL(selectedMedia[index].preview);
     
     setSelectedMedia(prev => {
@@ -57,7 +48,6 @@ const MediaCarousel: React.FC<MediaCarouselProps> = ({
 
   return (
     <div className={styles.mediaContainer}>
-      {/* Media Carousel */}
       <div className={styles.mediaCarousel}>
         <div className={styles.mediaFrame}>
           {selectedMedia[currentMediaIndex]?.type === 'image' ? (
@@ -75,7 +65,6 @@ const MediaCarousel: React.FC<MediaCarouselProps> = ({
           )}
         </div>
         
-        {/* Navigation Arrows */}
         {selectedMedia.length > 1 && (
           <>
             {currentMediaIndex > 0 && (
@@ -97,14 +86,12 @@ const MediaCarousel: React.FC<MediaCarouselProps> = ({
           </>
         )}
         
-        {/* Media Counter */}
         {selectedMedia.length > 1 && !shareMode && (
           <div className={styles.mediaCounter}>
             {currentMediaIndex + 1}/{selectedMedia.length}
           </div>
         )}
         
-        {/* Remove Button */}
         {!shareMode && (
           <button
             onClick={() => removeMedia(currentMediaIndex)}
@@ -115,7 +102,6 @@ const MediaCarousel: React.FC<MediaCarouselProps> = ({
         )}
       </div>
       
-      {/* Thumbnail Strip */}
       {selectedMedia.length > 1 && !shareMode && (
         <div className={styles.thumbnailStrip}>
           {selectedMedia.map((media, index) => (

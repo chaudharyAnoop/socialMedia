@@ -1,6 +1,7 @@
 import { initializeApp } from 'firebase/app';
 import { getMessaging, getToken,onMessage} from 'firebase/messaging';
-import { toast } from 'react-toastify'
+import { toast } from 'react-toastify';
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyDTH8dvQznTaJRnl8NbZHPfMIMWLplKZvo",
@@ -40,7 +41,6 @@ export const requestNotificationPermission = async (): Promise<void> => {
 
     if (token) {
       console.log(' FCM Token:', token);
-      // snedNotification().psot(token , 
      
     } else {
       console.warn(' No FCM registration token available.');
@@ -50,39 +50,116 @@ export const requestNotificationPermission = async (): Promise<void> => {
   }
 };
 
-// export const onFirebaseMessage = () =>
-//     new Promise((resolve) => {
-//       onMessage(messaging, (payload) => {
-//         console.log(' Message received in foreground:', payload);
-//         resolve(payload);
-//       });
-//     });
 
+
+// export const onFirebaseMessage = () =>
+//   new Promise((resolve) => {
+//     onMessage(messaging, (payload) => {
+//       console.log(' Message received in foreground:', payload);
+
+      
+//       const notificationTitle = payload?.notification?.title || 'New Notification';
+//       const notificationBody = payload?.notification?.body || '';
+
+//       toast.info(
+//         <div>
+//           <strong>{notificationTitle}</strong>
+//           <div>{notificationBody}</div>
+//         </div>,
+//         {
+//           position: 'top-center',
+//           autoClose: 5000,
+//           closeOnClick: true,
+//         }
+//       );
+
+//       resolve(payload);
+//     });
+//   });
 export const onFirebaseMessage = () =>
   new Promise((resolve) => {
     onMessage(messaging, (payload) => {
-      console.log(' Message received in foreground:', payload);
+      console.log('Message received in foreground:', payload);
 
-      
+      // Default values
       const notificationTitle = payload?.notification?.title || 'New Notification';
       const notificationBody = payload?.notification?.body || '';
+      const notificationType = payload?.data?.type; // 'like', 'comment', 'mention', 'follow'
 
-      toast.info(
-        <div>
-          <strong>{notificationTitle}</strong>
-          <div>{notificationBody}</div>
-        </div>,
-        {
-          position: 'top-center',
-          autoClose: 5000,
-          closeOnClick: true,
-        }
-      );
+      // Customize toast based on notification type
+      switch (notificationType) {
+        case 'like':
+          toast.success(
+            <div>
+              <strong>❤️ New Like</strong>
+              <div>{notificationBody}</div>
+            </div>,
+            {
+              position: 'top-center',
+              autoClose: 3000,
+              icon: <span>'❤️'</span>,
+            }
+          );
+          break;
+
+        case 'comment':
+          toast.info(
+            <div>
+              <strong>💬 New Comment</strong>
+              <div>{notificationBody}</div>
+            </div>,
+            {
+              position: 'top-center',
+              autoClose: 4000,
+              icon:<span>'💬'</span> ,
+            }
+          );
+          break;
+
+        case 'mention':
+          toast.warning(
+            <div>
+              <strong>👋 You Were Mentioned</strong>
+              <div>{notificationBody}</div>
+            </div>,
+            {
+              position: 'top-center',
+              autoClose: 5000,
+              icon: <span>'👋'</span>,
+            }
+          );
+          break;
+
+        case 'follow':
+          toast.success(
+            <div>
+              <strong>✨ New Follower</strong>
+              <div>{notificationBody}</div>
+            </div>,
+            {
+              position: 'top-center',
+              autoClose: 4000,
+              icon: <span> '✨'</span>,
+            }
+          );
+          break;
+
+        default:
+          toast.info(
+            <div>
+              <strong>{notificationTitle}</strong>
+              <div>{notificationBody}</div>
+            </div>,
+            {
+              position: 'top-center',
+              autoClose: 3000,
+            }
+          );
+      }
 
       resolve(payload);
     });
   });
-
 
 
 

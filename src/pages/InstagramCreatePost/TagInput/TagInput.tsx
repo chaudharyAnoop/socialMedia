@@ -23,11 +23,7 @@ interface TagInputProps {
   settaggedUsers: React.Dispatch<React.SetStateAction<TaggedPerson[]>>;
 }
 
-let token = localStorage.getItem("instagram_user");
-let cleanedUser = token;
 
-// Get token from props or context instead of localStorage
-// const token = "your-auth-token-here"; // Replace with proper token management
 
 const TagInput: React.FC<TagInputProps> = ({ taggedUsers, settaggedUsers }) => {
   const [tagInput, setTagInput] = useState('');
@@ -35,63 +31,48 @@ const TagInput: React.FC<TagInputProps> = ({ taggedUsers, settaggedUsers }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const token = localStorage.getItem("instagram_user");
+  const cleanedUser = token;
 
   const debounceTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-
-
-
-
-
-  // API function to search users using Axios
   const searchUsers = async (query: string): Promise<User[]> => {
     try {
       const response = await axios.get(SEARCH_USERS, {
-        params: {
-          query: query
-        },
+        params: { query },
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${cleanedUser}`
         }
       });
 
-      console.log('API Response:', response.data);
+      const users = response?.data?.users || response?.data || [];
 
-      // Safely access the users array from the response
-      const users = response.data?.users || response.data || [];
-
-      // Filter users with proper null checks
-      const filteredUsers = users.filter((user: User) => {
+      return users?.filter((user: User) => {
         const name = user?.fullName || '';
         const username = user?.username || '';
         return (
-          name.toLowerCase().includes(query.toLowerCase()) ||
-          username.toLowerCase().includes(query.toLowerCase())
+          name?.toLowerCase()?.includes(query.toLowerCase()) ||
+          username?.toLowerCase()?.includes(query.toLowerCase())
         );
-      });
-
-      return filteredUsers;
+      }) || [];
     } catch (error) {
-      console.error('Error searching users:', error);
+      
       if (axios.isAxiosError(error)) {
-        throw new Error(`API Error: ${error.response?.status} - ${error.response?.statusText || 'Network Error'}`);
+        throw new Error(`API Error: ${error?.response?.status} - ${error?.response?.statusText || 'Network Error'}`);
       }
       throw new Error('Failed to search users. Please try again.');
     }
   };
 
-  // Debounced search effect
   useEffect(() => {
-    if (tagInput.trim().length > 0) {
-      // Clear previous timeout
-      if (debounceTimeoutRef.current) {
+    if (tagInput?.trim()?.length > 0) {
+      if (debounceTimeoutRef?.current) {
         clearTimeout(debounceTimeoutRef.current);
       }
 
-      // Set new timeout
       debounceTimeoutRef.current = setTimeout(async () => {
         setIsLoading(true);
         setError(null);
@@ -106,45 +87,43 @@ const TagInput: React.FC<TagInputProps> = ({ taggedUsers, settaggedUsers }) => {
         } finally {
           setIsLoading(false);
         }
-      }, 1000); // 1 second debounce
+      }, 1000);
     } else {
       setShowDropdown(false);
       setSearchResults([]);
       setIsLoading(false);
     }
 
-    // Cleanup timeout on unmount or when tagInput changes
     return () => {
-      if (debounceTimeoutRef.current) {
+      if (debounceTimeoutRef?.current) {
         clearTimeout(debounceTimeoutRef.current);
       }
     };
   }, [tagInput]);
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      if (dropdownRef?.current && !dropdownRef.current.contains(event.target as Node)) {
         setShowDropdown(false);
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document?.addEventListener('mousedown', handleClickOutside);
+    return () => document?.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
   const addTaggedPerson = (user?: User): void => {
     const personToAdd = user || {
       _id: Date.now().toString(),
-      username: tagInput.trim(),
-      fullName: tagInput.trim(),
+      username: tagInput?.trim(),
+      fullName: tagInput?.trim(),
       email: ''
     };
 
-    if (personToAdd.username && !taggedUsers.find(p => p.name === personToAdd.username)) {
+    if (personToAdd?.username && !taggedUsers?.find(p => p?.name === personToAdd?.username)) {
       const newPerson: TaggedPerson = {
-        id: personToAdd._id,
-        name: personToAdd.username
+        id: personToAdd?._id,
+        name: personToAdd?.username
       };
       settaggedUsers(prev => [...prev, newPerson]);
       setTagInput('');
@@ -154,14 +133,14 @@ const TagInput: React.FC<TagInputProps> = ({ taggedUsers, settaggedUsers }) => {
   };
 
   const removeTaggedPerson = (id: string): void => {
-    settaggedUsers(prev => prev.filter(p => p.id !== id));
+    settaggedUsers(prev => prev?.filter(p => p?.id !== id));
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
+    const value = e?.target?.value;
     setTagInput(value);
 
-    if (value.trim().length === 0) {
+    if (value?.trim()?.length === 0) {
       setShowDropdown(false);
       setSearchResults([]);
       setIsLoading(false);
@@ -170,25 +149,25 @@ const TagInput: React.FC<TagInputProps> = ({ taggedUsers, settaggedUsers }) => {
   };
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
+    if (e?.key === 'Enter') {
       e.preventDefault();
-      if (!showDropdown && tagInput.trim()) {
+      if (!showDropdown && tagInput?.trim()) {
         addTaggedPerson();
       }
     }
   };
 
   return (
-    <div className={styles.tagSection}>
-      <div className={styles.tagHeader}>
+    <div className={styles?.tagSection}>
+      <div className={styles?.tagHeader}>
         <UserPlus size={16} />
-        <span className={styles.tagLabel}>Tag people</span>
+        <span className={styles?.tagLabel}>Tag people</span>
       </div>
 
-      <div className={styles.tagInputContainer} ref={dropdownRef}>
-        <div className={styles.tagInput}>
-          <div className={styles.inputWithIcon}>
-            <Search size={16} className={styles.searchIcon} />
+      <div className={styles?.tagInputContainer} ref={dropdownRef}>
+        <div className={styles?.tagInput}>
+          <div className={styles?.inputWithIcon}>
+            <Search size={16} className={styles?.searchIcon} />
             <input
               ref={inputRef}
               type="text"
@@ -196,48 +175,47 @@ const TagInput: React.FC<TagInputProps> = ({ taggedUsers, settaggedUsers }) => {
               onChange={handleInputChange}
               onKeyPress={handleKeyPress}
               placeholder="Search users..."
-              className={styles.tagInputField}
+              className={styles?.tagInputField}
             />
             {isLoading && (
-              <Loader2 size={16} className={`${styles.loadingIcon} ${styles.spinning}`} />
+              <Loader2 size={16} className={`${styles?.loadingIcon} ${styles?.spinning}`} />
             )}
           </div>
           <button
             onClick={() => addTaggedPerson()}
-            className={styles.tagAddButton}
-            disabled={!tagInput.trim() || isLoading}
+            className={styles?.tagAddButton}
+            disabled={!tagInput?.trim() || isLoading}
           >
             Add
           </button>
         </div>
 
-        {/* Dropdown Modal */}
         {showDropdown && (
-          <div className={styles.dropdown}>
+          <div className={styles?.dropdown}>
             {error ? (
-              <div className={styles.errorMessage}>
+              <div className={styles?.errorMessage}>
                 {error}
               </div>
-            ) : searchResults.length > 0 ? (
-              <div className={styles.userList}>
-                {searchResults.map((user) => (
+            ) : searchResults?.length > 0 ? (
+              <div className={styles?.userList}>
+                {searchResults?.map((user) => (
                   <div
-                    key={user._id}
-                    className={styles.userItem}
+                    key={user?._id}
+                    className={styles?.userItem}
                     onClick={() => addTaggedPerson(user)}
                   >
-                    <div className={styles.userInfo}>
-                      <div className={styles.userName}>{user.fullName}</div>
-                      <div className={styles.userHandle}>@{user.username}</div>
-                      {user.bio && (
-                        <div className={styles.userBio}>{user.bio}</div>
+                    <div className={styles?.userInfo}>
+                      <div className={styles?.userName}>{user?.fullName}</div>
+                      <div className={styles?.userHandle}>@{user?.username}</div>
+                      {user?.bio && (
+                        <div className={styles?.userBio}>{user?.bio}</div>
                       )}
                     </div>
                   </div>
                 ))}
               </div>
             ) : (
-              <div className={styles.noResults}>
+              <div className={styles?.noResults}>
                 No users found for "{tagInput}"
               </div>
             )}
@@ -245,14 +223,14 @@ const TagInput: React.FC<TagInputProps> = ({ taggedUsers, settaggedUsers }) => {
         )}
       </div>
 
-      {taggedUsers.length > 0 && (
-        <div className={styles.tagList}>
-          {taggedUsers.map((person) => (
-            <span key={person.id} className={styles.tag}>
-              @{person.name}
+      {taggedUsers?.length > 0 && (
+        <div className={styles?.tagList}>
+          {taggedUsers?.map((person) => (
+            <span key={person?.id} className={styles?.tag}>
+              @{person?.name}
               <button
-                onClick={() => removeTaggedPerson(person.id)}
-                className={styles.tagRemove}
+                onClick={() => removeTaggedPerson(person?.id)}
+                className={styles?.tagRemove}
               >
                 <X size={12} />
               </button>
