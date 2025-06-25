@@ -16,7 +16,7 @@ const OTPVerification: React.FC<OTPVerificationProps> = ({
   onVerified,
   onBack,
 }) => {
-  const { verifyOTP, loading } = useAuth();
+  const { verifyOTP, resendOTP, loading } = useAuth();
   const [timer, setTimer] = useState(60);
   const [canResend, setCanResend] = useState(false);
   const [error, setError] = useState("");
@@ -67,7 +67,7 @@ const OTPVerification: React.FC<OTPVerificationProps> = ({
     setSuccess("New OTP sent to your email");
 
     try {
-      // Call resend OTP API if available
+      await resendOTP(email);
       console.log("Resending OTP to:", email);
     } catch (error) {
       setError("Failed to resend OTP. Please try again.");

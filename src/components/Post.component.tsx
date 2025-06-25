@@ -1314,6 +1314,7 @@ export default function Post({
   };
 
   const handleLikeComment = (commentId: string) => {
+    console.log(commentId);
     dispatch(likeComment(commentId));
   };
 
@@ -1343,7 +1344,7 @@ export default function Post({
       [commentId]: !prev[commentId],
     }));
     if (!showReplies[commentId]) {
-      dispatch(fetchAllReplies(commentId)); // Fetch replies when toggled
+      dispatch(fetchAllReplies(commentId));
     }
   };
 
@@ -1361,7 +1362,12 @@ export default function Post({
         </div>
         <p className={styles.commentContent}>{comment.content}</p>
         <div className={styles.commentActions}>
-          <button onClick={() => handleLikeComment(comment._id)}>
+          <button
+            onClick={() => {
+              console.log(comment.commentId);
+              handleLikeComment(comment.commentId);
+            }}
+          >
             <FaHeart /> {comment.likes || 0}
           </button>
           <button
@@ -1374,7 +1380,7 @@ export default function Post({
           >
             Reply
           </button>
-          <button onClick={() => toggleReplies(comment._id)}>
+          <button onClick={() => toggleReplies(comment.commentId)}>
             {showReplies[comment._id]
               ? "Hide Replies"
               : `View ${comment.replies?.length || 0} Replies`}

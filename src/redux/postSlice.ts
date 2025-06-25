@@ -75,11 +75,12 @@ export const likePost = createAsyncThunk<
   { rejectValue: string }
 >("posts/likePost", async (postId, { rejectWithValue }) => {
   try {
-    const token = localStorage.getItem("instagram_user")?.slice(1, -1);
+    const token = localStorage.getItem("instagram_user");
     const headers = {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     };
+    console.log(token);
     const response = await axios.post(
       `http://172.50.5.102:3000/posts/${postId}/like`,
       { userId: "Anoop Kumar Chaudhary" }, // Assuming userId is sent for tracking

@@ -21,7 +21,6 @@ import {
   FaTimes,
   FaTimesCircle,
   FaUser,
-
 } from "react-icons/fa";
 import {
   FaCircleInfo,
@@ -35,27 +34,31 @@ import type { AppDispatch, RootState } from "../../redux/store";
 import { toggleNavigationBar } from "../../redux/navigationBarSlice";
 import { Home, MessageCircle } from "lucide-react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function NavigationBar() {
+  const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const isSidebarVisible = useSelector(
     (state: RootState) => state.sidebar.isVisible
   );
 
- 
-  const logoutHnadler = async () =>{
-   const res =  await axios.post("http://172.50.5.102:3011/auth/logout",{
-
-      headers : {
-        // "Authorization" : `Bearer ${}`
-      }
-
-
-
-   })
-
-
-  }
+  const logoutHnadler = async () => {
+    const token = localStorage.getItem("instagram_user");
+    const cleanedUser = token;
+    console.log(token);
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    };
+    const res = await axios.post("http://172.50.5.102:3011/auth/logout", {
+      headers,
+    });
+    if (res.status === 201) {
+      localStorage.clear();
+      window.location.reload();
+    }
+  };
   return (
     <div className={styles.outer}>
       <div className={isSidebarVisible ? styles.main : styles.hideMain}>

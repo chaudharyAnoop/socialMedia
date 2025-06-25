@@ -260,6 +260,7 @@ import {
 import axios from "axios";
 
 export interface Comment {
+  commentId: string;
   _id: string;
   postId: string;
   user: string;
@@ -283,8 +284,8 @@ const initialState: CommentsState = {
   error: null,
 };
 
-let token = localStorage.getItem("instagram_user");
-let cleanedUser = token?.slice(1, -1);
+const token = localStorage.getItem("instagram_user");
+const cleanedUser = token;
 const headers = {
   "Content-Type": "application/json",
   Authorization: `Bearer ${cleanedUser}`,
@@ -405,7 +406,6 @@ const commentsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // Fetch Comments
       .addCase(fetchComments.pending, (state) => {
         state.status = "loading";
       })
@@ -420,7 +420,6 @@ const commentsSlice = createSlice({
         state.status = "failed";
         state.error = action.error.message || "Failed to fetch comments";
       })
-      // Add Comment
       .addCase(
         addComment.fulfilled,
         (state, action: PayloadAction<Comment>) => {
@@ -431,7 +430,6 @@ const commentsSlice = createSlice({
         state.status = "failed";
         state.error = action.error.message || "Failed to add comment";
       })
-      // Like Comment
       .addCase(
         likeComment.fulfilled,
         (
@@ -458,7 +456,7 @@ const commentsSlice = createSlice({
       .addCase(likeComment.rejected, (state, action) => {
         state.error = action.error.message || "Failed to like comment";
       })
-      // Reply Comment
+
       .addCase(
         replyComment.fulfilled,
         (
@@ -494,11 +492,11 @@ const commentsSlice = createSlice({
         fetchAllReplies.fulfilled,
         (state, action: PayloadAction<Comment[], string, { arg: string }>) => {
           state.status = "succeeded";
-          const commentId = action.meta.arg; // Get the commentId from meta
+          const commentId = action.meta.arg;
           const updateReplies = (comments: Comment[]) => {
             for (const comment of comments) {
               if (comment._id === commentId) {
-                comment.replies = action.payload; // Update replies with fetched data
+                comment.replies = action.payload;
                 return true;
               }
               if (comment.replies) {
