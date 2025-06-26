@@ -7,7 +7,6 @@
         align-items: center;
         padding: 0 30px;
         overflow-y: scroll;
-
     }
 
     .tags {
@@ -27,7 +26,6 @@
         font-size: 18px;
         font-weight: 700;
         padding: 7px 20px;
-        /* background-color: rgb(233, 233, 233); */
         border-radius: 30px;
         margin: 4px 20px;
     }
@@ -71,9 +69,7 @@
         .t1,
         .t2,
         .t3 {
-
             background-color: rgb(0, 0, 0);
-
         }
 
         .t2 {
@@ -91,7 +87,6 @@
         align-items: center;
         padding: 0 30px;
         overflow: scroll;
-
     }
 
     .tags {
@@ -111,7 +106,6 @@
         font-size: 16px;
         font-weight: 700;
         padding: 7px 20px;
-        /* background-color: rgb(15, 15, 15); */
         border-radius: 30px;
         margin: 4px 10px;
     }
@@ -139,9 +133,7 @@
         .t1,
         .t2,
         .t3 {
-
             background-color: rgb(0, 0, 0);
-
         }
 
         .t2 {
@@ -159,8 +151,6 @@
         width: 100vw;
         align-items: center;
         padding: 25px 0;
-
-
     }
 
     .tags {
@@ -208,15 +198,12 @@
         .t1,
         .t2,
         .t3 {
-
             background-color: rgb(0, 0, 0);
-
         }
 
         .t2 {
             width: 70px;
             background-color: rgb(24, 24, 24);
         }
-
     }
 }

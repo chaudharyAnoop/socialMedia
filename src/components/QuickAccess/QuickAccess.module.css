@@ -12,16 +12,11 @@
         overflow-y: hidden;
         transition: 200ms ease-in-out;
         display: none;
-        /* scrollbar-color: transparent transparent; */
     }
 
     .main:hover {
-        /* overflow-y: scroll; */
         transition: 200ms ease-in-out;
-        /* scrollbar-color: #888 transparent; */
     }
-
-
 
     .heading {
         display: flex;
@@ -89,16 +84,11 @@
         overflow-y: hidden;
         transition: 200ms ease-in-out;
         display: none;
-        /* scrollbar-color: transparent transparent; */
     }
 
     .main:hover {
-        /* overflow-y: scroll; */
         transition: 200ms ease-in-out;
-        /* scrollbar-color: #888 transparent; */
     }
-
-
 
     .heading {
         display: flex;
@@ -165,16 +155,11 @@
         padding: 0 5px;
         overflow-y: hidden;
         transition: 200ms ease-in-out;
-        /* scrollbar-color: transparent transparent; */
     }
 
     .main:hover {
-        /* overflow-y: scroll; */
         transition: 200ms ease-in-out;
-        /* scrollbar-color: #888 transparent; */
     }
-
-
 
     .heading {
         display: flex;

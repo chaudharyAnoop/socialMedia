@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import { Formik, Form } from "formik";
+import { useNavigate } from "react-router-dom";
+
 import FormikInput from "../FormInput/FormikInput";
 import SocialLogin from "../SocialLogin/SocialLogin";
+import { useAuth } from "../../contexts/AuthContext";
 import {
   loginSchema,
   forgotPasswordSchema,
 } from "../../utils/validationSchemas";
-import { useAuth } from "../../contexts/AuthContext";
-import { useNavigate } from "react-router-dom";
+
 import styles from "./AuthForm.module.css";
 
 interface LoginFormProps {

@@ -1,20 +1,23 @@
-import styles from "./App.module.css";
-import React, { useEffect } from "react";
-import { ToastContainer } from "react-toastify";
+import React, { useEffect, Suspense, lazy } from "react";
 import { Route, Routes, useLocation, BrowserRouter } from "react-router-dom";
-import NavigationBar from "./components/NavigationBar/NavigationBar";
-import QuickAccess from "./components/QuickAccess/QuickAccess";
-import { Suspense, lazy } from "react";
-import ExplorePage from "./pages/explore/ExplorePage";
-import Signin from "./pages/Signin/Signin";
+import { ToastContainer } from "react-toastify";
+
+import { AuthProvider } from "./contexts/AuthContext";
 import {
   onFirebaseMessage,
   requestNotificationPermission,
 } from "./firebase/firebase";
+
+import NavigationBar from "./components/NavigationBar/NavigationBar";
+import QuickAccess from "./components/QuickAccess/QuickAccess";
+import ExplorePage from "./pages/explore/ExplorePage";
+import Signin from "./pages/Signin/Signin";
 import InstagramCreatePost from "./pages/InstagramCreatePost/InstagramCreatePost";
-import { AuthProvider } from "./contexts/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Dashboard from "./components/Dashboard/Dashboard";
+
+import styles from "./App.module.css";
+
 import NotificationsPage from "./pages/notifications/NotificationsPage/NotificationsPage";
 
 const LandingPage = lazy(() => import("./pages/LandingPage/LandingPage"));

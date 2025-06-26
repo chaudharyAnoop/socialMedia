@@ -1,10 +1,13 @@
-import React, { useEffect, useRef, useCallback } from "react";
-import styles from "./LandingPage.module.css";
+import { useEffect, useRef, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { v4 as uuidv4 } from "uuid";
+
 import type { AppDispatch, RootState } from "../../redux/store";
 import { fetchPosts, resetPosts } from "../../redux/postSlice";
+
 import Post from "../../components/Post.component";
-import { v4 as uuidv4 } from "uuid";
+
+import styles from "./LandingPage.module.css";
 
 function LandingPage() {
   const dispatch = useDispatch<AppDispatch>();

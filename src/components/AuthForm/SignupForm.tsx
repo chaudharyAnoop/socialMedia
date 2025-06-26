@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import { Formik, Form } from "formik";
+
 import FormikInput from "../FormInput/FormikInput";
 import SocialLogin from "../SocialLogin/SocialLogin";
 import PasswordStrength from "../PasswordStrength/PasswordStrength";
-import { registerSchema } from "../../utils/validationSchemas";
+
 import { useAuth } from "../../contexts/AuthContext";
+import { registerSchema } from "../../utils/validationSchemas";
+
 import styles from "./AuthForm.module.css";
 
 interface SignupFormProps {

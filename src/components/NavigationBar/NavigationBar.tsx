@@ -1,43 +1,26 @@
-import React from "react";
 import { NavLink } from "react-router-dom";
-import styles from "./NavigationBar.module.css";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+
+import { toggleNavigationBar } from "../../redux/navigationBarSlice";
+import type { AppDispatch, RootState } from "../../redux/store";
+
 import {
-  FaArrowAltCircleLeft,
-  FaArrowDown,
-  FaArrowLeft,
-  FaBackward,
   FaBars,
-  FaBookmark,
-  FaEye,
-  FaHeart,
-  FaHome,
-  FaInternetExplorer,
   FaPlus,
   FaRegBookmark,
   FaRegHeart,
   FaRegTimesCircle,
   FaRegUser,
   FaSearch,
-  FaTimes,
-  FaTimesCircle,
-  FaUser,
 } from "react-icons/fa";
-import {
-  FaCircleInfo,
-  FaExplosion,
-  FaMessage,
-  FaPerson,
-} from "react-icons/fa6";
+import { FaCircleInfo } from "react-icons/fa6";
 import { CgLogOut } from "react-icons/cg";
-import { useDispatch, useSelector } from "react-redux";
-import type { AppDispatch, RootState } from "../../redux/store";
-import { toggleNavigationBar } from "../../redux/navigationBarSlice";
 import { Home, MessageCircle } from "lucide-react";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
+
+import styles from "./NavigationBar.module.css";
 
 function NavigationBar() {
-  const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const isSidebarVisible = useSelector(
     (state: RootState) => state.sidebar.isVisible
@@ -45,7 +28,6 @@ function NavigationBar() {
 
   const logoutHnadler = async () => {
     const token = localStorage.getItem("instagram_user");
-    const cleanedUser = token;
     console.log(token);
     const headers = {
       "Content-Type": "application/json",
@@ -93,17 +75,6 @@ function NavigationBar() {
               </div>
             </NavLink>
           </li>{" "}
-          {/* <li className={styles.list_li}>
-            <NavLink to="/" className={styles.link}>
-              <div className={styles.tile}>
-                <div className={styles.name}>
-                  <FaEye className={styles.icon} />
-                  <p className={styles.head}> Explore</p>
-                </div>
-                <p className={styles.val}>suggestion</p>
-              </div>
-            </NavLink>
-          </li>{" "} */}
           <li className={styles.list_li}>
             <NavLink to="/create" className={styles.link}>
               <div className={styles.tile}>
@@ -155,7 +126,6 @@ function NavigationBar() {
                   <FaRegUser className={styles.icon} />
                   <p className={styles.head}> Profile</p>
                 </div>
-                {/* <p className={styles.val}>10</p> */}
               </div>
             </NavLink>
           </li>
@@ -166,7 +136,6 @@ function NavigationBar() {
                   <CgLogOut className={styles.icon} />
                   <p className={styles.head}> Logout</p>
                 </div>
-                {/* <p className={styles.val}>10</p> */}
               </div>
             </NavLink>
           </li>
@@ -186,7 +155,6 @@ function NavigationBar() {
               <FaBars className={styles.icon} />
               <p className={styles.head}> More</p>
             </div>
-            {/* <p className={styles.val}>10</p> */}
           </div>
         </div>
       </div>

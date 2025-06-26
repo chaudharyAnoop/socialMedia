@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import styles from "../styles/Post.module.css";
-import { FaHeart, FaRegBookmark, FaRegHeart, FaTimes } from "react-icons/fa";
-import { MessageCircle, Send } from "lucide-react";
+import type { AppDispatch, RootState } from "../redux/store";
+
 import {
   fetchComments,
   addComment,
@@ -13,7 +12,11 @@ import {
   fetchAllReplies,
   type Comment,
 } from "../redux/commentSlice";
-import type { AppDispatch, RootState } from "../redux/store";
+
+import { FaHeart, FaRegBookmark, FaRegHeart, FaTimes } from "react-icons/fa";
+import { MessageCircle, Send } from "lucide-react";
+
+import styles from "../styles/Post.module.css";
 
 interface CircularImageProps {
   imgUrl: string;

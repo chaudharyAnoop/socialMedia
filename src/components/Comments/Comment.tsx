@@ -1,7 +1,6 @@
-import React from "react";
-import styles from "./Comment.module.css";
+import { Heart } from "lucide-react";
 
-import { Heart, Home, MessageCircle } from "lucide-react";
+import styles from "./Comment.module.css";
 
 function Comment() {
   const txt = `Wow, this looks amazing! 😍 Keep shining! ✨ #Inspo dashbdgb dajdas dbjasbdas dhasvdbas dbhasvd asdbva sd dbausd asjdas dbsad asdasdb asdabsd asbd asbd anbs dasd had sad `;
