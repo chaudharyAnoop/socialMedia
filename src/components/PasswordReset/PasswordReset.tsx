@@ -1,9 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { Formik, Form } from "formik";
+import React, { useEffect, useReducer } from "react";
+
+import { Formik, Form, FormikHelpers } from "formik";
+import { AxiosError } from "axios";
+
+import { useAuth } from "../../contexts/AuthContext";
+import { resetPasswordSchema } from "../../utils/validationSchemas";
+
 import FormikInput from "../FormInput/FormikInput";
 import PasswordStrength from "../PasswordStrength/PasswordStrength";
-import { resetPasswordSchema } from "../../utils/validationSchemas";
-import { useAuth } from "../../contexts/AuthContext";
 import styles from "./PasswordReset.module.css";
 
 interface PasswordResetProps {
@@ -12,48 +16,99 @@ interface PasswordResetProps {
   onBack: () => void;
 }
 
+interface PasswordResetState {
+  timer: number;
+  canResend: boolean;
+  error: string;
+  success: string;
+  showPasswordStrength: boolean;
+}
+
+type PasswordResetAction =
+  | { type: "SET_TIMER"; payload: number }
+  | { type: "SET_CAN_RESEND"; payload: boolean }
+  | { type: "SET_ERROR"; payload: string }
+  | { type: "SET_SUCCESS"; payload: string }
+  | { type: "SET_SHOW_PASSWORD_STRENGTH"; payload: boolean }
+  | { type: "RESET_STATE" };
+
+const initialState: PasswordResetState = {
+  timer: 60,
+  canResend: false,
+  error: "",
+  success: "",
+  showPasswordStrength: false,
+};
+
+function passwordResetReducer(
+  state: PasswordResetState,
+  action: PasswordResetAction
+): PasswordResetState {
+  switch (action.type) {
+    case "SET_TIMER":
+      return { ...state, timer: action.payload };
+    case "SET_CAN_RESEND":
+      return { ...state, canResend: action.payload };
+    case "SET_ERROR":
+      return { ...state, error: action.payload, success: "" };
+    case "SET_SUCCESS":
+      return { ...state, success: action.payload, error: "" };
+    case "SET_SHOW_PASSWORD_STRENGTH":
+      return { ...state, showPasswordStrength: action.payload };
+    case "RESET_STATE":
+      return { ...initialState, timer: state.timer };
+    default:
+      return state;
+  }
+}
+
+interface ResetFormValues {
+  otp: string;
+  newPassword: string;
+  confirmPassword: string;
+}
+
 const PasswordReset: React.FC<PasswordResetProps> = ({
   email,
   onPasswordReset,
   onBack,
 }) => {
   const { resetPassword, loading } = useAuth();
-  const [timer, setTimer] = useState(60);
-  const [canResend, setCanResend] = useState(false);
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
-  const [showPasswordStrength, setShowPasswordStrength] = useState(false);
+  const [state, dispatch] = useReducer(passwordResetReducer, initialState);
 
   useEffect(() => {
-    if (timer > 0) {
+    if (state.timer > 0) {
       const interval = setInterval(() => {
-        setTimer(timer - 1);
+        dispatch({ type: "SET_TIMER", payload: state.timer - 1 });
       }, 1000);
       return () => clearInterval(interval);
     } else {
-      setCanResend(true);
+      dispatch({ type: "SET_CAN_RESEND", payload: true });
     }
-  }, [timer]);
+  }, [state.timer]);
 
   const handleSubmit = async (
     values: { otp: string; newPassword: string; confirmPassword: string },
-    { setSubmitting }: any
+    { setSubmitting }: FormikHelpers<ResetFormValues>
   ) => {
-    setError("");
-    setSuccess("");
+    dispatch({ type: "RESET_STATE" });
     setSubmitting(true);
 
     try {
       await resetPassword(email, values.otp, values.newPassword);
-      setSuccess("Password reset successfully! Redirecting to login...");
+      dispatch({
+        type: "SET_SUCCESS",
+        payload: "Password reset successfully! Redirecting to login...",
+      });
       setTimeout(() => {
         onPasswordReset();
       }, 1500);
-    } catch (error: any) {
+    } catch (error) {
+      const axiosError = error as AxiosError<{ message?: string }>;
       const errorMessage =
-        error.response?.data?.message ||
+        axiosError.response?.data?.message ||
         "Invalid OTP or failed to reset password. Please try again.";
-      setError(errorMessage);
+      dispatch({ type: "SET_ERROR", payload: errorMessage });
       console.error("Password Reset Error:", error);
     } finally {
       setSubmitting(false);
@@ -61,18 +116,19 @@ const PasswordReset: React.FC<PasswordResetProps> = ({
   };
 
   const handleResend = async () => {
-    setTimer(60);
-    setCanResend(false);
-    setError("");
-    setSuccess("New OTP sent to your email");
+    dispatch({ type: "SET_TIMER", payload: 60 });
+    dispatch({ type: "SET_CAN_RESEND", payload: false });
+    dispatch({ type: "SET_SUCCESS", payload: "New OTP sent to your email" });
 
     try {
-      // Call resend OTP API if available
       console.log("Resending OTP to:", email);
     } catch (error) {
-      setError("Failed to resend OTP. Please try again.");
-      setCanResend(true);
-      setTimer(0);
+      dispatch({
+        type: "SET_ERROR",
+        payload: "Failed to resend OTP. Please try again.",
+      });
+      dispatch({ type: "SET_CAN_RESEND", payload: true });
+      dispatch({ type: "SET_TIMER", payload: 0 });
     }
   };
 
@@ -107,13 +163,17 @@ const PasswordReset: React.FC<PasswordResetProps> = ({
               type="password"
               placeholder="New Password"
               showPasswordToggle
-              onFocus={() => setShowPasswordStrength(true)}
-              onBlur={() => setShowPasswordStrength(false)}
+              onFocus={() =>
+                dispatch({ type: "SET_SHOW_PASSWORD_STRENGTH", payload: true })
+              }
+              onBlur={() =>
+                dispatch({ type: "SET_SHOW_PASSWORD_STRENGTH", payload: false })
+              }
             />
 
             <PasswordStrength
               password={values.newPassword}
-              showStrength={showPasswordStrength}
+              showStrength={state.showPasswordStrength}
             />
 
             <FormikInput
@@ -123,9 +183,10 @@ const PasswordReset: React.FC<PasswordResetProps> = ({
               showPasswordToggle
             />
 
-            {error && <div className={styles.error}>{error}</div>}
-
-            {success && <div className={styles.success}>{success}</div>}
+            {state.error && <div className={styles.error}>{state.error}</div>}
+            {state.success && (
+              <div className={styles.success}>{state.success}</div>
+            )}
 
             <button
               type="submit"
@@ -141,7 +202,7 @@ const PasswordReset: React.FC<PasswordResetProps> = ({
       </Formik>
 
       <div>
-        {canResend ? (
+        {state.canResend ? (
           <button
             onClick={handleResend}
             className={styles.resendButton}
@@ -150,7 +211,7 @@ const PasswordReset: React.FC<PasswordResetProps> = ({
             Resend code
           </button>
         ) : (
-          <div className={styles.resendText}>Resend code in {timer}s</div>
+          <div className={styles.resendText}>Resend code in {state.timer}s</div>
         )}
       </div>
 

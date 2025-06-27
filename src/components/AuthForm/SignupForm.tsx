@@ -1,18 +1,28 @@
 import React, { useState } from "react";
-import { Formik, Form } from "formik";
 
-import FormikInput from "../FormInput/FormikInput";
-import SocialLogin from "../SocialLogin/SocialLogin";
-import PasswordStrength from "../PasswordStrength/PasswordStrength";
+import { Formik, Form } from "formik";
+import { AxiosError } from "axios";
 
 import { useAuth } from "../../contexts/AuthContext";
 import { registerSchema } from "../../utils/validationSchemas";
 
+import FormikInput from "../FormInput/FormikInput";
+import SocialLogin from "../SocialLogin/SocialLogin";
+import PasswordStrength from "../PasswordStrength/PasswordStrength";
 import styles from "./AuthForm.module.css";
 
 interface SignupFormProps {
   onLoginClick: () => void;
   onSignupSuccess: (email: string) => void;
+}
+
+interface SignupFormValues {
+  email: string;
+  password: string;
+  confirmPassword: string;
+  fullName: string;
+  username: string;
+  bio?: string;
 }
 
 const SignupForm: React.FC<SignupFormProps> = ({
@@ -23,7 +33,7 @@ const SignupForm: React.FC<SignupFormProps> = ({
   const [error, setError] = useState("");
   const [showPasswordStrength, setShowPasswordStrength] = useState(false);
 
-  const handleSignup = async (values: any) => {
+  const handleSignup = async (values: SignupFormValues) => {
     setError("");
     try {
       await register({
@@ -35,9 +45,10 @@ const SignupForm: React.FC<SignupFormProps> = ({
         isPrivate: false,
       });
       onSignupSuccess(values.email);
-    } catch (error: any) {
+    } catch (error) {
+      const axiosError = error as AxiosError<{ message?: string }>;
       setError(
-        error.response?.data?.message ||
+        axiosError.response?.data?.message ||
           "Registration failed. Please try again."
       );
     }

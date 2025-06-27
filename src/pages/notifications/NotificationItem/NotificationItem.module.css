@@ -1,10 +1,10 @@
 .notificationItem {
   position: relative;
   overflow: hidden;
-  margin: 8px 16px;
-  border-radius: 16px;
+  margin: 0.5rem 1rem;
+  border-radius: 1rem;
   background-color: #ffffff;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  box-shadow: 0 0.125rem 0.75rem rgba(0, 0, 0, 0.08);
 }
 
 .deleteBackground {
@@ -12,7 +12,7 @@
   right: 0;
   top: 0;
   bottom: 0;
-  width: 80px;
+  width: 5rem;
   background-color: #ff3040;
   display: flex;
   align-items: center;
@@ -23,17 +23,17 @@
 .notificationContent {
   display: flex;
   align-items: center;
-  padding: 16px;
+  padding: 1rem;
   background-color: #ffffff;
-  gap: 16px;
+  gap: 1rem;
   position: relative;
   border-left: none;
-  border-radius: 16px;
+  border-radius: 1rem;
 }
 
 .unread {
   background-color: #f8f9ff;
-  border-left-width: 4px;
+  border-left-width: 0.25rem;
   border-left-style: solid;
 }
 
@@ -43,12 +43,12 @@
 }
 
 .avatarBorder {
-  width: 48px;
-  height: 48px;
+  width: 3rem;
+  height: 3rem;
   border-radius: 50%;
   background-color: #ffffff;
-  border: 3px solid;
-  padding: 3px;
+  border: 0.1875rem solid;
+  padding: 0.1875rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -59,17 +59,17 @@
   height: 100%;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid #ffffff;
+  border: 0.125rem solid #ffffff;
 }
 
 .iconContainer {
   position: absolute;
-  bottom: -2px;
-  right: -2px;
+  bottom: -0.125rem;
+  right: -0.125rem;
   background-color: #ffffff;
   border-radius: 50%;
-  padding: 6px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  padding: 0.375rem;
+  box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.15);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -81,10 +81,10 @@
 }
 
 .text {
-  font-size: 15px;
+  font-size: 0.9375rem;
   color: #1c1e21;
   line-height: 1.4;
-  margin-bottom: 4px;
+  margin-bottom: 0.25rem;
   word-break: break-word;
 }
 
@@ -98,7 +98,7 @@
 }
 
 .timestamp {
-  font-size: 13px;
+  font-size: 0.8125rem;
   color: #8a8d91;
   font-weight: 500;
 }
@@ -108,71 +108,69 @@
 }
 
 .image {
-  width: 48px;
-  height: 48px;
-  border-radius: 12px;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 0.75rem;
   object-fit: cover;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.1);
 }
 
 .followButton {
   background-color: #1877f2;
   color: #ffffff;
   border: none;
-  border-radius: 8px;
-  padding: 10px 16px;
-  font-size: 14px;
+  border-radius: 0.5rem;
+  padding: 0.625rem 1rem;
+  font-size: 0.875rem;
   font-weight: 600;
   cursor: pointer;
   flex-shrink: 0;
-  box-shadow: 0 2px 4px rgba(24, 119, 242, 0.2);
+  box-shadow: 0 0.125rem 0.25rem rgba(24, 119, 242, 0.2);
   transition: all 0.2s ease;
   transform: translateY(0);
 }
 
 .followButton:hover {
   background-color: #166fe5;
-  box-shadow: 0 4px 8px rgba(24, 119, 242, 0.3);
+  box-shadow: 0 0.25rem 0.5rem rgba(24, 119, 242, 0.3);
 }
 
 .followingButton {
   background-color: #4CAF50 !important;
-  box-shadow: 0 2px 4px rgba(76, 175, 80, 0.2) !important;
+  box-shadow: 0 0.125rem 0.25rem rgba(76, 175, 80, 0.2) !important;
 }
 
 .followingButton:hover {
   background-color: #43A047 !important;
-  box-shadow: 0 4px 8px rgba(76, 175, 80, 0.3) !important;
+  box-shadow: 0 0.25rem 0.5rem rgba(76, 175, 80, 0.3) !important;
 }
 
-
-
-@media (min-width: 769px) {
+@media (min-width: 48.0625rem) {
   .notificationContent {
-    padding: 20px;
+    padding: 1.25rem;
   }
 
   .avatarBorder {
-    width: 56px;
-    height: 56px;
+    width: 3.5rem;
+    height: 3.5rem;
   }
 
   .text {
-    font-size: 16px;
+    font-size: 1rem;
   }
 
   .image {
-    width: 56px;
-    height: 56px;
+    width: 3.5rem;
+    height: 3.5rem;
   }
 
   .followButton {
-    padding: 12px 20px;
+    padding: 0.75rem 1.25rem;
   }
 }
 
-/* Dark mode styles */
 @media (prefers-color-scheme: dark) {
+
   .notificationItem,
   .notificationContent {
     background-color: #000000;
@@ -198,11 +196,11 @@
 
   .followButton {
     background-color: #3a86ff;
-    box-shadow: 0 2px 4px rgba(58, 134, 255, 0.2);
+    box-shadow: 0 0.125rem 0.25rem rgba(58, 134, 255, 0.2);
   }
 
   .followButton:hover {
     background-color: #2c6ddf;
-    box-shadow: 0 4px 8px rgba(58, 134, 255, 0.3);
+    box-shadow: 0 0.25rem 0.5rem rgba(58, 134, 255, 0.3);
   }
 }

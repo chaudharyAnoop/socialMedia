@@ -1,0 +1,120 @@
+.profileContainer {
+  max-width: 58.4375rem;
+  margin: 0 auto;
+  padding: 1.25rem;
+}
+
+.profileHeader {
+  display: flex;
+  gap: 2.5rem;
+  margin-bottom: 2.75rem;
+  padding: 0 1.25rem;
+}
+
+.profilePicture {
+  width: 9.375rem;
+  height: 9.375rem;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.profileInfo {
+  flex: 1;
+}
+
+.profileTop {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+.username {
+  font-size: 1.75rem;
+  font-weight: 300;
+  margin: 0;
+}
+
+.editButton,
+.followButton {
+  padding: 0.3125rem 0.9375rem;
+  border: 0.0625rem solid #dbdbdb;
+  border-radius: 0.25rem;
+  background: white;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.followButton {
+  background: #0095f6;
+  color: white;
+  border: none;
+}
+
+.stats {
+  display: flex;
+  gap: 2.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.bio {
+  font-size: 1rem;
+}
+
+.bio h2 {
+  font-weight: 400;
+  margin: 0 0 0.625rem 0;
+}
+
+.postsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.75rem;
+  padding: 0 1.25rem;
+}
+
+.postContainer {
+  position: relative;
+  aspect-ratio: 1;
+  cursor: pointer;
+}
+
+.postMedia {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.postOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  color: white;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.postContainer:hover .postOverlay {
+  opacity: 1;
+}
+
+.noPosts {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 1.25rem;
+  color: #8e8e8e;
+}
+
+.loading,
+.error {
+  text-align: center;
+  padding: 2.5rem;
+  font-size: 1rem;
+}

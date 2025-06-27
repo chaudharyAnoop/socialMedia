@@ -66,7 +66,6 @@
   transform: scale(1.05);
 }
 
-/* Dark Mode */
 @media (prefers-color-scheme: dark) {
   .dropZone {
     border-color: #374151;
@@ -96,7 +95,6 @@
   }
 }
 
-/* Responsive styles */
 @media (max-width: 640px) {
   .dropZone {
     height: 384px;

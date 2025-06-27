@@ -5,8 +5,8 @@ import React, {
   useEffect,
   ReactNode,
 } from "react";
-import axios from "axios";
-import { Navigate } from "react-router-dom";
+import axios, { AxiosResponse } from "axios";
+
 import { token as ftoken } from "../firebase/firebase";
 
 interface User {
@@ -24,15 +24,16 @@ interface AuthContextType {
   user: User | null;
   isAuthenticated: boolean;
   isLoading: boolean;
-  login: (email: string, password: string) => Promise<any>;
-  register: (userData: RegisterData) => Promise<any>;
-  verifyOTP: (email: string, otp: string) => Promise<any>;
-  forgotPassword: (email: string) => Promise<any>;
+  login: (email: string, password: string) => Promise<AxiosResponse>;
+  register: (userData: RegisterData) => Promise<AxiosResponse>;
+  verifyOTP: (email: string, otp: string) => Promise<AxiosResponse>;
+  forgotPassword: (email: string) => Promise<AxiosResponse>;
+  resendOTP: (email: string) => Promise<AxiosResponse>;
   resetPassword: (
     email: string,
     otp: string,
     newPassword: string
-  ) => Promise<any>;
+  ) => Promise<AxiosResponse>;
   logout: () => void;
   loading: boolean;
   checkAuthStatus: () => Promise<void>;
@@ -50,7 +51,7 @@ interface RegisterData {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-const API_BASE_URL = "http://172.50.5.102:3011";
+const API_BASE_URL = "http://172.50.5.120:3011";
 
 // Configure axios defaults
 axios.defaults.baseURL = API_BASE_URL;
@@ -61,7 +62,8 @@ const generateDeviceId = () => {
   let deviceId = localStorage.getItem("deviceId");
   if (!deviceId) {
     deviceId =
-      "device-" + Math.random().toString(36).substr(2, 9) + "-" + Date.now();
+      // "device-" + Math.random().toString(36).substr(2, 9) + "-" + Date.now();
+      `device-${Math.random().toString(36).slice(2, 11)}-${Date.now()}`;
     localStorage.setItem("deviceId", deviceId);
   }
   return deviceId;
@@ -170,52 +172,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     }
   };
 
-  useEffect(() => {
-    checkAuthStatus();
-  }, []);
-
-  // Axios interceptor for handling token refresh
-  useEffect(() => {
-    const interceptor = axios.interceptors.response.use(
-      (response) => response,
-      async (error) => {
-        const originalRequest = error.config;
-
-        if (error.response?.status === 401 && !originalRequest._retry) {
-          originalRequest._retry = true;
-
-          const refreshToken = localStorage.getItem("refresh_token");
-          if (refreshToken) {
-            // try {
-            //   // Adjusted refresh token endpoint path to /auth/token/refresh
-            //   const response = await axios.post("/auth/token/refresh", {
-            //     refresh_token: refreshToken,
-            //   });
-            //   const { access_token } = response.data;
-            //   localStorage.setItem("access_token", access_token);
-            //   axios.defaults.headers.common[
-            //     "Authorization"
-            //   ] = `Bearer ${access_token}`;
-            //   return axios(originalRequest);
-            // } catch (refreshError) {
-            //   // Refresh failed, logout user
-            //   logout();
-            //   return Promise.reject(refreshError);
-            // }
-          } else {
-            logout();
-          }
-        }
-
-        return Promise.reject(error);
-      }
-    );
-
-    return () => {
-      axios.interceptors.response.eject(interceptor);
-    };
-  }, []);
-
   const login = async (email: string, password: string) => {
     setLoading(true);
     try {
@@ -273,6 +229,21 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     }
   };
 
+  const resendOTP = async (email: string) => {
+    setLoading(true);
+    try {
+      const response = await axios.post("/auth/resend-otp", {
+        email,
+      });
+      return response.data;
+    } catch (error) {
+      console.error("Resend OTP error:", error);
+      throw error;
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const register = async (userData: RegisterData) => {
     setLoading(true);
     try {
@@ -296,6 +267,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
         email,
         otp,
       });
+      if (!response.data.success) {
+        throw new Error(response.data.message || "OTP verification failed");
+      }
       return response.data;
     } catch (error) {
       console.error("OTP verification error:", error);
@@ -348,6 +322,10 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     setUser(null);
   };
 
+  useEffect(() => {
+    checkAuthStatus();
+  }, []);
+
   return (
     <AuthContext.Provider
       value={{
@@ -362,6 +340,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
         logout,
         loading,
         checkAuthStatus,
+        resendOTP,
       }}
     >
       {children}

@@ -1,32 +1,10 @@
-import axios from "axios";
-
 import {
   createSlice,
   createAsyncThunk,
   type PayloadAction,
 } from "@reduxjs/toolkit";
-
-interface Post {
-  _id: number;
-  UserId: string;
-  username: string;
-  commentCount: number;
-  reactionCount: number;
-  content: string;
-  tags: string[];
-  media: string[];
-  reactions: number;
-  isLiked: boolean;
-}
-
-interface PostsState {
-  posts: Post[];
-  status: "idle" | "loading" | "succeeded" | "failed";
-  error: string | null;
-  page: number;
-  hasMore: boolean;
-  limit: number;
-}
+import { fetchPostsApi, likePostApi } from "../service/postSliceApi";
+import { Post, PostsState } from "../interfaces/posts.interface";
 
 const initialState: PostsState = {
   posts: [],
@@ -37,85 +15,33 @@ const initialState: PostsState = {
   hasMore: true,
 };
 
-export const fetchPosts = createAsyncThunk<
-  { posts: Post[]; total: number },
-  { page: number; limit: number },
-  { rejectValue: string }
->("posts/fetchPosts", async ({ page, limit }, { rejectWithValue }) => {
-  if (page < 1 || limit < 1) {
-    return rejectWithValue("Invalid page or limit");
-  }
-  try {
-    const token = localStorage.getItem("instagram_user");
-    const headers = token
-      ? {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-          "X-Custom-Header": "CustomValue",
-        }
-      : {};
-    const response = await axios.get<{
-      data: Post[];
-      total: number;
-      skip: number;
-      limit: number;
-    }>(
-      `http://172.50.5.102:3000/posts/feed?limit=${limit}&skip=${
-        (page - 1) * limit
-      }`,
-      { headers }
-    );
-    const posts = response.data?.data;
-    const total = response.data?.total;
-    if (!Array.isArray(posts) || typeof total !== "number") {
-      return rejectWithValue("Invalid posts or total data received");
+export const fetchPosts = createAsyncThunk(
+  "posts/fetchPosts",
+  async (
+    { page, limit }: { page: number; limit: number },
+    { rejectWithValue }
+  ) => {
+    try {
+      const { posts, total } = await fetchPostsApi(page, limit);
+      return { posts, total };
+    } catch (error) {
+      if (error instanceof Error) return rejectWithValue(error.message);
+      return rejectWithValue("Failed to fetch posts");
     }
-    return { posts, total };
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      return rejectWithValue(
-        error.response?.data?.message || "Failed to fetch posts"
-      );
-    }
-    return rejectWithValue("Unexpected error occurred");
   }
-});
+);
 
-export const likePost = createAsyncThunk<
-  { postId: number; reactions: number },
-  number,
-  { rejectValue: string }
->("posts/likePost", async (postId, { rejectWithValue }) => {
-  if (!postId) {
-    return rejectWithValue("Post ID is required");
-  }
-  try {
-    const token = localStorage.getItem("instagram_user");
-    const headers = token
-      ? {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        }
-      : {};
-    const response = await axios.post(
-      `http://172.50.5.102:3000/posts/${postId}/like`,
-      { userId: "Anoop Kumar Chaudhary" },
-      { headers }
-    );
-    const reactions = response.data?.reactions;
-    if (typeof reactions !== "number") {
-      return rejectWithValue("Invalid reactions data received");
+export const likePost = createAsyncThunk(
+  "posts/likePost",
+  async (postId: number, { rejectWithValue }) => {
+    try {
+      return await likePostApi(postId);
+    } catch (error) {
+      if (error instanceof Error) return rejectWithValue(error.message);
+      return rejectWithValue("Failed to like post");
     }
-    return { postId, reactions };
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      return rejectWithValue(
-        error.response?.data?.message || "Failed to like post"
-      );
-    }
-    return rejectWithValue("Unexpected error occurred");
   }
-});
+);
 
 const postsSlice = createSlice({
   name: "posts",
@@ -148,7 +74,7 @@ const postsSlice = createSlice({
       )
       .addCase(fetchPosts.rejected, (state, action) => {
         state.status = "failed";
-        state.error = action.payload || "Failed to fetch posts";
+        state.error = action.payload as string;
       })
       .addCase(
         likePost.fulfilled,
@@ -165,7 +91,7 @@ const postsSlice = createSlice({
         }
       )
       .addCase(likePost.rejected, (state, action) => {
-        state.error = action.payload || "Failed to like post";
+        state.error = action.payload as string;
       });
   },
 });

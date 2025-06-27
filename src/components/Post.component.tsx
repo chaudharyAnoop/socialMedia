@@ -17,16 +17,7 @@ import { FaHeart, FaRegBookmark, FaRegHeart, FaTimes } from "react-icons/fa";
 import { MessageCircle, Send } from "lucide-react";
 
 import styles from "../styles/Post.module.css";
-
-interface CircularImageProps {
-  imgUrl: string;
-  alt?: string;
-  body: string;
-  title: string;
-  likecount: string;
-  postId: string;
-  isLiked: boolean;
-}
+import { CircularImageProps } from "../interfaces/posts.interface";
 
 export default function Post({
   imgUrl,
@@ -48,14 +39,6 @@ export default function Post({
   const { comments, status, error, postLikes } = useSelector(
     (state: RootState) => state.comments
   );
-
-  useEffect(() => {
-    if (isOpen) {
-      dispatch(fetchComments(postId));
-    } else {
-      dispatch(resetComments());
-    }
-  }, [isOpen, dispatch, postId]);
 
   const handleImageLoad = () => {
     setIsImageLoading(false);
@@ -111,6 +94,14 @@ export default function Post({
       dispatch(fetchAllReplies(commentId));
     }
   };
+
+  useEffect(() => {
+    if (isOpen) {
+      dispatch(fetchComments(postId));
+    } else {
+      dispatch(resetComments());
+    }
+  }, [isOpen, dispatch, postId]);
 
   const renderComment = (comment: Comment, depth = 0) => {
     return (

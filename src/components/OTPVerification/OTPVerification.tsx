@@ -1,8 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useReducer } from "react";
+
 import { Formik, Form } from "formik";
-import FormikInput from "../FormInput/FormikInput";
-import { otpSchema } from "../../utils/validationSchemas";
+import { AxiosError } from "axios";
+
 import { useAuth } from "../../contexts/AuthContext";
+import { otpSchema } from "../../utils/validationSchemas";
+
+import FormikInput from "../FormInput/FormikInput";
 import styles from "./OTPVerification.module.css";
 
 interface OTPVerificationProps {
@@ -11,49 +15,85 @@ interface OTPVerificationProps {
   onBack: () => void;
 }
 
+interface OTPState {
+  timer: number;
+  canResend: boolean;
+  error: string;
+  success: string;
+}
+
+type OTPAction =
+  | { type: "SET_TIMER"; payload: number }
+  | { type: "SET_CAN_RESEND"; payload: boolean }
+  | { type: "SET_ERROR"; payload: string }
+  | { type: "SET_SUCCESS"; payload: string }
+  | { type: "RESET_STATE" };
+
+const initialState: OTPState = {
+  timer: 60,
+  canResend: false,
+  error: "",
+  success: "",
+};
+
+function otpReducer(state: OTPState, action: OTPAction): OTPState {
+  switch (action.type) {
+    case "SET_TIMER":
+      return { ...state, timer: action.payload };
+    case "SET_CAN_RESEND":
+      return { ...state, canResend: action.payload };
+    case "SET_ERROR":
+      return { ...state, error: action.payload, success: "" };
+    case "SET_SUCCESS":
+      return { ...state, success: action.payload, error: "" };
+    case "RESET_STATE":
+      return { ...initialState, timer: state.timer };
+    default:
+      return state;
+  }
+}
+
 const OTPVerification: React.FC<OTPVerificationProps> = ({
   email,
   onVerified,
   onBack,
 }) => {
   const { verifyOTP, resendOTP, loading } = useAuth();
-  const [timer, setTimer] = useState(60);
-  const [canResend, setCanResend] = useState(false);
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
+  const [state, dispatch] = useReducer(otpReducer, initialState);
 
   useEffect(() => {
-    if (timer > 0) {
+    if (state.timer > 0) {
       const interval = setInterval(() => {
-        setTimer(timer - 1);
+        dispatch({ type: "SET_TIMER", payload: state.timer - 1 });
       }, 1000);
       return () => clearInterval(interval);
     } else {
-      setCanResend(true);
+      dispatch({ type: "SET_CAN_RESEND", payload: true });
     }
-  }, [timer]);
+  }, [state.timer]);
 
   const handleSubmit = async (
     values: { otp: string },
-    { setSubmitting }: any
+    { setSubmitting }: import("formik").FormikHelpers<{ otp: string }>
   ) => {
-    setError("");
-    setSuccess("");
-    setSubmitting(true);
+    // Clear previous error before submitting
+    dispatch({ type: "SET_ERROR", payload: "" });
 
     try {
-      // For email verification during registration
       await verifyOTP(email, values.otp);
-      setSuccess("Email verified successfully! Redirecting to login...");
+      dispatch({
+        type: "SET_SUCCESS",
+        payload: "Email verified successfully! Redirecting to login...",
+      });
       setTimeout(() => {
         onVerified();
       }, 1500);
-    } catch (error: any) {
-      // Stay on the same page and show error - DO NOT redirect
+    } catch (error) {
+      const axiosError = error as AxiosError<{ message?: string }>;
       const errorMessage =
-        error.response?.data?.message ||
+        axiosError.response?.data?.message ||
         "Invalid OTP. Please check your code and try again.";
-      setError(errorMessage);
+      dispatch({ type: "SET_ERROR", payload: errorMessage });
       console.error("OTP Verification Error:", error);
     } finally {
       setSubmitting(false);
@@ -61,18 +101,20 @@ const OTPVerification: React.FC<OTPVerificationProps> = ({
   };
 
   const handleResend = async () => {
-    setTimer(60);
-    setCanResend(false);
-    setError("");
-    setSuccess("New OTP sent to your email");
+    dispatch({ type: "SET_TIMER", payload: 60 });
+    dispatch({ type: "SET_CAN_RESEND", payload: false });
+    dispatch({ type: "SET_SUCCESS", payload: "New OTP sent to your email" });
 
     try {
       await resendOTP(email);
       console.log("Resending OTP to:", email);
     } catch (error) {
-      setError("Failed to resend OTP. Please try again.");
-      setCanResend(true);
-      setTimer(0);
+      dispatch({
+        type: "SET_ERROR",
+        payload: "Failed to resend OTP. Please try again.",
+      });
+      dispatch({ type: "SET_CAN_RESEND", payload: true });
+      dispatch({ type: "SET_TIMER", payload: 0 });
     }
   };
 
@@ -100,9 +142,10 @@ const OTPVerification: React.FC<OTPVerificationProps> = ({
               maxLength={6}
             />
 
-            {error && <div className={styles.error}>{error}</div>}
-
-            {success && <div className={styles.success}>{success}</div>}
+            {state.error && <div className={styles.error}>{state.error}</div>}
+            {state.success && (
+              <div className={styles.success}>{state.success}</div>
+            )}
 
             <button
               type="submit"
@@ -116,7 +159,7 @@ const OTPVerification: React.FC<OTPVerificationProps> = ({
       </Formik>
 
       <div>
-        {canResend ? (
+        {state.canResend ? (
           <button
             onClick={handleResend}
             className={styles.resendButton}
@@ -125,7 +168,7 @@ const OTPVerification: React.FC<OTPVerificationProps> = ({
             Resend code
           </button>
         ) : (
-          <div className={styles.resendText}>Resend code in {timer}s</div>
+          <div className={styles.resendText}>Resend code in {state.timer}s</div>
         )}
       </div>
 

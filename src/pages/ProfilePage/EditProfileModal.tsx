@@ -1,6 +1,5 @@
-// EditProfileModal.tsx
-import React, { useState } from 'react';
-import { User } from './api';
+import React, { useState } from "react";
+import { User } from "./api";
 
 interface EditProfileModalProps {
   isOpen: boolean;
@@ -13,25 +12,29 @@ export const EditProfileModal: React.FC<EditProfileModalProps> = ({
   isOpen,
   onClose,
   user,
-  onSave
+  onSave,
 }) => {
   const [formData, setFormData] = useState({
     fullName: user.fullName,
     username: user.username,
     bio: user.bio,
-    website: user.website || '',
+    website: user.website || "",
   });
   const [profilePicture, setProfilePicture] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
   if (!isOpen) return null;
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleProfilePictureChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleProfilePictureChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const file = e.target.files?.[0];
     if (file) {
       setProfilePicture(file);
@@ -51,21 +54,31 @@ export const EditProfileModal: React.FC<EditProfileModalProps> = ({
     onClose();
   };
 
-  const currentAvatar = previewUrl || user.profilePicture || 
+  const currentAvatar =
+    previewUrl ||
+    user.profilePicture ||
     `https://ui-avatars.com/api/?name=${user.username}&background=333&color=fff&size=150`;
 
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="edit-modal" onClick={(e) => e.stopPropagation()}>
         <div className="edit-modal-header">
-          <button onClick={onClose} className="cancel-btn">Cancel</button>
+          <button onClick={onClose} className="cancel-btn">
+            Cancel
+          </button>
           <h2>Edit Profile</h2>
-          <button onClick={handleSave} className="save-btn">Done</button>
+          <button onClick={handleSave} className="save-btn">
+            Done
+          </button>
         </div>
-        
+
         <div className="edit-modal-content">
           <div className="profile-picture-section">
-            <img src={currentAvatar} alt="Profile" className="edit-profile-pic" />
+            <img
+              src={currentAvatar}
+              alt="Profile"
+              className="edit-profile-pic"
+            />
             <div className="profile-pic-actions">
               <label htmlFor="profile-pic-input" className="change-photo-btn">
                 Change profile photo
@@ -75,7 +88,7 @@ export const EditProfileModal: React.FC<EditProfileModalProps> = ({
                 type="file"
                 accept="image/*"
                 onChange={handleProfilePictureChange}
-                style={{ display: 'none' }}
+                style={{ display: "none" }}
               />
             </div>
           </div>
@@ -126,7 +139,7 @@ export const EditProfileModal: React.FC<EditProfileModalProps> = ({
         </div>
       </div>
 
-      <style >{`
+      <style>{`
         .modal-overlay {
           position: fixed;
           top: 0;

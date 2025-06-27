@@ -1,8 +1,17 @@
 // src/components/Notifications/NotificationItem.tsx
-import React, { useState, useRef , memo} from 'react';
-import { Heart, MessageCircle, UserPlus, UserCheck, AtSign, Trash2 } from 'lucide-react';
-import { NotificationData } from '../../../data/notifications';
-import styles from './NotificationItem.module.css';
+
+import React, { useState, useRef, memo } from "react";
+
+import {
+  Heart,
+  MessageCircle,
+  UserPlus,
+  UserCheck,
+  AtSign,
+  Trash2,
+} from "lucide-react";
+import { NotificationData } from "../../../data/notifications";
+import styles from "./NotificationItem.module.css";
 
 interface NotificationItemProps {
   notification: NotificationData;
@@ -10,10 +19,12 @@ interface NotificationItemProps {
   onFollowToggle: (id: string, isFollowing: boolean) => void;
 }
 
-const NotificationItem: React.FC<NotificationItemProps> = ({ 
-  notification, 
+import { NotificationTypeEnum } from "../../../enums/NotificationTypeEnum";
+
+const NotificationItem: React.FC<NotificationItemProps> = ({
+  notification,
   onDelete,
-  onFollowToggle
+  onFollowToggle,
 }) => {
   const [isDragging, setIsDragging] = useState(false);
   const [dragX, setDragX] = useState(0);
@@ -65,41 +76,61 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
   };
 
   const getIcon = () => {
-    const iconStyle = { width: '16px', height: '16px' };
+    const iconStyle = { width: "16px", height: "16px" };
 
     switch (notification.type) {
-      case 'like': return <Heart fill="#ff3040" color="#ff3040" style={iconStyle} />;
-      case 'follow': return notification.isFollowing 
-        ? <UserCheck color="#4CAF50" style={iconStyle} /> 
-        : <UserPlus color="#1877f2" style={iconStyle} />;
-      case 'comment': return <MessageCircle color="#00d4aa" style={iconStyle} />;
-      case 'mention': return <AtSign color="#ff9500" style={iconStyle} />;
-      default: return null;
+      case NotificationTypeEnum.Like:
+        return <Heart fill="#ff3040" color="#ff3040" style={iconStyle} />;
+      case NotificationTypeEnum.Follow:
+        return notification.isFollowing ? (
+          <UserCheck color="#4CAF50" style={iconStyle} />
+        ) : (
+          <UserPlus color="#1877f2" style={iconStyle} />
+        );
+      case NotificationTypeEnum.Comment:
+        return <MessageCircle color="#00d4aa" style={iconStyle} />;
+      case NotificationTypeEnum.Mention:
+        return <AtSign color="#ff9500" style={iconStyle} />;
+      default:
+        return null;
     }
   };
 
   const getNotificationText = () => {
     switch (notification.type) {
-      case 'like': return 'liked your post';
-      case 'follow': return notification.isFollowing 
-        ? 'is now following you' 
-        : 'started following you';
-      case 'comment': return `commented: ${notification.content}`;
-      case 'mention': return notification.content || 'mentioned you';
-      default: return '';
+      case NotificationTypeEnum.Like:
+        return "liked your post";
+      case NotificationTypeEnum.Follow:
+        return notification.isFollowing
+          ? "is now following you"
+          : "started following you";
+      case NotificationTypeEnum.Comment:
+        return `commented: ${notification.content}`;
+      case NotificationTypeEnum.Mention:
+        return notification.content || "mentioned you";
+      default:
+        return "";
     }
   };
 
   const getTypeColor = () => {
-    if (notification.type === 'follow' && notification.isFollowing) {
-      return '#4CAF50'; // Green for following state
+    if (
+      notification.type === NotificationTypeEnum.Follow &&
+      notification.isFollowing
+    ) {
+      return "#4CAF50"; // Green for following state
     }
     switch (notification.type) {
-      case 'like': return '#ff3040';
-      case 'follow': return '#1877f2';
-      case 'comment': return '#00d4aa';
-      case 'mention': return '#ff9500';
-      default: return '#1877f2';
+      case NotificationTypeEnum.Like:
+        return "#ff3040";
+      case NotificationTypeEnum.Follow:
+        return "#1877f2";
+      case NotificationTypeEnum.Comment:
+        return "#00d4aa";
+      case NotificationTypeEnum.Mention:
+        return "#ff9500";
+      default:
+        return "#1877f2";
     }
   };
 
@@ -109,8 +140,10 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
       className={styles.notificationItem}
       style={{
         transform: `translateX(${dragX}px)`,
-        transition: isDragging ? 'none' : 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-        cursor: isDragging ? 'grabbing' : 'grab'
+        transition: isDragging
+          ? "none"
+          : "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+        cursor: isDragging ? "grabbing" : "grab",
       }}
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
@@ -120,43 +153,37 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
       onMouseUp={handleMouseEnd}
       onMouseLeave={handleMouseEnd}
     >
-      <div 
-        className={styles.deleteBackground} 
+      <div
+        className={styles.deleteBackground}
         style={{ opacity: Math.min(1, Math.abs(dragX) / 100) }}
       >
         <Trash2 color="#ffffff" size={20} />
       </div>
 
-      <div 
-        className={`${styles.notificationContent} ${notification.isRead ? '' : styles.unread}`}
+      <div
+        className={`${styles.notificationContent} ${
+          notification.isRead ? "" : styles.unread
+        }`}
         style={{ borderLeftColor: getTypeColor() }}
       >
         <div className={styles.avatarContainer}>
-          <div className={styles.avatarBorder} style={{ borderColor: getTypeColor() }}>
-            <img
-              src={notification.user.avatar}
-              alt={notification.user.username}
-              className={styles.avatar}
-            />
+          <div
+            className={styles.avatarBorder}
+            style={{ borderColor: getTypeColor() }}
+          >
+            {notification.user.avatar}
           </div>
-          <div className={styles.iconContainer}>
-            {getIcon()}
-          </div>
+          <div className={styles.iconContainer}>{getIcon()}</div>
         </div>
 
         <div className={styles.content}>
           <div className={styles.text}>
             <span className={styles.username} style={{ color: getTypeColor() }}>
               {notification.user.username}
-            </span>
-            {' '}
-            <span className={styles.actionText}>
-              {getNotificationText()}
-            </span>
+            </span>{" "}
+            <span className={styles.actionText}>{getNotificationText()}</span>
           </div>
-          <div className={styles.timestamp}>
-            {notification.timestamp} ago
-          </div>
+          <div className={styles.timestamp}>{notification.timestamp} ago</div>
         </div>
 
         {notification.post ? (
@@ -167,13 +194,14 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
               className={styles.image}
             />
           </div>
-        ) : notification.type === 'follow' ? (
-          <button 
-            className={`${styles.followButton} ${notification.isFollowing ? styles.followingButton : ''}`}
+        ) : notification.type === "follow" ? (
+          <button
+            className={`${styles.followButton} ${
+              notification.isFollowing ? styles.followingButton : ""
+            }`}
             onClick={handleFollowToggle}
           >
-            {notification.isFollowing ? 'Following' : 'Follow Back'}
-            
+            {notification.isFollowing ? "Following" : "Follow Back"}
           </button>
         ) : null}
       </div>

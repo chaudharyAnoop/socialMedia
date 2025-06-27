@@ -1,0 +1,62 @@
+import { Chat } from "../../interfaces/types";
+import styles from "./ChatListItem.module.css";
+
+interface ChatListItemProps {
+  chat: Chat;
+  isSelected: boolean;
+  onClick: () => void;
+}
+
+const ChatListItem = ({ chat, isSelected, onClick }: ChatListItemProps) => {
+  const selectedChatId = localStorage.getItem("selectedChatId");
+  const formatTime = (date: Date) => {
+    const now = new Date();
+    const diffInHours = (now.getTime() - date.getTime()) / (1000 * 60 * 60);
+
+    if (diffInHours < 1) {
+      const minutes = Math.floor(diffInHours * 60);
+      return `${minutes}m`;
+    } else if (diffInHours < 24) {
+      return `${Math.floor(diffInHours)}h`;
+    } else {
+      const days = Math.floor(diffInHours / 24);
+      return `${days}d`;
+    }
+  };
+  return (
+    <div
+      onClick={onClick}
+      className={`${styles.container} ${isSelected ? styles.selected : ""}`}
+    >
+      <div className={styles.avatarContainer}>
+        <img
+          src={"https://picsum.photos/800/600"}
+          alt={chat.user.username}
+          className={styles.avatar}
+        />
+        {chat.user.isOnline && <div className={styles.onlineIndicator}></div>}
+      </div>
+
+      <div className={styles.chatInfo}>
+        <div className={styles.topRow}>
+          <span className={styles.username}>{chat.user.username}</span>
+          <span className={styles.timestamp}>
+            {formatTime(new Date(chat.lastMessage.timestamp))}
+          </span>
+        </div>
+
+        <div className={styles.bottomRow}>
+          {chat.unreadCount > 0 && chat.id != selectedChatId && (
+            <div className={styles.unreadBadge}>
+              <span className={styles.unreadCount}>
+                {chat.unreadCount} + new Message
+              </span>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ChatListItem;

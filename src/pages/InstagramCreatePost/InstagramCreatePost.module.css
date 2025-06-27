@@ -4,7 +4,8 @@
   min-height: 100vh;
   background-color: #ffffff;
   overflow-x: hidden;
-  padding-top: 40px; /* ✅ Push down below topbar */
+  padding-top: 40px;
+
 }
 
 .header {
@@ -22,7 +23,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  flex-wrap: wrap; /* ✅ Allows button to go down on small screens */
+  flex-wrap: wrap;
 }
 
 .title {

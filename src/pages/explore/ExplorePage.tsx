@@ -1,8 +1,8 @@
 import React from "react";
-import Explore from "../../components/explore/Explore";
 
 // Import the CSS module
 import styles from "./explore.module.css"; // Adjust path if your CSS file is elsewhere
+import Explore from "../../components/Explore/Explore/Explore";
 
 const ExplorePage: React.FC = () => {
   return (

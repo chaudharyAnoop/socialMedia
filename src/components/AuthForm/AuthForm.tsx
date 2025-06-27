@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 
+import styles from "./AuthForm.module.css";
+
 import LoginForm from "./LoginForm";
 import SignupForm from "./SignupForm";
 import OTPVerification from "../OTPVerification/OTPVerification";
 import PasswordReset from "../PasswordReset/PasswordReset";
-
-import styles from "./AuthForm.module.css";
 
 type AuthView =
   | "login"

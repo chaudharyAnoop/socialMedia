@@ -1,24 +1,36 @@
 .mediaContainer {
-  padding: 24px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  max-height: 90vh;
+  overflow-y: auto;
 }
 
 .mediaCarousel {
   position: relative;
-  margin-bottom: 24px;
+  margin-bottom: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .mediaFrame {
-  aspect-ratio: 1 / 1;
+  width: 100%;
+  max-height: 80vh;
   background-color: #f3f4f6;
-  border-radius: 8px;
+  border-radius: 0.5rem;
   overflow: hidden;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0.625rem 0.9375rem -0.1875rem rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .mediaItem {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  width: auto;
+  max-width: 100%;
+  max-height: 80vh;
+  object-fit: contain;
 }
 
 .navButtonLeft,
@@ -28,19 +40,20 @@
   transform: translateY(-50%);
   background-color: rgba(0, 0, 0, 0.5);
   color: white;
-  padding: 8px;
+  padding: 0.5rem;
   border-radius: 9999px;
   border: none;
   cursor: pointer;
   transition: background-color 0.2s;
+  z-index: 10;
 }
 
 .navButtonLeft {
-  left: 8px;
+  left: 0.5rem;
 }
 
 .navButtonRight {
-  right: 8px;
+  right: 0.5rem;
 }
 
 .navButtonLeft:hover,
@@ -50,46 +63,48 @@
 
 .mediaCounter {
   position: absolute;
-  top: 8px;
-  right: 8px;
+  top: 0.5rem;
+  right: 0.5rem;
   background-color: rgba(0, 0, 0, 0.5);
   color: white;
-  padding: 4px 8px;
+  padding: 0.25rem 0.5rem;
   border-radius: 9999px;
   font-size: 0.75rem;
+  z-index: 10;
 }
 
 .removeButton {
   position: absolute;
-  top: 8px;
-  left: 8px;
+  top: 0.5rem;
+  left: 0.5rem;
   background-color: rgba(0, 0, 0, 0.5);
   color: white;
-  padding: 4px;
+  padding: 0.25rem;
   border-radius: 9999px;
   border: none;
   cursor: pointer;
   transition: background-color 0.2s;
+  z-index: 10;
 }
 
 .thumbnailStrip {
   display: flex;
-  gap: 8px;
-  margin-bottom: 24px;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
   overflow-x: auto;
-  padding-bottom: 8px;
+  padding-bottom: 0.5rem;
 }
 
 .thumbnail {
   flex-shrink: 0;
-  width: 64px;
-  height: 64px;
-  border-radius: 8px;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 0.5rem;
   overflow: hidden;
   border: 2px solid #e5e7eb;
-  transition: border-color 0.2s;
   background-color: transparent;
   cursor: pointer;
+  transition: border-color 0.2s;
   padding: 0;
 }
 
@@ -105,10 +120,10 @@
 
 .addMoreButton {
   width: 100%;
-  margin-bottom: 16px;
-  padding: 8px 16px;
+  margin-bottom: 1rem;
+  padding: 0.5rem 1rem;
   border: 2px dashed #d1d5db;
-  border-radius: 8px;
+  border-radius: 0.5rem;
   color: #6b7280;
   background-color: transparent;
   cursor: pointer;
@@ -116,7 +131,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 0.5rem;
 }
 
 .addMoreButton:hover {
@@ -133,27 +148,27 @@
   font-size: 0.875rem;
   font-weight: 500;
   color: #374151;
-  margin-bottom: 8px;
+  margin-bottom: 0.5rem;
 }
 
 .textarea {
   width: 100%;
-  padding: 12px;
+  padding: 0.75rem;
   border: 1px solid #d1d5db;
-  border-radius: 8px;
-  resize: none;
+  border-radius: 0.5rem;
+  resize: vertical;
   font-size: 1rem;
   transition: all 0.2s;
   font-family: inherit;
+  max-height: 12.5rem;
 }
 
 .textarea:focus {
   outline: none;
   border-color: transparent;
-  box-shadow: 0 0 0 2px #3b82f6;
+  box-shadow: 0 0 0 0.125rem #3b82f6;
 }
 
-/* Dark mode */
 @media (prefers-color-scheme: dark) {
   .mediaContainer {
     background-color: #0f172a;
@@ -161,7 +176,7 @@
 
   .mediaFrame {
     background-color: #1e293b;
-    box-shadow: 0 10px 15px -3px rgba(255, 255, 255, 0.05);
+    box-shadow: 0 0.625rem 0.9375rem -0.1875rem rgba(255, 255, 255, 0.05);
   }
 
   .thumbnail {
@@ -193,13 +208,24 @@
   }
 
   .textarea:focus {
-    box-shadow: 0 0 0 2px #60a5fa;
+    box-shadow: 0 0 0 0.125rem #60a5fa;
   }
 }
 
-/* Responsive */
-@media (max-width: 640px) {
+@media (max-width: 40rem) {
   .mediaContainer {
-    padding: 16px;
+    padding: 1rem;
+  }
+
+  .textarea {
+    font-size: 0.9rem;
+  }
+
+  .mediaFrame {
+    max-height: 60vh;
+  }
+
+  .mediaItem {
+    max-height: 60vh;
   }
 }

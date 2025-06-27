@@ -1,9 +1,6 @@
 .modal {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
   background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
@@ -13,11 +10,14 @@
 }
 
 .shareModal {
-  background-color: white;
+  background-color: #f9fafb;
   border-radius: 12px;
   width: 100%;
   max-width: 64rem;
-  max-height: 90vh;
+  height: auto;
+  max-height: 95vh;
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 }
@@ -29,21 +29,22 @@
   padding: 12px 16px;
   border-bottom: 1px solid #e5e7eb;
   position: relative;
+  background-color: #f9fafb;
 }
 
 .modalHeaderButton {
   position: absolute;
-  padding: 4px;
+  left: 16px;
+  padding: 6px;
   background-color: transparent;
   border: none;
   border-radius: 9999px;
   cursor: pointer;
   transition: background-color 0.2s;
-  left: 16px;
 }
 
 .modalHeaderButton:hover {
-  background-color: #f3f4f6;
+  background-color: #e5e7eb;
 }
 
 .modalHeaderButtonRight {
@@ -69,14 +70,33 @@
 .shareContent {
   display: flex;
   flex-direction: column;
-  overflow: hidden;
-  max-height: calc(90vh - 60px);
+  overflow: auto;
+  flex: 1;
 }
 
 .shareImageContainer {
+  width: 100%;
   aspect-ratio: 1 / 1;
-  background-color: #f3f4f6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f9fafb;
   position: relative;
+  overflow: hidden;
+}
+
+.shareImageContainer img,
+.shareImageContainer video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background-color: #fff;
+}
+
+.divider {
+  display: none;
+  width: 1px;
+  background-color: #e5e7eb;
 }
 
 .shareOptions {
@@ -84,6 +104,7 @@
   display: flex;
   flex-direction: column;
   overflow-y: auto;
+  background-color: #f9fafb;
 }
 
 .userInfo {
@@ -119,12 +140,16 @@
   font-size: 0.875rem;
   font-family: inherit;
   outline: none;
+  background-color: #f9fafb;
+  color: #111827;
+  /* border: 1px solid #e5e7eb; */
+  border-radius: 8px;
 }
 
 .contentCounter {
   font-size: 0.75rem;
   color: #6b7280;
-  margin-bottom: 16px;
+  margin-top: 8px;
 }
 
 .shareOptionsList {
@@ -163,10 +188,7 @@
   color: #2563eb;
 }
 
-
-
-
-/* Responsive styles */
+/* Responsive layout */
 @media (min-width: 1024px) {
   .shareContent {
     flex-direction: row;
@@ -174,6 +196,11 @@
 
   .shareImageContainer {
     width: 50%;
+    max-height: none;
+  }
+
+  .divider {
+    display: block;
   }
 
   .shareOptions {
@@ -181,12 +208,49 @@
   }
 }
 
-/* Dark mode styles */
+/* Toggle Buttons */
+.toggleButtonGroup {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.toggleButton {
+  flex: 1;
+  min-width: 120px;
+  padding: 10px 16px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border-radius: 9999px;
+  border: 2px solid #d1d5db;
+  background-color: #f9fafb;
+  color: #374151;
+  cursor: pointer;
+  transition: all 0.25s ease-in-out;
+}
+
+.toggleButton:hover {
+  background-color: #e5e7eb;
+}
+
+.toggleButton.active {
+  background-color: #22c55e;
+  color: #ffffff;
+  border-color: #22c55e;
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.35);
+}
+
+/* Dark mode */
 @media (prefers-color-scheme: dark) {
-  .shareModal {
-    background-color: #1e293b;
-    color: #e5e7eb;
-    box-shadow: 0 25px 50px -12px rgba(255, 255, 255, 0.1);
+  .shareModal,
+  .modalHeader,
+  .shareImageContainer,
+  .shareOptions,
+  .contentInput {
+    background-color: #0f172a;
+    color: #f1f5f9;
   }
 
   .modalHeader {
@@ -205,29 +269,18 @@
     color: #3b82f6;
   }
 
-  .modalTitle {
-    color: #f1f5f9;
-  }
-
-  .shareImageContainer {
-    background-color: #334155;
-  }
-
-  .username {
+  .modalTitle,
+  .username,
+  .shareOptionLabel {
     color: #f1f5f9;
   }
 
   .contentInput {
-    background-color: #0f172a;
-    color: #f1f5f9;
+    /* border-color: #334155; */
   }
 
-  .contentCounter {
-    color: #94a3b8;
-  }
-
-  .shareOptionLabel {
-    color: #cbd5e1;
+  .divider {
+    background-color: #334155;
   }
 
   .shareOptionButton {
@@ -237,65 +290,21 @@
   .shareOptionButton:hover {
     color: #3b82f6;
   }
-}
 
-.toggleButtonGroup {
-  display: flex;
-  gap: 12px;
-  margin-bottom: 16px;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  outline: none;
-}
-
-.toggleButton {
-  flex: 1;
-  min-width: 120px;
-  padding: 10px 16px;
-  font-size: 0.875rem;
-  font-weight: 600;
-  border-radius: 9999px;
-  border: 2px solid #d1d5db;
-  background-color: #f9fafb;
-  color: #374151;
-  cursor: pointer;
-  transition: all 0.25s ease-in-out;
-  outline: none; /* ✅ Prevent default black focus outline */
-}
-
-.toggleButton:hover {
-  background-color: #e5e7eb;
-}
-
-.toggleButton.active {
-  background-color: #22c55e;
-  color: #ffffff;
-  border-color: #22c55e;
-  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.35);
-  outline: none;
-}
-
-/* Dark mode styles */
-@media (prefers-color-scheme: dark) {
   .toggleButton {
     background-color: #1e293b;
     color: #cbd5e1;
     border-color: #334155;
   }
 
-  .toggleButton:hover {
-    /* background-color: #334155; */
-  }
-
   .toggleButton.active {
     background-color: #22c55e;
-    color: #ffffff;
     border-color: #22c55e;
     box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.4);
   }
 }
 
-/* Responsive stack on small screens */
+/* Mobile tweak */
 @media (max-width: 768px) {
   .toggleButtonGroup {
     flex-direction: column;

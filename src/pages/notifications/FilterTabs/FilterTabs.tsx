@@ -1,6 +1,7 @@
-import {memo} from 'react';
-import styles from './FilterTabs.module.css';
-import { NotificationData } from '../../../data/notifications';
+import { memo } from "react";
+
+import styles from "./FilterTabs.module.css";
+import { NotificationData } from "../../../data/notifications";
 
 interface FilterTabsProps {
   activeFilter: string;
@@ -11,32 +12,34 @@ interface FilterTabsProps {
 const FilterTabs: React.FC<FilterTabsProps> = ({
   activeFilter,
   onFilterChange,
-  notifications
+  notifications,
 }) => {
   const filterOptions = [
-    { key: 'all', label: 'All' },
-    { key: 'like', label: 'Likes' },
-    { key: 'follow', label: 'Follows' },
-    { key: 'comment', label: 'Comments' }
+    { key: "all", label: "All" },
+    { key: "like", label: "Likes" },
+    { key: "follow", label: "Follows" },
+    { key: "comment", label: "Comments" },
   ];
 
   const getNotificationCount = (filterKey: string) => {
-    if (filterKey === 'all') return notifications.length;
-    return notifications.filter(n => n.type === filterKey).length;
+    if (filterKey === "all") return notifications?.length || 0;
+    return notifications?.filter((n) => n?.type === filterKey)?.length || 0;
   };
 
   return (
     <div className={styles.filterContainer}>
       <div className={styles.filterTabs}>
-        {filterOptions.map((filter) => {
-          const count = getNotificationCount(filter.key);
+        {filterOptions?.map((filter) => {
+          const count = getNotificationCount(filter?.key);
           return (
             <button
-              key={filter.key}
-              className={`${styles.filterTab} ${activeFilter === filter.key ? styles.active : ''}`}
-              onClick={() => onFilterChange(filter.key)}
+              key={filter?.key}
+              className={`${styles.filterTab} ${
+                activeFilter === filter?.key ? styles.active : ""
+              }`}
+              onClick={() => onFilterChange(filter?.key)}
             >
-              {filter.label}
+              {filter?.label}
               {count > 0 && <span className={styles.countBadge}>{count}</span>}
             </button>
           );

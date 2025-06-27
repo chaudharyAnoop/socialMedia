@@ -1,10 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
+
 import sidebarReducer from "./navigationBarSlice";
-import postReducer from "./postSlice";
-import exploreReducer from "./slices/exploreSlice";
-import commentReducer from "./commentSlice";
-import userSearchReducer from "./UserProfile";
 import userReducer from "./GetUser";
+import userSearchReducer from "./UserProfile";
+import postReducer from "./postSlice";
+import commentReducer from "./commentSlice";
+import exploreReducer from "./slices/exploreSlice";
+
+import chatReducer from "./chatSlice/chatSlice";
 
 export const store = configureStore({
   reducer: {
@@ -14,6 +17,7 @@ export const store = configureStore({
     comments: commentReducer,
     userSearch: userSearchReducer,
     user: userReducer,
+    chat: chatReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

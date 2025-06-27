@@ -2,30 +2,30 @@
   position: sticky;
   top: 0;
   background-color: #ffffff;
-  padding: 20px 24px;
+  padding: 1.25rem 1.5rem;
   z-index: 100;
-  border-bottom: 1px solid #e1e5e9;
+  border-bottom: 0.0625rem solid #e1e5e9;
 }
 
 .title {
-  font-size: 24px;
+  font-size: 1.5rem;
   font-weight: 700;
   margin: 0;
   color: #1a1a1a;
   text-align: center;
-  letter-spacing: -0.5px;
+  letter-spacing: -0.03125rem;
 }
 
-@media (min-width: 769px) {
+@media (min-width: 48.0625rem) {
   .title {
-    font-size: 28px;
+    font-size: 1.75rem;
   }
 }
 
 @media (prefers-color-scheme: dark) {
   .header {
     background-color: #000000;
-    border-bottom: 1px solid #3a3b3c;
+    border-bottom: 0.0625rem solid #3a3b3c;
   }
 
   .title {

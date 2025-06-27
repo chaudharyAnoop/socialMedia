@@ -1,0 +1,327 @@
+.searchResultsContainer {
+  padding: 1.5rem 0;
+}
+
+.sectionHeader {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #262626;
+  margin: 0 0 1rem 0;
+}
+
+.loadingContainer {
+  text-align: center;
+  padding: 2rem;
+}
+
+.loadingText {
+  font-weight: 500;
+  color: #666;
+}
+
+@media (prefers-color-scheme: dark) {
+  .sectionHeader {
+    color: white;
+  }
+}
+
+.accountsList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.accountItem {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.accountItem:hover {
+  background-color: #f5f5f5;
+}
+
+@media (prefers-color-scheme: dark) {
+  .accountItem:hover {
+    background-color: #1a1a1a;
+  }
+}
+
+.profileImageContainer {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.profileImage {
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.verifiedBadgeOuter {
+  position: absolute;
+  bottom: -0.125rem;
+  right: -0.125rem;
+  background: white;
+  border-radius: 50%;
+  padding: 0.125rem;
+  color: #0095f6;
+}
+
+@media (prefers-color-scheme: dark) {
+  .verifiedBadgeOuter {
+    background: black;
+  }
+}
+
+.accountInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.usernameContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.username {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #262626;
+}
+
+@media (prefers-color-scheme: dark) {
+  .username {
+    color: white;
+  }
+}
+
+.verifiedIcon {
+  width: 0.75rem;
+  height: 0.75rem;
+  color: #0095f6;
+}
+
+.fullName {
+  font-size: 0.875rem;
+  color: #8e8e8e;
+  margin: 0;
+}
+
+.followersCount {
+  font-size: 0.75rem;
+  color: #8e8e8e;
+  margin: 0;
+}
+
+.followButton {
+  padding: 0.3125rem 1rem;
+  background: #0095f6;
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.followButton:hover {
+  background: #1877f2;
+}
+
+.postsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.25rem;
+  margin-bottom: 2rem;
+}
+
+.postGridItem {
+  position: relative;
+  aspect-ratio: 1;
+  cursor: pointer;
+  overflow: hidden;
+  background: #f5f5f5;
+}
+
+@media (prefers-color-scheme: dark) {
+  .postGridItem {
+    background: #1a1a1a;
+  }
+}
+
+.postImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.2s ease;
+}
+
+.postGridItem:hover .postImage {
+  transform: scale(1.05);
+}
+
+.videoIndicator {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  color: white;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 0.25rem;
+  padding: 0.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hoverOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.postGridItem:hover .hoverOverlay {
+  opacity: 1;
+}
+
+.overlayContent {
+  display: flex;
+  gap: 1.5rem;
+  color: white;
+}
+
+.overlayButton {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: none;
+  border: none;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  transition: background-color 0.2s ease;
+}
+
+.overlayButton:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.overlayButtonSpan {
+  font-size: 0.875rem;
+}
+
+.noResultsContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 4rem 1rem;
+  text-align: center;
+}
+
+.noResultsMessage {
+  font-size: 1.375rem;
+  font-weight: 300;
+  color: #262626;
+  margin: 0 0 0.5rem 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  .noResultsMessage {
+    color: white;
+  }
+}
+
+.noResultsSubMessage {
+  font-size: 0.875rem;
+  color: #8e8e8e;
+  margin: 0;
+}
+
+@media screen and (max-width: 900px) {
+  .searchResultsContainer {
+    padding: 1rem 0;
+  }
+
+  .accountItem {
+    padding: 0.375rem 0.75rem;
+  }
+
+  .postsGrid {
+    gap: 0.125rem;
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .searchResultsContainer {
+    padding: 0.75rem 0;
+  }
+
+  .sectionHeader {
+    font-size: 0.875rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .accountItem {
+    padding: 0.25rem 0.5rem;
+    gap: 0.5rem;
+  }
+
+  .profileImage {
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+
+  .username {
+    font-size: 0.8125rem;
+  }
+
+  .fullName,
+  .followersCount {
+    font-size: 0.75rem;
+  }
+
+  .followButton {
+    padding: 0.25rem 0.75rem;
+    font-size: 0.75rem;
+  }
+
+  .postsGrid {
+    gap: 0.0625rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .overlayContent {
+    gap: 1rem;
+  }
+
+  .overlayButtonSpan {
+    font-size: 0.75rem;
+  }
+
+  .noResultsContainer {
+    padding: 3rem 0.75rem;
+  }
+
+  .noResultsMessage {
+    font-size: 1.125rem;
+  }
+
+  .noResultsSubMessage {
+    font-size: 0.75rem;
+  }
+}

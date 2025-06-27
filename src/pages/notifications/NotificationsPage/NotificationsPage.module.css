@@ -4,7 +4,7 @@
   min-height: 100vh;
   background-color: #000000;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  padding-bottom: 20px;
+  padding-bottom: 1.25rem;
   box-sizing: border-box;
   margin: 0 auto;
   transition: all 0.3s ease;
@@ -18,47 +18,47 @@
 }
 
 .notificationsContainer {
-  padding-top: 16px;
-  padding-bottom: 20px;
+  padding-top: 1rem;
+  padding-bottom: 1.25rem;
 }
 
 .swipeInstruction {
   text-align: center;
-  padding: 12px 20px;
+  padding: 0.75rem 1.25rem;
   color: #8a8d91;
-  font-size: 13px;
+  font-size: 0.8125rem;
   font-weight: 500;
 }
 
 .emptyState {
   text-align: center;
-  padding: 80px 20px;
+  padding: 5rem 1.25rem;
   color: #8a8d91;
 }
 
 .emptyIcon {
-  width: 120px;
-  height: 120px;
+  width: 7.5rem;
+  height: 7.5rem;
   border-radius: 50%;
   background-color: #e3f2fd;
-  border: 3px solid #1877f2;
-  margin: 0 auto 24px;
+  border: 0.1875rem solid #1877f2;
+  margin: 0 auto 1.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .emptyTitle {
-  font-size: 24px;
-  margin-bottom: 12px;
+  font-size: 1.5rem;
+  margin-bottom: 0.75rem;
   font-weight: 600;
   color: #f1f3f5;
 }
 
 .emptyText {
-  font-size: 16px;
+  font-size: 1rem;
   color: #b0b3b8;
-  max-width: 300px;
+  max-width: 18.75rem;
   margin: 0 auto;
   line-height: 1.4;
 }
@@ -66,12 +66,12 @@
 .scrollContainer {
   max-height: 75vh;
   overflow-y: auto;
-  padding-right: 6px;
-  margin-top: 12px;
+  padding-right: 0.375rem;
+  margin-top: 0.75rem;
 }
 
 .scrollContainer::-webkit-scrollbar {
-  width: 6px;
+  width: 0.375rem;
 }
 
 .scrollContainer::-webkit-scrollbar-track {
@@ -80,10 +80,9 @@
 
 .scrollContainer::-webkit-scrollbar-thumb {
   background: #c0c0c0;
-  border-radius: 8px;
+  border-radius: 0.5rem;
 }
 
-/* 🌞 Light Mode */
 @media (prefers-color-scheme: light) {
   .page {
     background-color: #ffffff;
@@ -113,7 +112,6 @@
   }
 }
 
-/* 🌚 Dark Mode */
 @media (prefers-color-scheme: dark) {
   .page {
     background-color: #000000;
@@ -147,67 +145,64 @@
   }
 }
 
-/* 📱 Small screens */
-@media screen and (max-width: 520px) {
+@media screen and (max-width: 32.5rem) {
   .page {
     width: 100vw;
-    padding: 0 10px 20px;
+    padding: 0 0.625rem 1.25rem;
   }
 
   .swipeInstruction {
-    font-size: 12px;
-    padding: 10px 15px;
+    font-size: 0.75rem;
+    padding: 0.625rem 0.9375rem;
   }
 
   .emptyState {
-    padding: 40px 10px;
+    padding: 2.5rem 0.625rem;
   }
 
   .emptyIcon {
-    width: 80px;
-    height: 80px;
-    margin-bottom: 16px;
+    width: 5rem;
+    height: 5rem;
+    margin-bottom: 1rem;
   }
 
   .emptyTitle {
-    font-size: 20px;
+    font-size: 1.25rem;
   }
 
   .emptyText {
-    font-size: 14px;
-    max-width: 250px;
+    font-size: 0.875rem;
+    max-width: 15.625rem;
   }
 }
 
-/* 💻 Medium screens */
-@media screen and (min-width: 521px) and (max-width: 899px) {
+@media screen and (min-width: 32.5625rem) and (max-width: 56.1875rem) {
   .page {
     width: 90vw;
-    padding: 0 16px 30px;
+    padding: 0 1rem 1.875rem;
   }
 
   .container {
-    max-width: 700px;
+    max-width: 43.75rem;
   }
 
   .emptyState {
-    padding: 60px 15px;
+    padding: 3.75rem 0.9375rem;
   }
 
   .emptyIcon {
-    width: 100px;
-    height: 100px;
+    width: 6.25rem;
+    height: 6.25rem;
   }
 }
 
-/* 🖥️ Large screens */
-@media screen and (min-width: 900px) {
+@media screen and (min-width: 56.25rem) {
   .page {
     width: 40vw;
-    padding-bottom: 40px;
+    padding-bottom: 2.5rem;
   }
 
   .container {
-    max-width: 800px;
+    max-width: 50rem;
   }
 }

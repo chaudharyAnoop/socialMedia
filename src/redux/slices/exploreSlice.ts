@@ -1,47 +1,14 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 
+import {
+  Account,
+  ExploreState,
+  Post,
+} from "../../interfaces/explore.interface";
+
 const BASE_URL_USER = "http://172.50.5.102:3011";
 const BASE_URL_FEED = "http://172.50.5.102:3000";
-const S3_BASE_URL = "https://dummy-project-bucket.s3.ap-south-1.amazonaws.com/"; // NEW: S3 Base URL
-
-
-export interface Post {
-  id: string;
-  imageUrl: string; 
-  content?: string; 
-  username: string;
-  likes: number;
-  comments: number;
-  isVideo: boolean;
-  isLiked?: boolean;
-}
-
-export interface Account {
-  id: string;
-  username: string;
-  fullName: string;
-  profilePicture: string;
-  followers: number;
-  isVerified: boolean;
-}
-
-interface ExploreState {
-  posts: Post[];
-  page: number;
-  isLoading: boolean;
-  hasMore: boolean;
-  error: string | null;
-  searchResults: {
-    accounts: Account[];
-    posts: Post[];
-  };
-  isSearchingLoading: boolean;
-  accounts: Account[];
-  selectedPost: Post | null;
-  searchQuery: string;
-  recentSearches: string[];
-  isSearching: boolean;
-}
+const S3_BASE_URL = "https://dummy-project-bucket.s3.ap-south-1.amazonaws.com/";
 
 const initialState: ExploreState = {
   posts: [],
@@ -64,9 +31,10 @@ const getAuthHeaders = (): HeadersInit => {
 
   if (rawAuthData) {
     try {
-      token = rawAuthData.startsWith('"') && rawAuthData.endsWith('"')
-        ? rawAuthData.slice(1, -1)
-        : rawAuthData;
+      token =
+        rawAuthData.startsWith('"') && rawAuthData.endsWith('"')
+          ? rawAuthData.slice(1, -1)
+          : rawAuthData;
       console.log("Retrieved token:", token);
     } catch (e) {
       console.error("Failed to process auth data from localStorage:", e);
@@ -87,7 +55,6 @@ const getAuthHeaders = (): HeadersInit => {
   return headers;
 };
 
-
 export const fetchSearchResults = createAsyncThunk(
   "explore/fetchSearchResults",
   async (query: string, { rejectWithValue }) => {
@@ -95,54 +62,85 @@ export const fetchSearchResults = createAsyncThunk(
 
     try {
       const [userRes, postRes] = await Promise.all([
-        fetch(`${BASE_URL_USER}/users/search?query=${encodeURIComponent(query)}&page=1`, {
-          headers,
-        }),
-        fetch(`${BASE_URL_FEED}/posts/search?q=${encodeURIComponent(query)}&page=1`, {
-          headers,
-        }),
+        fetch(
+          `${BASE_URL_USER}/users/search?query=${encodeURIComponent(
+            query
+          )}&page=1`,
+          {
+            headers,
+          }
+        ),
+        fetch(
+          `${BASE_URL_FEED}/posts/search?q=${encodeURIComponent(query)}&page=1`,
+          {
+            headers,
+          }
+        ),
       ]);
 
       if (!userRes.ok) {
-        const errorData = await userRes.json().catch(() => ({ message: userRes.statusText }));
+        const errorData = await userRes
+          .json()
+          .catch(() => ({ message: userRes.statusText }));
         console.error("User search failed:", errorData);
-        return rejectWithValue(errorData.message || "Failed to fetch user search results.");
+        return rejectWithValue(
+          errorData.message || "Failed to fetch user search results."
+        );
       }
       if (!postRes.ok) {
-        const errorData = await postRes.json().catch(() => ({ message: postRes.statusText }));
+        const errorData = await postRes
+          .json()
+          .catch(() => ({ message: postRes.statusText }));
         console.error("Post search failed:", errorData);
-        return rejectWithValue(errorData.message || "Failed to fetch post search results.");
+        return rejectWithValue(
+          errorData.message || "Failed to fetch post search results."
+        );
       }
 
       const userJson = await userRes.json();
       const postJson = await postRes.json();
 
-      const accounts = (userJson.users || []).map((u: any): Account => ({
-        id: u._id,
-        username: u.username,
-        fullName: u.fullName || "",
-        profilePicture: u.profilePicture || `https://i.pravatar.cc/150?u=${u._id}`,
-        followers: u.followersCount || 0,
-        isVerified: u.emailVerified || false,
-      }));
+      const accounts = (userJson.users || []).map(
+        (u: any): Account => ({
+          id: u._id,
+          username: u.username,
+          fullName: u.fullName || "",
+          profilePicture:
+            u.profilePicture || `https://i.pravatar.cc/150?u=${u._id}`,
+          followers: u.followersCount || 0,
+          isVerified: u.emailVerified || false,
+        })
+      );
 
-      const posts = (postJson.data || []).map((p: any): Post => ({
-        id: p._id,
-        content: p.content || "",
-        username: p.username || `user${p.UserId || p._id}`,
-        likes: p.reactionCount || 0,
-        comments: p.commentCount || 0,
-        isVideo: p.media && p.media.length > 0 && typeof p.media[0] === 'string' && (p.media[0].endsWith('.mp4') || p.media[0].endsWith('.mov') || p.media[0].endsWith('.webm')),
-        imageUrl: p.media && p.media.length > 0 ? `${S3_BASE_URL}${p.media[0]}` : `https://picsum.photos/seed/${p._id || p.id}/500/500`,
-        isLiked: false,
-      }));
+      const posts = (postJson.data || []).map(
+        (p: any): Post => ({
+          id: p._id,
+          content: p.content || "",
+          username: p.username || `user${p.UserId || p._id}`,
+          likes: p.reactionCount || 0,
+          comments: p.commentCount || 0,
+          isVideo:
+            p.media &&
+            p.media.length > 0 &&
+            typeof p.media[0] === "string" &&
+            (p.media[0].endsWith(".mp4") ||
+              p.media[0].endsWith(".mov") ||
+              p.media[0].endsWith(".webm")),
+          imageUrl:
+            p.media && p.media.length > 0
+              ? `${S3_BASE_URL}${p.media[0]}`
+              : `https://picsum.photos/seed/${p._id || p.id}/500/500`,
+          isLiked: false,
+        })
+      );
 
       return { accounts, posts };
     } catch (error: any) {
       console.error("Search fetch error:", error);
       let errorMessage = "Network error during search results fetch";
       if (error instanceof TypeError && error.message === "Failed to fetch") {
-        errorMessage = "Could not connect to the server for search results. Check server status or network.";
+        errorMessage =
+          "Could not connect to the server for search results. Check server status or network.";
       } else if (error.message) {
         errorMessage = error.message;
       }
@@ -156,16 +154,23 @@ export const fetchFeedPosts = createAsyncThunk(
   async (page: number = 5, { rejectWithValue }) => {
     if (!Number.isInteger(page) || page < 1) {
       console.error(`Invalid page value: ${page}`);
-      return rejectWithValue("Invalid page number: Page must be a positive integer.");
+      return rejectWithValue(
+        "Invalid page number: Page must be a positive integer."
+      );
     }
 
     const headers = getAuthHeaders();
     if (!headers.Authorization) {
-      return rejectWithValue("No authentication token provided. Please log in.");
+      return rejectWithValue(
+        "No authentication token provided. Please log in."
+      );
     }
 
     try {
-      console.log(`Fetching feed posts for page ${page} with headers:`, headers);
+      console.log(
+        `Fetching feed posts for page ${page} with headers:`,
+        headers
+      );
       const res = await fetch(`${BASE_URL_FEED}/posts/explore?page=${page}`, {
         headers,
       });
@@ -185,9 +190,11 @@ export const fetchFeedPosts = createAsyncThunk(
         });
         let errorMessage = errorData.message || `Server error: ${res.status}`;
         if (res.status === 500) {
-          errorMessage = "Internal server error occurred. Please check server logs for details.";
+          errorMessage =
+            "Internal server error occurred. Please check server logs for details.";
         } else if (errorData.code === 2 && errorData.codeName === "BadValue") {
-          errorMessage = "Invalid query parameter sent to the server. Check page number or request format.";
+          errorMessage =
+            "Invalid query parameter sent to the server. Check page number or request format.";
         }
         return rejectWithValue(errorMessage);
       }
@@ -196,25 +203,39 @@ export const fetchFeedPosts = createAsyncThunk(
       console.log("Feed response data:", data);
 
       if (data && Array.isArray(data.data)) {
-        return data.data.map((p: any): Post => ({
-          id: p._id,
-          content: p.content || "",
-          username: p.username || `user${p.UserId || p._id}`,
-          likes: p.reactionCount || 0,
-          comments: p.commentCount || 0,
-          isVideo: p.media && p.media.length > 0 && typeof p.media[0] === 'string' && (p.media[0].endsWith('.mp4') || p.media[0].endsWith('.mov') || p.media[0].endsWith('.webm')),
-          // CORRECTED LINE: Prepend S3_BASE_URL
-          imageUrl: p.media && p.media.length > 0 ? `${S3_BASE_URL}${p.media[0]}` : `https://picsum.photos/seed/${p._id}/500/500`,
-          isLiked: false,
-        }));
+        return data.data.map(
+          (p: any): Post => ({
+            id: p._id,
+            content: p.content || "",
+            username: p.username || `user${p.UserId || p._id}`,
+            likes: p.reactionCount || 0,
+            comments: p.commentCount || 0,
+            isVideo:
+              p.media &&
+              p.media.length > 0 &&
+              typeof p.media[0] === "string" &&
+              (p.media[0].endsWith(".mp4") ||
+                p.media[0].endsWith(".mov") ||
+                p.media[0].endsWith(".webm")),
+            // CORRECTED LINE: Prepend S3_BASE_URL
+            imageUrl:
+              p.media && p.media.length > 0
+                ? `${S3_BASE_URL}${p.media[0]}`
+                : `https://picsum.photos/seed/${p._id}/500/500`,
+            isLiked: false,
+          })
+        );
       } else {
-        return rejectWithValue("Server responded with an unexpected feed data format.");
+        return rejectWithValue(
+          "Server responded with an unexpected feed data format."
+        );
       }
     } catch (error: any) {
       console.error("Fetch feed posts error:", error);
       let errorMessage = "Network error during feed posts fetch";
       if (error instanceof TypeError && error.message === "Failed to fetch") {
-        errorMessage = "Could not connect to the feed server. Check server status or network.";
+        errorMessage =
+          "Could not connect to the feed server. Check server status or network.";
       } else if (error.message) {
         errorMessage = error.message;
       }
@@ -261,7 +282,9 @@ const exploreSlice = createSlice({
       state.recentSearches = [];
     },
     removeRecentSearch: (state, action: PayloadAction<string>) => {
-      state.recentSearches = state.recentSearches.filter((s) => s !== action.payload);
+      state.recentSearches = state.recentSearches.filter(
+        (s) => s !== action.payload
+      );
     },
     resetExplore: (state) => {
       state.posts = [];
@@ -288,7 +311,10 @@ const exploreSlice = createSlice({
       })
       .addCase(fetchFeedPosts.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = (action.payload as string) || action.error.message || "An unknown error occurred.";
+        state.error =
+          (action.payload as string) ||
+          action.error.message ||
+          "An unknown error occurred.";
         console.error("Failed to fetch feed posts:", state.error);
       })
       .addCase(fetchSearchResults.pending, (state) => {
@@ -302,7 +328,10 @@ const exploreSlice = createSlice({
       })
       .addCase(fetchSearchResults.rejected, (state, action) => {
         state.isSearchingLoading = false;
-        state.error = (action.payload as string) || action.error.message || "An unknown error occurred during search.";
+        state.error =
+          (action.payload as string) ||
+          action.error.message ||
+          "An unknown error occurred during search.";
         console.error("Failed to fetch search results:", state.error);
       });
   },

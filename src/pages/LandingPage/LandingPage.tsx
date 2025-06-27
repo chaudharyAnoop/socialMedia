@@ -40,7 +40,6 @@ function LandingPage() {
       dispatch(fetchPosts({ page: 1, limit: 5 }));
     }
   }, [status, dispatch]);
-  console.log(posts);
 
   return (
     <div className={styles.main}>

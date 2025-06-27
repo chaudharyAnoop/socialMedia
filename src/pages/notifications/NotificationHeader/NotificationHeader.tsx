@@ -1,7 +1,6 @@
-// src/components/Notifications/NotificationHeader.tsx
-import React , {memo} from 'react';
-import styles from './NotificationHeader.module.css';
+import React, { memo } from "react";
 
+import styles from "./NotificationHeader.module.css";
 
 const NotificationHeader: React.FC = () => {
   return (
@@ -11,4 +10,4 @@ const NotificationHeader: React.FC = () => {
   );
 };
 
-export default   memo(NotificationHeader);
+export default memo(NotificationHeader);

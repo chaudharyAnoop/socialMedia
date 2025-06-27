@@ -3,7 +3,7 @@
   background-color: #ffffff;
   overflow-x: auto;
   scrollbar-width: none;
-  padding: 0 16px;
+  padding: 0 1rem;
 }
 
 .filterContainer::-webkit-scrollbar {
@@ -12,29 +12,29 @@
 
 .filterTabs {
   display: flex;
-  padding-top: 12px;
+  padding-top: 0.75rem;
   width: 100%;
   justify-content: space-between;
 }
 
 .filterTab {
   flex: 1;
-  padding: 12px 8px;
-  border: 1px solid #e1e5e9;
+  padding: 0.75rem 0.5rem;
+  border: 0.0625rem solid #e1e5e9;
   background-color: #ffffff;
   color: #65676b;
   font-weight: 500;
-  font-size: 14px;
+  font-size: 0.875rem;
   cursor: pointer;
-  border-radius: 8px;
+  border-radius: 0.5rem;
   transition: all 0.3s ease;
   white-space: nowrap;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
-  margin: 0 4px;
+  gap: 0.375rem;
+  box-shadow: 0 0.0625rem 0.125rem rgba(0, 0, 0, 0.05);
+  margin: 0 0.25rem;
 }
 
 .filterTab:hover:not(.active) {
@@ -47,22 +47,22 @@
   color: #ffffff;
   font-weight: 600;
   border: none;
-  box-shadow: 0 2px 4px rgba(24, 119, 242, 0.2);
+  box-shadow: 0 0.125rem 0.25rem rgba(24, 119, 242, 0.2);
 }
 
 .countBadge {
   background-color: #1877f2;
   color: #ffffff;
-  border-radius: 12px;
-  padding: 2px 8px;
-  font-size: 11px;
+  border-radius: 0.75rem;
+  padding: 0.125rem 0.5rem;
+  font-size: 0.6875rem;
   font-weight: 600;
-  min-width: 18px;
+  min-width: 1.125rem;
   text-align: center;
 }
 
 .active .countBadge {
-  background-color: rgba(255,255,255,0.3);
+  background-color: rgba(255, 255, 255, 0.3);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -72,7 +72,7 @@
 
   .filterTab {
     background-color: #1a1a1a;
-    border: 1px solid #333;
+    border: 0.0625rem solid #333;
     color: #cfd2d5;
   }
 
@@ -91,6 +91,6 @@
   }
 
   .active .countBadge {
-    background-color: rgba(255,255,255,0.3);
+    background-color: rgba(255, 255, 255, 0.3);
   }
 }

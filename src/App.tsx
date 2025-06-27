@@ -1,6 +1,7 @@
 import React, { useEffect, Suspense, lazy } from "react";
-import { Route, Routes, useLocation, BrowserRouter } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
+
+import styles from "./App.module.css";
+import { BrowserRouter } from "react-router-dom";
 
 import { AuthProvider } from "./contexts/AuthContext";
 import {
@@ -8,101 +9,14 @@ import {
   requestNotificationPermission,
 } from "./firebase/firebase";
 
-import NavigationBar from "./components/NavigationBar/NavigationBar";
-import QuickAccess from "./components/QuickAccess/QuickAccess";
-import ExplorePage from "./pages/explore/ExplorePage";
-import Signin from "./pages/Signin/Signin";
-import InstagramCreatePost from "./pages/InstagramCreatePost/InstagramCreatePost";
-import ProtectedRoute from "./components/ProtectedRoute";
-import Dashboard from "./components/Dashboard/Dashboard";
-
-import styles from "./App.module.css";
-
-import NotificationsPage from "./pages/notifications/NotificationsPage/NotificationsPage";
-
-const LandingPage = lazy(() => import("./pages/LandingPage/LandingPage"));
-const AdminPage = lazy(() => import("./pages/AdminPage/AdminPage"));
+import Router from "./Router/Router";
 
 const AppContent: React.FC = () => {
-  const location = useLocation();
-  const isSignin = location.pathname === "/signin";
-
   return (
     <div className={styles.nav}>
-      {!isSignin && <NavigationBar />}
-      <Suspense fallback={<div aria-busy="true" style={{ display: "none" }} />}>
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <ProtectedRoute>
-                <LandingPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/explore"
-            element={
-              <ProtectedRoute>
-                <ExplorePage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/create"
-            element={
-              <ProtectedRoute>
-                <InstagramCreatePost />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/create"
-            element={
-              <ProtectedRoute>
-                <InstagramCreatePost />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/admin"
-            element={
-              <ProtectedRoute>
-                <AdminPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route path="/signin" element={<Signin />} />
-          <Route
-            path="/dashboard"
-            element={
-              <ProtectedRoute>
-                <Dashboard />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/noti"
-            element={
-              <ProtectedRoute>
-                <NotificationsPage />
-              </ProtectedRoute>
-            }
-          />
-        </Routes>
-      </Suspense>
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
-      {!isSignin && <QuickAccess />}
+      {/* <BrowserRouter> */}
+      <Router />
+      {/* </BrowserRouter> */}
     </div>
   );
 };

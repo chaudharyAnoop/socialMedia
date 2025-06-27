@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-// Define interfaces (reusing User from userSearchSlice)
 interface User {
   _id: string;
   username: string;
@@ -27,20 +26,20 @@ interface User {
   banReason?: string | null;
 }
 
+import { StatusEnum } from "../enums/StatusEnum";
+
 interface UserState {
   user: User | null;
-  status: "idle" | "loading" | "succeeded" | "failed";
+  status: StatusEnum;
   error: string | null;
 }
 
-// Initial state
 const initialState: UserState = {
   user: null,
-  status: "idle",
+  status: StatusEnum.Idle,
   error: null,
 };
 
-// Token setup
 const token = localStorage.getItem("instagram_user");
 const cleanedUser = token?.slice(1, -1);
 const headers = {
@@ -48,11 +47,10 @@ const headers = {
   Authorization: `Bearer ${cleanedUser}`,
 };
 
-// Async thunk to fetch a single user
 export const fetchUser = createAsyncThunk<
-  User, // Return type
-  string, // Argument type (userId)
-  { rejectValue: string } // ThunkAPI config
+  User,
+  string,
+  { rejectValue: string }
 >("user/fetchUser", async (userId: string, { rejectWithValue }) => {
   try {
     const response = await fetch(`http://172.50.5.102:3011/users/${userId}`, {
@@ -78,32 +76,29 @@ const userSlice = createSlice({
   reducers: {
     clearUser(state) {
       state.user = null;
-      state.status = "idle";
+      state.status = StatusEnum.Idle;
       state.error = null;
     },
   },
   extraReducers: (builder) => {
     builder
       .addCase(fetchUser.pending, (state) => {
-        state.status = "loading";
+        state.status = StatusEnum.Loading;
         state.error = null;
       })
       .addCase(fetchUser.fulfilled, (state, action) => {
-        state.status = "succeeded";
+        state.status = StatusEnum.Succeeded;
         state.user = action.payload;
       })
       .addCase(fetchUser.rejected, (state, action) => {
-        state.status = "failed";
+        state.status = StatusEnum.Failed;
         state.error = action.payload ?? "Unknown error";
       });
   },
 });
 
-// Export actions
 export const { clearUser } = userSlice.actions;
 
-// Export reducer
 export default userSlice.reducer;
 
-// Export state type for use in selectors
 export type { UserState, User };

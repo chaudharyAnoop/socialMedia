@@ -1,8 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { UserPlus, X, Search, Loader2 } from 'lucide-react';
-import axios from 'axios';
-import styles from './TagInput.module.css';
-import { SEARCH_USERS } from '../baseURL';
+import React, { useState, useEffect, useRef } from "react";
+
+import { UserPlus, X, Search, Loader2 } from "lucide-react";
+import axios from "axios";
+
+import styles from "./TagInput.module.css";
+import { SEARCH_USERS } from "../baseURL";
 
 interface TaggedPerson {
   id: string;
@@ -20,78 +22,62 @@ interface User {
 
 interface TagInputProps {
   taggedUsers: TaggedPerson[];
-  settaggedUsers: React.Dispatch<React.SetStateAction<TaggedPerson[]>>;
+  settaggedUsers: (users: TaggedPerson[]) => void;
 }
 
-let token = localStorage.getItem("instagram_user");
-let cleanedUser = token;
-
-// Get token from props or context instead of localStorage
-// const token = "your-auth-token-here"; // Replace with proper token management
-
 const TagInput: React.FC<TagInputProps> = ({ taggedUsers, settaggedUsers }) => {
-  const [tagInput, setTagInput] = useState('');
+  const [tagInput, setTagInput] = useState("");
   const [searchResults, setSearchResults] = useState<User[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const token = localStorage.getItem("instagram_user");
+
   const debounceTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-
-
-
-
-
-  // API function to search users using Axios
   const searchUsers = async (query: string): Promise<User[]> => {
     try {
       const response = await axios.get(SEARCH_USERS, {
-        params: {
-          query: query
-        },
+        params: { query },
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${cleanedUser}`
-        }
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
       });
 
-      console.log('API Response:', response.data);
+      const users = response?.data?.users || response?.data || [];
 
-      // Safely access the users array from the response
-      const users = response.data?.users || response.data || [];
-
-      // Filter users with proper null checks
-      const filteredUsers = users.filter((user: User) => {
-        const name = user?.fullName || '';
-        const username = user?.username || '';
-        return (
-          name.toLowerCase().includes(query.toLowerCase()) ||
-          username.toLowerCase().includes(query.toLowerCase())
-        );
-      });
-
-      return filteredUsers;
+      return (
+        users?.filter((user: User) => {
+          const name = user?.fullName || "";
+          const username = user?.username || "";
+          return (
+            name?.toLowerCase()?.includes(query.toLowerCase()) ||
+            username?.toLowerCase()?.includes(query.toLowerCase())
+          );
+        }) || []
+      );
     } catch (error) {
-      console.error('Error searching users:', error);
       if (axios.isAxiosError(error)) {
-        throw new Error(`API Error: ${error.response?.status} - ${error.response?.statusText || 'Network Error'}`);
+        throw new Error(
+          `API Error: ${error?.response?.status} - ${
+            error?.response?.statusText || "Network Error"
+          }`
+        );
       }
-      throw new Error('Failed to search users. Please try again.');
+      throw new Error("Failed to search users. Please try again.");
     }
   };
 
-  // Debounced search effect
   useEffect(() => {
-    if (tagInput.trim().length > 0) {
-      // Clear previous timeout
+    if (tagInput?.trim()?.length > 0) {
       if (debounceTimeoutRef.current) {
         clearTimeout(debounceTimeoutRef.current);
       }
 
-      // Set new timeout
       debounceTimeoutRef.current = setTimeout(async () => {
         setIsLoading(true);
         setError(null);
@@ -100,20 +86,22 @@ const TagInput: React.FC<TagInputProps> = ({ taggedUsers, settaggedUsers }) => {
           setSearchResults(results);
           setShowDropdown(true);
         } catch (err) {
-          const errorMessage = err instanceof Error ? err.message : 'Failed to search users. Please try again.';
+          const errorMessage =
+            err instanceof Error
+              ? err.message
+              : "Failed to search users. Please try again.";
           setError(errorMessage);
           setSearchResults([]);
         } finally {
           setIsLoading(false);
         }
-      }, 1000); // 1 second debounce
+      }, 1000);
     } else {
       setShowDropdown(false);
       setSearchResults([]);
       setIsLoading(false);
     }
 
-    // Cleanup timeout on unmount or when tagInput changes
     return () => {
       if (debounceTimeoutRef.current) {
         clearTimeout(debounceTimeoutRef.current);
@@ -121,16 +109,18 @@ const TagInput: React.FC<TagInputProps> = ({ taggedUsers, settaggedUsers }) => {
     };
   }, [tagInput]);
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
         setShowDropdown(false);
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   const addTaggedPerson = (user?: User): void => {
@@ -138,23 +128,26 @@ const TagInput: React.FC<TagInputProps> = ({ taggedUsers, settaggedUsers }) => {
       _id: Date.now().toString(),
       username: tagInput.trim(),
       fullName: tagInput.trim(),
-      email: ''
+      email: "",
     };
 
-    if (personToAdd.username && !taggedUsers.find(p => p.name === personToAdd.username)) {
+    if (
+      personToAdd?.username &&
+      !taggedUsers?.find((p) => p?.name === personToAdd?.username)
+    ) {
       const newPerson: TaggedPerson = {
-        id: personToAdd._id,
-        name: personToAdd.username
+        id: personToAdd?._id,
+        name: personToAdd?.username,
       };
-      settaggedUsers(prev => [...prev, newPerson]);
-      setTagInput('');
+      settaggedUsers([...taggedUsers, newPerson]);
+      setTagInput("");
       setShowDropdown(false);
       setSearchResults([]);
     }
   };
 
   const removeTaggedPerson = (id: string): void => {
-    settaggedUsers(prev => prev.filter(p => p.id !== id));
+    settaggedUsers(taggedUsers.filter((p) => p.id !== id));
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -170,7 +163,7 @@ const TagInput: React.FC<TagInputProps> = ({ taggedUsers, settaggedUsers }) => {
   };
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       e.preventDefault();
       if (!showDropdown && tagInput.trim()) {
         addTaggedPerson();
@@ -199,7 +192,10 @@ const TagInput: React.FC<TagInputProps> = ({ taggedUsers, settaggedUsers }) => {
               className={styles.tagInputField}
             />
             {isLoading && (
-              <Loader2 size={16} className={`${styles.loadingIcon} ${styles.spinning}`} />
+              <Loader2
+                size={16}
+                className={`${styles.loadingIcon} ${styles.spinning}`}
+              />
             )}
           </div>
           <button
@@ -211,13 +207,10 @@ const TagInput: React.FC<TagInputProps> = ({ taggedUsers, settaggedUsers }) => {
           </button>
         </div>
 
-        {/* Dropdown Modal */}
         {showDropdown && (
           <div className={styles.dropdown}>
             {error ? (
-              <div className={styles.errorMessage}>
-                {error}
-              </div>
+              <div className={styles.errorMessage}>{error}</div>
             ) : searchResults.length > 0 ? (
               <div className={styles.userList}>
                 {searchResults.map((user) => (

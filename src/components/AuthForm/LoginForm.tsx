@@ -1,17 +1,18 @@
 import React, { useState } from "react";
+
 import { Formik, Form } from "formik";
 import { useNavigate } from "react-router-dom";
+import { AxiosError } from "axios";
 
-import FormikInput from "../FormInput/FormikInput";
-import SocialLogin from "../SocialLogin/SocialLogin";
 import { useAuth } from "../../contexts/AuthContext";
 import {
   loginSchema,
   forgotPasswordSchema,
 } from "../../utils/validationSchemas";
 
+import FormikInput from "../FormInput/FormikInput";
+import SocialLogin from "../SocialLogin/SocialLogin";
 import styles from "./AuthForm.module.css";
-
 interface LoginFormProps {
   onSignupClick: () => void;
   onForgotPassword: (email: string) => void;
@@ -32,9 +33,10 @@ const LoginForm: React.FC<LoginFormProps> = ({
     try {
       await login(values.email, values.password);
       navigate("/");
-    } catch (error: any) {
+    } catch (error) {
+      const axiosError = error as AxiosError<{ message?: string }>;
       setError(
-        error.response?.data?.message || "Login failed. Please try again."
+        axiosError.response?.data?.message || "Login failed. Please try again."
       );
     }
   };
@@ -46,8 +48,9 @@ const LoginForm: React.FC<LoginFormProps> = ({
       await forgotPassword(values.email);
       setForgotPasswordMessage("OTP sent to your email");
       onForgotPassword(values.email);
-    } catch (error: any) {
-      setError(error.response?.data?.message || "Email not found");
+    } catch (error) {
+      const axiosError = error as AxiosError<{ message?: string }>;
+      setError(axiosError.response?.data?.message || "Email not found");
     }
   };
 

@@ -1,13 +1,16 @@
-import React from 'react';
-import { ArrowLeft } from 'lucide-react';
-import styles from './ShareModal.module.css';
-import MediaCarousel from '../MediaCarousel/MediaCarousel';
-import TagInput from '../TagInput/TagInput';
+import React, { memo } from "react";
+
+import { ArrowLeft } from "lucide-react";
+
+import MediaCarousel from "../MediaCarousel/MediaCarousel";
+import TagInput from "../TagInput/TagInput";
+
+import styles from "./ShareModal.module.css";
 
 interface SelectedMedia {
   file: File;
   preview: string;
-  type: 'image' | 'video';
+  type: "image" | "video";
 }
 
 interface TaggedPerson {
@@ -18,21 +21,14 @@ interface TaggedPerson {
 interface ShareModalProps {
   selectedMedia: SelectedMedia[];
   content: string;
-  visibility:String;
-  setVisibility:any;
-  setcontent: React.Dispatch<React.SetStateAction<string>>;
+  visibility: string;
+  setVisibility: (visibility: string) => void;
+  setcontent: (content: string) => void;
   taggedUsers: TaggedPerson[];
-  settaggedUsers: React.Dispatch<React.SetStateAction<TaggedPerson[]>>;
+  settaggedUsers: (users: TaggedPerson[]) => void;
   onBack: () => void;
   onShare: () => void;
 }
-
-
-
-
-
-
-
 
 const ShareModal: React.FC<ShareModalProps> = ({
   selectedMedia,
@@ -43,45 +39,21 @@ const ShareModal: React.FC<ShareModalProps> = ({
   visibility,
   setVisibility,
   onBack,
-  onShare
+  onShare,
 }) => {
-
-
-  const  addpublic = (): void => {
-    setVisibility("public")
-  };
-  
-  const  addprivate = (): void => {
-    setVisibility("private");
-  };
-  
-
-
-
-
   return (
     <div className={styles.modal}>
       <div className={styles.shareModal}>
-        {/* Modal Header */}
         <div className={styles.modalHeader}>
-          <button
-            onClick={onBack}
-            className={styles.modalHeaderButton}
-          >
+          <button onClick={onBack} className={styles.modalHeaderButton}>
             <ArrowLeft size={24} color="#6b7280" />
           </button>
           <h3 className={styles.modalTitle}>Share</h3>
-          <button
-            onClick={onShare}
-            className={styles.modalHeaderButtonRight}
-          >
+          <button onClick={onShare} className={styles.modalHeaderButtonRight}>
             Share
           </button>
         </div>
-
-        {/* Modal Content */}
         <div className={styles.shareContent}>
-          {/* Image Preview */}
           <div className={styles.shareImageContainer}>
             <MediaCarousel
               selectedMedia={selectedMedia}
@@ -89,16 +61,11 @@ const ShareModal: React.FC<ShareModalProps> = ({
               shareMode
             />
           </div>
-          
-          {/* content and Options */}
           <div className={styles.shareOptions}>
-            {/* User Info */}
             <div className={styles.userInfo}>
               <div className={styles.userAvatar}></div>
-              <span className={styles.username}>your_username</span>
+              <span className={styles.username}>yash rajput</span>
             </div>
-            
-            {/* content */}
             <div className={styles.contentContainer}>
               <textarea
                 value={content}
@@ -108,53 +75,29 @@ const ShareModal: React.FC<ShareModalProps> = ({
                 maxLength={2200}
               />
             </div>
-            
-            <div className={styles.contentCounter}>
-              {content.length}/2,200
-            </div>
-            
-            {/* Tagged People */}
+            <div className={styles.contentCounter}>{content.length}/2,200</div>
             <TagInput
               taggedUsers={taggedUsers}
               settaggedUsers={settaggedUsers}
             />
             <div className={styles.toggleButtonGroup}>
-  <button
-    className={`${styles.toggleButton} ${visibility === 'public' ? styles.active : ''}`}
-    onClick={() => setVisibility('public')}
-  >
-    Public Post
-  </button>
-  <button
-    className={`${styles.toggleButton} ${visibility === 'private' ? styles.active : ''}`}
-    onClick={() => setVisibility('private')}
-  >
-    Private Post
-  </button>
-</div>
-            
-            {/* Share Options */}
-            {/* <div className={styles.shareOptionsList}>
-              <div className={styles.shareOption}>
-                <div className={styles.shareOptionLeft}>
-                  <MapPin size={16} />
-                  <span className={styles.shareOptionLabel}>Add location</span>
-                </div>
-                <button className={styles.shareOptionButton}>
-                  Add
-                </button>
-              </div>
-              
-              <div className={styles.shareOption}>
-                <div className={styles.shareOptionLeft}>
-                  <Music size={16} />
-                  <span className={styles.shareOptionLabel}>Add music</span>
-                </div>
-                <button className={styles.shareOptionButton}>
-                  Add
-                </button>
-              </div>
-            </div> */}
+              <button
+                className={`${styles.toggleButton} ${
+                  visibility === "public" ? styles.active : ""
+                }`}
+                onClick={() => setVisibility("public")}
+              >
+                Public Post
+              </button>
+              <button
+                className={`${styles.toggleButton} ${
+                  visibility === "private" ? styles.active : ""
+                }`}
+                onClick={() => setVisibility("private")}
+              >
+                Private Post
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -162,4 +105,4 @@ const ShareModal: React.FC<ShareModalProps> = ({
   );
 };
 
-export default ShareModal;
+export default memo(ShareModal);
