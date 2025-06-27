@@ -6,9 +6,7 @@ import {
   Post,
 } from "../../interfaces/explore.interface";
 
-const BASE_URL_USER = "http://172.50.5.102:3011";
-const BASE_URL_FEED = "http://172.50.5.102:3000";
-const S3_BASE_URL = "https://dummy-project-bucket.s3.ap-south-1.amazonaws.com/";
+import { BASE_URL_USER, BASE_URL_FEED, S3_BASE_URL } from "../../api/endpoints";
 
 const initialState: ExploreState = {
   posts: [],
@@ -25,23 +23,23 @@ const initialState: ExploreState = {
   isSearching: false,
 };
 
-const getAuthHeaders = (): HeadersInit => {
-  const rawAuthData = localStorage.getItem("instagram_user");
+import { getInstagramUser } from "../../constants/localStorage";
+
+const getAuthHeaders = (): Record<string, string> => {
   let token: string | null = null;
 
-  if (rawAuthData) {
-    try {
-      token =
-        rawAuthData.startsWith('"') && rawAuthData.endsWith('"')
-          ? rawAuthData.slice(1, -1)
-          : rawAuthData;
-      console.log("Retrieved token:", token);
-    } catch (e) {
-      console.error("Failed to process auth data from localStorage:", e);
-    }
+  try {
+    const rawAuthData = getInstagramUser();
+    token =
+      rawAuthData && rawAuthData.startsWith('"') && rawAuthData.endsWith('"')
+        ? rawAuthData.slice(1, -1)
+        : rawAuthData;
+    console.log("Retrieved token:", token);
+  } catch (e) {
+    console.error("Failed to process auth data from localStorage:", e);
   }
 
-  const headers: HeadersInit = {
+  const headers: Record<string, string> = {
     "Content-Type": "application/json",
     "X-Custom-Header": "CustomValue",
   };

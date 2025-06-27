@@ -15,6 +15,69 @@ import ChatLayout from "../components/Chat/ChatLayout";
 const LandingPage = lazy(() => import("../pages/LandingPage/LandingPage"));
 const AdminPage = lazy(() => import("../pages/AdminPage/AdminPage"));
 
+const routes = [
+  {
+    path: "/",
+    element: (
+      <ProtectedRoute>
+        <LandingPage />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/explore",
+    element: (
+      <ProtectedRoute>
+        <ExplorePage />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/create",
+    element: (
+      <ProtectedRoute>
+        <InstagramCreatePost />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/admin",
+    element: (
+      <ProtectedRoute>
+        <AdminPage />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/chat",
+    element: (
+      <ProtectedRoute>
+        <ChatLayout />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/signin",
+    element: <Signin />,
+  },
+  {
+    path: "/dashboard",
+    element: (
+      <ProtectedRoute>
+        <Dashboard />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/noti",
+    element: (
+      <ProtectedRoute>
+        <NotificationsPage />
+      </ProtectedRoute>
+    ),
+  },
+];
+
 const Router: React.FC = () => {
   const location = useLocation();
   const isSignin = location.pathname === "/signin";
@@ -24,63 +87,9 @@ const Router: React.FC = () => {
       {!isSignin && <NavigationBar />}
       <Suspense fallback={<div aria-busy="true" style={{ display: "none" }} />}>
         <Routes>
-          <Route
-            path="/"
-            element={
-              <ProtectedRoute>
-                <LandingPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/explore"
-            element={
-              <ProtectedRoute>
-                <ExplorePage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/create"
-            element={
-              <ProtectedRoute>
-                <InstagramCreatePost />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/admin"
-            element={
-              <ProtectedRoute>
-                <AdminPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/chat"
-            element={
-              <ProtectedRoute>
-                <ChatLayout />
-              </ProtectedRoute>
-            }
-          />
-          <Route path="/signin" element={<Signin />} />
-          <Route
-            path="/dashboard"
-            element={
-              <ProtectedRoute>
-                <Dashboard />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/noti"
-            element={
-              <ProtectedRoute>
-                <NotificationsPage />
-              </ProtectedRoute>
-            }
-          />
+          {routes.map(({ path, element }) => (
+            <Route key={path} path={path} element={element} />
+          ))}
         </Routes>
       </Suspense>
       <ToastContainer

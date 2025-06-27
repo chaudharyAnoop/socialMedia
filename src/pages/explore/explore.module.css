@@ -1,12 +1,12 @@
 .explorePage {
   min-height: 100vh;
-  background: white;
+  background: var(--bg-primary);
   padding-top: 60px;
 }
 
 @media (prefers-color-scheme: dark) {
   .explorePage {
-    background: black;
+    background: var(--bg-primary);
   }
 }
 
@@ -27,7 +27,7 @@
     padding-top: 0;
     padding-bottom: 60px;
   }
-  
+
   .container {
     padding: 12px;
   }

@@ -6,41 +6,24 @@ import {
   type PayloadAction,
 } from "@reduxjs/toolkit";
 
-export interface Comment {
-  commentId: string;
-  _id: string;
-  postId: string;
-  user: string;
-  content: string;
-  createdAt: string;
-  likes?: number;
-  replies?: Comment[];
-}
+import { StatusEnum } from "../enums/StatusEnum";
+import { CommentActionTypeEnum } from "../enums/CommentActionTypeEnum";
 
-export interface CommentsState {
-  comments: Comment[];
-  postLikes: { [postId: string]: number };
-  status: "idle" | "loading" | "succeeded" | "failed";
-  error: string | null;
-}
+import { Comment, CommentsState } from "../interfaces/comment.interface";
+import { initialCommentsState } from "./initialStates";
 
-const initialState: CommentsState = {
-  comments: [],
-  postLikes: {},
-  status: "idle",
-  error: null,
-};
+import { getInstagramUser } from "../constants/localStorage";
 
-const token = localStorage.getItem("instagram_user");
-const headers = token
+const rawToken = getInstagramUser();
+const headers = rawToken
   ? {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${rawToken}`,
     }
   : {};
 
 export const fetchComments = createAsyncThunk<Comment[], string>(
-  "comments/fetchComments",
+  CommentActionTypeEnum.FetchComments,
   async (postId: string, { rejectWithValue }) => {
     if (!postId) {
       return rejectWithValue("Post ID is required");
@@ -69,30 +52,33 @@ export const fetchComments = createAsyncThunk<Comment[], string>(
 export const addComment = createAsyncThunk<
   Comment,
   { postId: string; content: string }
->("comments/addComment", async ({ postId, content }, { rejectWithValue }) => {
-  if (!postId || !content) {
-    return rejectWithValue("Post ID and content are required");
-  }
-  try {
-    const response = await axios.post(
-      "http://172.50.5.102:3008/interaction/comment",
-      { postId, content },
-      { headers }
-    );
-    const comment = response.data;
-    if (!comment || !comment._id) {
-      return rejectWithValue("Invalid comment data received");
+>(
+  CommentActionTypeEnum.AddComment,
+  async ({ postId, content }, { rejectWithValue }) => {
+    if (!postId || !content) {
+      return rejectWithValue("Post ID and content are required");
     }
-    return comment as Comment;
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      return rejectWithValue(
-        error.response?.data?.message || "Failed to add comment"
+    try {
+      const response = await axios.post(
+        "http://172.50.5.102:3008/interaction/comment",
+        { postId, content },
+        { headers }
       );
+      const comment = response.data;
+      if (!comment || !comment._id) {
+        return rejectWithValue("Invalid comment data received");
+      }
+      return comment as Comment;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        return rejectWithValue(
+          error.response?.data?.message || "Failed to add comment"
+        );
+      }
+      return rejectWithValue("Unexpected error occurred");
     }
-    return rejectWithValue("Unexpected error occurred");
   }
-});
+);
 
 export const likeComment = createAsyncThunk<
   { commentId: string; likes: number },
@@ -132,7 +118,7 @@ export const replyComment = createAsyncThunk<
     replyToUserId: string;
   }
 >(
-  "comments/replyComment",
+  CommentActionTypeEnum.ReplyComment,
   async (
     { commentId, content, postId, parentCommentId, replyToUserId },
     { rejectWithValue }
@@ -225,28 +211,28 @@ export const likePost = createAsyncThunk<
 
 const commentsSlice = createSlice({
   name: "comments",
-  initialState,
+  initialState: initialCommentsState,
   reducers: {
     resetComments: (state) => {
       state.comments = [];
-      state.status = "idle";
+      state.status = StatusEnum.Idle;
       state.error = null;
     },
   },
   extraReducers: (builder) => {
     builder
       .addCase(fetchComments.pending, (state) => {
-        state.status = "loading";
+        state.status = StatusEnum.Loading;
       })
       .addCase(
         fetchComments.fulfilled,
         (state, action: PayloadAction<Comment[]>) => {
-          state.status = "succeeded";
+          state.status = StatusEnum.Succeeded;
           state.comments = action.payload || [];
         }
       )
       .addCase(fetchComments.rejected, (state, action) => {
-        state.status = "failed";
+        state.status = StatusEnum.Failed;
         state.error = (action.payload as string) || "Failed to fetch comments";
       })
       .addCase(
@@ -258,7 +244,7 @@ const commentsSlice = createSlice({
         }
       )
       .addCase(addComment.rejected, (state, action) => {
-        state.status = "failed";
+        state.status = StatusEnum.Failed;
         state.error = (action.payload as string) || "Failed to add comment";
       })
       .addCase(
@@ -315,12 +301,12 @@ const commentsSlice = createSlice({
         state.error = (action.payload as string) || "Failed to add reply";
       })
       .addCase(fetchAllReplies.pending, (state) => {
-        state.status = "loading";
+        state.status = StatusEnum.Loading;
       })
       .addCase(
         fetchAllReplies.fulfilled,
         (state, action: PayloadAction<Comment[], string, { arg: string }>) => {
-          state.status = "succeeded";
+          state.status = StatusEnum.Succeeded;
           const commentId = action.meta.arg;
           const updateReplies = (comments: Comment[]): boolean => {
             for (const comment of comments) {
@@ -339,7 +325,7 @@ const commentsSlice = createSlice({
         }
       )
       .addCase(fetchAllReplies.rejected, (state, action) => {
-        state.status = "failed";
+        state.status = StatusEnum.Failed;
         state.error = (action.payload as string) || "Failed to fetch replies";
       })
       .addCase(

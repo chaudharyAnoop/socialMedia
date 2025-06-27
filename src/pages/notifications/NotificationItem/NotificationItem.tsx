@@ -96,18 +96,33 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
     }
   };
 
+  const NotificationTextEnum = {
+    Like: "liked your post",
+    FollowNowFollowing: "is now following you",
+    FollowStartedFollowing: "started following you",
+    MentionDefault: "mentioned you",
+  };
+
+  const NotificationColorEnum = {
+    FollowGreen: "#4CAF50",
+    LikeRed: "#ff3040",
+    FollowBlue: "#1877f2",
+    CommentTeal: "#00d4aa",
+    MentionOrange: "#ff9500",
+  };
+
   const getNotificationText = () => {
     switch (notification.type) {
       case NotificationTypeEnum.Like:
-        return "liked your post";
+        return NotificationTextEnum.Like;
       case NotificationTypeEnum.Follow:
         return notification.isFollowing
-          ? "is now following you"
-          : "started following you";
+          ? NotificationTextEnum.FollowNowFollowing
+          : NotificationTextEnum.FollowStartedFollowing;
       case NotificationTypeEnum.Comment:
         return `commented: ${notification.content}`;
       case NotificationTypeEnum.Mention:
-        return notification.content || "mentioned you";
+        return notification.content || NotificationTextEnum.MentionDefault;
       default:
         return "";
     }
@@ -118,19 +133,19 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
       notification.type === NotificationTypeEnum.Follow &&
       notification.isFollowing
     ) {
-      return "#4CAF50"; // Green for following state
+      return NotificationColorEnum.FollowGreen; // Green for following state
     }
     switch (notification.type) {
       case NotificationTypeEnum.Like:
-        return "#ff3040";
+        return NotificationColorEnum.LikeRed;
       case NotificationTypeEnum.Follow:
-        return "#1877f2";
+        return NotificationColorEnum.FollowBlue;
       case NotificationTypeEnum.Comment:
-        return "#00d4aa";
+        return NotificationColorEnum.CommentTeal;
       case NotificationTypeEnum.Mention:
-        return "#ff9500";
+        return NotificationColorEnum.MentionOrange;
       default:
-        return "#1877f2";
+        return NotificationColorEnum.FollowBlue;
     }
   };
 
@@ -201,7 +216,9 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
             }`}
             onClick={handleFollowToggle}
           >
-            {notification.isFollowing ? "Following" : "Follow Back"}
+            {notification.isFollowing
+              ? NotificationTextEnum.FollowNowFollowing
+              : "Follow Back"}
           </button>
         ) : null}
       </div>

@@ -1,0 +1,127 @@
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.editModal {
+    background: #262626;
+    border-radius: 12px;
+    width: 400px;
+    max-height: 80vh;
+    overflow: hidden;
+    color: #fff;
+}
+
+.editModalHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    border-bottom: 1px solid #363636;
+}
+
+.editModalHeader h2 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+}
+
+.cancelBtn,
+.saveBtn {
+    background: none;
+    border: none;
+    color: #0095f6;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 8px;
+}
+
+.cancelBtn:hover,
+.saveBtn:hover {
+    color: #1877f2;
+}
+
+.editModalContent {
+    padding: 20px;
+    max-height: 60vh;
+    overflow-y: auto;
+}
+
+.profilePictureSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.editProfilePic {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 12px;
+}
+
+.changePhotoBtn {
+    color: #0095f6;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.changePhotoBtn:hover {
+    color: #1877f2;
+}
+
+.formGroup {
+    margin-bottom: 16px;
+}
+
+.formGroup label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #fff;
+}
+
+.formGroup input,
+.formGroup textarea {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #363636;
+    border-radius: 6px;
+    background: #262626;
+    color: #fff;
+    font-size: 14px;
+    font-family: inherit;
+    resize: vertical;
+}
+
+.formGroup input:focus,
+.formGroup textarea:focus {
+    outline: none;
+    border-color: #0095f6;
+}
+
+.formGroup input::placeholder,
+.formGroup textarea::placeholder {
+    color: #8e8e8e;
+}
+
+@media (max-width: 480px) {
+    .editModal {
+        width: 90vw;
+        margin: 20px;
+    }
+}

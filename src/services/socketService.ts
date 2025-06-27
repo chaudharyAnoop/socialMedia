@@ -1,5 +1,6 @@
 import { io, Socket } from "socket.io-client";
 import { ApiMessage } from "./chatApi";
+import { getAccessToken } from "../constants/localStorage";
 
 class SocketService {
   private socket: Socket | null = null;
@@ -9,7 +10,7 @@ class SocketService {
     if (this.socket?.connected) return;
 
     this.currentUserId = userId;
-    const token = localStorage.getItem("access_token");
+    const token = getAccessToken();
     this.socket = io(`ws://172.50.5.116:3010/chat?token=${token}`, {
       extraHeaders: {
         Authorization: `Bearer ${token}`,

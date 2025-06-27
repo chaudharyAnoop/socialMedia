@@ -40,8 +40,10 @@ const initialState: UserState = {
   error: null,
 };
 
-const token = localStorage.getItem("instagram_user");
-const cleanedUser = token?.slice(1, -1);
+import { getInstagramUser } from "../constants/localStorage";
+
+const rawToken = getInstagramUser();
+const cleanedUser = rawToken?.slice(1, -1);
 const headers = {
   "Content-Type": "application/json",
   Authorization: `Bearer ${cleanedUser}`,

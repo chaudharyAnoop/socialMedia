@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { User } from "./api";
+import styles from "./EditProfileModal.module.css";
 
 interface EditProfileModalProps {
   isOpen: boolean;
@@ -60,27 +61,30 @@ export const EditProfileModal: React.FC<EditProfileModalProps> = ({
     `https://ui-avatars.com/api/?name=${user.username}&background=333&color=fff&size=150`;
 
   return (
-    <div className="modal-overlay" onClick={onClose}>
-      <div className="edit-modal" onClick={(e) => e.stopPropagation()}>
-        <div className="edit-modal-header">
-          <button onClick={onClose} className="cancel-btn">
+    <div className={styles.modalOverlay} onClick={onClose}>
+      <div className={styles.editModal} onClick={(e) => e.stopPropagation()}>
+        <div className={styles.editModalHeader}>
+          <button onClick={onClose} className={styles.cancelBtn}>
             Cancel
           </button>
           <h2>Edit Profile</h2>
-          <button onClick={handleSave} className="save-btn">
+          <button onClick={handleSave} className={styles.saveBtn}>
             Done
           </button>
         </div>
 
-        <div className="edit-modal-content">
-          <div className="profile-picture-section">
+        <div className={styles.editModalContent}>
+          <div className={styles.profilePictureSection}>
             <img
               src={currentAvatar}
               alt="Profile"
-              className="edit-profile-pic"
+              className={styles.editProfilePic}
             />
-            <div className="profile-pic-actions">
-              <label htmlFor="profile-pic-input" className="change-photo-btn">
+            <div className={styles.profilePicActions}>
+              <label
+                htmlFor="profile-pic-input"
+                className={styles.changePhotoBtn}
+              >
                 Change profile photo
               </label>
               <input
@@ -93,7 +97,7 @@ export const EditProfileModal: React.FC<EditProfileModalProps> = ({
             </div>
           </div>
 
-          <div className="form-group">
+          <div className={styles.formGroup}>
             <label>Name</label>
             <input
               type="text"
@@ -104,7 +108,7 @@ export const EditProfileModal: React.FC<EditProfileModalProps> = ({
             />
           </div>
 
-          <div className="form-group">
+          <div className={styles.formGroup}>
             <label>Username</label>
             <input
               type="text"
@@ -115,7 +119,7 @@ export const EditProfileModal: React.FC<EditProfileModalProps> = ({
             />
           </div>
 
-          <div className="form-group">
+          <div className={styles.formGroup}>
             <label>Website</label>
             <input
               type="url"
@@ -126,7 +130,7 @@ export const EditProfileModal: React.FC<EditProfileModalProps> = ({
             />
           </div>
 
-          <div className="form-group">
+          <div className={styles.formGroup}>
             <label>Bio</label>
             <textarea
               name="bio"
@@ -138,134 +142,6 @@ export const EditProfileModal: React.FC<EditProfileModalProps> = ({
           </div>
         </div>
       </div>
-
-      <style>{`
-        .modal-overlay {
-          position: fixed;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          background: rgba(0, 0, 0, 0.8);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          z-index: 1000;
-        }
-
-        .edit-modal {
-          background: #262626;
-          border-radius: 12px;
-          width: 400px;
-          max-height: 80vh;
-          overflow: hidden;
-          color: #fff;
-        }
-
-        .edit-modal-header {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          padding: 16px 20px;
-          border-bottom: 1px solid #363636;
-        }
-
-        .edit-modal-header h2 {
-          margin: 0;
-          font-size: 16px;
-          font-weight: 600;
-          color: #fff;
-        }
-
-        .cancel-btn, .save-btn {
-          background: none;
-          border: none;
-          color: #0095f6;
-          cursor: pointer;
-          font-size: 14px;
-          font-weight: 600;
-          padding: 8px;
-        }
-
-        .cancel-btn:hover, .save-btn:hover {
-          color: #1877f2;
-        }
-
-        .edit-modal-content {
-          padding: 20px;
-          max-height: 60vh;
-          overflow-y: auto;
-        }
-
-        .profile-picture-section {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          margin-bottom: 24px;
-        }
-
-        .edit-profile-pic {
-          width: 80px;
-          height: 80px;
-          border-radius: 50%;
-          object-fit: cover;
-          margin-bottom: 12px;
-        }
-
-        .change-photo-btn {
-          color: #0095f6;
-          cursor: pointer;
-          font-size: 14px;
-          font-weight: 600;
-        }
-
-        .change-photo-btn:hover {
-          color: #1877f2;
-        }
-
-        .form-group {
-          margin-bottom: 16px;
-        }
-
-        .form-group label {
-          display: block;
-          font-size: 14px;
-          font-weight: 600;
-          margin-bottom: 6px;
-          color: #fff;
-        }
-
-        .form-group input,
-        .form-group textarea {
-          width: 100%;
-          padding: 8px 12px;
-          border: 1px solid #363636;
-          border-radius: 6px;
-          background: #262626;
-          color: #fff;
-          font-size: 14px;
-          font-family: inherit;
-          resize: vertical;
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus {
-          outline: none;
-          border-color: #0095f6;
-        }
-
-        .form-group input::placeholder,
-        .form-group textarea::placeholder {
-          color: #8e8e8e;
-        }
-
-        @media (max-width: 480px) {
-          .edit-modal {
-            width: 90vw;
-            margin: 20px;
-          }
-        }
-      `}</style>
     </div>
   );
 };
