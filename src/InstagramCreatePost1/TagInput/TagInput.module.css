@@ -1,0 +1,266 @@
+.tagSection {
+  margin-bottom: 55px;
+}
+
+.tagHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.tagLabel {
+  font-size: 0.875rem;
+  color: #374151;
+}
+
+.tagInputContainer {
+  position: relative;
+}
+
+.tagInput {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.inputWithIcon {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 12px;
+  color: #6b7280;
+  z-index: 1;
+}
+
+.loadingIcon {
+  position: absolute;
+  right: 12px;
+  color: #6b7280;
+  z-index: 1;
+}
+
+.spinning {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.tagInputField {
+  width: 100%;
+  padding: 8px 12px 8px 36px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-family: inherit;
+  background-color: #fff;
+  color: #111827;
+}
+
+.tagInputField:focus {
+  outline: none;
+  border-color: transparent;
+  box-shadow: 0 0 0 2px #3b82f6;
+}
+
+.tagAddButton {
+  padding: 8px 16px;
+  background-color: #3b82f6;
+  color: white;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.tagAddButton:hover:not(:disabled) {
+  background-color: #2563eb;
+}
+
+.tagAddButton:disabled {
+  background-color: #9ca3af;
+  cursor: not-allowed;
+}
+
+.dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: #fff;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  z-index: 1000;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.userList {
+  padding: 4px 0;
+}
+
+.userItem {
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background-color 0.15s;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.userItem:last-child {
+  border-bottom: none;
+}
+
+.userItem:hover {
+  background-color: #f9fafb;
+}
+
+.userInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.userName {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #111827;
+}
+
+.userHandle {
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
+.noResults {
+  padding: 12px;
+  text-align: center;
+  color: #6b7280;
+  font-size: 0.875rem;
+}
+
+.errorMessage {
+  padding: 12px;
+  text-align: center;
+  color: #dc2626;
+  font-size: 0.875rem;
+  background-color: #fef2f2;
+}
+
+.tagList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background-color: #dbeafe;
+  color: #1e40af;
+  padding: 4px 8px;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+}
+
+.tagRemove {
+  color: #2563eb;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+
+.tagRemove:hover {
+  color: #1e40af;
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  .tagLabel {
+    color: #d1d5db;
+  }
+
+  .searchIcon,
+  .loadingIcon {
+    color: #9ca3af;
+  }
+
+  .tagInputField {
+    background-color: #0f172a;
+    color: #f1f5f9;
+    border: 1px solid #334155;
+  }
+
+  .tagInputField:focus {
+    box-shadow: 0 0 0 2px #3b82f6;
+  }
+
+  .tagAddButton {
+    background-color: #3b82f6;
+    color: white;
+  }
+
+  .tagAddButton:hover:not(:disabled) {
+    background-color: #2563eb;
+  }
+
+  .tagAddButton:disabled {
+    background-color: #4b5563;
+  }
+
+  .dropdown {
+    background-color: #1e293b;
+    border: 1px solid #475569;
+  }
+
+  .userItem {
+    border-bottom: 1px solid #334155;
+  }
+
+  .userItem:hover {
+    background-color: #334155;
+  }
+
+  .userName {
+    color: #f1f5f9;
+  }
+
+  .userHandle {
+    color: #94a3b8;
+  }
+
+  .noResults {
+    color: #94a3b8;
+  }
+
+  .errorMessage {
+    color: #fca5a5;
+    background-color: #450a0a;
+  }
+
+  .tag {
+    background-color: #1e3a8a;
+    color: #dbeafe;
+  }
+
+  .tagRemove {
+    color: #93c5fd;
+  }
+
+  .tagRemove:hover {
+    color: #bfdbfe;
+  }
+}

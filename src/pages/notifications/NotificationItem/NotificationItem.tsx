@@ -1,5 +1,5 @@
 // src/components/Notifications/NotificationItem.tsx
-import React, { useState, useRef , memo} from 'react';
+import React, { useState, useRef, memo } from 'react';
 import { Heart, MessageCircle, UserPlus, UserCheck, AtSign, Trash2 } from 'lucide-react';
 import { NotificationData } from '../../../data/notifications';
 import styles from './NotificationItem.module.css';
@@ -10,8 +10,8 @@ interface NotificationItemProps {
   onFollowToggle: (id: string, isFollowing: boolean) => void;
 }
 
-const NotificationItem: React.FC<NotificationItemProps> = ({ 
-  notification, 
+const NotificationItem: React.FC<NotificationItemProps> = ({
+  notification,
   onDelete,
   onFollowToggle
 }) => {
@@ -69,8 +69,8 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
 
     switch (notification.type) {
       case 'like': return <Heart fill="#ff3040" color="#ff3040" style={iconStyle} />;
-      case 'follow': return notification.isFollowing 
-        ? <UserCheck color="#4CAF50" style={iconStyle} /> 
+      case 'follow': return notification.isFollowing
+        ? <UserCheck color="#4CAF50" style={iconStyle} />
         : <UserPlus color="#1877f2" style={iconStyle} />;
       case 'comment': return <MessageCircle color="#00d4aa" style={iconStyle} />;
       case 'mention': return <AtSign color="#ff9500" style={iconStyle} />;
@@ -81,8 +81,8 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
   const getNotificationText = () => {
     switch (notification.type) {
       case 'like': return 'liked your post';
-      case 'follow': return notification.isFollowing 
-        ? 'is now following you' 
+      case 'follow': return notification.isFollowing
+        ? 'is now following you'
         : 'started following you';
       case 'comment': return `commented: ${notification.content}`;
       case 'mention': return notification.content || 'mentioned you';
@@ -120,23 +120,23 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
       onMouseUp={handleMouseEnd}
       onMouseLeave={handleMouseEnd}
     >
-      <div 
-        className={styles.deleteBackground} 
+      <div
+        className={styles.deleteBackground}
         style={{ opacity: Math.min(1, Math.abs(dragX) / 100) }}
       >
         <Trash2 color="#ffffff" size={20} />
       </div>
 
-      <div 
+      <div
         className={`${styles.notificationContent} ${notification.isRead ? '' : styles.unread}`}
         style={{ borderLeftColor: getTypeColor() }}
       >
         <div className={styles.avatarContainer}>
           <div className={styles.avatarBorder} style={{ borderColor: getTypeColor() }}>
-            
-              {notification.user.avatar}
-              
-          
+
+            {notification.user.avatar}
+
+
           </div>
           <div className={styles.iconContainer}>
             {getIcon()}
@@ -167,12 +167,12 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
             />
           </div>
         ) : notification.type === 'follow' ? (
-          <button 
+          <button
             className={`${styles.followButton} ${notification.isFollowing ? styles.followingButton : ''}`}
             onClick={handleFollowToggle}
           >
             {notification.isFollowing ? 'Following' : 'Follow Back'}
-            
+
           </button>
         ) : null}
       </div>

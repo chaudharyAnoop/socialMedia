@@ -5,17 +5,11 @@ import { toast } from 'react-toastify';
 
 const firebaseConfig = {
   apiKey: "AIzaSyDTH8dvQznTaJRnl8NbZHPfMIMWLplKZvo",
-
   authDomain: "my-project-f3fb8.firebaseapp.com",
-
   projectId: "my-project-f3fb8",
-
   storageBucket: "my-project-f3fb8.firebasestorage.app",
-
   messagingSenderId: "880241752809",
-
   appId: "1:880241752809:web:0306aaf550a9f8ee388e78",
-
   measurementId: "G-HL1P162Q1J"
 };
 
@@ -50,43 +44,17 @@ export const requestNotificationPermission = async (): Promise<void> => {
   }
 };
 
-
-
-// export const onFirebaseMessage = () =>
-//   new Promise((resolve) => {
-//     onMessage(messaging, (payload) => {
-//       console.log(' Message received in foreground:', payload);
-
-      
-//       const notificationTitle = payload?.notification?.title || 'New Notification';
-//       const notificationBody = payload?.notification?.body || '';
-
-//       toast.info(
-//         <div>
-//           <strong>{notificationTitle}</strong>
-//           <div>{notificationBody}</div>
-//         </div>,
-//         {
-//           position: 'top-center',
-//           autoClose: 5000,
-//           closeOnClick: true,
-//         }
-//       );
-
-//       resolve(payload);
-//     });
-//   });
 export const onFirebaseMessage = () =>
   new Promise((resolve) => {
     onMessage(messaging, (payload) => {
       console.log('Message received in foreground:', payload);
 
-      // Default values
+    
       const notificationTitle = payload?.notification?.title || 'New Notification';
       const notificationBody = payload?.notification?.body || '';
-      const notificationType = payload?.data?.type; // 'like', 'comment', 'mention', 'follow'
+      const notificationType = payload?.data?.type; 
 
-      // Customize toast based on notification type
+     
       switch (notificationType) {
         case 'like':
           toast.success(

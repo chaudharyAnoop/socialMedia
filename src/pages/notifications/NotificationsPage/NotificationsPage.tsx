@@ -11,7 +11,7 @@ import axios from 'axios';
 import { NotificationData, sampleNotifications } from '../../../data/notifications';
 import styles from './NotificationsPage.module.css';
 import { Heart } from 'lucide-react';
-import { formatNotification } from '../formatNotification';
+import { formatNotification } from '../ApiResponseformat';
 import { Notification_URL } from '../BaseUrl';
 
 const NotificationHeader = lazy(() => import('../NotificationHeader/NotificationHeader'));

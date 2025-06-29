@@ -19,10 +19,10 @@ interface ShareModalProps {
   selectedMedia: SelectedMedia[];
   content: string;
   visibility: string;
-  setVisibility: (visibility: string) => void;
-  setcontent: (content: string) => void;
+  setVisibility: React.Dispatch<React.SetStateAction<string>>;
+  setcontent: React.Dispatch<React.SetStateAction<string>>;
   taggedUsers: TaggedPerson[];
-  settaggedUsers: (users: TaggedPerson[]) => void;
+  settaggedUsers: React.Dispatch<React.SetStateAction<TaggedPerson[]>>;
   onBack: () => void;
   onShare: () => void;
 }
@@ -39,62 +39,76 @@ const ShareModal: React.FC<ShareModalProps> = ({
   onShare
 }) => {
   return (
-    <div className={styles.modal}>
-      <div className={styles.shareModal}>
-        <div className={styles.modalHeader}>
-          <button onClick={onBack} className={styles.modalHeaderButton}>
+    <div className={styles?.modal}>
+      <div className={styles?.shareModal}>
+
+        
+        <div className={styles?.modalHeader}>
+          <button onClick={onBack} className={styles?.modalHeaderButton}>
             <ArrowLeft size={24} color="#6b7280" />
           </button>
-          <h3 className={styles.modalTitle}>Share</h3>
-          <button onClick={onShare} className={styles.modalHeaderButtonRight}>
+          <h3 className={styles?.modalTitle}>Share</h3>
+          <button onClick={onShare} className={styles?.modalHeaderButtonRight}>
             Share
           </button>
         </div>
-        <div className={styles.shareContent}>
-          <div className={styles.shareImageContainer}>
+
+        
+        <div className={styles?.shareContent}>
+          
+          
+          <div className={styles?.shareImageContainer}>
             <MediaCarousel
               selectedMedia={selectedMedia}
-              setSelectedMedia={() => {}}
+              setSelectedMedia={() => {}} 
               shareMode
             />
           </div>
-          <div className={styles.shareOptions}>
-            <div className={styles.userInfo}>
-              <div className={styles.userAvatar}></div>
-              <span className={styles.username}>yash rajput</span>
+          
+          <div className={styles?.shareOptions}>
+            
+            <div className={styles?.userInfo}>
+              <div className={styles?.userAvatar}></div>
+              <span className={styles?.username}>yash rajput</span>
             </div>
-            <div className={styles.contentContainer}>
+            
+            <div className={styles?.contentContainer}>
               <textarea
                 value={content}
                 onChange={(e) => setcontent(e.target.value)}
                 placeholder="Write a content..."
-                className={styles.contentInput}
+                className={styles?.contentInput}
                 maxLength={2200}
               />
             </div>
-            <div className={styles.contentCounter}>
-              {content.length}/2,200
+            
+            <div className={styles?.contentCounter}>
+              {content?.length}/2,200
             </div>
+            
             <TagInput
               taggedUsers={taggedUsers}
               settaggedUsers={settaggedUsers}
             />
-            <div className={styles.toggleButtonGroup}>
+
+            <div className={styles?.toggleButtonGroup}>
               <button
-                className={`${styles.toggleButton} ${visibility === 'public' ? styles.active : ''}`}
+                className={`${styles?.toggleButton} ${visibility === 'public' ? styles?.active : ''}`}
                 onClick={() => setVisibility('public')}
               >
                 Public Post
               </button>
               <button
-                className={`${styles.toggleButton} ${visibility === 'private' ? styles.active : ''}`}
+                className={`${styles?.toggleButton} ${visibility === 'private' ? styles?.active : ''}`}
                 onClick={() => setVisibility('private')}
               >
                 Private Post
               </button>
             </div>
+
           </div>
         </div>
+
       </div>
     </div>
   );
