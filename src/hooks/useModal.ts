@@ -1,24 +1,25 @@
-// hooks/useModal.ts - Modal State Management
-import { useState } from 'react';
+// src/hooks/useModal.ts - Modal State Management
+import { useState, useCallback } from 'react';
 
 export const useModal = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [modalContent, setModalContent] = useState<React.ReactNode>(null);
 
-  const openModal = (content?: React.ReactNode) => {
-    setModalContent(content || null);
+  const openModal = useCallback(() => {
     setIsOpen(true);
-  };
+  }, []);
 
-  const closeModal = () => {
+  const closeModal = useCallback(() => {
     setIsOpen(false);
-    setModalContent(null);
-  };
+  }, []);
+
+  const toggleModal = useCallback(() => {
+    setIsOpen(prev => !prev);
+  }, []);
 
   return {
     isOpen,
-    modalContent,
     openModal,
     closeModal,
+    toggleModal,
   };
 };

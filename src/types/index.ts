@@ -1,4 +1,4 @@
-// types/index.ts - Updated Type Definitions with Carousel Support
+// src/types/index.ts - Clean Type Definitions
 
 export interface UserProfile {
   id: string;
@@ -12,9 +12,6 @@ export interface UserProfile {
   followingCount: number;
   isVerified: boolean;
   isPrivate: boolean;
-  posts: number;
-  followers: number;
-  following: number;
 }
 
 export interface MediaItem {
@@ -59,6 +56,8 @@ export interface Story {
   timestamp: Date;
   isViewed: boolean;
   isOwn?: boolean;
+  isVideo?: boolean;
+  title?: string;
 }
 
 export interface Highlight {
@@ -69,4 +68,16 @@ export interface Highlight {
   stories: Story[];
 }
 
-export type TabType = 'posts' | 'reels' | 'tagged';
+// Simplified - only posts tab needed
+export type TabType = 'posts';
+
+// API Response types for future backend integration
+export interface ApiResponse<T> {
+  data: T;
+  success: boolean;
+  message?: string;
+}
+
+export interface UserApiResponse extends ApiResponse<UserProfile> {}
+export interface PostsApiResponse extends ApiResponse<Post[]> {}
+export interface CommentsApiResponse extends ApiResponse<Comment[]> {}

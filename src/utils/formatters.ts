@@ -1,32 +1,6 @@
-// // utils/formatters.ts
-// export const formatNumber = (num: number): string => {
-//   if (num >= 1000000) {
-//     return (num / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
-//   }
-//   if (num >= 1000) {
-//     return (num / 1000).toFixed(1).replace(/\.0$/, '') + 'K';
-//   }
-//   return num.toString();
-// };
+// src/utils/formatters.ts - Utility Functions
 
-// export const formatTimeAgo = (date: Date): string => {
-//   const now = new Date();
-//   const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000);
-  
-//   if (diffInSeconds < 60) {
-//     return `${diffInSeconds}s`;
-//   } else if (diffInSeconds < 3600) {
-//     return `${Math.floor(diffInSeconds / 60)}m`;
-//   } else if (diffInSeconds < 86400) {
-//     return `${Math.floor(diffInSeconds / 3600)}h`;
-//   } else if (diffInSeconds < 604800) {
-//     return `${Math.floor(diffInSeconds / 86400)}d`;
-//   } else {
-//     return `${Math.floor(diffInSeconds / 604800)}w`;
-//   }
-// };
-
-// utils/formatters.ts - Complete Fixed Version
+// Format numbers with K, M abbreviations
 export const formatNumber = (num: number): string => {
   if (num >= 1000000) {
     return (num / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
@@ -37,55 +11,54 @@ export const formatNumber = (num: number): string => {
   return num.toString();
 };
 
-export const formatTimeAgo = (date: Date | string | number | null | undefined): string => {
-  try {
-    // Handle null/undefined cases
-    if (!date) {
-      return 'now';
-    }
+// Format time ago (e.g., "2 hours ago")
+export const formatTimeAgo = (date: Date): string => {
+  const now = new Date();
+  const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000);
 
-    // Convert to Date object if it's not already
-    let dateObj: Date;
-    
-    if (date instanceof Date) {
-      dateObj = date;
-    } else if (typeof date === 'string') {
-      dateObj = new Date(date);
-    } else if (typeof date === 'number') {
-      // Assume it's a timestamp
-      dateObj = new Date(date);
-    } else {
-      // Fallback for unexpected types
-      console.warn('Invalid date format:', date);
-      return 'now';
-    }
-    
-    // Check if the date is valid
-    if (isNaN(dateObj.getTime())) {
-      console.warn('Invalid date:', date);
-      return 'now';
-    }
-    
-    const now = new Date();
-    const diffInSeconds = Math.floor((now.getTime() - dateObj.getTime()) / 1000);
-    
-    if (diffInSeconds < 60) {
-      return 'now';
-    } else if (diffInSeconds < 3600) {
-      const minutes = Math.floor(diffInSeconds / 60);
-      return `${minutes}m`;
-    } else if (diffInSeconds < 86400) {
-      const hours = Math.floor(diffInSeconds / 3600);
-      return `${hours}h`;
-    } else if (diffInSeconds < 604800) {
-      const days = Math.floor(diffInSeconds / 86400);
-      return `${days}d`;
-    } else {
-      const weeks = Math.floor(diffInSeconds / 604800);
-      return `${weeks}w`;
-    }
-  } catch (error) {
-    console.error('Error in formatTimeAgo:', error, 'Date:', date);
-    return 'now';
+  if (diffInSeconds < 60) {
+    return `${diffInSeconds}s`;
   }
+  
+  const diffInMinutes = Math.floor(diffInSeconds / 60);
+  if (diffInMinutes < 60) {
+    return `${diffInMinutes}m`;
+  }
+  
+  const diffInHours = Math.floor(diffInMinutes / 60);
+  if (diffInHours < 24) {
+    return `${diffInHours}h`;
+  }
+  
+  const diffInDays = Math.floor(diffInHours / 24);
+  if (diffInDays < 7) {
+    return `${diffInDays}d`;
+  }
+  
+  const diffInWeeks = Math.floor(diffInDays / 7);
+  if (diffInWeeks < 4) {
+    return `${diffInWeeks}w`;
+  }
+  
+  // For longer periods, show actual date
+  return date.toLocaleDateString('en-US', { 
+    month: 'short', 
+    day: 'numeric',
+    year: date.getFullYear() !== now.getFullYear() ? 'numeric' : undefined
+  });
+};
+
+// Format date for display
+export const formatDate = (date: Date): string => {
+  return date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  });
+};
+
+// Truncate text with ellipsis
+export const truncateText = (text: string, maxLength: number): string => {
+  if (text.length <= maxLength) return text;
+  return text.substring(0, maxLength).trim() + '...';
 };

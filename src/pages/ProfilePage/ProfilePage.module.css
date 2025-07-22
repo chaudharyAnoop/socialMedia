@@ -1,99 +1,614 @@
-.profileContainer {
-  padding: 1rem;
-  max-width: 960px;
-  margin: 0 auto;
+/* ProfilePage.module.css - Dark Instagram Theme */
+
+.container {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #000000;
+  color: #ffffff;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
+.content {
+  max-width: 935px;
+  margin: 0 auto;
+  padding: 30px 20px;
+}
+
+/* Profile Header */
 .profileHeader {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: 2rem;
+  margin-bottom: 44px;
+  gap: 77px;
 }
 
-@media screen and (min-width: 520px) {
-  .profileHeader {
-    flex-direction: row;
-    align-items: flex-start;
-  }
+.profilePictureContainer {
+  flex-shrink: 0;
 }
 
-.profileImage {
-  width: 100px;
-  height: 100px;
+.profilePicture {
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
   object-fit: cover;
+  border: 2px solid #262626;
+  background: #262626;
+  transition: transform 0.2s ease;
 }
 
-.userInfo {
+.profilePicture:hover {
+  transform: scale(1.05);
+}
+
+.profileInfo {
+  flex: 1;
+  padding-top: 11px;
+}
+
+.usernameSection {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  text-align: center;
-}
-
-@media screen and (min-width: 520px) {
-  .userInfo {
-    text-align: left;
-  }
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
 }
 
 .username {
-  font-size: 1.5rem;
-  font-weight: bold;
+  font-size: 28px;
+  font-weight: 300;
+  line-height: 32px;
+  margin: 0;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
-.fullName {
-  font-size: 1.2rem;
-  color: #555;
+.verified {
+  color: #1877f2;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.editButton {
+  background: #262626;
+  border: 1px solid #363636;
+  border-radius: 6px;
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 7px 16px;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.editButton:hover {
+  background: #363636;
+  border-color: #555555;
+}
+
+.settingsButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  padding: 8px;
+  color: #ffffff;
+  transition: color 0.2s;
+}
+
+.settingsButton:hover {
+  color: #8e8e8e;
+}
+
+.stats {
+  display: flex;
+  gap: 40px;
+  margin-bottom: 20px;
+  font-size: 16px;
+}
+
+.stat {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 0;
+  text-align: left;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  transition: color 0.2s;
+}
+
+.stat:hover {
+  color: #8e8e8e;
+}
+
+.statNumber {
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.statLabel {
+  color: #ffffff;
+  font-weight: 400;
 }
 
 .bio {
-  margin-top: 0.5rem;
-  color: #777;
+  max-width: 350px;
 }
 
+.fullName {
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 4px;
+}
+
+.bioText {
+  color: #ffffff;
+  line-height: 20px;
+  margin-bottom: 4px;
+  white-space: pre-wrap;
+}
+
+.website {
+  color: #e0f1ff;
+  text-decoration: none;
+  font-weight: 400;
+}
+
+.website:hover {
+  text-decoration: underline;
+}
+
+/* Tabs */
+.tabs {
+  display: flex;
+  justify-content: center;
+  border-top: 1px solid #262626;
+  margin-bottom: 24px;
+}
+
+.tab {
+  background: none;
+  border: none;
+  color: #8e8e8e;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 600;
+  gap: 6px;
+  letter-spacing: 1px;
+  padding: 12px 0;
+  margin: 0 30px;
+  text-transform: uppercase;
+  border-top: 1px solid transparent;
+  transition: all 0.2s;
+}
+
+.tab:hover {
+  color: #ffffff;
+}
+
+.activeTab {
+  color: #ffffff;
+  border-top: 1px solid #ffffff;
+}
+
+.tabIcon {
+  font-size: 14px;
+}
+
+.tabContent {
+  min-height: 200px;
+}
+
+/* Posts Grid */
 .postsGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  gap: 0.5rem;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+}
+
+.postItem {
+  position: relative;
+  aspect-ratio: 1;
+  cursor: pointer;
+  background: #262626;
+  border-radius: 3px;
+  overflow: hidden;
+  transition: transform 0.2s ease;
+}
+
+.postItem:hover {
+  transform: scale(1.02);
 }
 
 .postImage {
   width: 100%;
-  aspect-ratio: 1 / 1;
+  height: 100%;
   object-fit: cover;
-  border-radius: 8px;
+  transition: filter 0.2s ease;
 }
 
-.loading {
+.postOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 600;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.postItem:hover .postOverlay {
+  opacity: 1;
+}
+
+.postStats {
+  display: flex;
+  gap: 30px;
+  font-size: 16px;
+}
+
+/* Empty State */
+.emptyState {
   text-align: center;
-  padding: 2rem;
-  font-size: 1.2rem;
+  padding: 60px 20px;
+  color: #8e8e8e;
 }
 
-@media screen and (min-width: 900px) {
-  @media (prefers-color-scheme: dark) {
-    .profileContainer {
-      background-color: #0d0d0d;
-      color: #fff;
-    }
+.emptyIcon {
+  font-size: 62px;
+  margin-bottom: 16px;
+  opacity: 0.6;
+}
+
+.emptyState h3 {
+  font-size: 28px;
+  font-weight: 300;
+  color: #ffffff;
+  margin-bottom: 10px;
+}
+
+.emptyState p {
+  color: #8e8e8e;
+  margin-bottom: 24px;
+}
+
+.shareButton {
+  background: #0095f6;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 8px 16px;
+  transition: background-color 0.2s;
+}
+
+.shareButton:hover {
+  background: #1877f2;
+}
+
+/* Loading */
+.loading {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+  text-align: center;
+  gap: 16px;
+  color: #ffffff;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #262626;
+  border-top: 3px solid #0095f6;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+/* Error State */
+.errorState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 60px 20px;
+  text-align: center;
+  gap: 16px;
+  color: #ffffff;
+}
+
+.retryButton {
+  background: #0095f6;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 8px 24px;
+  transition: background-color 0.2s;
+}
+
+.retryButton:hover {
+  background: #1877f2;
+}
+
+/* Modal */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: #262626;
+  border-radius: 12px;
+  width: 400px;
+  max-height: 400px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+}
+
+.modalHeader {
+  padding: 16px;
+  border-bottom: 1px solid #363636;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.modalTitle {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 8px;
+  color: #8e8e8e;
+  transition: color 0.2s;
+}
+
+.closeButton:hover {
+  color: #ffffff;
+}
+
+.modalContent {
+  max-height: 300px;
+  overflow-y: auto;
+  padding: 8px 0;
+}
+
+.modalContent::-webkit-scrollbar {
+  width: 6px;
+}
+
+.modalContent::-webkit-scrollbar-track {
+  background: #262626;
+}
+
+.modalContent::-webkit-scrollbar-thumb {
+  background: #363636;
+  border-radius: 3px;
+}
+
+.userItem {
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
+  gap: 12px;
+  transition: background-color 0.2s;
+}
+
+.userItem:hover {
+  background: #363636;
+}
+
+.userAvatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(45deg, #405de6, #5851db);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.userName {
+  flex: 1;
+  font-weight: 600;
+  color: #ffffff;
+  font-size: 14px;
+}
+
+.followButton {
+  background: #0095f6;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 5px 16px;
+  transition: background-color 0.2s;
+}
+
+.followButton:hover {
+  background: #1877f2;
+}
+
+.emptyList {
+  padding: 32px;
+  text-align: center;
+  color: #8e8e8e;
+  font-size: 14px;
+}
+
+.modalLoading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+}
+
+.modalLoading .spinner {
+  width: 24px;
+  height: 24px;
+  border-width: 2px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .content {
+    padding: 20px 16px;
+  }
+
+  .profileHeader {
+    gap: 30px;
+    margin-bottom: 30px;
+  }
+
+  .profilePicture {
+    width: 77px;
+    height: 77px;
+  }
+
+  .username {
+    font-size: 24px;
+  }
+
+  .usernameSection {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .stats {
+    gap: 20px;
+    font-size: 14px;
+    justify-content: space-around;
+    width: 100%;
+  }
+
+  .stat {
+    align-items: center;
+  }
+
+  .bio {
+    max-width: 100%;
+  }
+
+  .tabs {
+    border-top: none;
+    border-bottom: 1px solid #262626;
+    background: #000000;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  .tab {
+    margin: 0 20px;
+    font-size: 11px;
+  }
+
+  .postsGrid {
+    gap: 3px;
+  }
+
+  .modal {
+    width: 90vw;
+    margin: 20px;
+    max-height: 70vh;
   }
 }
 
-@media screen and (max-width: 900px) and (min-width: 520px) {
-  @media (prefers-color-scheme: dark) {
-    .profileContainer {
-      background-color: #121212;
-    }
+@media (max-width: 480px) {
+  .profileHeader {
+    gap: 20px;
+  }
+
+  .stats {
+    gap: 15px;
+  }
+
+  .tab {
+    margin: 0 15px;
+    font-size: 10px;
+  }
+
+  .tabIcon {
+    font-size: 12px;
   }
 }
 
-@media screen and (max-width: 520px) {
-  @media (prefers-color-scheme: dark) {
-    .profileContainer {
-      background-color: #1a1a1a;
-    }
-  }
+/* Animations */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Instagram-like touches */
+.editButton:active,
+.followButton:active,
+.shareButton:active,
+.retryButton:active {
+  transform: scale(0.98);
+}
+
+/* Focus states for accessibility */
+.editButton:focus,
+.stat:focus,
+.tab:focus,
+.followButton:focus {
+  outline: 2px solid #0095f6;
+  outline-offset: 2px;
+}
+
+/* Smooth scrolling */
+.modalContent {
+  scroll-behavior: smooth;
+}
+
+/* Better text selection */
+::selection {
+  background: #0095f6;
+  color: white;
+}
+
+/* Hide scrollbar but keep functionality */
+.modalContent {
+  scrollbar-width: thin;
+  scrollbar-color: #363636 #262626;
 }

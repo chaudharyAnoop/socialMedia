@@ -23,13 +23,9 @@ import LoginForm from "./components/AuthForm/LoginForm";
 import { AuthProvider } from "./contexts/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Dashboard from "./components/Dashboard/Dashboard";
-<<<<<<< HEAD
 import ChatLayout from "./components/chat/ChatLayout";
 import ProfilePage from "./pages/ProfilePage/ProfilePg";
 
-=======
-import NotificationsPage from "./pages/notifications/NotificationsPage/NotificationsPage";
->>>>>>> develop
 
 const LandingPage = lazy(() => import("./pages/LandingPage/LandingPage"));
 const AdminPage = lazy(() => import("./pages/AdminPage/AdminPage"));
@@ -228,17 +224,10 @@ const AppContent: React.FC = () => {
             }
           />
           <Route
-<<<<<<< HEAD
             path="/profile"
             element={
               <ProtectedRoute>
                 <ProfilePage />
-=======
-            path="/noti"
-            element={
-              <ProtectedRoute>
-                <NotificationsPage/>
->>>>>>> develop
               </ProtectedRoute>
             }
           />

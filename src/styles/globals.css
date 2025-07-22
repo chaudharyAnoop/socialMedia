@@ -640,3 +640,72 @@ body.profile-page-active .nav {
     overflow-y: auto !important;
   }
 }
+
+
+
+
+
+
+
+/* src/styles/globals.css - Clean & Safe Global Styles */
+
+/* Essential global reset - safe for all pages */
+* {
+  box-sizing: border-box;
+}
+
+/* CSS Variables for Instagram colors - safe to use globally */
+:root {
+  --ig-primary-button: #0095f6;
+  --ig-primary-button-hover: #1877f2;
+  --ig-secondary-button: #efefef;
+  --ig-border-color: #dbdbdb;
+  --ig-text-primary: #262626;
+  --ig-text-secondary: #8e8e8e;
+  --ig-background: #fafafa;
+  --ig-white: #ffffff;
+  --ig-red: #ed4956;
+}
+
+/* Smooth scrolling - safe global enhancement */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Better font rendering - safe global enhancement */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Accessibility - safe global enhancement */
+button:focus-visible {
+  outline: 2px solid var(--ig-primary-button);
+  outline-offset: 2px;
+}
+
+/* Reduced motion support - safe global */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Screen reader only - utility class */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
